@@ -26,42 +26,54 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 9999;
             padding: 1.5rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            height: 90px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000;
             text-decoration: none;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #666;
+            line-height: 1;
+            margin-top: 0.2rem;
         }
 
         .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
         }
 
         .nav-menu a {
+            color: #000;
             text-decoration: none;
-            color: #666;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .nav-menu a:hover {
-            color: #333;
-        }
-
-        .nav-menu a.active {
-            color: #333;
+            color: #666;
         }
 
         /* Main layout */
@@ -227,11 +239,12 @@
 
         /* Introduction text */
         .intro-text {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 0.02em;
-            line-height: 1.6;
+            line-height: 1.8;
+            color: #333;
         }
 
         /* Profile picture */
@@ -369,7 +382,7 @@
         }
 
         .button-text {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -456,8 +469,19 @@
                 gap: 0; /* Remove gap to save space */
             }
 
+            .logo-container {
+                flex-direction: column; /* Stack vertically on mobile */
+                align-items: flex-start;
+            }
+            
             .logo {
-                font-size: 1.1rem; /* Slightly smaller for mobile */
+                font-size: 1rem; /* Smaller logo for mobile */
+                line-height: 1;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.7rem; /* Smaller subtitle for mobile */
+                margin-top: 0.1rem;
             }
 
             .nav-menu {
@@ -506,8 +530,19 @@
                 gap: 0; /* Remove gap to save space */
             }
 
+            .logo-container {
+                flex-direction: column; /* Stack vertically on very small screens */
+                align-items: flex-start;
+            }
+            
             .logo {
-                font-size: 0.9rem; /* Even smaller for very small screens */
+                font-size: 0.9rem; /* Even smaller logo for very small screens */
+                line-height: 1;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.6rem; /* Even smaller subtitle for very small screens */
+                margin-top: 0.05rem;
             }
 
             .nav-menu {
@@ -546,7 +581,7 @@
             }
 
             .intro-text {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
             /* Mobile-specific image click indicator */
@@ -580,12 +615,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <a href="index.html" class="logo">HARIS CHATZIANASTASIOU</a>
+        <div class="logo-container">
+            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <span class="logo-subtitle">HARIS CHATZIANASTASIOU</span>
+        </div>
         <nav>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -669,9 +708,9 @@
         <!-- Right column - Profile, buttons and contact -->
         <div class="right-column">
             <!-- Introduction -->
-            <div class="intro-text">
+            <!-- <div class="intro-text">
                 Full-stack developer based in Thessaloniki, Greece.
-                    </div>
+                    </div> -->
 
             <!-- Profile picture -->
             <div class="profile-section">
