@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKG CHESS - IXL Studio</title>
+    <link rel="icon" type="image/png" href="ixl.png">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            height: 90px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000;
+            text-decoration: none;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #666;
+            line-height: 1;
+            margin-top: 0.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #666;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            background: #8B4513; /* Saddle brown background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(139, 69, 19, 0.3);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 400;
+            color: #f0f0f0;
+            margin-bottom: 2rem;
+        }
+
+        /* Project details section */
+        .project-details {
+            padding: 6rem 4rem;
+            background: #fff;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+        }
+
+        .project-description p {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-info {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .info-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            padding: 0.3rem 0;
+            color: #333;
+        }
+
+        /* Visit Website Button */
+        .visit-website-btn {
+            display: inline-block;
+            background: #8B4513; /* Saddle brown to match the theme */
+            color: #fff;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #8B4513;
+        }
+
+        .visit-website-btn:hover {
+            background: #5D2E0C; /* Darker brown on hover */
+            color: #fff;
+            border-color: #5D2E0C;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(93, 46, 12, 0.4);
+        }
+
+        /* Large photos section */
+        .large-photos {
+            padding: 4rem 0;
+            background: #f8f8f8;
+        }
+
+        .photo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .photo-item {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .photo-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-caption {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Back button */
+        .back-button {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(0, 0, 0, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem 2rem;
+                flex-direction: row; /* Keep header on one line */
+                justify-content: space-between; /* Clear separation: logo left, nav right */
+                align-items: center;
+                height: 70px; /* Fixed height for mobile */
+                gap: 0; /* Remove gap to save space */
+            }
+            
+            .logo-container {
+                flex-direction: column; /* Stack vertically on mobile */
+                align-items: flex-start;
+            }
+            
+            .logo {
+                font-size: 1rem; /* Smaller logo for mobile */
+                line-height: 1;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.7rem; /* Smaller subtitle for mobile */
+                margin-top: 0.1rem;
+            }
+            
+            .nav-menu {
+                gap: 1.5rem; /* Reduced gap for mobile */
+                margin: 0; /* Remove any default margins */
+                justify-content: flex-end; /* Align to the right */
+            }
+            
+            .nav-menu a {
+                font-size: 0.9rem; /* Smaller font for mobile */
+            }
+
+            .project-details {
+                padding: 4rem 2rem;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .photo-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.8rem 1rem;
+                flex-direction: row; /* Keep header on one line even on very small screens */
+                justify-content: space-between;
+                align-items: center;
+                height: 60px; /* Even smaller height for very small screens */
+                gap: 0; /* Remove gap to save space */
+            }
+            
+            .logo-container {
+                flex-direction: column; /* Stack vertically on very small screens */
+                align-items: flex-start;
+            }
+            
+            .logo {
+                font-size: 0.9rem; /* Even smaller logo for very small screens */
+                line-height: 1;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.6rem; /* Even smaller subtitle for very small screens */
+                margin-top: 0.05rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem; /* Minimal gap for very small screens */
+                margin: 0;
+                justify-content: flex-end;
+            }
+            
+            .nav-menu a {
+                font-size: 0.8rem; /* Smaller font for very small screens */
+            }
+
+            .project-details {
+                padding: 3rem 1rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <span class="logo-subtitle">HARIS CHATZIANASTASIOU</span>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="about.html">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero">
+        <img src="retrochess2.jpg" alt="SKG CHESS" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">SKG CHESS</h1>
+            <p class="hero-subtitle">A modern chess platform with retro aesthetics</p>
+        </div>
+    </section>
+
+    <!-- Project details -->
+    <section class="project-details">
+        <div class="details-grid">
+            <div class="project-description">
+                <p>SKG CHESS is a comprehensive online chess platform that combines modern functionality with nostalgic retro aesthetics. The project showcases advanced web development techniques while maintaining an engaging user experience.</p>
+                <p>The platform features real-time multiplayer games, AI opponents, comprehensive game analysis tools, and a beautiful retro-inspired interface that pays homage to classic chess sets and vintage gaming aesthetics.</p>
+                <p>Built with cutting-edge technologies, SKG CHESS demonstrates our expertise in creating immersive digital experiences that bridge the gap between traditional board games and modern web applications.</p>
+                <a href="https://skgchess.com" class="visit-website-btn" target="_blank">Visit Website</a>
+            </div>
+            <div class="project-info">
+                <div class="info-item">
+                    <div class="info-label">Client</div>
+                    <div class="info-value">SKG Chess Community</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Role</div>
+                    <div class="info-value">Full Stack Developer</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Technologies</div>
+                    <ul class="tech-list">
+                        <li>React.js</li>
+                        <li>Node.js</li>
+                        <li>Socket.io</li>
+                        <li>MongoDB</li>
+                        <li>Chess.js</li>
+                        <li>CSS3 Animations</li>
+                    </ul>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Duration</div>
+                    <div class="info-value">6 months</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Large photos section -->
+    <section class="large-photos">
+        <div class="photo-container">
+            <div class="photo-item">
+                <img src="retrochess2.jpg" alt="SKG CHESS Interface">
+                <div class="photo-caption">Main game interface with retro chess pieces</div>
+            </div>
+            <div class="photo-item">
+                <img src="retrochess2.jpg" alt="SKG CHESS Mobile">
+                <div class="photo-caption">Mobile-responsive design for on-the-go play</div>
+            </div>
+            <div class="photo-item">
+                <img src="retrochess2.jpg" alt="SKG CHESS Analysis">
+                <div class="photo-caption">Advanced game analysis and move suggestions</div>
+            </div>
+            <div class="photo-item">
+                <img src="retrochess2.jpg" alt="SKG CHESS Tournament">
+                <div class="photo-caption">Tournament mode with leaderboards</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back button -->
+    <a href="index.html" class="back-button">← Back to Projects</a>
+
+    <script>
+        // Intersection Observer for photo animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all photo items
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoItems = document.querySelectorAll('.photo-item');
+            photoItems.forEach(item => observer.observe(item));
+        });
+    </script>
+</body>
+</html>

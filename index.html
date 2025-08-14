@@ -15,403 +15,22 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #ffffff;
+            background-color: #2a2a2a;
             color: #000000;
             line-height: 1.6;
             overflow-x: hidden;
             /* Keep default cursor visible */
+            /* Smooth scrolling behavior - makes all scrolling smooth and slow */
+            scroll-behavior: smooth;
+            /* Additional smooth scrolling for better performance */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Custom cursor styles */
-        .custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 24px;
-            height: 24px;
-            border: 1.5px solid #666;
-            border-radius: 50%;
-            background: transparent;
-            pointer-events: none;
-            z-index: 9999;
-            transition: none; /* Remove transition for instant following */
-            transform: translate(-50%, -50%);
-        }
 
-        /* Scroll cursor with arrows */
-        .custom-cursor.scrolling {
-            width: 24px;
-            height: 72px;
-            border: none;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
 
-        .custom-cursor.scrolling::before {
-            content: '^';
-            font-size: 16px;
-            color: #666;
-            font-weight: bold;
-            line-height: 1;
-        }
 
-        .custom-cursor.scrolling::after {
-            content: 'v';
-            font-size: 16px;
-            color: #666;
-            font-weight: bold;
-            line-height: 1;
-        }
 
-        .custom-cursor.scrolling .scroll-center {
-            width: 24px;
-            height: 24px;
-            border: 1.5px solid #666;
-            border-radius: 50%;
-            background: transparent;
-        }
-
-        /* Clickable cursor - smaller size */
-        .custom-cursor.clickable {
-            width: 16px;
-            height: 16px;
-            border-width: 1px;
-            transition: all 0.2s ease;
-        }
-
-        .custom-cursor.clickable .scroll-center {
-            width: 16px;
-            height: 16px;
-            border-width: 1px;
-        }
-
-        /* Clickable cursor when scrolling */
-        .custom-cursor.clickable.scrolling {
-            width: 16px;
-            height: 48px;
-        }
-
-        .custom-cursor.clickable.scrolling .scroll-center {
-            width: 16px;
-            height: 16px;
-            border-width: 1px;
-        }
-
-        /* Initial hero header (like the image) */
-        .hero-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 4rem;
-            background: #ffffff;
-            opacity: 0;
-            transform: translateY(-100%);
-            height: 90px; /* Reduced height to end at About, Contact */
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .hero-header.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
-        }
-
-        .hero-name-left {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            color: #333;
-            letter-spacing: -0.02em;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hero-name-left.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-name-right {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            color: #333;
-            letter-spacing: -0.02em;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-            text-align: right;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hero-name-right.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-description {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.4;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .hero-description.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-description p {
-            margin-bottom: 0.3rem;
-        }
-
-        .hero-availability {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .hero-availability.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .availability-badge {
-            background: #333;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .availability-indicator {
-            width: 6px;
-            height: 6px;
-            background: #4CAF50;
-            border-radius: 50%;
-        }
-
-        .hero-nav {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .hero-nav a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .hero-nav a:hover {
-            color: #333;
-        }
-
-        .hero-nav {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #666;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .hero-nav.landed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive design for hero header */
-        @media (max-width: 1024px) {
-            .hero-header {
-                padding: 1rem 2rem;
-                height: 80px;
-            }
-
-            .hero-name-left,
-            .hero-name-right {
-                font-size: clamp(2rem, 6vw, 4rem);
-            }
-
-            .hero-description {
-                margin-top: 1rem;
-                font-size: 1rem;
-            }
-
-            .hero-description p {
-                margin-bottom: 0.3rem;
-            }
-
-            .hero-availability {
-                margin-top: 1rem;
-                gap: 0.5rem;
-            }
-
-            .hero-nav {
-                margin-top: 1rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-header {
-                padding: 1rem;
-                height: auto;
-                min-height: 120px;
-            }
-
-            .hero-header-content {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-
-            .hero-name-left,
-            .hero-name-right {
-                font-size: clamp(1.8rem, 8vw, 3rem);
-            }
-
-            .hero-name-right {
-                text-align: left;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-size: clamp(1.5rem, 6vw, 2.5rem);
-            }
-
-            .hero-description {
-                margin-top: 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .hero-description p {
-                margin-bottom: 0.2rem;
-            }
-
-            .hero-availability {
-                margin-top: 0.5rem;
-            }
-
-            .hero-nav {
-                margin-top: 0.5rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-header {
-                padding: 0.8rem;
-                min-height: 100px;
-            }
-
-            .hero-name-left,
-            .hero-name-right {
-                font-size: clamp(1.5rem, 10vw, 2.5rem);
-            }
-
-            .hero-name-right {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-size: clamp(1.2rem, 5vw, 2rem);
-            }
-
-            .hero-description {
-                font-size: 0.8rem;
-            }
-
-            .hero-description p {
-                margin-bottom: 0.1rem;
-            }
-
-            .availability-badge {
-                padding: 0.2rem 0.6rem;
-                font-size: 0.7rem;
-            }
-
-            .availability-indicator {
-                width: 5px;
-                height: 5px;
-            }
-
-            .hero-nav {
-                font-size: 0.7rem;
-                gap: 0.3rem;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .hero-header {
-                padding: 0.5rem;
-                min-height: 80px;
-            }
-
-            .hero-name-left,
-            .hero-name-right {
-                font-size: clamp(1.2rem, 12vw, 2rem);
-            }
-
-            .hero-name-right {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-size: clamp(1rem, 4vw, 1.5rem);
-            }
-
-            .hero-description {
-                font-size: 0.7rem;
-            }
-
-            .hero-availability {
-                gap: 0.3rem;
-            }
-
-            .availability-badge {
-                padding: 0.15rem 0.5rem;
-                font-size: 0.6rem;
-            }
-
-            .hero-nav {
-                font-size: 0.6rem;
-            }
-        }
-
-        /* Regular header navigation (hidden initially) */
+        /* Regular header navigation */
         .header {
             position: fixed;
             top: 0;
@@ -424,17 +43,16 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(-100%);
-            height: 90px; /* Match the Eric header height */
+            height: 90px;
         }
 
         /* Logo */
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #000;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         /* Navigation menu */
@@ -457,22 +75,20 @@
 
         /* Main content */
         .main-content {
-            padding-top: 100px;
+            padding-top: 90px; /* Account for fixed header */
         }
 
         /* Hero section */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 2rem;
-            position: relative;
+            min-height: 45vh; /* Reduced height to end where "Pixel by Pixel" ends */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             background: #000;
             color: #fff;
             overflow: hidden;
+            z-index: 1;
         }
 
         /* Video background */
@@ -490,18 +106,24 @@
         }
 
         .hero:hover .hero-video {
-            transform: translate(var(--mouse-x, 0), var(--mouse-y, 0)) scale(var(--scale, 1.02));
-            filter: contrast(1.8) saturate(2.0) hue-rotate(var(--hue-rotation, 0deg)) brightness(1.3);
+            filter: contrast(1.8) saturate(2.0) brightness(1.3);
             opacity: 0.7;
             transition: all 0.1s ease; /* Faster transition for more responsive feel */
         }
+
+
 
         /* Hero text with scroll-based opacity animations */
         .hero-text {
             max-width: 800px;
             margin-bottom: 4rem;
-            /* Remove initial opacity animation - we'll handle this with scroll */
-            transform: translateY(15vh); /* Move down to center better */
+            /* Position text near the top of the hero section with gap from header */
+            position: absolute;
+            top: 30%; /* Reduced gap from header */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
         }
 
         .hero-name {
@@ -537,6 +159,11 @@
             display: inline-block;
         }
 
+        /* STUDIO span - always visible */
+        .hero-name span:nth-child(4) {
+            opacity: 1 !important;
+        }
+
         /* Full opacity when letter/word is active */
         .hero-name span.active,
         .hero-title span.active,
@@ -564,17 +191,16 @@
             transform: translateY(0) rotateX(0deg) !important;
         }
 
+        /* STUDIO always visible */
+        .hero-name span:nth-child(4) {
+            opacity: 1 !important;
+            transform: translateY(0) rotateX(0deg) !important;
+        }
+
         /* Individual letter animations with delays */
         .hero-name span:nth-child(1) { transition-delay: 0.1s; }  /* I */
         .hero-name span:nth-child(2) { transition-delay: 0.2s; }  /* X */
         .hero-name span:nth-child(3) { transition-delay: 0.3s; }  /* L */
-        .hero-name span:nth-child(5) { transition-delay: 0.4s; }  /* S */
-        .hero-name span:nth-child(6) { transition-delay: 0.5s; }  /* T */
-        .hero-name span:nth-child(7) { transition-delay: 0.6s; }  /* U */
-        .hero-name span:nth-child(8) { transition-delay: 0.7s; }  /* D */
-        .hero-name span:nth-child(9) { transition-delay: 0.8s; }  /* I */
-        .hero-name span:nth-child(10) { transition-delay: 0.9s; } /* O */
-        .hero-name span:nth-child(11) { transition-delay: 1.0s; } /* . */
 
         /* Simple rainbow animations for "Unique digital experiences." */
         .hero-title span {
@@ -635,54 +261,12 @@
             transform: translateY(0) rotateZ(0deg) scale(1);
         }
 
-        .hero-name span:nth-child(5) { /* S */
-            transform: translateY(50px) rotateX(-90deg) scale(1.2);
-        }
-        .hero-name span:nth-child(5).active {
-            transform: translateY(0) rotateX(0deg) scale(1);
-        }
 
-        .hero-name span:nth-child(6) { /* T */
-            transform: translateY(50px) rotateY(-90deg) skewY(20deg);
-        }
-        .hero-name span:nth-child(6).active {
-            transform: translateY(0) rotateY(0deg) skewY(0deg);
-        }
 
-        .hero-name span:nth-child(7) { /* U */
-            transform: translateY(50px) rotateZ(-45deg) scale(0.9);
-        }
-        .hero-name span:nth-child(7).active {
-            transform: translateY(0) rotateZ(0deg) scale(1);
-        }
-
-        .hero-name span:nth-child(8) { /* D */
-            transform: translateY(50px) rotateX(180deg) scale(1.1);
-        }
-        .hero-name span:nth-child(8).active {
-            transform: translateY(0) rotateX(0deg) scale(1);
-        }
-
-        .hero-name span:nth-child(9) { /* I */
-            transform: translateY(50px) rotateY(180deg) scale(0.7);
-        }
-        .hero-name span:nth-child(9).active {
-            transform: translateY(0) rotateY(0deg) scale(1);
-        }
-
-        .hero-name span:nth-child(10) { /* O */
-            transform: translateY(50px) rotateZ(90deg) scale(1.3);
-        }
-        .hero-name span:nth-child(10).active {
-            transform: translateY(0) rotateZ(0deg) scale(1);
-        }
-
-        /* Popup animation for the dot */
+        /* Dot always visible */
         #dot {
-            transform: translateY(50px) scale(0) rotate(0deg);
-        }
-        #dot.active {
-            transform: translateY(0) scale(1) rotate(0deg);
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) rotate(0deg) !important;
         }
 
 
@@ -713,6 +297,7 @@
             transition: all 0.3s ease;
             opacity: 0;
             animation: fadeInUp 1s ease 1s forwards;
+            z-index: 10;
         }
 
         @keyframes fadeInUp {
@@ -767,9 +352,105 @@
             padding: 4rem 2rem;
             max-width: 1400px;
             margin: 0 auto;
-            background: #fff;
-            position: relative; /* For absolute positioning of view toggle */
+            background: #928575; /* Brown color (same as SKG CHESS hover) */
+            position: absolute;
+            top: 45vh; /* Start after hero section ends */
+            left: 0;
+            right: 0;
             min-height: auto; /* Dynamic height based on content */
+            z-index: 2; /* Above hero section */
+            transition: background-color 0.2s ease;
+        }
+
+        /* Projects section background color changes on hover */
+        body.skg-chess-hover .projects {
+            background-color: #8B4513; /* Saddle brown - nice brown for SKG CHESS */
+        }
+
+        body.falcon-hover .projects {
+            background-color: #DAA520; /* Goldenrod - warm yellow that matches the brown tone */
+        }
+
+        /* Meet the creator link */
+        .meet-creator-link {
+            position: absolute;
+            left: 2rem;
+            top: 2rem; /* Fixed top position instead of 50% */
+            z-index: 1000;
+        }
+
+        .meet-creator-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meet-creator-link a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .meet-creator-link a:hover {
+            color: #333;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .meet-creator-link a:hover::before {
+            left: 100%;
+        }
+
+        /* Projects content container */
+        .projects-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Projects section when locked */
+        .projects.locked {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: rgba(255, 0, 0, 0.3) !important; /* Temporary red background for debugging */
+        }
+
+        /* Projects content when section is locked */
+        .projects.locked .projects-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 4rem 2rem;
         }
 
         .projects-content {
@@ -797,91 +478,39 @@
             transform: translateY(0);
         }
 
-        /* Projects grid with scroll animations */
+        /* Projects grid with flexbox layout */
         .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-wrap: wrap;
             gap: 2rem;
             margin-bottom: 4rem;
             width: 100%;
-            max-width: 100%;
+            max-width: 800px;
+            justify-content: center;
+            align-items: center;
         }
         
 
-        /* List view styling - simple text list */
-        .projects-grid.list-view {
-            grid-template-columns: 1fr;
-            max-width: 600px;
-            background: #333;
-            padding: 3rem 2rem;
-            border-radius: 8px;
-            position: relative;
-        }
 
-        .projects-grid.list-view::before {
-            content: '';
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-        }
-
-        .projects-grid.list-view .project-card {
-            display: block;
-            aspect-ratio: auto;
-            height: auto;
-            background: transparent;
-            border-radius: 0;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .projects-grid.list-view .project-image {
-            display: none;
-        }
-
-        .projects-grid.list-view .project-overlay {
-            display: none;
-        }
-
-        .projects-grid.list-view .project-category {
-            display: none;
-        }
-
-        .projects-grid.list-view .project-title {
-            position: relative;
-            top: auto;
-            left: auto;
-            transform: none;
-            text-align: left;
-            margin: 0;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.1em;
-            opacity: 1;
-            padding: 0.5rem 0;
-        }
-
-        .projects-grid.list-view .project-title:hover {
-            color: #ccc;
-            transition: color 0.3s ease;
-        }
 
         /* Project card with advanced animations */
         .project-card {
             position: relative;
-            aspect-ratio: 16/10;
+            width: calc(50% - 1rem); /* 2 cards per row with gap */
+            height: 50px; /* Very short height */
             overflow: hidden;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.15s ease;
-            opacity: 0;
-            transform: translateY(50px) scale(0.95);
+            opacity: 1;
+            transform: translateY(0) scale(1);
             background: #000;
+            /* Ensure the entire card is clickable */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Add a subtle border to make click area more visible */
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* SKG Chess specific styling */
@@ -894,7 +523,7 @@
 
         .project-card[data-project="falcon"] {
             background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-                        url('retrochess2.jpg') center/cover;
+                        url('bnwthess1.jpg') center/cover;
             background-size: cover;
             background-position: center;
         }
@@ -906,47 +535,43 @@
             background-position: center;
         }
 
-        /* Page background transition */
-        body {
-            transition: background-color 0.2s ease;
-        }
 
-        body.skg-chess-hover {
-            background-color: #928575; /* Same brown color */
-        }
 
-        body.falcon-hover {
-            background-color: #968e45; /* Same brown color */
-        }
 
-        body.lilith-hover {
-            background-color: #312926; /* Same brown color */
-        }
-
-        /* Projects section background transition */
-        .projects {
-            transition: background-color 0.2s ease;
-        }
-
-        body.skg-chess-hover .projects {
-            background-color: #928575; /* Same brown color */
-        }
-
-        body.falcon-hover .projects {
-            background-color: #968e45; /* Same brown color */
-        }
-
-        body.lilith-hover .projects {
-            background-color: #312926; /* Same brown color */
-        }
-
-        .project-card.animate {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
 
         .project-card:hover {
             transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* SKG CHESS title hover effect */
+        .project-card[data-project="skg-chess"] .project-title:hover {
+            text-decoration-color: rgba(255, 255, 255, 0.8);
+            text-decoration-thickness: 3px;
+            /* Removed transform scale to prevent text movement */
+            transition: all 0.2s ease;
+        }
+
+        /* Project card click animation */
+        .project-card.clicking {
+            animation: projectClickAnimation 0.8s ease-in-out forwards;
+        }
+
+        @keyframes projectClickAnimation {
+            0% {
+                transform: scale(1);
+                z-index: 10;
+            }
+            50% {
+                transform: scale(1.5);
+                z-index: 1000;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+                z-index: 1000;
+            }
         }
 
         .project-image {
@@ -1073,30 +698,7 @@
 
 
 
-                /* View toggle - positioned on the left side of projects section */
-        .view-toggle {
-            position: absolute;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            z-index: 1000;
-        }
-
-        .toggle-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-btn.active {
-            background: #000;
-            color: white;
-        }
+        
 
         /* Pagination */
         .pagination {
@@ -1136,6 +738,10 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
+            z-index: 2; /* Above hero section */
+            position: absolute;
+            left: 0;
+            right: 0;
         }
 
         .articles-content {
@@ -1269,11 +875,15 @@
         /* Large screens (1200px and up) */
         @media (min-width: 1200px) {
             .projects-grid {
-                grid-template-columns: 1fr !important;
-                max-width: 600px;
+                max-width: 800px;
                 width: 100%;
                 margin-left: auto;
                 margin-right: auto;
+            }
+            
+            .project-card {
+                width: calc(50% - 1rem); /* 2 cards per row */
+                height: 50px; /* Very short height */
             }
             
             .articles-grid {
@@ -1289,8 +899,12 @@
             }
             
             .projects-grid {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
                 max-width: 100%;
+            }
+            
+            .project-card {
+                width: calc(50% - 1rem); /* 2 cards per row */
+                height: 50px; /* Very short height */
             }
             
             .articles {
@@ -1302,9 +916,7 @@
                 max-width: 100%;
             }
             
-            .view-toggle {
-                left: 1.5rem;
-            }
+
         }
 
         /* Small screens (tablets - 481px to 767px) */
@@ -1320,9 +932,12 @@
             }
             
             .projects-grid {
-                grid-template-columns: 1fr;
                 max-width: 100%;
                 gap: 1.5rem;
+            }
+            
+            .project-card {
+                width: 100%; /* 1 card per row on tablets */
             }
             
             .articles {
@@ -1345,16 +960,7 @@
                 min-height: 180px;
             }
             
-            .view-toggle {
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-                flex-direction: row;
-                gap: 1rem;
-                margin-bottom: 2rem;
-                justify-content: center;
-            }
+
             
             .section-title {
                 font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -1375,10 +981,13 @@
             }
             
             .projects-grid {
-                grid-template-columns: 1fr;
                 max-width: 100%;
                 gap: 1rem;
                 margin-bottom: 2rem;
+            }
+            
+            .project-card {
+                width: 100%; /* 1 card per row on mobile */
             }
             
             .project-card {
@@ -1478,14 +1087,7 @@
                 font-size: 0.85rem;
             }
             
-            .view-toggle {
-                gap: 0.5rem;
-            }
             
-            .toggle-btn {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.8rem;
-            }
         }
 
         /* Landscape orientation adjustments */
@@ -1500,16 +1102,7 @@
                 padding: 1rem 0;
             }
             
-            .view-toggle {
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-                flex-direction: row;
-                gap: 1rem;
-                margin-bottom: 1rem;
-                justify-content: center;
-            }
+
         }
 
         /* Project detail modal */
@@ -1880,10 +1473,23 @@
         @media (max-width: 768px) {
             .header {
                 padding: 1rem 2rem;
+                flex-direction: row; /* Ensure header stays on one line */
+                justify-content: space-between; /* Keep logo left, nav right */
+                align-items: center;
+                height: 70px; /* Slightly smaller height for mobile */
+            }
+            
+            .logo {
+                font-size: 1rem; /* Smaller logo for mobile */
             }
             
             .nav-menu {
-                gap: 2rem;
+                gap: 1.5rem; /* Reduced gap for mobile */
+                margin: 0; /* Remove any default margins */
+            }
+            
+            .nav-menu a {
+                font-size: 0.9rem; /* Smaller font for mobile */
             }
 
             .hero {
@@ -1901,6 +1507,20 @@
 
             .project-title {
                 font-size: 1.5rem;
+            }
+            
+            /* Meet the creator link responsive */
+            .meet-creator-link {
+                position: absolute;
+                left: 1rem; /* Reduced left margin for mobile */
+                top: 1rem; /* Fixed top position for mobile */
+                z-index: 1000;
+            }
+            
+            .meet-creator-link a {
+                padding: 0.6rem 1rem; /* Smaller padding for mobile */
+                font-size: 0.8rem; /* Smaller font for mobile */
+                border-radius: 20px; /* Slightly smaller border radius */
             }
         }
 
@@ -1928,13 +1548,24 @@
 
         @media (max-width: 480px) {
             .header {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
+                padding: 0.8rem 1rem;
+                flex-direction: row; /* Keep header on one line even on very small screens */
+                justify-content: space-between;
+                align-items: center;
+                height: 60px; /* Even smaller height for very small screens */
+                gap: 0; /* Remove gap to save space */
+            }
+            
+            .logo {
+                font-size: 0.9rem; /* Even smaller logo for very small screens */
             }
 
             .nav-menu {
-                gap: 1.5rem;
+                gap: 1rem; /* Minimal gap for very small screens */
+            }
+            
+            .nav-menu a {
+                font-size: 0.8rem; /* Smaller font for very small screens */
             }
 
             .hero-name {
@@ -1973,6 +1604,18 @@
                 font-size: 2rem;
             }
             
+            /* Meet the creator link responsive for very small screens */
+            .meet-creator-link {
+                left: 0.5rem; /* Even smaller left margin for very small screens */
+                top: 0.5rem; /* Even smaller top margin for very small screens */
+            }
+            
+            .meet-creator-link a {
+                padding: 0.5rem 0.8rem; /* Even smaller padding for very small screens */
+                font-size: 0.7rem; /* Even smaller font for very small screens */
+                border-radius: 15px; /* Smaller border radius */
+            }
+            
             .stat-label {
                 font-size: 0.8rem;
             }
@@ -1984,30 +1627,7 @@
     </style>
 </head>
 <body>
-    <!-- Initial hero header (like the image) -->
-    <header class="hero-header" id="hero-header">
-        <div class="hero-header-content">
-            <div class="hero-left">
-                <div class="hero-name-left">HARIS</div>
-                <div class="hero-description">
-                    <p>FULLSTACK DEVELOPER</p>
-                    <p>CRAFTING DIGITAL EXPERIENCES</p>
-                </div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-name-right">CHATZIANASTASIOU</div>
-                <div class="hero-availability">
-                    <div class="availability-badge">AVAILABLE</div>
-                    <div class="availability-indicator"></div>
-                </div>
-                <div class="hero-nav">
-                    <a href="#about">About</a>, <a href="#contact">Contact</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Regular header navigation (hidden initially) -->
+    <!-- Regular header navigation -->
     <header class="header" id="regular-header">
         <a href="#" class="logo">IXLSTUDIO</a>
         <nav>
@@ -2037,23 +1657,18 @@
                 </p>
             </div>
 
-            <div class="scroll-indicator">
-                <span>Click to scroll</span>
+            <!-- <div class="scroll-indicator">
                 <div class="scroll-line"></div>
-            </div>
+            </div> -->
 
-            <!-- Custom cursor -->
-            <div class="custom-cursor" id="custom-cursor">
-                <div class="scroll-center"></div>
-            </div>
+
         </section>
 
         <!-- Projects section -->
         <section class="projects">            
-            <!-- View toggle -->
-            <div class="view-toggle">
-                <button class="toggle-btn active" data-view="grid">Grid view</button>
-                <button class="toggle-btn" data-view="list">List view</button>
+            <!-- Meet the creator link -->
+            <div class="meet-creator-link">
+                <a href="about.html">Meet the creator</a>
             </div>
             
             <!-- Projects content container -->
@@ -2062,20 +1677,12 @@
                 <div class="projects-grid" id="projects-grid">
                     <div class="project-card" data-project="skg-chess">
                         <div class="project-overlay"></div>
-                        <h2 class="project-title">SKG CHESS</h3>
-                        <p class="project-category">Full Stack Development</p>
+                        <h2 class="project-title">SKGCHESS</h3>
                     </div>
 
                     <div class="project-card" data-project="falcon">
                         <div class="project-overlay"></div>
                         <h2 class="project-title">FALCON</h3>
-                        <p class="project-category">Full Stack Development</p>
-                    </div>
-
-                    <div class="project-card" data-project="lilith">
-                        <div class="project-overlay"></div>
-                        <h2 class="project-title">LILITH</h3>
-                        <p class="project-category">Full Stack Development</p>
                     </div>
                 </div>
             </div>
@@ -2335,113 +1942,26 @@
 
 
 
-        // Smooth scroll functionality
+        // Smooth scroll functionality (disabled)
         function setupSmoothScroll() {
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            const projectsSection = document.querySelector('.projects');
-            
-            scrollIndicator.addEventListener('click', function() {
-                projectsSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+            // Scroll indicator click functionality removed
+            // The button now does nothing when clicked
         }
 
-                // Clean header transition - only one visible at a time
-        function setupHeaderTransition() {
-            const heroHeader = document.getElementById('hero-header');
-            const regularHeader = document.getElementById('regular-header');
-            
-            // Check initial scroll position and set appropriate header
-            const initialScrollY = window.scrollY;
-            
-            if (initialScrollY === 0) {
-                // At the very top - show hero header
-                heroHeader.style.opacity = '1';
-                heroHeader.style.transform = 'translateY(0)';
-                regularHeader.style.opacity = '0';
-                regularHeader.style.transform = 'translateY(-100%)';
-                currentHeader = 'hero';
-            } else {
-                // Scrolled down - show regular header
-                heroHeader.style.opacity = '0';
-                heroHeader.style.transform = 'translateY(-100%)';
-                regularHeader.style.opacity = '1';
-                regularHeader.style.transform = 'translateY(0)';
-                currentHeader = 'regular';
-            }
-            
-            let ticking = false;
-            
-            function updateHeader() {
-                const scrollY = window.scrollY;
-                const heroSection = document.querySelector('.hero');
-                const heroRect = heroSection.getBoundingClientRect();
-                const heroCenter = heroRect.top + heroRect.height / 2;
-                const viewportCenter = window.innerHeight / 2;
-                const triggerOffset = 100; // 100px below center (same as text animations)
-                const triggerPoint = viewportCenter + triggerOffset;
-                
-                if (scrollY === 0 && currentHeader !== 'hero') {
-                    // Show hero header only when at the very top
-                    heroHeader.style.opacity = '1';
-                    heroHeader.style.transform = 'translateY(0)';
-                    regularHeader.style.opacity = '0';
-                    regularHeader.style.transform = 'translateY(-100%)';
-                    currentHeader = 'hero';
-                    
-                    // Reset letter positions
-                    const heroNames = document.querySelectorAll('.hero-name-left, .hero-name-right');
-                    heroNames.forEach(name => {
-                        name.style.transform = 'translateY(0)';
-                    });
-                    
-                    const regularHeaderElements = document.querySelectorAll('.logo, .nav-menu a');
-                    regularHeaderElements.forEach(element => {
-                        element.style.transform = 'translateY(0)';
-                    });
-                    
-                } else if (heroCenter <= triggerPoint && currentHeader !== 'regular') {
-                    // Show regular header when hero section center reaches trigger point (below center)
-                    heroHeader.style.opacity = '0';
-                    heroHeader.style.transform = 'translateY(-100%)';
-                    regularHeader.style.opacity = '1';
-                    regularHeader.style.transform = 'translateY(0)';
-                    currentHeader = 'regular';
-                    
-                    // Animate letters
-                    const heroNames = document.querySelectorAll('.hero-name-left, .hero-name-right');
-                    heroNames.forEach(name => {
-                        name.style.transform = 'translateY(-10px)';
-                    });
-                    
-                    const regularHeaderElements = document.querySelectorAll('.logo, .nav-menu a');
-                    regularHeaderElements.forEach(element => {
-                        element.style.transform = 'translateY(10px)';
-                    });
-                }
-                
-                ticking = false;
-            }
-            
-            window.addEventListener('scroll', function() {
-                if (!ticking) {
-                    requestAnimationFrame(updateHeader);
-                    ticking = true;
-                }
-            });
-        }
+
 
         // Project card click animations
         function setupProjectCardAnimations() {
+            console.log('Setting up project card animations...'); // Debug log
             const projectCards = document.querySelectorAll('.project-card');
+            console.log('Found project cards:', projectCards.length); // Debug log
             const modal = document.getElementById('project-modal');
             const modalTitle = document.getElementById('modal-title');
             const modalBody = document.getElementById('modal-body');
             const modalClose = document.getElementById('modal-close');
 
             projectCards.forEach(card => {
-                // SKG Chess hover effect
+                // SKG CHESS hover effect
                 if (card.getAttribute('data-project') === 'skg-chess') {
                     card.addEventListener('mouseenter', function() {
                         document.body.classList.add('skg-chess-hover');
@@ -2452,7 +1972,7 @@
                     });
                 }
                 
-                // SKG Chess1 hover effect
+                // FALCON hover effect
                 if (card.getAttribute('data-project') === 'falcon') {
                     card.addEventListener('mouseenter', function() {
                         document.body.classList.add('falcon-hover');
@@ -2463,27 +1983,31 @@
                     });
                 }
                 
-                // SKG Chess2 hover effect
-                if (card.getAttribute('data-project') === 'lilith') {
-                    card.addEventListener('mouseenter', function() {
-                        document.body.classList.add('lilith-hover');
-                    });
+                card.addEventListener('click', function(e) {
+                    console.log('Project card clicked!'); // Debug log
+                    console.log('Project:', this.getAttribute('data-project')); // Debug log
                     
-                    card.addEventListener('mouseleave', function() {
-                        document.body.classList.remove('lilith-hover');
-                    });
-                }
-
-                card.addEventListener('click', function() {
                     const projectName = this.querySelector('.project-title').textContent;
                     const projectType = this.querySelector('.project-category').textContent;
                     
-                    // Animate letters coming together
+                    // Check if this is SKG CHESS project
+                    if (this.getAttribute('data-project') === 'skg-chess') {
+                        console.log('SKG CHESS detected, starting animation...'); // Debug log
+                        // Add clicking animation class
+                        this.classList.add('clicking');
+                        
+                        // Redirect to skgchess.html after animation
+                        setTimeout(() => {
+                            console.log('Redirecting to skgchess.html...'); // Debug log
+                            window.location.href = 'skgchess.html';
+                        }, 800);
+                    } else {
+                        console.log('Other project detected, showing modal...'); // Debug log
+                        // Default modal behavior for other projects
                     const title = this.querySelector('.project-title');
                     title.style.letterSpacing = '0em';
                     title.style.transition = 'letter-spacing 0.5s ease';
                     
-                    // Show modal after letter animation
                     setTimeout(() => {
                         modalTitle.textContent = projectName;
                         modalBody.innerHTML = `
@@ -2493,7 +2017,32 @@
                         `;
                         modal.classList.add('active');
                     }, 500);
+                    }
                 });
+
+                // Also make the project title text clickable for SKG CHESS
+                const projectTitle = card.querySelector('.project-title');
+                if (card.getAttribute('data-project') === 'skg-chess') {
+                    projectTitle.style.cursor = 'pointer';
+                    // Add visual indicator that it's clickable
+                    projectTitle.style.textDecoration = 'underline';
+                    projectTitle.style.textDecorationColor = 'rgba(255, 255, 255, 0.5)';
+                    projectTitle.style.textDecorationThickness = '2px';
+                    
+                    projectTitle.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Prevent triggering the card click event
+                        console.log('SKG CHESS title clicked!'); // Debug log
+                        
+                        // Add clicking animation class to the parent card
+                        card.classList.add('clicking');
+                        
+                        // Redirect to skgchess.html after animation
+                        setTimeout(() => {
+                            console.log('Redirecting to skgchess.html...'); // Debug log
+                            window.location.href = 'skgchess.html';
+                        }, 800);
+                    });
+                }
             });
 
             // Close modal
@@ -2603,288 +2152,102 @@
             animatedElements.forEach(el => observer.observe(el));
         }
 
-        // View toggle functionality with centering
-        function setupViewToggle() {
-            const toggleBtns = document.querySelectorAll('.toggle-btn');
-            const projectsGrid = document.getElementById('projects-grid');
-            
-            toggleBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    toggleBtns.forEach(b => b.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Change grid layout based on view
-                    const view = this.getAttribute('data-view');
-                    if (view === 'list') {
-                        projectsGrid.classList.add('list-view');
-                        // Scroll to closest project in list view
-                        scrollToClosestProject();
-                    } else {
-                        projectsGrid.classList.remove('list-view');
-                        // Center the grid view and focus closest project
-                        centerGridViewAndFocusProject();
-                    }
-                });
-            });
-        }
 
-        // Function to center grid view and focus closest project
-        function centerGridViewAndFocusProject() {
-            const projectsSection = document.querySelector('.projects');
-            const projectCards = document.querySelectorAll('.project-card');
-            const viewportCenter = window.innerHeight / 2;
-            let closestCard = null;
-            let closestDistance = Infinity;
-            
-            // Find the project card closest to viewport center
-            projectCards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const cardCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(cardCenter - viewportCenter);
-                
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestCard = card;
-                }
-            });
-            
-            // Center the projects section first
-            const sectionRect = projectsSection.getBoundingClientRect();
-            const sectionCenter = sectionRect.top + sectionRect.height / 2;
-            const scrollOffset = sectionCenter - viewportCenter;
-            const currentScroll = window.pageYOffset;
-            const targetScroll = currentScroll + scrollOffset;
-            
-            // Smooth scroll to center the section
-            window.scrollTo({
-                top: targetScroll,
-                behavior: 'smooth'
-            });
-            
-            // After centering, focus the closest project
-            setTimeout(() => {
-                if (closestCard) {
-                    // Remove focus from all cards
-                    projectCards.forEach(card => {
-                        card.classList.remove('focused');
-                        card.classList.add('scroll-narrow');
-                    });
-                    
-                    // Add focus to closest card
-                    closestCard.classList.remove('scroll-narrow');
-                    closestCard.classList.add('focused');
-                    
-                    // Center the focused card
-                    centerProjectCard(closestCard);
-                }
-            }, 600); // Wait for scroll animation to complete
-        }
 
-        // Function to scroll to closest project in list view
-        function scrollToClosestProject() {
-            const projectCards = document.querySelectorAll('.project-card');
-            const viewportCenter = window.innerHeight / 2;
-            let closestCard = null;
-            let closestDistance = Infinity;
-            
-            // Find the project card closest to viewport center
-            projectCards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const cardCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(cardCenter - viewportCenter);
-                
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestCard = card;
-                }
-            });
-            
-            // Scroll to center the closest project
-            if (closestCard) {
-                const rect = closestCard.getBoundingClientRect();
-                const cardCenter = rect.top + rect.height / 2;
-                const viewportCenter = window.innerHeight / 2;
-                const scrollOffset = cardCenter - viewportCenter;
-                const currentScroll = window.pageYOffset;
-                const targetScroll = currentScroll + scrollOffset;
-                
-                window.scrollTo({
-                    top: targetScroll,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        // Liquid wobble effect for hero section
+        // Static video background (no effects)
         function setupWobbleEffect() {
-            const hero = document.querySelector('.hero');
             const heroVideo = document.querySelector('.hero-video');
             
             // Set initial slow playback speed
             if (heroVideo) {
                 heroVideo.playbackRate = 0.6; // 20% of normal speed (very slow)
             }
-            
-            // Function to apply wobble effect
-            function applyWobbleEffect(x, y) {
-                const rect = hero.getBoundingClientRect();
-                
-                // Calculate normalized position (-1 to 1)
-                const normalizedX = (x / rect.width - 0.5) * 2;
-                const normalizedY = (y / rect.height - 0.5) * 2;
-                
-                // Apply much stronger liquid distortion effect
-                const wobbleX = normalizedX * 120; // 3x stronger movement
-                const wobbleY = normalizedY * 120; // 3x stronger movement
-                const hueRotation = normalizedX * 60; // 3x stronger color shift
-                const scale = 1 + Math.abs(normalizedX) * 0.1 + Math.abs(normalizedY) * 0.1; // Dynamic scaling
-                
-                hero.style.setProperty('--mouse-x', `${wobbleX}px`);
-                hero.style.setProperty('--mouse-y', `${wobbleY}px`);
-                hero.style.setProperty('--hue-rotation', `${hueRotation}deg`);
-                hero.style.setProperty('--scale', scale);
-            }
-            
-            // Apply initial wobble effect on page load (center position)
-            setTimeout(() => {
-                const rect = hero.getBoundingClientRect();
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                applyWobbleEffect(centerX, centerY);
-            }, 1500); // Wait 1.5 seconds after page load to sync with other animations
-            
-            hero.addEventListener('mousemove', (e) => {
-                const rect = hero.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                applyWobbleEffect(x, y);
-            });
-            
-            hero.addEventListener('mouseleave', () => {
-                // Reset position when mouse leaves
-                hero.style.setProperty('--mouse-x', '0px');
-                hero.style.setProperty('--mouse-y', '0px');
-                hero.style.setProperty('--hue-rotation', '0deg');
-                hero.style.setProperty('--scale', '1');
-            });
         }
 
-        // Landing animation for HARIS CHATZIANASTASIOU header
-        function setupLandingAnimation() {
-            const heroHeader = document.getElementById('hero-header');
-            const heroNameLeft = document.querySelector('.hero-name-left');
-            const heroNameRight = document.querySelector('.hero-name-right');
-            const heroDescription = document.querySelector('.hero-description');
-            const heroAvailability = document.querySelector('.hero-availability');
-            const heroNav = document.querySelector('.hero-nav');
+
+
+
+
+        // Handle projects section scroll locking
+        function setupProjectsScrollLock() {
+            console.log('Setting up projects scroll lock...');
             
-            // Trigger landing animation after a short delay
-            setTimeout(() => {
-                if (heroHeader) heroHeader.classList.add('landed');
+            const projectsSection = document.querySelector('.projects');
+            const heroName = document.querySelector('.hero-name');
+            
+            console.log('Projects section found:', !!projectsSection);
+            console.log('Hero name found:', !!heroName);
+            
+            if (!projectsSection || !heroName) {
+                console.log('Projects section or hero name not found');
+                return;
+            }
+            
+            function handleScroll() {
+                const heroNameRect = heroName.getBoundingClientRect();
+                const heroNameBottom = heroNameRect.bottom;
+                const scrollY = window.pageYOffset;
                 
-                // Animate name parts at the same time
-                setTimeout(() => {
-                    if (heroNameLeft) heroNameLeft.classList.add('landed');
-                    if (heroNameRight) heroNameRight.classList.add('landed');
-                }, 300);
+                console.log('Scroll Y:', scrollY, 'Hero name bottom:', heroNameBottom);
                 
-                // Animate description, availability, and navigation at the same time
-                setTimeout(() => {
-                    if (heroDescription) heroDescription.classList.add('landed');
-                    if (heroAvailability) heroAvailability.classList.add('landed');
-                    if (heroNav) heroNav.classList.add('landed');
-                }, 900);
-            }, 500);
+                // When hero name bottom reaches top of viewport, lock projects section
+                if (heroNameBottom <= 0 && !projectsSection.classList.contains('locked')) {
+                    console.log('Locking projects section');
+                    projectsSection.classList.add('locked');
+                } else if (heroNameBottom > 0 && projectsSection.classList.contains('locked')) {
+                    console.log('Unlocking projects section');
+                    projectsSection.classList.remove('locked');
+                }
+            }
+            
+            // Test scroll event
+            window.addEventListener('scroll', function() {
+                console.log('Scroll event fired!');
+            });
+            
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+            
+            console.log('Projects scroll lock setup complete');
         }
 
-        // Custom cursor functionality
-        function setupCustomCursor() {
-            const cursor = document.getElementById('custom-cursor');
-            let isScrolling = false;
-            let scrollTimeout;
-            let mouseX = 0;
-            let mouseY = 0;
-
-            // Track mouse movement with requestAnimationFrame for smooth following
-            function updateCursorPosition() {
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
-                requestAnimationFrame(updateCursorPosition);
+        // Position articles section after projects section
+        function positionArticlesSection() {
+            const projectsSection = document.querySelector('.projects');
+            const articlesSection = document.querySelector('.articles');
+            
+            if (projectsSection && articlesSection) {
+                const projectsRect = projectsSection.getBoundingClientRect();
+                const projectsBottom = projectsRect.bottom + window.pageYOffset;
+                articlesSection.style.top = projectsBottom + 'px';
             }
-
-            // Start the animation loop
-            updateCursorPosition();
-
-            // Track mouse movement
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                
-                // Check if hovering over clickable element
-                const target = e.target;
-                const isClickable = target.tagName === 'A' || 
-                                   target.tagName === 'BUTTON' || 
-                                   target.classList.contains('project-card') ||
-                                   target.classList.contains('toggle-btn') ||
-                                   target.closest('a') ||
-                                   target.closest('button') ||
-                                   target.closest('.project-card') ||
-                                   target.closest('.toggle-btn') ||
-                                   target.style.cursor === 'pointer';
-                
-                if (isClickable) {
-                    cursor.classList.add('clickable');
-                } else {
-                    cursor.classList.remove('clickable');
-                }
-            });
-
-            // Track scroll events
-            window.addEventListener('scroll', () => {
-                if (!isScrolling) {
-                    isScrolling = true;
-                    cursor.classList.add('scrolling');
-                }
-
-                // Clear existing timeout
-                clearTimeout(scrollTimeout);
-
-                // Set timeout to remove scrolling class
-                scrollTimeout = setTimeout(() => {
-                    isScrolling = false;
-                    cursor.classList.remove('scrolling');
-                }, 150); // Wait 150ms after scrolling stops
-            });
-
-            // Hide cursor when leaving window
-            document.addEventListener('mouseleave', () => {
-                cursor.style.display = 'none';
-            });
-
-            // Show cursor when entering window
-            document.addEventListener('mouseenter', () => {
-                cursor.style.display = 'block';
-            });
         }
 
         // Initialize all functionality
         document.addEventListener('DOMContentLoaded', function() {
-            setupLandingAnimation();
+            console.log('DOM Content Loaded - Starting initialization...');
+            
             setupScrollAnimations();
             setupProjectScrollAnimations();
             setupSmoothScroll();
-            setupHeaderTransition();
             setupProjectCardAnimations();
             setupPagination();
             setupParallax();
             setupAnimatedCounters();
             setupMeetCreatorAnimations();
-            setupViewToggle();
             setupWobbleEffect();
-            setupCustomCursor();
+            
+            console.log('About to call setupProjectsScrollLock...');
+            setupProjectsScrollLock();
+            console.log('setupProjectsScrollLock called');
+            
+            // Position articles section
+            positionArticlesSection();
+            
+            // Reposition on window resize
+            window.addEventListener('resize', positionArticlesSection);
+            
+            console.log('Initialization complete');
         });
     </script>
 </body>
