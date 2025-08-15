@@ -306,7 +306,7 @@
 
         /* Scroll indicator section */
         .scroll-indicator-section {
-            background: #121212;
+            background: #121212 !important;
             padding: 3rem 0;
             display: flex;
             align-items: center;
@@ -356,12 +356,10 @@
             right: 0;
             width: 100vw; /* Full viewport width */
             max-width: none; /* Remove any max-width constraints */
-            background: rgba(139, 69, 19, 0.95); /* Permanent brown color */
+            background: rgba(139, 69, 19, 0.95) !important; /* Dark brown background */
             backdrop-filter: blur(10px);
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             height: fit-content; /* Fit content exactly */
             min-height: 60vh; /* Increased minimum height for desktop */
             max-height: none; /* Remove any maximum height */
@@ -403,6 +401,54 @@
 
         /* Color change effects removed - permanent brown color only */
 
+        /* Second Sticky Section - Higher z-index than first sticky section */
+        .sticky-section-second {
+            position: relative; /* Normal document flow positioning */
+            width: 100vw; /* Full viewport width */
+            max-width: none; /* Remove any max-width constraints */
+            background: #121212; /* Black background */
+            z-index: 222200; /* Higher than first sticky section (100) but lower than projects-title (1000) */
+            padding: 2rem 0; /* Remove horizontal padding for full width */
+            height: 100vh; /* Always full viewport height */
+            overflow: visible; /* Allow content to determine height */
+            margin-bottom: 0; /* Ensure no bottom margin */
+            display: flex; /* Use flexbox for proper alignment */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        /* Responsive text sizing for second sticky section */
+        .sticky-section-second .sticky-hero-title {
+            font-size: clamp(3rem, 8vw, 8rem); /* Responsive font size from 3rem to 8rem */
+            line-height: 0.9; /* Tighter line height for better fit */
+            text-align: center; /* Center text */
+            padding: 0 2rem; /* Add horizontal padding for smaller screens */
+        }
+
+        /* Mobile responsive adjustments for second sticky section */
+        @media (max-width: 768px) {
+            .sticky-section-second {
+                padding: 1rem 0; /* Reduced padding for mobile */
+            }
+            
+            .sticky-section-second .sticky-hero-title {
+                font-size: clamp(2.5rem, 6vw, 4rem); /* Smaller responsive font for mobile */
+                padding: 0 1rem; /* Less padding on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sticky-section-second .sticky-hero-title {
+                font-size: clamp(2rem, 5vw, 3rem); /* Even smaller for very small screens */
+                padding: 0 0.5rem; /* Minimal padding */
+            }
+        }
+
+        /* Second sticky section animation - starts when activated */
+        .sticky-section-second .sticky-hero-title span {
+            display: inline-block;
+        }
+
         .sticky-content {
             max-width: 800px;
             margin: 0 auto;
@@ -439,7 +485,7 @@
         /* Sticky logo removed - no longer needed */
 
         /* Individual letter/word styling for sticky section */
-        .sticky-hero-title span,
+        .sticky-section .sticky-hero-title span,
         .sticky-hero-subtitle span {
             opacity: 0;
             transform: translateY(30px);
@@ -448,7 +494,7 @@
         }
 
         /* Full opacity when letter/word is active */
-        .sticky-hero-title span.active,
+        .sticky-section .sticky-hero-title span.active,
         .sticky-hero-subtitle span.active {
             opacity: 1;
             transform: translateY(0);
@@ -586,14 +632,9 @@
             letter-spacing: -0.02em;
         }
 
-        /* Projects title section background color changes on hover */
-        body.skg-chess-hover .projects-title-section {
-            background-color: #675141; /* Saddle brown - nice brown for SKG CHESS */
-            transition: background-color 0.8s ease-in-out;
-        }
-
-        body.falcon-hover .projects-title-section {
-            background-color: #726649; /* Goldenrod - warm yellow that matches the brown tone */
+        /* Projects title section background color changes when activated */
+        body.projects-title-active .projects-title-section {
+            background-color: #3f3128; /* Same dark brown background as sticky section */
             transition: background-color 0.8s ease-in-out;
         }
 
@@ -1033,6 +1074,7 @@
             padding: 0 2rem; /* Remove top/bottom padding to eliminate gaps */
             width: 100vw; /* Full viewport width */
             margin: 0; /* No margin for full width */
+            margin-top: 0; /* Remove top margin to position exactly after scroll indicator */
             background: #121212;
             min-height: 100vh;
             display: flex;
@@ -2181,7 +2223,7 @@
         <!-- Sticky Section under hero -->
         <section class="sticky-section">
             <!-- Video background -->
-            <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(139, 69, 19, 0.3);">
+            <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(18, 18, 18, 0.3);">
                 <video class="sticky-video" autoplay muted loop playsinline preload="auto" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;">
                     <source src="1.mp4" type="video/mp4">
                 </video>
@@ -2217,6 +2259,24 @@
             </div>
         </section>
 
+        <!-- Second Sticky Section - Higher z-index -->
+        <section class="sticky-section-second">
+            <!-- Video background -->
+            <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(18, 18, 18, 0.3);">
+                <video class="sticky-video" autoplay muted loop playsinline preload="auto" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;">
+                    <source src="1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="sticky-content">
+                <h1 class="sticky-hero-title">
+                    <br><span></span> <span>TURNING</span> <span>YOUR</span> <span>IDEAS</span> <span>INTO</span> <span>ELEGANT</span> <span>SOLUTIONS.</span>
+                </h1>
+                <!-- <p class="sticky-hero-subtitle">
+                    <span>Pixel</span> <span>by</span> <span>Pixel.</span>
+                </p> -->
+            </div>
+        </section>
+
         <!-- IXL Scroll Indicator Section -->
         <section class="scroll-indicator-section">
             <div class="scroll-indicator">
@@ -2237,7 +2297,7 @@
             </div>
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author" id="hero-author-text">HARIS CREATES</p>
+                <p class="hero-author" id="hero-author-text">WE CREATE</p>
             </div>
 
             
@@ -2607,11 +2667,14 @@
         function setupDynamicHeroText() {
             const heroAuthorText = document.getElementById('hero-author-text');
             const projectsTitleSection = document.querySelector('.projects-title-section');
+            const projectsSection = document.querySelector('.projects');
             const articlesSection = document.querySelector('.articles');
+            const stickyTitleSpans = document.querySelectorAll('.sticky-hero-title span');
+            
+            // Flag to track sticky text state
+            let stickyTextState = 'digital'; // 'digital' or 'haris'
             
             if (!heroAuthorText) return;
-
-            
 
             // Function to change text with smooth transition
             function changeTextWithTransition(newText) {
@@ -2629,6 +2692,28 @@
                     heroAuthorText.style.transform = 'translateY(0)';
                 }, 300); // Half of transition time
             }
+            
+            // Function to change sticky section text to HARIS CHATZIANASTASIOU
+            function changeStickyTextToHaris() {
+                if (stickyTextState === 'haris' || stickyTitleSpans.length < 2) return;
+                
+                stickyTextState = 'haris';
+                
+                // Immediate text change - no animation
+                stickyTitleSpans[0].textContent = ' ';
+                stickyTitleSpans[1].textContent = 'IDEASTOLIFE.';
+            }
+            
+            // Function to change sticky section text back to digital stories
+            function changeStickyTextToDigital() {
+                if (stickyTextState === 'digital' || stickyTitleSpans.length < 2) return;
+                
+                stickyTextState = 'digital';
+                
+                // Immediate text change - no animation
+                stickyTitleSpans[0].textContent = 'HARIS';
+                stickyTitleSpans[1].textContent = 'CHATZIANASTASIOU.';
+            }
 
             const observerOptions = {
                 threshold: 0.5, // Trigger when 50% of section is visible
@@ -2639,9 +2724,9 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         if (entry.target.classList.contains('projects-title-section')) {
-                            changeTextWithTransition('HARIS CREATES');
+                            changeTextWithTransition('EXPLORE OUR PROJECTS');
                         } else if (entry.target.classList.contains('articles')) {
-                            changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
+                            changeTextWithTransition('READ OUR SOFTWARE INSIGHTS');
                         }
                     }
                 });
@@ -2654,24 +2739,54 @@
             // Add scroll listener to change text based on page scroll percentage
             window.addEventListener('scroll', () => {
                 const projectsRect = projectsTitleSection ? projectsTitleSection.getBoundingClientRect() : null;
+                const projectsSectionRect = projectsSection ? projectsSection.getBoundingClientRect() : null;
                 const articlesRect = articlesSection ? articlesSection.getBoundingClientRect() : null;
+                const secondStickyRect = document.querySelector('.sticky-section-second') ? document.querySelector('.sticky-section-second').getBoundingClientRect() : null;
                 
                 const isProjectsActive = projectsRect && projectsRect.top < window.innerHeight * 0.5 && projectsRect.bottom > window.innerHeight * 0.5;
+                const isProjectsSectionActive = projectsSectionRect && projectsSectionRect.top < window.innerHeight * 0.3 && projectsSectionRect.bottom > window.innerHeight * 0.7 && projectsSectionRect.top > 0;
+                const isProjectsAtEnd = projectsRect && projectsRect.bottom <= window.innerHeight * 0.8 && projectsRect.bottom > 0;
                 const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
+                const isSecondStickyReached = secondStickyRect && secondStickyRect.top <= window.innerHeight * 0.5;
+                
+                // Change original sticky section styling when second sticky section is reached
+                const originalStickySection = document.querySelector('.sticky-section');
+                if (originalStickySection) {
+                    if (isSecondStickyReached) {
+                        // Change to black background and set text opacity to 0
+                        originalStickySection.style.background = '#121212';
+                        originalStickySection.style.transition = 'background 0.3s ease';
+                        const stickyTitleSpans = originalStickySection.querySelectorAll('.sticky-hero-title span');
+                        stickyTitleSpans.forEach(span => {
+                            span.style.opacity = '0';
+                            span.style.transition = 'opacity 0.3s ease';
+                        });
+                    } else {
+                        // Revert to original styling
+                        originalStickySection.style.background = 'rgba(139, 69, 19, 0.95)';
+                        const stickyTitleSpans = originalStickySection.querySelectorAll('.sticky-hero-title span');
+                        stickyTitleSpans.forEach(span => {
+                            span.style.opacity = '';
+                            span.style.transition = 'opacity 0.3s ease';
+                        });
+                    }
+                }
                 
                 // Calculate page scroll percentage
                 const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
                 
                 if (isProjectsActive) {
-                    changeTextWithTransition('EXPLORE MY PROJECTS');
+                    changeTextWithTransition('EXPLORE OUR PROJECTS');
+                } else if (isProjectsSectionActive) {
+                    changeTextWithTransition('WE CREATE');
                 } else if (isArticlesActive) {
-                    changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
-                } else if (scrollPercentage >= 50) {
-                    // After 50% of page scroll, show HARIS CHATZIANASTASIOU
-                    changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
+                    changeTextWithTransition('READ OUR SOFTWARE INSIGHTS');
+                } else if (window.scrollY > 100) {
+                    // When scrolled past initial content and no section is active, make text empty
+                    changeTextWithTransition('');
                 } else {
-                    // Before 50% of page scroll, show CREATING DIGITAL STORIES
-                    changeTextWithTransition('HARIS CREATES');
+                    // Before scrolling, show WE CREATE
+                    changeTextWithTransition('WE CREATE');
                 }
             });
         }
@@ -2693,6 +2808,99 @@
 
             const animatedElements = document.querySelectorAll('.meet-title, .creator-quote, .expertise-item, .stat-item, .learn-more, .social-link');
             animatedElements.forEach(el => observer.observe(el));
+        }
+
+        // Projects title section activation
+        function setupProjectsTitleActivation() {
+            const projectsTitleSection = document.querySelector('.projects-title-section');
+            
+            if (!projectsTitleSection) {
+                console.log('Projects title section not found');
+                return;
+            }
+            
+            console.log('Setting up projects title activation for:', projectsTitleSection);
+            
+            const observerOptions = {
+                threshold: 0.3, // Trigger when 30% of section is visible
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    console.log('Projects title intersection observed:', entry.isIntersecting);
+                    if (entry.isIntersecting) {
+                        console.log('Projects title section is intersecting - activating color change');
+                        document.body.classList.add('projects-title-active');
+                    } else {
+                        console.log('Projects title section is not intersecting - deactivating color change');
+                        document.body.classList.remove('projects-title-active');
+                    }
+                });
+            }, observerOptions);
+            
+            observer.observe(projectsTitleSection);
+            console.log('Observer attached to projects title section');
+        }
+
+        // Second sticky section animation trigger - scroll-based
+        function setupSecondStickyAnimation() {
+            const secondStickySection = document.querySelector('.sticky-section-second');
+            
+            if (!secondStickySection) {
+                console.log('Second sticky section not found');
+                return;
+            }
+            
+            console.log('Setting up second sticky animation for:', secondStickySection);
+            
+            // Set initial state - make all spans invisible
+            const stickyTitleSpans = secondStickySection.querySelectorAll('.sticky-hero-title span');
+            stickyTitleSpans.forEach(span => {
+                span.style.opacity = '0';
+                span.style.transform = 'translateY(30px)';
+                span.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            
+            console.log('Set initial state for', stickyTitleSpans.length, 'spans');
+            
+            // Track which words have been animated
+            let animatedWords = new Set();
+            
+            // Scroll event listener for scroll-based animation
+            window.addEventListener('scroll', () => {
+                const sectionRect = secondStickySection.getBoundingClientRect();
+                const sectionTop = sectionRect.top;
+                const sectionHeight = sectionRect.height;
+                const viewportHeight = window.innerHeight;
+                
+                // More precise scroll progress calculation
+                const startTrigger = viewportHeight * 0.8; // Start when section is 80% up the viewport
+                const endTrigger = -sectionHeight * 0.2; // End when section is 20% below viewport
+                const scrollProgress = Math.max(0, Math.min(1, (startTrigger - sectionTop) / (startTrigger - endTrigger)));
+                
+                // Determine which word should be visible based on scroll progress - last word appears sooner
+                const totalWords = stickyTitleSpans.length;
+                let wordsToShow;
+                
+                if (scrollProgress <= 0.5) {
+                    // First half of scroll: show first two words
+                    wordsToShow = Math.floor(scrollProgress * 2);
+                } else {
+                    // Second half of scroll: show all words including the last one
+                    wordsToShow = totalWords;
+                }
+                
+                // Animate words based on scroll position
+                stickyTitleSpans.forEach((span, index) => {
+                    if (index < wordsToShow && !animatedWords.has(index)) {
+                        span.style.opacity = '1';
+                        span.style.transform = 'translateY(0)';
+                        animatedWords.add(index);
+                        console.log('Animated word', index, 'at scroll progress', scrollProgress.toFixed(3));
+                    }
+                });
+            });
         }
 
 
@@ -2855,6 +3063,8 @@
             setupMeetCreatorAnimations();
             setupWobbleEffect();
             setupStickySectionAnimation();
+            setupSecondStickyAnimation();
+            setupProjectsTitleActivation();
             setupStickySectionEffects();
             setupDynamicHeroText();
             

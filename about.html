@@ -99,6 +99,7 @@
             line-height: 1.1;
             text-transform: uppercase;
             letter-spacing: -0.02em;
+            opacity: 0; /* Hide initially to prevent flash */
         }
 
         /* Animated content styles */
@@ -286,6 +287,42 @@
             background: rgba(139, 69, 19, 1); /* Brown - sleek and elegant */
             color: white;
             box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+        }
+
+        /* Glass traveling animation for My Story button */
+        .glass-travel-animation {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-travel-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            animation: glassTravel 3s ease-in-out infinite;
+            pointer-events: none;
+            border-radius: inherit; /* Inherit border radius from parent */
+        }
+
+        @keyframes glassTravel {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
         }
 
         /* Elegant pulse animation for mobile nav button */
@@ -689,6 +726,16 @@
                 padding: 0.5rem 0.6rem;
                 font-size: 0.65rem;
             }
+            
+            /* Ensure glass animation works properly on mobile */
+            .mobile-nav-button.glass-travel-animation {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .mobile-nav-button.glass-travel-animation::before {
+                border-radius: 20px; /* Match mobile button border radius */
+            }
 
 
 
@@ -853,10 +900,17 @@
         // GSAP Animations
         gsap.registerPlugin();
         
+        // Track if My Story button has been pressed
+        let myStoryPressed = false;
+        
         // Initial page load animations
         window.addEventListener('load', function() {
             // Animate the quote text with letter-by-letter effect
             const quoteText = document.getElementById('animatedQuote');
+            
+            // Make quote text visible before starting animation
+            gsap.set(quoteText, { opacity: 1 });
+            
             const chars = quoteText.textContent.split('');
             quoteText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
             
@@ -870,15 +924,9 @@
                     stagger: 0.05,
                     ease: "back.out(1.7)",
                     onComplete: function() {
-                        // Add elegant pulse animation to "My Story" button on mobile after quote animation
-                        if (window.innerWidth <= 768) {
-                            const myStoryButton = document.querySelector('.mobile-nav-button');
-                            if (myStoryButton) {
-                                // Add a small delay before starting the pulse
-                                setTimeout(() => {
-                                    myStoryButton.classList.add('pulse-hint');
-                                }, 500);
-                            }
+                        // Add glass traveling animation to "My Story" button immediately after quote animation
+                        if (!myStoryPressed) {
+                            addGlassAnimation();
                         }
                     }
                 }
@@ -897,6 +945,30 @@
                 }
             );
         });
+        
+        // Function to add glass traveling animation
+        function addGlassAnimation() {
+            if (myStoryPressed) return; // Don't add animation if already pressed
+            
+            // Add animation to desktop My Story button
+            const desktopMyStoryButton = document.querySelector('.interactive-button[onclick="showContent(\'defaultContent\')"]');
+            if (desktopMyStoryButton) {
+                desktopMyStoryButton.classList.add('glass-travel-animation');
+            }
+            
+            // Add animation to mobile My Story button
+            const mobileMyStoryButton = document.querySelector('.mobile-nav-button[onclick="resetToDefault()"]');
+            if (mobileMyStoryButton) {
+                mobileMyStoryButton.classList.add('glass-travel-animation');
+            }
+        }
+        
+        // Function to remove glass animation
+        function removeGlassAnimation() {
+            document.querySelectorAll('.glass-travel-animation').forEach(button => {
+                button.classList.remove('glass-travel-animation');
+            });
+        }
         
         function showContent(category) {
             // Remove active class from all buttons
@@ -928,6 +1000,9 @@
             if (category === 'defaultContent') {
                 targetContent = document.getElementById('defaultContent');
                 targetContent.classList.add('show');
+                // Mark My Story as pressed and remove glass animation
+                myStoryPressed = true;
+                removeGlassAnimation();
             } else if (category === 'education') {
                 targetContent = document.getElementById('educationContent');
                 targetContent.classList.add('show');
@@ -969,6 +1044,10 @@
             // Show default content
             const defaultContent = document.getElementById('defaultContent');
             defaultContent.classList.add('show');
+            
+            // Mark My Story as pressed and remove glass animation
+            myStoryPressed = true;
+            removeGlassAnimation();
 
             // Removed automatic scrolling behavior - no focus on navigation
         }
@@ -1032,6 +1111,12 @@
             if (window.innerWidth <= 768) {
                 const mobileNav = document.getElementById('mobileNav');
                 mobileNav.classList.add('show');
+            }
+            
+            // Ensure quote text is hidden initially
+            const quoteText = document.getElementById('animatedQuote');
+            if (quoteText) {
+                quoteText.style.opacity = '0';
             }
         });
     </script>
