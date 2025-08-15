@@ -259,6 +259,8 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            /* Ensure proper flex container behavior */
+            min-height: 0; /* Prevent flex container from growing unnecessarily */
         }
 
         .mobile-nav-button {
@@ -276,6 +278,9 @@
             white-space: nowrap;
             flex: 1;
             text-align: center;
+            /* Ensure proper flex item behavior */
+            min-width: 0; /* Allow flex item to shrink if needed */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .mobile-nav-button:hover {
@@ -293,6 +298,8 @@
         .glass-travel-animation {
             position: relative;
             overflow: hidden;
+            /* Ensure proper stacking context */
+            z-index: 1;
         }
 
         .glass-travel-animation::before {
@@ -309,8 +316,9 @@
                 transparent
             );
             animation: glassTravel 3s ease-in-out infinite;
-            pointer-events: none;
+            pointer-events: none; /* Don't interfere with button clicks */
             border-radius: inherit; /* Inherit border radius from parent */
+            z-index: -1; /* Keep behind the button content */
         }
 
         @keyframes glassTravel {
@@ -727,14 +735,30 @@
                 font-size: 0.65rem;
             }
             
-            /* Ensure glass animation works properly on mobile */
+            /* Ensure glass animation works properly on mobile without breaking layout */
             .mobile-nav-button.glass-travel-animation {
                 position: relative;
                 overflow: hidden;
+                /* Ensure the button maintains its flex properties */
+                flex: 1;
+                min-width: 0; /* Prevent flex item from growing beyond container */
             }
             
             .mobile-nav-button.glass-travel-animation::before {
                 border-radius: 20px; /* Match mobile button border radius */
+                /* Ensure pseudo-element doesn't affect layout */
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                z-index: 1; /* Keep behind text */
+                pointer-events: none; /* Don't interfere with clicks */
+            }
+            
+            /* Ensure text stays above the glass effect */
+            .mobile-nav-button.glass-travel-animation {
+                z-index: 2;
             }
 
 

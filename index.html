@@ -2676,21 +2676,34 @@
             
             if (!heroAuthorText) return;
 
-            // Function to change text with smooth transition
+            // Optimized function to change text with smooth transition for better mobile performance
+            let textTransitionTimeout; // Variable to prevent multiple simultaneous transitions
+            
             function changeTextWithTransition(newText) {
                 if (heroAuthorText.textContent === newText) return; // Don't change if same text
                 
-                // Fade out
-                heroAuthorText.style.opacity = '0';
-                heroAuthorText.style.transform = 'translateY(-10px)';
+                // Clear any existing transition timeout
+                if (textTransitionTimeout) {
+                    clearTimeout(textTransitionTimeout);
+                }
                 
-                // Change text after fade out
-                setTimeout(() => {
-                    heroAuthorText.textContent = newText;
-                    // Fade in
-                    heroAuthorText.style.opacity = '1';
-                    heroAuthorText.style.transform = 'translateY(0)';
-                }, 300); // Half of transition time
+                // Use requestAnimationFrame for smoother transitions on mobile
+                requestAnimationFrame(() => {
+                    // Fade out
+                    heroAuthorText.style.opacity = '0';
+                    heroAuthorText.style.transform = 'translateY(-10px)';
+                    
+                    // Change text after fade out with shorter delay for mobile
+                    textTransitionTimeout = setTimeout(() => {
+                        heroAuthorText.textContent = newText;
+                        
+                        // Use requestAnimationFrame for fade in
+                        requestAnimationFrame(() => {
+                            heroAuthorText.style.opacity = '1';
+                            heroAuthorText.style.transform = 'translateY(0)';
+                        });
+                    }, 150); // Reduced from 300ms to 150ms for faster response on mobile
+                });
             }
             
             // Function to change sticky section text to HARIS CHATZIANASTASIOU
@@ -2715,78 +2728,80 @@
                 stickyTitleSpans[1].textContent = 'CHATZIANASTASIOU.';
             }
 
-            const observerOptions = {
-                threshold: 0.5, // Trigger when 50% of section is visible
-                rootMargin: '0px 0px -10% 0px'
-            };
+            // IntersectionObserver disabled - using simple scroll-based logic instead
+            // This prevents the confusing mobile behavior where different sections overlap
 
-            const observer = new IntersectionObserver((entries) => {
+            // Mobile-friendly scroll-based text changes with viewport detection
+            let currentTextState = 'WE CREATE'; // Track current text state
+            let lastScrollY = 0; // Track last scroll position
+            let articlesInViewport = false; // Track if articles section is visible
+            
+            // Use the existing articlesSection variable from above
+            
+            // Create IntersectionObserver to detect when articles section enters viewport
+            const articlesObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (entry.target.classList.contains('projects-title-section')) {
-                            changeTextWithTransition('EXPLORE OUR PROJECTS');
-                        } else if (entry.target.classList.contains('articles')) {
-                            changeTextWithTransition('READ OUR SOFTWARE INSIGHTS');
-                        }
-                    }
+                    articlesInViewport = entry.isIntersecting; // Update viewport state when articles section intersects
                 });
-            }, observerOptions);
-
-            // Observe both sections
-            if (projectsTitleSection) observer.observe(projectsTitleSection);
-            if (articlesSection) observer.observe(articlesSection);
-
-            // Add scroll listener to change text based on page scroll percentage
+            }, {
+                threshold: 0.1, // Trigger when 10% of articles section is visible
+                rootMargin: '0px 0px -100px 0px' // Add some margin for better timing
+            });
+            
+            // Start observing the articles section
+            if (articlesSection) {
+                articlesObserver.observe(articlesSection);
+            }
+            
             window.addEventListener('scroll', () => {
-                const projectsRect = projectsTitleSection ? projectsTitleSection.getBoundingClientRect() : null;
-                const projectsSectionRect = projectsSection ? projectsSection.getBoundingClientRect() : null;
-                const articlesRect = articlesSection ? articlesSection.getBoundingClientRect() : null;
-                const secondStickyRect = document.querySelector('.sticky-section-second') ? document.querySelector('.sticky-section-second').getBoundingClientRect() : null;
+                const scrollY = window.scrollY;
                 
-                const isProjectsActive = projectsRect && projectsRect.top < window.innerHeight * 0.5 && projectsRect.bottom > window.innerHeight * 0.5;
-                const isProjectsSectionActive = projectsSectionRect && projectsSectionRect.top < window.innerHeight * 0.3 && projectsSectionRect.bottom > window.innerHeight * 0.7 && projectsSectionRect.top > 0;
-                const isProjectsAtEnd = projectsRect && projectsRect.bottom <= window.innerHeight * 0.8 && projectsRect.bottom > 0;
-                const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
-                const isSecondStickyReached = secondStickyRect && secondStickyRect.top <= window.innerHeight * 0.5;
-                
-                // Change original sticky section styling when second sticky section is reached
-                const originalStickySection = document.querySelector('.sticky-section');
-                if (originalStickySection) {
-                    if (isSecondStickyReached) {
-                        // Change to black background and set text opacity to 0
-                        originalStickySection.style.background = '#121212';
-                        originalStickySection.style.transition = 'background 0.3s ease';
-                        const stickyTitleSpans = originalStickySection.querySelectorAll('.sticky-hero-title span');
-                        stickyTitleSpans.forEach(span => {
-                            span.style.opacity = '0';
-                            span.style.transition = 'opacity 0.3s ease';
-                        });
-                    } else {
-                        // Revert to original styling
-                        originalStickySection.style.background = 'rgba(139, 69, 19, 0.95)';
-                        const stickyTitleSpans = originalStickySection.querySelectorAll('.sticky-hero-title span');
-                        stickyTitleSpans.forEach(span => {
-                            span.style.opacity = '';
-                            span.style.transition = 'opacity 0.3s ease';
-                        });
-                    }
+                // Only update if scroll position changed significantly (more than 20px)
+                if (Math.abs(scrollY - lastScrollY) < 20) {
+                    return;
                 }
                 
-                // Calculate page scroll percentage
-                const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                lastScrollY = scrollY;
                 
-                if (isProjectsActive) {
-                    changeTextWithTransition('EXPLORE OUR PROJECTS');
-                } else if (isProjectsSectionActive) {
-                    changeTextWithTransition('WE CREATE');
-                } else if (isArticlesActive) {
-                    changeTextWithTransition('READ OUR SOFTWARE INSIGHTS');
-                } else if (window.scrollY > 100) {
-                    // When scrolled past initial content and no section is active, make text empty
-                    changeTextWithTransition('');
-                } else {
-                    // Before scrolling, show WE CREATE
-                    changeTextWithTransition('WE CREATE');
+                // Enhanced 3-state logic using viewport detection
+                let newTextState;
+                
+                if (scrollY <= 50) {
+                    // At the very top (with small buffer) - not scrolled much
+                    newTextState = 'WE CREATE';
+                } else if (scrollY > 50 && !articlesInViewport) {
+                    // Scrolled but articles section not yet in viewport
+                    newTextState = 'EXPLORE OUR PROJECTS';
+                } else if (articlesInViewport) {
+                    // Articles section is now in viewport
+                    newTextState = 'READ OUR ARTICLES';
+                }
+                
+                // Only change text if state actually changed
+                if (newTextState !== currentTextState) {
+                    currentTextState = newTextState;
+                    changeTextWithTransition(newTextState);
+                }
+                
+                // Handle sticky section background changes
+                const originalStickySection = document.querySelector('.sticky-section');
+                if (originalStickySection) {
+                    const shouldBeBlack = scrollY >= window.innerHeight; // Change to black after scrolling past viewport height
+                    const currentBackground = originalStickySection.style.background;
+                    const targetBackground = shouldBeBlack ? '#121212' : 'rgba(139, 69, 19, 0.95)';
+                    
+                    // Only update if background needs to change
+                    if (currentBackground !== targetBackground) {
+                        originalStickySection.style.background = targetBackground;
+                        originalStickySection.style.transition = 'background 0.3s ease';
+                        
+                        const stickyTitleSpans = originalStickySection.querySelectorAll('.sticky-hero-title span');
+                        const targetOpacity = shouldBeBlack ? '0' : '';
+                        stickyTitleSpans.forEach(span => {
+                            span.style.opacity = targetOpacity;
+                            span.style.transition = 'opacity 0.3s ease';
+                        });
+                    }
                 }
             });
         }
