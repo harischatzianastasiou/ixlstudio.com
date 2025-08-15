@@ -168,6 +168,7 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             margin: 0;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
         }
 
         /* Individual letter/word styling */
@@ -2588,7 +2589,24 @@
             if (!heroAuthorText) return;
 
             // Set default text
-            heroAuthorText.textContent = 'IXLSTUDIO';
+            heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
+
+            // Function to change text with smooth transition
+            function changeTextWithTransition(newText) {
+                if (heroAuthorText.textContent === newText) return; // Don't change if same text
+                
+                // Fade out
+                heroAuthorText.style.opacity = '0';
+                heroAuthorText.style.transform = 'translateY(-10px)';
+                
+                // Change text after fade out
+                setTimeout(() => {
+                    heroAuthorText.textContent = newText;
+                    // Fade in
+                    heroAuthorText.style.opacity = '1';
+                    heroAuthorText.style.transform = 'translateY(0)';
+                }, 300); // Half of transition time
+            }
 
             const observerOptions = {
                 threshold: 0.5, // Trigger when 50% of section is visible
@@ -2599,9 +2617,9 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         if (entry.target.classList.contains('projects-title-section')) {
-                            heroAuthorText.textContent = 'PROJECTS';
+                            changeTextWithTransition('PROJECTS');
                         } else if (entry.target.classList.contains('articles')) {
-                            heroAuthorText.textContent = 'ARTICLES';
+                            changeTextWithTransition('ARTICLES');
                         }
                     }
                 });
@@ -2611,7 +2629,7 @@
             if (projectsTitleSection) observer.observe(projectsTitleSection);
             if (articlesSection) observer.observe(articlesSection);
 
-            // Add scroll listener to reset to "PRESENTING" when no section is active
+            // Add scroll listener to reset to default when no section is active
             window.addEventListener('scroll', () => {
                 const projectsRect = projectsTitleSection ? projectsTitleSection.getBoundingClientRect() : null;
                 const articlesRect = articlesSection ? articlesSection.getBoundingClientRect() : null;
@@ -2620,7 +2638,7 @@
                 const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
                 
                 if (!isProjectsActive && !isArticlesActive) {
-                    heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
+                    changeTextWithTransition('HARIS CHATZIANASTASIOU');
                 }
             });
         }
