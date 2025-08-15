@@ -242,7 +242,7 @@
             backdrop-filter: blur(20px);
             border-radius: 25px;
             padding: 1rem 1.5rem;
-            display: none;
+            display: none; /* Hidden by default on desktop */
             z-index: 1000;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -559,9 +559,9 @@
             }
 
             .main-container {
-                flex-direction: column-reverse; /* Right section appears first on mobile */
+                flex-direction: column; /* Single column layout on mobile */
                 padding-top: 120px; /* Account for taller header */
-                padding-bottom: 100px; /* Account for mobile navigation bar */
+                padding-bottom: 120px; /* Account for mobile navigation bar */
             }
 
             .left-column {
@@ -569,13 +569,16 @@
             }
 
             .right-column {
-                padding: 2rem 1.5rem;
-                border-left: none;
-                border-top: 2px solid #000;
+                display: none; /* Hide the right column on mobile */
             }
 
             .quote-text {
                 font-size: clamp(2rem, 8vw, 3rem);
+            }
+
+            /* Show mobile navigation by default on mobile */
+            .mobile-nav {
+                display: flex !important;
             }
 
             /* Add smooth scrolling for mobile */
@@ -689,7 +692,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="mailto:harischatzi@tutanota.com">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -706,9 +709,9 @@
                 <!-- Default content -->
                 <div class="content-block" id="defaultContent">
                     <div class="philosophy-text">
-                        My name is Haris Chatzianastasiou. I'm a full-stack developer based in Thessaloniki, Greece. I design and code software solutions. <br> <br> 
+                        My name is Haris Chatzianastasiou. I'm a full-stack developer based in Thessaloniki, Greece.<br> <br> 
                         I believe that every project should tell a unique story. An experience that resonates with users, all while serving its functional purpose effectively and reliably.<br><br>
-                        <strong>IXLstudio</strong> is a place to share this vision. Feel free to explore our projects, read about development insights, or reach out if you have an interesting project we could help you with.
+                        <strong>IXLstudio</strong> is a place to share this vision. Feel free to explore my projects, read about development insights, or reach out if you have an interesting project I could help you with.
                     </div>
                 </div>
 
@@ -716,18 +719,14 @@
                 <div class="content-block" id="educationContent">
                     <div class="content-title">Education Journey</div>
                     <div class="content-text">
-                        <strong>Computer Science Degree</strong><br>
-                        University of Technology, 2018-2022<br>
-                        Specialized in Software Engineering with focus on web development and user experience design.
+                        <strong>Master of Science in Artificial Intelligence</strong><br>
+                        European University of Cyprus, 2024 – Ongoing<br>
+                        Currently pursuing advanced studies in AI and machine learning technologies.
                     </div>
                     <div class="content-text">
-                        <strong>Web Development Certification</strong><br>
-                        Online Platform, 2020<br>
-                        Advanced certification in modern web technologies and frameworks including React, Vue.js, and Node.js.
-                    </div>
-                    <div class="content-text">
-                        <strong>Continuous Learning</strong><br>
-                        Always staying updated with the latest technologies and best practices in web development.
+                        <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
+                        University of Thessaly, 2017-2022<br>
+                        Comprehensive foundation in computer science with specialized focus on biomedical applications and informatics.
                     </div>
                 </div>
 
@@ -735,19 +734,21 @@
                 <div class="content-block" id="experienceContent">
                     <div class="content-title">Professional Experience</div>
                     <div class="content-text">
-                        <strong>Senior Frontend Developer</strong><br>
-                        TechCorp Inc., 2020-2022<br>
-                        Led development of enterprise web applications using React, Vue.js, and modern CSS frameworks.
+                        <strong>Software Engineer</strong><br>
+                        Netcompany-Intrasoft, April 2024 – Current<br>
+                        Thessaloniki, Greece<br><br>
+                        • Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP) using <code>Java EE/Oracle ADF</code>, implementing the historic 2024 judicial reform.<br>
+                        • Participated in the migration of Greek courts into OSDDY-PP using <code>PL/SQL</code>, providing <strong>technical leadership</strong>, and achieving 92% reduction in processing time (60min to 5min) with an automated migration toolkit.<br>
+                        • Developed an electronic legal document filing system using <code>PL/SQL</code>, designing services for judicial documents.<br>
+                        • Established <code>Oracle BI</code> reporting system using <code>SQL/Oracle BI</code> for automated generation of judicial documents.
                     </div>
                     <div class="content-text">
-                        <strong>Freelance Developer</strong><br>
-                        Self-employed, 2020-Present<br>
-                        Creating custom web solutions for clients across various industries, focusing on aesthetic design and reliable functionality.
-                    </div>
-                    <div class="content-text">
-                        <strong>UI/UX Designer</strong><br>
-                        Design Studio, 2019-2020<br>
-                        Designed user interfaces and experiences for mobile and web applications.
+                        <strong>Software Engineer Consultant</strong><br>
+                        Ernst & Young (EY), August 2022 – April 2024<br>
+                        Thessaloniki, Greece<br><br>
+                        • Designed end-to-end claims payment system for a major UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
+                        • Managed core non-life insurance system for a global reinsurer using <code>PL/SQL</code>.<br>
+                        • Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication and agile methodology.
                     </div>
                 </div>
 
@@ -756,14 +757,11 @@
                     <div class="content-title">Get In Touch</div>
                     <div class="content-text">
                         <strong>Email</strong><br>
-                        <a href="mailto:contact@ixlstudio.com" class="contact-link">contact@ixlstudio.com</a>
+                        <a href="mailto:harischatzi@tutanota.com" class="contact-link">harischatzi@tutanota.com</a>
                     </div>
                     <div class="content-text">
                         <strong>Social Media</strong><br>
-                        <a href="#" target="_blank" class="contact-link">Instagram</a><br>
-                        <a href="#" target="_blank" class="contact-link">Twitter</a><br>
-                        <a href="#" target="_blank" class="contact-link">LinkedIn</a><br>
-                        <a href="#" target="_blank" class="contact-link">CodePen</a>
+                        <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-link">LinkedIn</a><br>
                     </div>
                 </div>
             </div>
@@ -907,19 +905,24 @@
                 targetContent.classList.add('show');
             }
 
-            // Show mobile nav on mobile
-            if (window.innerWidth <= 768) {
-                document.getElementById('mobileNav').classList.add('show');
-                
-                // Smooth scroll to content
-                if (targetContent) {
-            setTimeout(() => {
+            // Smooth scroll to content title on mobile
+            if (window.innerWidth <= 768 && targetContent) {
+                setTimeout(() => {
+                    // Find the title element within the content block
+                    const titleElement = targetContent.querySelector('.content-title, .philosophy-text');
+                    if (titleElement) {
+                        titleElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    } else {
+                        // Fallback to scrolling to the content block if no title found
                         targetContent.scrollIntoView({ 
                             behavior: 'smooth', 
                             block: 'start' 
                         });
-                    }, 100);
-                }
+                    }
+                }, 100);
             }
         }
 
@@ -949,15 +952,23 @@
             const defaultContent = document.getElementById('defaultContent');
             defaultContent.classList.add('show');
 
-            // Show mobile nav on mobile
+            // Smooth scroll to content title on mobile
             if (window.innerWidth <= 768) {
-                document.getElementById('mobileNav').classList.add('show');
-                
                 setTimeout(() => {
-                    defaultContent.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
+                    // Find the title element within the default content block
+                    const titleElement = defaultContent.querySelector('.philosophy-text');
+                    if (titleElement) {
+                        titleElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    } else {
+                        // Fallback to scrolling to the content block if no title found
+                        defaultContent.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
                 }, 100);
             }
         }
@@ -1017,20 +1028,11 @@
                 mainContainer.style.transform = 'translateY(0)';
             }, 100);
 
-            // Scroll event listener for mobile navigation
-            window.addEventListener('scroll', function() {
-                if (window.innerWidth <= 768) {
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    const mobileNav = document.getElementById('mobileNav');
-                    
-                    // Hide navigation bar when at the top
-                    if (scrollTop < 100) {
-                        mobileNav.classList.remove('show');
-                    } else {
-                        mobileNav.classList.add('show');
-                    }
-                }
-            });
+            // Show mobile navigation by default on mobile
+            if (window.innerWidth <= 768) {
+                const mobileNav = document.getElementById('mobileNav');
+                mobileNav.classList.add('show');
+            }
         });
     </script>
 </body>
