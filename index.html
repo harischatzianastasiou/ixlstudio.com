@@ -348,6 +348,14 @@
             pointer-events: none; /* Make it non-clickable */
         }
 
+        /* Sticky Container - creates proper sticky context */
+        @media (min-width: 769px) {
+            .sticky-container {
+                height: 100vh; /* Full viewport height */
+                position: relative; /* Creates sticky positioning context */
+            }
+        }
+
         /* Sticky Section after hero - same behavior as hero */
         .sticky-section {
             position: sticky; /* Changed to sticky */
@@ -2227,23 +2235,26 @@
             </div>
         </section>
 
-        <!-- Sticky Section under hero -->
-        <section class="sticky-section">
-            <!-- Video background -->
-            <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(18, 18, 18, 0.3);">
-                <video class="sticky-video" autoplay muted loop playsinline preload="auto" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;">
-                    <source src="1.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="sticky-content">
-                <h1 class="sticky-hero-title">
-                    <br><span>digital</span> <span>stories.</span>
-                </h1>
-                <!-- <p class="sticky-hero-subtitle">
-                    <span>Pixel</span> <span>by</span> <span>Pixel.</span>
-                </p> -->
-            </div>
-        </section>
+        <!-- Sticky Container -->
+        <div class="sticky-container">
+            <!-- Sticky Section under hero -->
+            <section class="sticky-section">
+                <!-- Video background -->
+                <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(18, 18, 18, 0.3);">
+                    <video class="sticky-video" autoplay muted loop playsinline preload="auto" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;">
+                        <source src="1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="sticky-content">
+                    <h1 class="sticky-hero-title">
+                        <br><span>digital</span> <span>stories.</span>
+                    </h1>
+                    <!-- <p class="sticky-hero-subtitle">
+                        <span>Pixel</span> <span>by</span> <span>Pixel.</span>
+                    </p> -->
+                </div>
+            </section>
+        </div>
 
         <!-- Projects Title Section -->
         <section class="projects-title-section">
