@@ -346,10 +346,12 @@
             top: 0; /* Stick to the top when scrolling */
             left: 0;
             right: 0;
+            width: 100vw; /* Full viewport width */
+            max-width: none; /* Remove any max-width constraints */
             background: rgba(139, 69, 19, 0.95); /* Permanent brown color */
             backdrop-filter: blur(10px);
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
-            padding: 2rem; /* Add padding around content */
+            padding: 2rem 0; /* Remove horizontal padding for full width */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             height: fit-content; /* Fit content exactly */
@@ -453,8 +455,9 @@
 
         /* Projects Title Section */
         .projects-title-section {
-            padding: 2rem 2rem;
-            width: 100%; /* Full width */
+            padding: 2rem 0; /* Remove horizontal padding for full width */
+            width: 100vw !important; /* Full viewport width with !important */
+            max-width: none !important; /* Remove any max-width constraints */
             background: #000000;
             position: relative; /* Normal flow positioning */
             height: 100vh; /* Full viewport height */
@@ -1817,7 +1820,8 @@
             .sticky-section {
                 height: fit-content; /* Fit content exactly */
                 min-height: 40vh; /* Increased minimum height for mobile */
-                padding: 1rem; /* Consistent padding for mobile */
+                padding: 1rem 0; /* Remove horizontal padding for full width on mobile */
+                width: 100vw; /* Full viewport width on mobile */
                 display: flex; /* Use flexbox for proper alignment */
                 align-items: center; /* Center vertically */
                 justify-content: center; /* Center horizontally */
@@ -1853,7 +1857,9 @@
             /* Projects Title Section mobile responsiveness */
             .projects-title-section {
                 gap: 2rem; /* Reduced gap for mobile */
-                padding: 1.5rem 1rem; /* Reduced padding for mobile */
+                padding: 1.5rem 0; /* Remove horizontal padding for full width on mobile */
+                width: 100vw !important; /* Full viewport width on mobile with !important */
+                max-width: none !important; /* Remove any max-width constraints */
             }
 
             .ixl-logo-title {
@@ -2207,7 +2213,7 @@
             </div>
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author">HARIS CHATZIANASTASIOU</p>
+                <p class="hero-author" id="hero-author-text">PRESENTING</p>
             </div>
 
             
@@ -2573,6 +2579,52 @@
             }
         })();
 
+        // Dynamic hero author text based on active section
+        function setupDynamicHeroText() {
+            const heroAuthorText = document.getElementById('hero-author-text');
+            const projectsTitleSection = document.querySelector('.projects-title-section');
+            const articlesSection = document.querySelector('.articles');
+            
+            if (!heroAuthorText) return;
+
+            // Set default text
+            heroAuthorText.textContent = 'IXL';
+
+            const observerOptions = {
+                threshold: 0.5, // Trigger when 50% of section is visible
+                rootMargin: '0px 0px -10% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('projects-title-section')) {
+                            heroAuthorText.textContent = 'CREATED BY';
+                        } else if (entry.target.classList.contains('articles')) {
+                            heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe both sections
+            if (projectsTitleSection) observer.observe(projectsTitleSection);
+            if (articlesSection) observer.observe(articlesSection);
+
+            // Add scroll listener to reset to "PRESENTING" when no section is active
+            window.addEventListener('scroll', () => {
+                const projectsRect = projectsTitleSection ? projectsTitleSection.getBoundingClientRect() : null;
+                const articlesRect = articlesSection ? articlesSection.getBoundingClientRect() : null;
+                
+                const isProjectsActive = projectsRect && projectsRect.top < window.innerHeight * 0.5 && projectsRect.bottom > window.innerHeight * 0.5;
+                const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
+                
+                if (!isProjectsActive && !isArticlesActive) {
+                    heroAuthorText.textContent = 'PRESENTING';
+                }
+            });
+        }
+
         // Enhanced scroll animations for meet creator section
         function setupMeetCreatorAnimations() {
             const observerOptions = {
@@ -2668,11 +2720,11 @@
                             span.classList.add('active');
                         });
                         
-                        // Animate each word sequentially with much longer delays
+                        // Animate each word sequentially with faster timing
                         stickyTitleSpans.forEach((span, index) => {
                             setTimeout(() => {
                                 span.classList.add('active');
-                            }, index * 1200); // 1.2 seconds delay between each word
+                            }, index * 650); // 0.8 seconds delay between each word (faster)
                         });
                         
                         // Unobserve after animation is triggered
@@ -2753,6 +2805,7 @@
             setupWobbleEffect();
             setupStickySectionAnimation();
             setupStickySectionEffects();
+            setupDynamicHeroText();
             
             console.log('About to call setupProjectsScrollLock...');
             setupProjectsScrollLock();
