@@ -905,25 +905,7 @@
                 targetContent.classList.add('show');
             }
 
-            // Smooth scroll to content title on mobile
-            if (window.innerWidth <= 768 && targetContent) {
-                setTimeout(() => {
-                    // Find the title element within the content block
-                    const titleElement = targetContent.querySelector('.content-title, .philosophy-text');
-                    if (titleElement) {
-                        titleElement.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start' 
-                        });
-                    } else {
-                        // Fallback to scrolling to the content block if no title found
-                        targetContent.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start' 
-                        });
-                    }
-                }, 100);
-            }
+            // Removed automatic scrolling behavior - no focus on navigation
         }
 
         // Reset to default when clicking on the quote
@@ -952,25 +934,7 @@
             const defaultContent = document.getElementById('defaultContent');
             defaultContent.classList.add('show');
 
-            // Smooth scroll to content title on mobile
-            if (window.innerWidth <= 768) {
-                setTimeout(() => {
-                    // Find the title element within the default content block
-                    const titleElement = defaultContent.querySelector('.philosophy-text');
-                    if (titleElement) {
-                        titleElement.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start' 
-                        });
-                    } else {
-                        // Fallback to scrolling to the content block if no title found
-                        defaultContent.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start' 
-                        });
-                    }
-                }, 100);
-            }
+            // Removed automatic scrolling behavior - no focus on navigation
         }
 
         // Keyboard navigation for accessibility
