@@ -194,7 +194,7 @@
         /* Visit Website Button */
         .visit-website-btn {
             display: inline-block;
-            background: #8B4513; /* Saddle brown to match the theme */
+            background: rgba(139, 69, 19, 0.95); /* Brown color matching the theme */
             color: #fff;
             padding: 1rem 2rem;
             text-decoration: none;
@@ -207,15 +207,15 @@
             margin-top: 1rem;
             margin-left: auto;
             margin-right: auto;
-            border: 2px solid #8B4513;
+            border: 2px solid rgba(139, 69, 19, 0.95);
         }
 
         .visit-website-btn:hover {
-            background: #5D2E0C; /* Darker brown on hover */
+            background: rgba(139, 69, 19, 1); /* Full opacity brown on hover */
             color: #fff;
-            border-color: #5D2E0C;
+            border-color: rgba(139, 69, 19, 1);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(93, 46, 12, 0.4);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
         }
 
         /* Large photos section */
@@ -257,9 +257,9 @@
             font-style: italic;
         }
 
-        /* Back button */
+        /* Back button - positioned relative to hero section */
         .back-button {
-            position: fixed;
+            position: absolute;
             bottom: 2rem;
             left: 2rem;
             background: rgba(0, 0, 0, 0.7); /* Increased opacity from 0.1 to 0.7 */
@@ -401,6 +401,8 @@
             <h1 class="hero-title">SKG CHESS</h1>
             <p class="hero-subtitle">A modern chess platform with retro aesthetics</p>
         </div>
+        <!-- Back button positioned within hero section -->
+        <a href="index.html" class="back-button">← Back to Projects</a>
     </section>
 
     <!-- Project details -->
@@ -461,9 +463,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Back button -->
-    <a href="index.html" class="back-button">← Back to Projects</a>
 
     <script>
         // Intersection Observer for photo animations

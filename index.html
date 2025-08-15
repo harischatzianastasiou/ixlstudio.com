@@ -372,7 +372,12 @@
             object-fit: cover;
             z-index: 0;
             opacity: 0.3;
-            filter: contrast(1.1) saturate(1.2);
+            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;
+        }
+
+        /* Maximum specificity to ensure filter is applied */
+        .sticky-section .video-filter-wrapper .sticky-video {
+            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;
         }
 
         /* Wobble effect for sticky section */
@@ -647,7 +652,7 @@
 
         .meet-creator-link a:hover {
             color: #fff;
-            background: rgba(139, 69, 19, 0.9); /* Saddle brown like SKGCHESS */
+            background: rgba(139, 69, 19, 0.95); /* Brown color ending the travelling animation */
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
         }
@@ -689,7 +694,7 @@
 
         .meet-creator-link-left a:hover {
             color: #fff;
-            background: rgba(139, 69, 19, 0.9); /* Saddle brown like SKGCHESS */
+            background: rgba(139, 69, 19, 0.95); /* Brown color ending the travelling animation */
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
         }
@@ -2149,9 +2154,11 @@
         <!-- Sticky Section under hero -->
         <section class="sticky-section">
             <!-- Video background -->
-            <video class="sticky-video" autoplay muted loop playsinline>
-                <source src="1.mp4" type="video/mp4">
-            </video>
+            <div class="video-filter-wrapper" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: rgba(139, 69, 19, 0.3);">
+                <video class="sticky-video" autoplay muted loop playsinline preload="auto" style="filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;">
+                    <source src="1.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="sticky-content">
                 <h1 class="sticky-hero-title">
                     <br><span>digital</span> <span>stories.</span>
@@ -2558,6 +2565,14 @@
             counters.forEach(counter => observer.observe(counter));
         }
 
+        // Apply video filter immediately to prevent flash
+        (function() {
+            const video = document.querySelector('.sticky-video');
+            if (video) {
+                video.style.filter = 'contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3)';
+            }
+        })();
+
         // Enhanced scroll animations for meet creator section
         function setupMeetCreatorAnimations() {
             const observerOptions = {
@@ -2590,17 +2605,17 @@
                 // Wait for video metadata to load, then set to center position
                 heroVideo.addEventListener('loadedmetadata', function() {
                     // Set video to start from 50% of its duration (center)
-                    heroVideo.currentTime = heroVideo.duration * 0.098;
+                    heroVideo.currentTime = heroVideo.duration * 0.5;
                     
                     // Add speed boost for 1 second when video starts playing
                     heroVideo.addEventListener('play', function() {
                         // Boost speed to 1.5x for 1 second
-                        heroVideo.playbackRate = 2;
+                        heroVideo.playbackRate = 0.6;
                         
                         // After 1 second, return to normal slow speed
                         setTimeout(function() {
-                            heroVideo.playbackRate = 1;
-                        }, 1500);
+                            heroVideo.playbackRate = 0.6;
+                        }, 500);
                     });
                 });
             }
@@ -2676,6 +2691,9 @@
             
             if (!stickySection || !stickyVideo) return;
             
+            // Apply filter immediately to prevent color flash
+            stickyVideo.style.filter = 'contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3)';
+            
             // Set initial video settings
             stickyVideo.playbackRate = 0.6;
             stickyVideo.addEventListener('loadedmetadata', function() {
@@ -2687,7 +2705,7 @@
                 stickyVideo.playbackRate = 2;
                 setTimeout(function() {
                     stickyVideo.playbackRate = 0.59;
-                }, 1500);
+                }, 600);
             });
         }
 

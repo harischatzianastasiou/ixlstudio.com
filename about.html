@@ -104,18 +104,18 @@
         /* Animated content styles */
 
         .content-card {
-            background: linear-gradient(135deg, rgba(72, 61, 139, 0.1), rgba(91, 75, 138, 0.05));
-            border: 1px solid rgba(72, 61, 139, 0.2);
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(139, 69, 19, 0.05));
+            border: 1px solid rgba(139, 69, 19, 0.2);
             border-radius: 20px;
             padding: 2.5rem;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(72, 61, 139, 0.1);
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.1);
         }
 
         .content-title {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #483D8B;
+            color: rgba(139, 69, 19, 1);
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -141,20 +141,20 @@
             padding: 1.5rem;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
-            border: 1px solid rgba(72, 61, 139, 0.1);
+            border: 1px solid rgba(139, 69, 19, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stat-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(72, 61, 139, 0.15);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.15);
         }
 
         .stat-number {
             display: block;
             font-size: 2.5rem;
             font-weight: 800;
-            color: #483D8B;
+            color: rgba(139, 69, 19, 1);
             margin-bottom: 0.5rem;
         }
 
@@ -283,9 +283,29 @@
         }
 
         .mobile-nav-button.active {
-            background: #483D8B; /* Dark Slate Blue - sleek and elegant */
+            background: rgba(139, 69, 19, 1); /* Brown - sleek and elegant */
             color: white;
-            box-shadow: 0 2px 8px rgba(72, 61, 139, 0.3);
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+        }
+
+        /* Elegant pulse animation for mobile nav button */
+        .mobile-nav-button.pulse-hint {
+            animation: elegantPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes elegantPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 4px 16px rgba(139, 69, 19, 0.2);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+            }
         }
 
 
@@ -410,15 +430,15 @@
         }
 
         .interactive-button:focus {
-            outline: 2px solid #483D8B; /* Dark Slate Blue - matches page theme */
+            outline: 2px solid rgba(139, 69, 19, 1); /* Brown - matches page theme */
             outline-offset: 2px;
         }
 
         .interactive-button.active {
-            background: linear-gradient(135deg, #483D8B, #5B4B8A); /* Dark Slate Blue gradient */
+            background: linear-gradient(135deg, rgba(139, 69, 19, 1), rgba(139, 69, 19, 0.8)); /* Brown gradient */
             color: white;
             border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.3);
         }
 
         .button-icon {
@@ -848,7 +868,19 @@
                     rotationX: 0, 
                     duration: 0.8, 
                     stagger: 0.05,
-                    ease: "back.out(1.7)"
+                    ease: "back.out(1.7)",
+                    onComplete: function() {
+                        // Add elegant pulse animation to "My Story" button on mobile after quote animation
+                        if (window.innerWidth <= 768) {
+                            const myStoryButton = document.querySelector('.mobile-nav-button');
+                            if (myStoryButton) {
+                                // Add a small delay before starting the pulse
+                                setTimeout(() => {
+                                    myStoryButton.classList.add('pulse-hint');
+                                }, 500);
+                            }
+                        }
+                    }
                 }
             );
             
@@ -873,6 +905,8 @@
             });
             document.querySelectorAll('.mobile-nav-button').forEach(button => {
                 button.classList.remove('active');
+                // Remove pulse animation when any button is clicked
+                button.classList.remove('pulse-hint');
             });
 
             // Add active class to clicked button
@@ -923,6 +957,8 @@
             });
             document.querySelectorAll('.mobile-nav-button').forEach(button => {
                 button.classList.remove('active');
+                // Remove pulse animation when resetting
+                button.classList.remove('pulse-hint');
             });
 
             // Hide all content blocks
