@@ -101,7 +101,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: #000;
+            background: #121212;
             color: #fff;
             overflow: hidden;
             z-index: 9998; /* Very high z-index to ensure visibility above sticky projects section */
@@ -304,12 +304,18 @@
             transition: color 0.3s ease;
         }
 
+        /* Scroll indicator section */
+        .scroll-indicator-section {
+            background: #121212;
+            padding: 3rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 20vh;
+        }
+
         /* Scroll indicator with animation */
         .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -325,7 +331,7 @@
         @keyframes fadeInUp {
             to {
                 opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                transform: translateY(0);
             }
         }
 
@@ -460,9 +466,10 @@
             padding: 2rem 0; /* Remove horizontal padding for full width */
             width: 100vw !important; /* Full viewport width with !important */
             max-width: none !important; /* Remove any max-width constraints */
-            background: #000000;
+            background: #121212;
             position: relative; /* Normal flow positioning */
-            height: 100vh; /* Full viewport height */
+            min-height: auto; /* Dynamic height based on content */
+            height: auto; /* Let content determine height */
             z-index: 1000; /* High z-index to ensure it stays above other content */
             display: flex; /* Use flexbox for centering content */
             flex-direction: column; /* Stack logo/title above projects grid */
@@ -518,7 +525,7 @@
             padding: 0;
             width: 100vw; /* Full viewport width */
             height: 100vh; /* Full viewport height */
-            background: #726649; /* Goldenrod color (same as Falcon hover) */
+            background: #121212; /* Same dark background as projects-title-section */
             position: fixed; /* Fixed position - permanently stuck to viewport */
             top: 0; /* Fixed to the top of the viewport */
             z-index: 10; /* Above sticky section */
@@ -730,7 +737,7 @@
             right: 0;
             height: 100vh;
             overflow: hidden;
-            background: #000; /* Remove red debugging background */
+            background: #121212; /* Remove red debugging background */
         }
 
         /* Projects content when section is locked */
@@ -788,7 +795,7 @@
             transition: all 0.1s ease-out;
             opacity: 1;
             transform: translateY(0) scale(1);
-            background: #000;
+            background: #121212;
             /* Ensure the entire card is clickable */
             display: flex;
             align-items: center;
@@ -1013,7 +1020,7 @@
         }
 
         .page-number.active {
-            background: #000;
+            background: #121212;
             color: white;
         }
 
@@ -1026,7 +1033,7 @@
             padding: 0 2rem; /* Remove top/bottom padding to eliminate gaps */
             width: 100vw; /* Full viewport width */
             margin: 0; /* No margin for full width */
-            background: #000000;
+            background: #121212;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -1056,7 +1063,7 @@
 
         /* Article card */
         .article-card {
-            background: #000000;
+            background: #121212;
             color: #fff;
             border-radius: 4px;
             overflow: hidden;
@@ -1864,6 +1871,8 @@
                 padding: 1.5rem 0; /* Remove horizontal padding for full width on mobile */
                 width: 100vw !important; /* Full viewport width on mobile with !important */
                 max-width: none !important; /* Remove any max-width constraints */
+                min-height: auto; /* Dynamic height based on content */
+                height: auto; /* Let content determine height */
             }
 
             .ixl-logo-title {
@@ -1933,6 +1942,8 @@
             .projects-title-section {
                 padding: 1.5rem 1rem; /* Adjusted padding */
                 margin-bottom: 0; /* Remove bottom margin */
+                min-height: auto; /* Dynamic height based on content */
+                height: auto; /* Let content determine height */
             }
             
             .projects-grid {
@@ -1946,6 +1957,12 @@
             
             .project-title {
                 font-size: 1.3rem; /* Adjusted font size */
+            }
+            
+            /* Scroll indicator section mobile */
+            .scroll-indicator-section {
+                padding: 2rem 0;
+                min-height: 15vh;
             }
             
             /* Articles section mobile */
@@ -2149,10 +2166,10 @@
         <!-- Projects section -->
         <section class="projects">            
             <!-- IXL Logo and Studio name in center -->
-            <div class="projects-logo">
+            <!-- <div class="projects-logo">
                 <img src="ixl.png" alt="IXL Studio Logo" class="ixl-logo">
                 <h1 class="projects-studio-name">IXLSTUDIO.</h1>
-            </div>
+            </div> -->
             
             <!-- Projects content container -->
             <div class="projects-content">
@@ -2197,10 +2214,13 @@
                         <div class="project-overlay"></div>
                         <h2 class="project-title">FALCON</h2>
                     </div> -->
+            </div>
+        </section>
 
-                    <div class="scroll-indicator">
-                        <div class="scroll-x">IXL</div>
-                    </div>
+        <!-- IXL Scroll Indicator Section -->
+        <section class="scroll-indicator-section">
+            <div class="scroll-indicator">
+                <div class="scroll-x">IXL</div>
             </div>
         </section>
 
@@ -2217,7 +2237,7 @@
             </div>
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author" id="hero-author-text">HARIS CHATZIANASTASIOU</p>
+                <p class="hero-author" id="hero-author-text">HARIS CREATES</p>
             </div>
 
             
@@ -2619,9 +2639,9 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         if (entry.target.classList.contains('projects-title-section')) {
-                            changeTextWithTransition('PROJECTS');
+                            changeTextWithTransition('HARIS CREATES');
                         } else if (entry.target.classList.contains('articles')) {
-                            changeTextWithTransition('ARTICLES');
+                            changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
                         }
                     }
                 });
@@ -2631,7 +2651,7 @@
             if (projectsTitleSection) observer.observe(projectsTitleSection);
             if (articlesSection) observer.observe(articlesSection);
 
-            // Add scroll listener to reset to default when no section is active
+            // Add scroll listener to change text based on page scroll percentage
             window.addEventListener('scroll', () => {
                 const projectsRect = projectsTitleSection ? projectsTitleSection.getBoundingClientRect() : null;
                 const articlesRect = articlesSection ? articlesSection.getBoundingClientRect() : null;
@@ -2639,8 +2659,19 @@
                 const isProjectsActive = projectsRect && projectsRect.top < window.innerHeight * 0.5 && projectsRect.bottom > window.innerHeight * 0.5;
                 const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
                 
-                if (!isProjectsActive && !isArticlesActive) {
-                    changeTextWithTransition('HARIS CHATZIANASTASIOU');
+                // Calculate page scroll percentage
+                const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                
+                if (isProjectsActive) {
+                    changeTextWithTransition('EXPLORE MY PROJECTS');
+                } else if (isArticlesActive) {
+                    changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
+                } else if (scrollPercentage >= 50) {
+                    // After 50% of page scroll, show HARIS CHATZIANASTASIOU
+                    changeTextWithTransition('READ MY SOFTWARE INSIGHTS');
+                } else {
+                    // Before 50% of page scroll, show CREATING DIGITAL STORIES
+                    changeTextWithTransition('HARIS CREATES');
                 }
             });
         }
@@ -2842,17 +2873,12 @@
             
             // Apply initial letter-by-letter animation for hero-author-text on page load
             const heroAuthorText = document.getElementById('hero-author-text');
-            console.log('Hero author text element:', heroAuthorText);
             if (heroAuthorText) {
-                console.log('Original text content:', heroAuthorText.textContent);
                 // Split text into individual characters for animation
                 const chars = heroAuthorText.textContent.split('');
-                console.log('Characters array:', chars);
                 heroAuthorText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
-                console.log('Updated HTML:', heroAuthorText.innerHTML);
                 
                 // Apply exact same GSAP animation as about.html
-                console.log('Starting GSAP animation...');
                 gsap.fromTo('.char', 
                     { opacity: 0, y: 50, rotationX: -90 },
                     { 
@@ -2861,15 +2887,9 @@
                         rotationX: 0, 
                         duration: 0.8, 
                         stagger: 0.05,
-                        ease: "back.out(1.7)",
-                        onComplete: function() {
-                            console.log('GSAP animation completed!');
-                        }
+                        ease: "back.out(1.7)"
                     }
                 );
-                console.log('GSAP animation started');
-            } else {
-                console.log('Hero author text element not found!');
             }
             
             console.log('Initialization complete');
