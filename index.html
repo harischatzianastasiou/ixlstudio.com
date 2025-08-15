@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IXL studio - Haris Chatzianastasiou</title>
     <link rel="icon" type="image/png" href="ixl.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         /* Reset and base styles */
         * {
@@ -1166,7 +1167,7 @@
         /* Large screens (1200px and up) */
         @media (min-width: 1200px) {
             .projects-grid {
-                max-width: 800px;
+                max-width: 1200px; /* Increased from 800px for bigger projects window */
                 width: 100%;
                 margin-left: auto;
                 margin-right: auto;
@@ -1174,7 +1175,8 @@
             
             .project-card {
                 width: calc(50% - 1rem); /* 2 cards per row */
-                height: 50px; /* Very short height */
+                height: 300px; /* Much bigger height for larger project windows */
+                min-height: 300px; /* Ensure minimum height */
             }
             
             .articles-grid {
@@ -1195,7 +1197,8 @@
             
             .project-card {
                 width: calc(50% - 1rem); /* 2 cards per row */
-                height: 50px; /* Very short height */
+                height: 250px; /* Bigger height for medium screens */
+                min-height: 250px; /* Ensure minimum height */
             }
             
             .articles {
@@ -2181,7 +2184,7 @@
             <!-- IXL Logo and Studio name title -->
             <div class="projects-title-logo">
                 <img src="ixl.png" alt="IXL Studio Logo" class="ixl-logo-title">
-                <h1 class="projects-studio-name-title">IXLSTUDIO.</h1>
+                <h1 class="projects-studio-name-title">IXLSTUDIO</h1>
             </div>
             
             <div class="projects-grid" id="projects-grid">
@@ -2190,10 +2193,10 @@
                         <h2 class="project-title">SKGCHESS</h2>
                     </div>
 
-                    <div class="project-card" data-project="falcon">
+                    <!-- <div class="project-card" data-project="falcon">
                         <div class="project-overlay"></div>
                         <h2 class="project-title">FALCON</h2>
-                    </div>
+                    </div> -->
 
                     <div class="scroll-indicator">
                         <div class="scroll-x">IXL</div>
@@ -2588,8 +2591,7 @@
             
             if (!heroAuthorText) return;
 
-            // Set default text
-            heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
+            
 
             // Function to change text with smooth transition
             function changeTextWithTransition(newText) {
@@ -2837,6 +2839,38 @@
             
             // Reposition on window resize - REMOVED
             // window.addEventListener('resize', positionArticlesSection);
+            
+            // Apply initial letter-by-letter animation for hero-author-text on page load
+            const heroAuthorText = document.getElementById('hero-author-text');
+            console.log('Hero author text element:', heroAuthorText);
+            if (heroAuthorText) {
+                console.log('Original text content:', heroAuthorText.textContent);
+                // Split text into individual characters for animation
+                const chars = heroAuthorText.textContent.split('');
+                console.log('Characters array:', chars);
+                heroAuthorText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
+                console.log('Updated HTML:', heroAuthorText.innerHTML);
+                
+                // Apply exact same GSAP animation as about.html
+                console.log('Starting GSAP animation...');
+                gsap.fromTo('.char', 
+                    { opacity: 0, y: 50, rotationX: -90 },
+                    { 
+                        opacity: 1, 
+                        y: 0, 
+                        rotationX: 0, 
+                        duration: 0.8, 
+                        stagger: 0.05,
+                        ease: "back.out(1.7)",
+                        onComplete: function() {
+                            console.log('GSAP animation completed!');
+                        }
+                    }
+                );
+                console.log('GSAP animation started');
+            } else {
+                console.log('Hero author text element not found!');
+            }
             
             console.log('Initialization complete');
         });
