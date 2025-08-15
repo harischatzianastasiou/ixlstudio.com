@@ -195,6 +195,18 @@
             position: relative; /* Return to normal flow when visible */
         }
 
+        /* Ensure contact content has consistent height to prevent layout shifts */
+        #contactContent {
+            min-height: 300px; /* Match the height of other content sections */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        #contactContent .content-text {
+            margin-bottom: 2rem; /* Add more spacing between contact items */
+        }
+
         .content-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -847,9 +859,9 @@
             <div class="mobile-nav" id="mobileNav">
                 <div class="mobile-nav-buttons">
                     <button class="mobile-nav-button" onclick="resetToDefault()">My Story</button>
-                    <button class="mobile-nav-button" onclick="showContent('education')">Education</button>
-                    <button class="mobile-nav-button" onclick="showContent('experience')">Experience</button>
-                    <button class="mobile-nav-button" onclick="showContent('contact')">Contact</button>
+                                    <button class="mobile-nav-button" onclick="showContent('education', event)">Education</button>
+                <button class="mobile-nav-button" onclick="showContent('experience', event)">Experience</button>
+                <button class="mobile-nav-button" onclick="showContent('contact', event)">Contact</button>
                 </div>
             </div>
             
@@ -912,6 +924,14 @@
                         <strong>Social Media</strong><br>
                         <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-link">LinkedIn</a><br>
                     </div>
+                    <div class="content-text">
+                        <strong>Location</strong><br>
+                        Thessaloniki, Greece
+                    </div>
+                    <div class="content-text">
+                        <strong>Availability</strong><br>
+                        Available
+                    </div>
                 </div>
             </div>
         </div>
@@ -940,7 +960,7 @@
                     </div>
                     <div class="button-text">My Story</div>
                 </button>
-                <button class="interactive-button" onclick="showContent('education')">
+                <button class="interactive-button" onclick="showContent('education', event)">
                     <div class="button-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z" fill="currentColor"/>
@@ -948,7 +968,7 @@
                     </div>
                     <div class="button-text">Education</div>
                 </button>
-                <button class="interactive-button" onclick="showContent('experience')">
+                <button class="interactive-button" onclick="showContent('experience', event)">
                     <div class="button-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2 6.89 2 8V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6M10 4H14V6H10V4M20 19H4V8H20V19Z" fill="currentColor"/>
@@ -956,7 +976,7 @@
                     </div>
                     <div class="button-text">Experience</div>
                 </button>
-                <button class="interactive-button" onclick="showContent('contact')">
+                <button class="interactive-button" onclick="showContent('contact', event)">
                     <div class="button-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 4H4C2.89 4 2 4.89 2 6V18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4M20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
@@ -1042,7 +1062,7 @@
             });
         }
         
-        function showContent(category) {
+        function showContent(category, event) {
             // Remove active class from all buttons
             document.querySelectorAll('.interactive-button').forEach(button => {
                 button.classList.remove('active');
@@ -1053,8 +1073,10 @@
                 button.classList.remove('pulse-hint');
             });
 
-            // Add active class to clicked button
-            event.currentTarget.classList.add('active');
+            // Add active class to clicked button if event is provided
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
 
             // Hide all content blocks
             document.querySelectorAll('.content-block').forEach(block => {
@@ -1086,7 +1108,24 @@
                 targetContent.classList.add('show');
             }
 
-            // Removed automatic scrolling behavior - no focus on navigation
+            // Smooth scroll down by 50vh on mobile devices only if navbar is below middle of viewport
+            if (window.innerWidth <= 768) {
+                const mobileNav = document.getElementById('mobileNav');
+                if (mobileNav) {
+                    const navRect = mobileNav.getBoundingClientRect();
+                    const viewportMiddle = window.innerHeight / 2;
+                    
+                    // Only scroll if the navigation bar is below the middle of the viewport
+                    if (navRect.top > viewportMiddle) {
+                        const currentScrollY = window.scrollY;
+                        const targetScrollY = currentScrollY + (window.innerHeight * 0.5); // 50vh
+                        window.scrollTo({
+                            top: targetScrollY,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
         }
 
         // Reset to default when clicking on the quote
@@ -1121,7 +1160,24 @@
             myStoryPressed = true;
             removeGlassAnimation();
 
-            // Removed automatic scrolling behavior - no focus on navigation
+            // Smooth scroll down by 50vh on mobile devices only if navbar is below middle of viewport
+            if (window.innerWidth <= 768) {
+                const mobileNav = document.getElementById('mobileNav');
+                if (mobileNav) {
+                    const navRect = mobileNav.getBoundingClientRect();
+                    const viewportMiddle = window.innerHeight / 2;
+                    
+                    // Only scroll if the navigation bar is below the middle of the viewport
+                    if (navRect.top > viewportMiddle) {
+                        const currentScrollY = window.scrollY;
+                        const targetScrollY = currentScrollY + (window.innerHeight * 0.5); // 50vh
+                        window.scrollTo({
+                            top: targetScrollY,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
         }
 
         // Keyboard navigation for accessibility
