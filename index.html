@@ -2195,7 +2195,7 @@
                     </div>
 
                     <div class="scroll-indicator">
-                        <div class="scroll-x">IXL</div>
+                        <div class="scroll-x">X</div>
                     </div>
             </div>
         </section>
@@ -2213,7 +2213,7 @@
             </div>
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author" id="hero-author-text">PRESENTING</p>
+                <p class="hero-author" id="hero-author-text">HARIS CHATZIANASTASIOU</p>
             </div>
 
             
@@ -2226,7 +2226,7 @@
         <!-- Articles/Blog Section -->
         <section class="articles">
             <div class="articles-content">
-                <h2 class="section-title" style="color: #fff;">ARTICLES</h2>
+                <!-- <h2 class="section-title" style="color: #fff;">HARIS CHATZIANASTASIOU</h2> -->
                 
                 <!-- Articles grid -->
                 <div class="articles-grid" id="articles-grid">
@@ -2588,7 +2588,7 @@
             if (!heroAuthorText) return;
 
             // Set default text
-            heroAuthorText.textContent = 'IXL';
+            heroAuthorText.textContent = 'IXLSTUDIO';
 
             const observerOptions = {
                 threshold: 0.5, // Trigger when 50% of section is visible
@@ -2599,9 +2599,9 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         if (entry.target.classList.contains('projects-title-section')) {
-                            heroAuthorText.textContent = 'CREATED BY';
+                            heroAuthorText.textContent = 'PROJECTS';
                         } else if (entry.target.classList.contains('articles')) {
-                            heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
+                            heroAuthorText.textContent = 'ARTICLES';
                         }
                     }
                 });
@@ -2620,7 +2620,7 @@
                 const isArticlesActive = articlesRect && articlesRect.top < window.innerHeight * 0.5 && articlesRect.bottom > window.innerHeight * 0.5;
                 
                 if (!isProjectsActive && !isArticlesActive) {
-                    heroAuthorText.textContent = 'PRESENTING';
+                    heroAuthorText.textContent = 'HARIS CHATZIANASTASIOU';
                 }
             });
         }
