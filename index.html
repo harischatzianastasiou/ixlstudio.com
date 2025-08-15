@@ -103,7 +103,7 @@
             background: #000;
             color: #fff;
             overflow: hidden;
-            z-index: 1;
+            z-index: 9998; /* Very high z-index to ensure visibility above sticky projects section */
         }
 
         /* Video background */
@@ -314,7 +314,6 @@
             gap: 0.5rem;
             color: #fff;
             font-size: 0.9rem;
-            cursor: pointer;
             transition: all 0.3s ease;
             opacity: 0;
             animation: fadeInUp 1s ease 1s forwards;
@@ -332,56 +331,35 @@
             color: #ccc;
         }
 
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: currentColor;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: currentColor;
-            animation: scrollLine 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollLine {
-            0%, 100% { transform: translateY(-100%); }
-            50% { transform: translateY(100%); }
-        }
-
-        .scroll-line::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: currentColor;
-            border-radius: 50%;
+        .scroll-x {
+            font-size: 2rem; /* Large IXL size for visibility */
+            font-weight: bold; /* Make IXL bold and prominent */
+            color: currentColor; /* Inherit color from parent */
+            text-align: center; /* Center the IXL */
+            line-height: 1; /* Tight line height for the IXL */
+            pointer-events: none; /* Make it non-clickable */
         }
 
         /* Sticky Section after hero - same behavior as hero */
         .sticky-section {
-            position: fixed;
-            top: 35vh; /* Position exactly where hero section ends */
+            position: sticky; /* Changed to sticky */
+            top: 0; /* Stick to the top when scrolling */
             left: 0;
             right: 0;
             background: rgba(139, 69, 19, 0.95); /* Permanent brown color */
             backdrop-filter: blur(10px);
-            z-index: 1; /* Lower than projects, title, and articles */
-            padding: 0 2rem 4rem 2rem; /* No top padding, keep bottom and sides */
+            z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
+            padding: 2rem; /* Add padding around content */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            min-height: 100vh; /* Increased height for more spacing */
-            overflow: hidden; /* Hide video overflow */
+            height: fit-content; /* Fit content exactly */
+            min-height: 60vh; /* Increased minimum height for desktop */
+            max-height: none; /* Remove any maximum height */
+            overflow: visible; /* Allow content to determine height */
+            margin-bottom: 0; /* Ensure no bottom margin */
+            display: flex; /* Use flexbox for proper alignment */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
         }
 
         /* Video background for sticky section */
@@ -418,43 +396,34 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: 100%;
+            height: fit-content; /* Fit content exactly */
+            min-height: unset; /* Remove any minimum height */
             padding: 0;
+            width: 100%; /* Full width for better responsiveness */
         }
 
-        /* Sticky hero text styling - same as main hero */
-        .sticky-hero-name {
-            font-size: clamp(2.5rem, 6vw, 6rem);
-            font-weight: 700;
-            line-height: 0.9;
-            margin-bottom: 0; /* No margin for top positioning */
-            letter-spacing: -0.02em;
-            color: #fff;
-        }
-
+        /* Sticky hero text styling - big and prominent */
         .sticky-hero-title {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            font-weight: 400;
-            color: #ccc;
-            margin-bottom: 0; /* No margin for center positioning */
+            font-size: clamp(4rem, 12vw, 12rem); /* Much bigger font size for maximum impact */
+            font-weight: 700; /* Bold weight for better readability */
+            line-height: 0.8; /* Tighter line height for big text */
+            margin-bottom: 1rem; /* Space between title and subtitle */
+            letter-spacing: -0.03em; /* Slightly tighter letter spacing */
+            color: #fff; /* Pure white for maximum contrast */
+            text-transform: uppercase; /* All caps for dramatic effect */
         }
 
         .sticky-hero-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: 300;
-            color: #999;
+            font-size: clamp(2rem, 6vw, 6rem); /* Big subtitle to match the title */
+            font-weight: 600; /* Semi-bold for good readability */
+            color: #ccc; /* Light gray for hierarchy */
+            text-transform: uppercase; /* All caps for consistency */
+            letter-spacing: -0.02em; /* Consistent letter spacing */
         }
 
-        .sticky-logo {
-            width: clamp(150px, 18vw, 250px);
-            height: auto;
-            margin-top: 2rem;
-            opacity: 0.9;
-            filter: brightness(1.2) contrast(1.1);
-        }
+        /* Sticky logo removed - no longer needed */
 
         /* Individual letter/word styling for sticky section */
-        .sticky-hero-name span,
         .sticky-hero-title span,
         .sticky-hero-subtitle span {
             opacity: 0;
@@ -464,7 +433,6 @@
         }
 
         /* Full opacity when letter/word is active */
-        .sticky-hero-name span.active,
         .sticky-hero-title span.active,
         .sticky-hero-subtitle span.active {
             opacity: 1;
@@ -481,12 +449,48 @@
         /* Projects Title Section */
         .projects-title-section {
             padding: 2rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 100%; /* Full width */
             background: #000000;
-            position: relative;
-            min-height: auto; /* Dynamic height based on content */
-            z-index: 10; /* Above sticky section */
+            position: relative; /* Normal flow positioning */
+            height: 100vh; /* Full viewport height */
+            z-index: 1000; /* High z-index to ensure it stays above other content */
+            display: flex; /* Use flexbox for centering content */
+            flex-direction: column; /* Stack logo/title above projects grid */
+            align-items: center; /* Center content horizontally */
+            justify-content: flex-start; /* Align to top instead of center */
+            margin: 0; /* No margin - full width */
+            gap: 3rem; /* Space between logo/title and projects grid */
+            padding-top: 2rem; /* Reduced top padding to move logo higher */
+        }
+
+        /* Projects Title Logo and Text */
+        .projects-title-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ixl-logo-title {
+            width: 120px; /* Smaller than main logo */
+            height: auto;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            animation: logo-breathe 3s ease-in-out infinite; /* Same breathing animation */
+        }
+
+        .ixl-logo-title:hover {
+            opacity: 1;
+            animation-play-state: paused; /* Pause animation on hover */
+        }
+
+        .projects-studio-name-title {
+            font-size: clamp(2rem, 4vw, 3rem); /* Responsive font size */
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            text-align: center;
+            letter-spacing: -0.02em;
         }
 
         .projects-title-content {
@@ -499,15 +503,19 @@
             padding: 2rem 0;
         }
 
-        /* Projects section */
+        /* Projects section - permanently fixed */
         .projects {
             padding: 0;
-            width: 100%;
-            background: #928575; /* Brown color (same as SKG CHESS hover) */
-            position: relative;
-            min-height: 60vh; /* Increased height */
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            background: #726649; /* Goldenrod color (same as Falcon hover) */
+            position: fixed; /* Fixed position - permanently stuck to viewport */
+            top: 0; /* Fixed to the top of the viewport */
             z-index: 10; /* Above sticky section */
             transition: background-color 0.2s ease;
+            margin: 0; /* Remove any default margins */
+            left: 0; /* Ensure it starts from the left edge */
+            right: 0; /* Ensure it extends to the right edge */
         }
 
         /* IXL Logo in projects section */
@@ -523,15 +531,33 @@
             gap: 1rem;
         }
 
+        /* Breathing animation keyframes for IXL logo */
+        @keyframes logo-breathe {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
         .ixl-logo {
             width: 150px;
             height: auto;
             opacity: 0.8;
             transition: opacity 0.3s ease;
+            animation: logo-breathe 3s ease-in-out infinite; /* Smooth breathing animation */
         }
 
         .ixl-logo:hover {
             opacity: 1;
+            animation-play-state: paused; /* Pause animation on hover */
         }
 
         .projects-studio-name {
@@ -543,23 +569,33 @@
             letter-spacing: -0.02em;
         }
 
-        /* Projects section background color changes on hover */
-        body.skg-chess-hover .projects {
+        /* Projects title section background color changes on hover */
+        body.skg-chess-hover .projects-title-section {
             background-color: #675141; /* Saddle brown - nice brown for SKG CHESS */
             transition: background-color 0.8s ease-in-out;
         }
 
-        body.falcon-hover .projects {
+        body.falcon-hover .projects-title-section {
             background-color: #726649; /* Goldenrod - warm yellow that matches the brown tone */
             transition: background-color 0.8s ease-in-out;
         }
 
-        /* Meet the creator link */
+        /* Meet the creator link - positioned on left at same height as author name */
         .meet-creator-link {
-            position: absolute;
-            left: 2rem;
-            top: 2rem; /* Fixed top position instead of 50% */
-            z-index: 1000;
+            position: absolute; /* Absolute position within hero section */
+            left: 2rem; /* Position on the left */
+            bottom: 0; /* Same bottom position as hero-text */
+            z-index: 9999; /* Very high z-index to ensure visibility above sticky sections */
+            padding-bottom: 1rem; /* Same padding as hero-text */
+        }
+
+        /* New identical button positioned on left bottom */
+        .meet-creator-link-left {
+            position: absolute; /* Absolute position within hero section */
+            left: 2rem; /* Position on the left */
+            bottom: 0; /* Same bottom position as hero-text */
+            z-index: 9999; /* Very high z-index to ensure visibility above sticky sections */
+            padding-bottom: 1rem; /* Same padding as hero-text */
         }
 
         /* Responsive adjustments for projects content */
@@ -620,6 +656,48 @@
             left: 100%;
         }
 
+        /* New button anchor styling - identical to original */
+        .meet-creator-link-left a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 1.5s ease-in-out;
+            padding: 1rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .meet-creator-link-left a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .meet-creator-link-left a:hover {
+            color: #fff;
+            background: rgba(139, 69, 19, 0.9); /* Saddle brown like SKGCHESS */
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
+        }
+
+        .meet-creator-link-left a:hover::before {
+            left: 100%;
+        }
+
         /* Projects content container */
         .projects-content {
             display: flex;
@@ -642,7 +720,7 @@
             right: 0;
             height: 100vh;
             overflow: hidden;
-            background: rgba(255, 0, 0, 0.3) !important; /* Temporary red background for debugging */
+            background: #000; /* Remove red debugging background */
         }
 
         /* Projects content when section is locked */
@@ -692,10 +770,10 @@
         /* Project card with advanced animations */
         .project-card {
             position: relative;
-            width: 100%; /* Full width for single column */
-            height: 50px; /* Very short height */
+            width: 80%; /* Reduced width to make cards bigger with margins */
+            height: 200px; /* Much bigger height for larger project window */
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 12px; /* Slightly larger border radius */
             cursor: pointer;
             transition: all 0.1s ease-out;
             opacity: 1;
@@ -935,14 +1013,14 @@
 
         /* Articles/Blog Section */
         .articles {
-            padding: 4rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0 2rem; /* Remove top/bottom padding to eliminate gaps */
+            width: 100vw; /* Full viewport width */
+            margin: 0; /* No margin for full width */
             background: #000000;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            z-index: 10; /* Above sticky section */
+            z-index: 2000; /* Higher z-index to appear on top of sticky projects title */
             position: relative;
         }
 
@@ -952,6 +1030,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            margin: 0; /* Ensure no margins */
+            padding: 4rem 0; /* Add padding to the content instead of the container */
         }
 
         /* Articles grid */
@@ -1705,8 +1785,78 @@
                 font-size: 0.9rem; /* Smaller font for mobile */
             }
 
+            /* Hero section mobile responsiveness */
             .hero {
+                min-height: 25vh; /* Reduced height for mobile */
                 padding: 0 1rem;
+                display: flex; /* Use flexbox for proper alignment */
+                flex-direction: column; /* Stack vertically */
+                justify-content: flex-end; /* Align to bottom */
+                align-items: center; /* Center horizontally */
+            }
+
+            .hero-text {
+                padding-bottom: 0.5rem; /* Reduced padding for mobile */
+                max-width: 100%; /* Full width on mobile */
+                position: relative; /* Change from absolute to relative */
+                left: auto; /* Remove absolute positioning */
+                transform: none; /* Remove transform */
+                text-align: center; /* Center text */
+            }
+
+            .hero-author {
+                font-size: clamp(0.8rem, 2.5vw, 1.2rem); /* Smaller font for mobile */
+            }
+
+            /* Sticky section mobile responsiveness */
+            .sticky-section {
+                height: fit-content; /* Fit content exactly */
+                min-height: 40vh; /* Increased minimum height for mobile */
+                padding: 1rem; /* Consistent padding for mobile */
+                display: flex; /* Use flexbox for proper alignment */
+                align-items: center; /* Center vertically */
+                justify-content: center; /* Center horizontally */
+            }
+
+            .sticky-content {
+                max-width: 100%; /* Full width on mobile */
+                padding: 0; /* Remove extra padding */
+                display: flex; /* Ensure flexbox is active */
+                flex-direction: column; /* Stack vertically */
+                align-items: center; /* Center horizontally */
+                justify-content: center; /* Center vertically */
+                height: fit-content; /* Fit content exactly */
+                min-height: unset; /* Remove any minimum height */
+            }
+
+            .sticky-hero-title {
+                font-size: clamp(2.5rem, 8vw, 6rem); /* Smaller font for mobile */
+                margin-bottom: 0.5rem; /* Reduced margin for mobile */
+                text-align: center; /* Ensure center alignment */
+                width: 100%; /* Full width */
+                line-height: 1.1; /* Better line height for mobile */
+                word-wrap: break-word; /* Handle long words */
+                overflow-wrap: break-word; /* Modern word wrapping */
+            }
+
+            .sticky-hero-subtitle {
+                font-size: clamp(1.5rem, 4vw, 3rem); /* Smaller font for mobile */
+                text-align: center; /* Ensure center alignment */
+                width: 100%; /* Full width */
+            }
+
+            /* Projects Title Section mobile responsiveness */
+            .projects-title-section {
+                gap: 2rem; /* Reduced gap for mobile */
+                padding: 1.5rem 1rem; /* Reduced padding for mobile */
+            }
+
+            .ixl-logo-title {
+                width: 80px; /* Smaller logo for mobile */
+            }
+
+            .projects-studio-name-title {
+                font-size: clamp(1.5rem, 3vw, 2.5rem); /* Smaller font for mobile */
             }
 
             .projects {
@@ -1723,14 +1873,19 @@
             }
             
             /* Meet the creator link responsive */
-            .meet-creator-link {
-                position: absolute;
-                left: 1rem; /* Reduced left margin for mobile */
-                top: 1rem; /* Fixed top position for mobile */
-                z-index: 1000;
+            .meet-creator-link,
+            .meet-creator-link-left {
+                position: relative; /* Change to relative for flexbox */
+                left: auto; /* Remove absolute positioning */
+                bottom: auto; /* Remove absolute positioning */
+                z-index: 9999;
+                padding-bottom: 0.5rem; /* Reduced padding for mobile - same as hero-text */
+                transform: none; /* Remove transform */
+                margin-bottom: 0.5rem; /* Add margin for spacing */
             }
             
-            .meet-creator-link a {
+            .meet-creator-link a,
+            .meet-creator-link-left a {
                 padding: 0.6rem 1rem; /* Smaller padding for mobile */
                 font-size: 0.8rem; /* Smaller font for mobile */
                 border-radius: 20px; /* Slightly smaller border radius */
@@ -1738,14 +1893,7 @@
         }
 
         @media (max-width: 768px) {
-            /* Hide hero and sticky sections on mobile */
-            .hero {
-                display: none;
-            }
-            
-            .sticky-section {
-                display: none;
-            }
+            /* Mobile responsive adjustments only - no hiding sections */
             
             /* Projects section mobile responsiveness */
             .projects {
@@ -1777,7 +1925,8 @@
             }
             
             .project-card {
-                height: 45px; /* Adjusted height for mobile */
+                width: 90%; /* Slightly wider on mobile */
+                height: 120px; /* Much bigger height for mobile */
             }
             
             .project-title {
@@ -1962,7 +2111,7 @@
             .portrait-image {
                 max-width: 300px;
             }
-        }
+        
     </style>
 </head>
 <body>
@@ -1981,21 +2130,20 @@
 
         <!-- Main content -->
     <main class="main-content">
-        <!-- Hero section -->
-        <section class="hero">
-            <!-- <video class="hero-video" autoplay muted loop playsinline>
-                <source src="1.mp4" type="video/mp4">
-            </video> -->
-            <!-- Hero text with author name -->
-            <div class="hero-text">
-                <p class="hero-author">BY HARIS CHATZIANASTASIOU</p>
+
+        <!-- Projects section -->
+        <section class="projects">            
+            <!-- IXL Logo and Studio name in center -->
+            <div class="projects-logo">
+                <img src="ixl.png" alt="IXL Studio Logo" class="ixl-logo">
+                <h1 class="projects-studio-name">IXLSTUDIO.</h1>
             </div>
-
-            <!-- <div class="scroll-indicator">
-                <div class="scroll-line"></div>
-            </div> -->
-
-
+            
+            <!-- Projects content container -->
+            <div class="projects-content">
+                <!-- Projects grid -->
+                
+            </div>
         </section>
 
         <!-- Sticky Section under hero -->
@@ -2005,52 +2153,61 @@
                 <source src="1.mp4" type="video/mp4">
             </video>
             <div class="sticky-content">
-                <h1 class="sticky-hero-name">
-                    <span>IXLSTUDIO</span><span id="sticky-dot">.</span>
+                <h1 class="sticky-hero-title">
+                    <br><span>digital</span> <span>stories.</span>
                 </h1>
-                <p class="sticky-hero-title">
-                    <span>Creating</span> <span>digital</span> <span>stories.</span>
-                </p>
-                <p class="sticky-hero-subtitle">
+                <!-- <p class="sticky-hero-subtitle">
                     <span>Pixel</span> <span>by</span> <span>Pixel.</span>
-                </p>
-                <img src="ixl.png" alt="IXL Studio Logo" class="sticky-logo">
+                </p> -->
             </div>
         </section>
 
-        <!-- Projects section -->
-        <section class="projects">            
-            <!-- Meet the creator link -->
-            <div class="meet-creator-link">
-                <a href="about.html">Meet the creator</a>
-            </div>
-            
-            <!-- IXL Logo and Studio name in center -->
-            <div class="projects-logo">
-                <img src="ixl.png" alt="IXL Studio Logo" class="ixl-logo">
-                <h1 class="projects-studio-name">IXLSTUDIO</h1>
-            </div>
-            
-            <!-- Projects content container -->
-            <div class="projects-content">
-                <!-- Projects grid -->
-                
-                </div>
-            </div>
-        </section>
-
-                <!-- Projects Title Section -->
+        <!-- Projects Title Section -->
         <section class="projects-title-section">
+            <!-- IXL Logo and Studio name title -->
+            <div class="projects-title-logo">
+                <img src="ixl.png" alt="IXL Studio Logo" class="ixl-logo-title">
+                <h1 class="projects-studio-name-title">IXLSTUDIO.</h1>
+            </div>
+            
             <div class="projects-grid" id="projects-grid">
                     <div class="project-card" data-project="skg-chess">
                         <div class="project-overlay"></div>
-                        <h2 class="project-title">SKGCHESS</h3>
+                        <h2 class="project-title">SKGCHESS</h2>
                     </div>
 
                     <div class="project-card" data-project="falcon">
                         <div class="project-overlay"></div>
-                        <h2 class="project-title">FALCON</h3>
+                        <h2 class="project-title">FALCON</h2>
                     </div>
+
+                    <div class="scroll-indicator">
+                        <div class="scroll-x">IXL</div>
+                    </div>
+            </div>
+        </section>
+
+        <!-- Hero section -->
+        <section class="hero">
+            <!-- <video class="hero-video" autoplay muted loop playsinline>
+                <source src="1.mp4" type="video/mp4">
+            </video> -->
+            <!-- Meet the creator link - positioned on left at same height as author name -->
+            
+            <!-- New identical button on left bottom -->
+            <div class="meet-creator-link-left">
+                <a href="about.html">Meet the creator</a>
+            </div>
+            <!-- Hero text with author name -->
+            <div class="hero-text">
+                <p class="hero-author">HARIS CHATZIANASTASIOU</p>
+            </div>
+
+            
+
+            
+
+
         </section>
 
         <!-- Articles/Blog Section -->
@@ -2228,8 +2385,10 @@
                     });
                 }
                 
-                card.addEventListener('click', function(e) {
-                    console.log('Project card clicked!'); // Debug log
+                // Function to handle project card interaction
+                function handleProjectInteraction(e) {
+                    e.preventDefault(); // Prevent default behavior
+                    console.log('Project card interacted!'); // Debug log
                     console.log('Project:', this.getAttribute('data-project')); // Debug log
                     
                     const projectName = this.querySelector('.project-title').textContent;
@@ -2241,29 +2400,39 @@
                         // Add clicking animation class
                         this.classList.add('clicking');
                         
-                        // Redirect to skgchess.html after animation
+                        // Add hover class to trigger background color change
+                        document.body.classList.add('skg-chess-hover');
+                        
+                        // Wait for background color transition to complete (0.8s) then redirect
+                        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                        const redirectDelay = isMobile ? 800 : 800; // Wait for color transition on both mobile and desktop
+                        
                         setTimeout(() => {
-                            console.log('Redirecting to skgchess.html...'); // Debug log
+                            console.log('Background color transition complete, redirecting to skgchess.html...'); // Debug log
                             window.location.href = 'skgchess.html';
-                        }, 800);
+                        }, redirectDelay);
                     } else {
                         console.log('Other project detected, showing modal...'); // Debug log
                         // Default modal behavior for other projects
-                    const title = this.querySelector('.project-title');
-                    title.style.letterSpacing = '0em';
-                    title.style.transition = 'letter-spacing 0.5s ease';
-                    
-                    setTimeout(() => {
-                        modalTitle.textContent = projectName;
-                        modalBody.innerHTML = `
-                            <h3>${projectType}</h3>
-                            <p>This is a detailed description of the ${projectName} project. Here you would typically include information about the technologies used, the creative process, and the final results.</p>
-                            <p>The project showcases our expertise in ${projectType.toLowerCase()} and demonstrates our commitment to creating unique digital experiences.</p>
-                        `;
-                        modal.classList.add('active');
-                    }, 500);
+                        const title = this.querySelector('.project-title');
+                        title.style.letterSpacing = '0em';
+                        title.style.transition = 'letter-spacing 0.5s ease';
+                        
+                        setTimeout(() => {
+                            modalTitle.textContent = projectName;
+                            modalBody.innerHTML = `
+                                <h3>${projectType}</h3>
+                                <p>This is a detailed description of the ${projectName} project. Here you would typically include information about the technologies used, the creative process, and the final results.</p>
+                                <p>The project showcases our expertise in ${projectType.toLowerCase()} and demonstrates our commitment to creating unique digital experiences.</p>
+                            `;
+                            modal.classList.add('active');
+                        }, 500);
                     }
-                });
+                }
+
+                // Add both click and touch events for better mobile support
+                card.addEventListener('click', handleProjectInteraction);
+                card.addEventListener('touchend', handleProjectInteraction);
 
                 // Also make the project title text clickable for SKG CHESS
                 const projectTitle = card.querySelector('.project-title');
@@ -2274,19 +2443,30 @@
                     projectTitle.style.textDecorationColor = 'rgba(255, 255, 255, 0.5)';
                     projectTitle.style.textDecorationThickness = '2px';
                     
-                    projectTitle.addEventListener('click', function(e) {
+                    // Function to handle project title interaction
+                    function handleTitleInteraction(e) {
                         e.stopPropagation(); // Prevent triggering the card click event
-                        console.log('SKG CHESS title clicked!'); // Debug log
+                        console.log('SKG CHESS title interacted!'); // Debug log
                         
                         // Add clicking animation class to the parent card
                         card.classList.add('clicking');
                         
-                        // Redirect to skgchess.html after animation
+                        // Add hover class to trigger background color change
+                        document.body.classList.add('skg-chess-hover');
+                        
+                        // Wait for background color transition to complete (0.8s) then redirect
+                        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                        const redirectDelay = isMobile ? 800 : 800; // Wait for color transition on both mobile and desktop
+                        
                         setTimeout(() => {
-                            console.log('Redirecting to skgchess.html...'); // Debug log
+                            console.log('Background color transition complete, redirecting to skgchess.html...'); // Debug log
                             window.location.href = 'skgchess.html';
-                        }, 800);
-                    });
+                        }, redirectDelay);
+                    }
+
+                    // Add both click and touch events for better mobile support
+                    projectTitle.addEventListener('click', handleTitleInteraction);
+                    projectTitle.addEventListener('touchend', handleTitleInteraction);
                 }
             });
 
@@ -2439,17 +2619,17 @@
                 }
         }
 
-        // Position articles section after projects section
-        function positionArticlesSection() {
-            const projectsSection = document.querySelector('.projects');
-            const articlesSection = document.querySelector('.articles');
-            
-            if (projectsSection && articlesSection) {
-                const projectsRect = projectsSection.getBoundingClientRect();
-                const projectsBottom = projectsRect.bottom + window.pageYOffset;
-                articlesSection.style.top = projectsBottom + 'px';
-            }
-        }
+        // Position articles section after projects section - REMOVED
+        // function positionArticlesSection() {
+        //     const projectsSection = document.querySelector('.projects');
+        //     const articlesSection = document.querySelector('.articles');
+        //     
+        //     if (projectsSection && articlesSection) {
+        //         const projectsRect = projectsSection.getBoundingClientRect();
+        //         const projectsBottom = projectsRect.bottom + window.pageYOffset;
+        //         articlesSection.style.top = projectsBottom + 'px';
+        //     }
+        // }
 
         // Sticky section animation trigger
         function setupStickySectionAnimation() {
@@ -2511,6 +2691,35 @@
             });
         }
 
+        // Make projects section unsticky when projects title section ends - REMOVED
+        // function setupProjectsUnsticky() {
+        //     const projectsSection = document.querySelector('.projects');
+        //     const projectsTitleSection = document.querySelector('.projects-title-section');
+        //     
+        //     if (!projectsSection || !projectsTitleSection) return;
+        //     
+        //     const observer = new IntersectionObserver((entries) => {
+        //         entries.forEach(entry => {
+        //             if (!entry.isIntersecting) {
+        //                 // Projects title section is no longer visible, make projects unsticky
+        //                 projectsSection.style.position = 'relative';
+        //                 projectsSection.style.top = 'auto';
+        //                 console.log('Projects section is now unsticky');
+        //             } else {
+        //                 // Projects title section is visible, keep projects sticky
+        //                 projectsSection.style.position = 'sticky';
+        //                 projectsSection.style.top = '0';
+        //                 console.log('Projects section is sticky again');
+        //             }
+        //         });
+        //     }, {
+        //         threshold: 0, // Trigger as soon as any part is not visible
+        //         rootMargin: '0px 0px -1px 0px' // Trigger when section is just out of view
+        //     });
+        //     
+        //     observer.observe(projectsTitleSection);
+        // }
+
         // Initialize all functionality
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded - Starting initialization...');
@@ -2531,11 +2740,14 @@
             setupProjectsScrollLock();
             console.log('setupProjectsScrollLock called');
             
-            // Position articles section
-            positionArticlesSection();
+            // Setup projects unsticky behavior - REMOVED
+            // setupProjectsUnsticky();
             
-            // Reposition on window resize
-            window.addEventListener('resize', positionArticlesSection);
+            // Position articles section - REMOVED
+            // positionArticlesSection();
+            
+            // Reposition on window resize - REMOVED
+            // window.addEventListener('resize', positionArticlesSection);
             
             console.log('Initialization complete');
         });

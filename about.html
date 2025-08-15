@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haris Chatzianastasiou - Front-End Developer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         /* Reset and base styles */
         * {
@@ -98,8 +99,71 @@
             line-height: 1.1;
             text-transform: uppercase;
             letter-spacing: -0.02em;
-            max-width: 800px;
-            margin-top: 0;
+        }
+
+        /* Animated content styles */
+
+        .content-card {
+            background: linear-gradient(135deg, rgba(72, 61, 139, 0.1), rgba(91, 75, 138, 0.05));
+            border: 1px solid rgba(72, 61, 139, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(72, 61, 139, 0.1);
+        }
+
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #483D8B;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(72, 61, 139, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(72, 61, 139, 0.15);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #483D8B;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .content-section {
@@ -346,12 +410,12 @@
         }
 
         .interactive-button:focus {
-            outline: 2px solid #FF6B35; /* Vibrant Orange - modern and energetic */
+            outline: 2px solid #483D8B; /* Dark Slate Blue - matches page theme */
             outline-offset: 2px;
         }
 
         .interactive-button.active {
-            background: linear-gradient(135deg, #FF6B35, #FF8E53); /* Vibrant Orange to Coral */
+            background: linear-gradient(135deg, #483D8B, #5B4B8A); /* Dark Slate Blue gradient */
             color: white;
             border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
@@ -633,14 +697,14 @@
     <main class="main-container">
         <!-- Left column - Quote and content -->
         <div class="left-column">
-            <h1 class="quote-text">
-                Crafting stories that unite aesthetics and functionality
+            <h1 class="quote-text" id="animatedQuote">
+                Crafting stories that unite aesthetics and functionality.
             </h1>
-
+            
             <!-- Content sections -->
-            <div class="content-section">
+            
                 <!-- Default content -->
-                <div class="content-block show" id="defaultContent">
+                <div class="content-block" id="defaultContent">
                     <div class="philosophy-text">
                         My name is Haris Chatzianastasiou. I'm a full-stack developer based in Thessaloniki, Greece. I design and code software solutions. <br> <br> 
                         I believe that every project should tell a unique story. An experience that resonates with users, all while serving its functional purpose effectively and reliably.<br><br>
@@ -721,6 +785,14 @@
 
             <!-- Interactive buttons -->
             <div class="interactive-section">
+                <button class="interactive-button" onclick="showContent('defaultContent')">
+                    <div class="button-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="button-text">My Story</div>
+                </button>
                 <button class="interactive-button" onclick="showContent('education')">
                     <div class="button-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -752,7 +824,7 @@
     <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobileNav">
         <div class="mobile-nav-buttons">
-            <button class="mobile-nav-button" onclick="resetToDefault()">Default</button>
+            <button class="mobile-nav-button" onclick="resetToDefault()">My Story</button>
             <button class="mobile-nav-button" onclick="showContent('education')">Education</button>
             <button class="mobile-nav-button" onclick="showContent('experience')">Experience</button>
             <button class="mobile-nav-button" onclick="showContent('contact')">Contact</button>
@@ -760,6 +832,42 @@
     </div>
 
     <script>
+        // GSAP Animations
+        gsap.registerPlugin();
+        
+        // Initial page load animations
+        window.addEventListener('load', function() {
+            // Animate the quote text with letter-by-letter effect
+            const quoteText = document.getElementById('animatedQuote');
+            const chars = quoteText.textContent.split('');
+            quoteText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
+            
+            gsap.fromTo('.char', 
+                { opacity: 0, y: 50, rotationX: -90 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    rotationX: 0, 
+                    duration: 0.8, 
+                    stagger: 0.05,
+                    ease: "back.out(1.7)"
+                }
+            );
+            
+            // Animate stats with counter effect
+            gsap.fromTo('.stat-number', 
+                { opacity: 0, scale: 0.5 },
+                { 
+                    opacity: 1, 
+                    scale: 1, 
+                    duration: 0.8, 
+                    delay: 1,
+                    stagger: 0.2,
+                    ease: "elastic.out(1, 0.3)"
+                }
+            );
+        });
+        
         function showContent(category) {
             // Remove active class from all buttons
             document.querySelectorAll('.interactive-button').forEach(button => {
@@ -776,10 +884,19 @@
             document.querySelectorAll('.content-block').forEach(block => {
                 block.classList.remove('show');
             });
+            
+            // Hide animated content when any button is clicked
+            const animatedContent = document.getElementById('animatedContent');
+            if (animatedContent) {
+                animatedContent.classList.remove('show');
+            }
 
             // Show appropriate content
             let targetContent;
-            if (category === 'education') {
+            if (category === 'defaultContent') {
+                targetContent = document.getElementById('defaultContent');
+                targetContent.classList.add('show');
+            } else if (category === 'education') {
                 targetContent = document.getElementById('educationContent');
                 targetContent.classList.add('show');
             } else if (category === 'experience') {
@@ -811,16 +928,7 @@
             resetToDefault();
         });
 
-        // Reset to default when clicking anywhere on the right section (except buttons)
-        document.querySelector('.right-column').addEventListener('click', function(event) {
-            // Check if the clicked element is an interactive button or its child
-            const isButton = event.target.closest('.interactive-button');
-            
-            // If it's not a button, reset to default
-            if (!isButton) {
-                resetToDefault();
-            }
-        });
+        // Right section click handler removed - no longer resets to default
 
         // Reset to default function
         function resetToDefault() {
