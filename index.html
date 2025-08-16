@@ -2204,7 +2204,7 @@
         </div>
         <nav>
             <ul class="nav-menu">
-            
+                <li><a href="about.html">About</a></li>
                 <li><a href="mailto:harischatzi@tutanota.com" class="contact-link">Contact</a></li>
             </ul>
         </nav>
@@ -2293,20 +2293,20 @@
         </section>
 
         <!-- Hero section -->
-        <!--<section class="hero">
+        <section class="hero">
             <!-- <video class="hero-video" autoplay muted loop playsinline>
                 <source src="1.mp4" type="video/mp4">
             </video> -->
             <!-- Meet the creator link - positioned on left at same height as author name -->
             
             <!-- New identical button on left bottom -->
-            <!--<div class="meet-creator-link-left">
+            <!-- <div class="meet-creator-link-left">
                 <a href="about.html">Meet the creator</a>
-            </div>-->
+            </div> -->
             <!-- Hero text with author name -->
-            <!--<div class="hero-text">
-                <p class="hero-author" id="hero-author-text">HARIS CHATZIANASTASIOU</p>
-            </div>-->
+            <div class="hero-text">
+                <p class="hero-author" id="hero-author-text">WE CREATE</p>
+            </div>
 
             
 
@@ -2740,7 +2740,7 @@
             // This prevents the confusing mobile behavior where different sections overlap
 
             // Mobile-friendly scroll-based text changes with viewport detection
-            let currentTextState = 'HARIS CHATZIANASTASIOU'; // Track current text state
+            let currentTextState = 'WE CREATE'; // Track current text state
             let lastScrollY = 0; // Track last scroll position
             let articlesInViewport = false; // Track if articles section is visible
             
@@ -2776,13 +2776,13 @@
                 
                 if (scrollY <= 50) {
                     // At the very top (with small buffer) - not scrolled much
-                    newTextState = 'HARIS CHATZIANASTASIOU';
+                    newTextState = 'WE CREATE';
                 } else if (scrollY > 50 && !articlesInViewport) {
                     // Scrolled but articles section not yet in viewport
-                    newTextState = 'PROJECTS';
+                    newTextState = 'EXPLORE OUR PROJECTS';
                 } else if (articlesInViewport) {
                     // Articles section is now in viewport
-                    newTextState = 'ARTICLES';
+                    newTextState = 'READ OUR ARTICLES';
                 }
                 
                 // Only change text if state actually changed
