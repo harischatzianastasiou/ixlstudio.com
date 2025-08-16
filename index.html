@@ -2305,7 +2305,7 @@
             </div>
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author" id="hero-author-text">WE CREATE</p>
+                <p class="hero-author" id="hero-author-text">HARIS CHATZIANASTASIOU</p>
             </div>
 
             
@@ -2740,7 +2740,7 @@
             // This prevents the confusing mobile behavior where different sections overlap
 
             // Mobile-friendly scroll-based text changes with viewport detection
-            let currentTextState = 'WE CREATE'; // Track current text state
+            let currentTextState = 'HARIS CHATZIANASTASIOU'; // Track current text state
             let lastScrollY = 0; // Track last scroll position
             let articlesInViewport = false; // Track if articles section is visible
             
@@ -2776,13 +2776,13 @@
                 
                 if (scrollY <= 50) {
                     // At the very top (with small buffer) - not scrolled much
-                    newTextState = 'WE CREATE';
+                    newTextState = 'HARIS CHATZIANASTASIOU';
                 } else if (scrollY > 50 && !articlesInViewport) {
                     // Scrolled but articles section not yet in viewport
-                    newTextState = 'EXPLORE OUR PROJECTS';
+                    newTextState = 'PROJECTS';
                 } else if (articlesInViewport) {
                     // Articles section is now in viewport
-                    newTextState = 'READ OUR ARTICLES';
+                    newTextState = 'ARTICLES';
                 }
                 
                 // Only change text if state actually changed
