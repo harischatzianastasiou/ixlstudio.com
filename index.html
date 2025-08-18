@@ -33,11 +33,11 @@
 
         /* Regular header navigation */
         .header {
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
+            position: fixed !important; /* Force fixed positioning to prevent any movement */
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 99999 !important; /* Very high z-index to ensure it stays on top */
             padding: 1.5rem 4rem;
             display: flex;
             justify-content: space-between;
@@ -45,6 +45,8 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             height: 90px;
+            transform: translateZ(0); /* Force hardware acceleration */
+            will-change: transform; /* Optimize for animations */
         }
 
         .logo-container {
@@ -91,7 +93,7 @@
 
         /* Main content */
         .main-content {
-            padding-top: 70px; /* Account for fixed header */
+            padding-top: 90px; /* Account for fixed header height */
         }
 
         /* Hero section */
@@ -418,8 +420,9 @@
             overflow: visible; /* Allow content to determine height */
             margin-bottom: 0; /* Ensure no bottom margin */
             display: flex; /* Use flexbox for proper alignment */
-            align-items: center; /* Center vertically */
+            align-items: flex-start; /* Align to top - text appears much higher */
             justify-content: center; /* Center horizontally */
+            padding-top: 8vh; /* Reduced top padding - less gap from top of section */
         }
 
         /* Responsive text sizing for second sticky section */
@@ -434,6 +437,9 @@
         @media (max-width: 768px) {
             .sticky-section-second {
                 padding: 1rem 0; /* Reduced padding for mobile */
+                padding-top: 6vh; /* Reduced top padding - less gap from top on mobile */
+                align-items: flex-start; /* Align to top on mobile */
+                height: 60vh; /* Reduced height for mobile - less than full viewport */
             }
             
             .sticky-section-second .sticky-hero-title {
@@ -443,6 +449,12 @@
         }
 
         @media (max-width: 480px) {
+            .sticky-section-second {
+                padding-top: 4vh; /* Reduced top padding - minimal gap from top on very small screens */
+                height: auto; /* Height fits content exactly */
+                min-height: 40vh; /* Minimum height to ensure some space */
+            }
+            
             .sticky-section-second .sticky-hero-title {
                 font-size: clamp(2rem, 5vw, 3rem); /* Even smaller for very small screens */
                 padding: 0 0.5rem; /* Minimal padding */
@@ -485,6 +497,72 @@
             color: #ccc; /* Light gray for hierarchy */
             text-transform: uppercase; /* All caps for consistency */
             letter-spacing: -0.02em; /* Consistent letter spacing */
+        }
+
+        /* CTA Button Styles - Desktop */
+        .sticky-cta-button {
+            margin-top: 2rem; /* Space between title and button */
+            text-align: center; /* Center the button */
+            animation: fadeInUp 2.5s ease-out 1.5s both; /* Slower fadeInUp animation with longer delay */
+        }
+
+        .cta-btn {
+            display: inline-block; /* Make it a block element */
+            padding: 1rem 2.5rem; /* Comfortable padding for desktop */
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); /* Subtle gradient */
+            color: #000; /* Black text */
+            text-decoration: none; /* Remove underline */
+            font-weight: 600; /* Bold text for impact */
+            font-size: 0.9rem; /* Appropriate font size for desktop */
+            border-radius: 50px; /* Rounded corners */
+            border: 2px solid rgba(255, 255, 255, 0.8); /* Semi-transparent border */
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Much slower elastic transition */
+            cursor: pointer; /* Hand cursor on hover */
+            text-transform: uppercase; /* All caps for impact */
+            letter-spacing: 1.5px; /* Spaced letters for style */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+            position: relative; /* For pseudo-elements */
+            overflow: hidden; /* Hide overflow for effects */
+        }
+
+        .cta-btn::before {
+            content: ''; /* Empty content for pseudo-element */
+            position: absolute; /* Position absolutely */
+            top: 0; /* Start from top */
+            left: -100%; /* Start off-screen */
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); /* Shine effect */
+            transition: left 1.8s; /* Much slower shine effect transition */
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #000 0%, #333 100%); /* Dark gradient on hover */
+            color: #fff; /* White text on hover */
+            transform: translateY(-3px) scale(1.03); /* Lift and scale effect */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.2); /* Enhanced shadow with glow */
+            border-color: rgba(255, 255, 255, 0.3); /* Lighter border on hover */
+        }
+
+        .cta-btn:hover::before {
+            left: 100%; /* Move shine effect across button */
+        }
+
+        .cta-btn:active {
+            transform: translateY(-1px) scale(1.01); /* Smaller effect when clicked */
+            transition: all 0.8s ease; /* Slower transition for click feedback */
+        }
+
+        /* Animation for button appearance */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0; /* Start invisible */
+                transform: translateY(30px); /* Start below final position */
+            }
+            to {
+                opacity: 1; /* End fully visible */
+                transform: translateY(0); /* End at final position */
+            }
         }
 
         /* Sticky logo removed - no longer needed */
@@ -670,13 +748,11 @@
             padding-bottom: 1rem; /* Same padding as hero-text */
         }
 
-        /* New identical button positioned on left bottom */
+        /* Meet creator link positioned in articles header */
         .meet-creator-link-left {
-            position: absolute; /* Absolute position within hero section */
-            left: 2rem; /* Position on the left */
-            bottom: 0; /* Same bottom position as hero-text */
-            z-index: 9999; /* Very high z-index to ensure visibility above sticky sections */
-            padding-bottom: 1rem; /* Same padding as hero-text */
+            position: static; /* Remove absolute positioning */
+            z-index: 9999; /* Keep high z-index for visibility */
+            padding-bottom: 0; /* Remove bottom padding */
         }
 
         /* Responsive adjustments for projects content */
@@ -1121,6 +1197,34 @@
             justify-content: center;
             margin: 0; /* Ensure no margins */
             padding: 4rem 0; /* Add padding to the content instead of the container */
+        }
+
+        /* Articles header with column layout for desktop */
+        .articles-header {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default */
+            align-items: center;
+            gap: 2rem; /* Space between meet creator link and articles title */
+            margin-bottom: 3rem; /* Space below the header */
+            width: 100%;
+            max-width: 1200px; /* Match the max-width of other sections */
+        }
+
+        /* Desktop layout - column arrangement */
+        @media (min-width: 769px) {
+            .articles-header {
+                flex-direction: column; /* Keep column layout on desktop */
+                align-items: center;
+                gap: 2.5rem; /* Slightly more space on desktop */
+            }
+        }
+
+        /* Mobile layout adjustments */
+        @media (max-width: 768px) {
+            .articles-header {
+                gap: 1.5rem; /* Less space on mobile */
+                margin-bottom: 2rem; /* Less margin on mobile */
+            }
         }
 
         /* Articles grid */
@@ -1940,6 +2044,72 @@
                 width: 100%; /* Full width */
             }
 
+            /* CTA Button Styles - Mobile */
+            .sticky-cta-button {
+                margin-top: 2rem; /* Reduced space between title and button */
+                text-align: center; /* Center the button */
+                animation: fadeInUp 2.5s ease-out 1.5s both; /* Slower fadeInUp animation with longer delay */
+            }
+
+            .cta-btn {
+                display: inline-block; /* Make it a block element */
+                padding: 0.8rem 2rem; /* Smaller padding for mobile */
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); /* Subtle gradient */
+                color: #000; /* Black text */
+                text-decoration: none; /* Remove underline */
+                font-weight: 600; /* Bold text for impact */
+                font-size: 0.9rem; /* Smaller font for mobile */
+                border-radius: 40px; /* Smaller rounded corners */
+                border: 2px solid rgba(255, 255, 255, 0.8); /* Semi-transparent border */
+                transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Much slower elastic transition */
+                cursor: pointer; /* Hand cursor on hover */
+                text-transform: uppercase; /* All caps for impact */
+                letter-spacing: 1px; /* Less spaced letters for mobile */
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Smaller shadow */
+                position: relative; /* For pseudo-elements */
+                overflow: hidden; /* Hide overflow for effects */
+            }
+
+            .cta-btn::before {
+                content: ''; /* Empty content for pseudo-element */
+                position: absolute; /* Position absolutely */
+                top: 0; /* Start from top */
+                left: -100%; /* Start off-screen */
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); /* Shine effect */
+                transition: left 1.8s; /* Much slower shine effect transition */
+            }
+
+            .cta-btn:hover {
+                background: linear-gradient(135deg, #000 0%, #333 100%); /* Dark gradient on hover */
+                color: #fff; /* White text on hover */
+                transform: none; /* No lift or scale effect - no popping up */
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Keep original shadow - no enhanced glow */
+                border-color: rgba(255, 255, 255, 0.8); /* Keep original border color */
+            }
+
+            .cta-btn:hover::before {
+                left: 100%; /* Move shine effect across button */
+            }
+
+            .cta-btn:active {
+                transform: none; /* No movement when clicked */
+                transition: all 0.8s ease; /* Slower transition for click feedback */
+            }
+
+            /* Animation for button appearance */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0; /* Start invisible */
+                    transform: translateY(30px); /* Start below final position */
+                }
+                to {
+                    opacity: 1; /* End fully visible */
+                    transform: translateY(0); /* End at final position */
+                }
+            }
+
             /* Projects Title Section mobile responsiveness */
             .projects-title-section {
                 gap: 2rem; /* Reduced gap for mobile */
@@ -2098,6 +2268,16 @@
                 gap: 0; /* Remove gap to save space */
             }
             
+            /* Sticky section very small screen responsiveness */
+            .sticky-section {
+                top: 60px; /* Stick below header (60px) for very small screens */
+            }
+            
+            /* Main content padding for very small screens */
+            .main-content {
+                padding-top: 60px; /* Account for fixed header height on very small screens */
+            }
+            
             .logo-container {
                 flex-direction: column; /* Stack vertically on very small screens */
                 align-items: flex-start;
@@ -2244,7 +2424,7 @@
             /* Fix for second sticky section on mobile */
             .sticky-section-second {
                 position: relative; /* Keep as relative on mobile */
-                height: 70vh; /* Full viewport height */
+                height: 50vh; /* Full viewport height */
                 /* Prevent mobile browser URL bar interference */
                 -webkit-transform: translateZ(0); /* Force hardware acceleration */
                 transform: translateZ(0); /* Force hardware acceleration */
@@ -2332,7 +2512,7 @@
             /* Additional fixes for very small screens */
             .sticky-section {
                 top: 60px; /* Adjust for smaller header on very small screens */
-                min-height: 70vh; /* Slightly smaller minimum height */
+                min-height: 40vh; /* Slightly smaller minimum height */
             }
 
             /* Ensure smooth scrolling on very small screens */
@@ -2424,8 +2604,12 @@
             </div>
             <div class="sticky-content">
                 <h1 class="sticky-hero-title">
-                    <br><span></span> <span>TURNING</span> <span>YOUR</span> <span>IDEAS</span> <span>INTO</span> <span>ELEGANT</span> <span>SOLUTIONS.</span>
+                    <br><span>EXPRESS YOUR BRAND.</span> <br><span>TELL</span> <span>YOUR</span> <span>STORY.</span>
                 </h1>
+                <!-- CTA Button -->
+                <div class="sticky-cta-button">
+                    <a href="#contact" class="cta-btn">LET'S DISCUSS YOUR VISION</a>
+                </div>
                 <!-- <p class="sticky-hero-subtitle">
                     <span>Pixel</span> <span>by</span> <span>Pixel.</span>
                 </p> -->
@@ -2452,7 +2636,7 @@
             </div> -->
             <!-- Hero text with author name -->
             <div class="hero-text">
-                <p class="hero-author" id="hero-author-text">WE CREATE</p>
+                <p class="hero-author" id="hero-author-text">CRAFTING</p>
             </div>
 
             
@@ -2465,7 +2649,12 @@
         <!-- Articles/Blog Section -->
         <section class="articles">
             <div class="articles-content">
-                <h4 style="color: #fff;">ARTICLES</h2>
+                <div class="articles-header">
+                    <div class="meet-creator-link-left">
+                        <a href="about.html">Meet the creator</a>
+                    </div>
+                    <h4 style="color: #fff; padding: 1px 1px;">ARTICLES</h4>
+                </div>
                 
                 <!-- Articles grid -->
                 <div class="articles-grid" id="articles-grid">
@@ -2923,13 +3112,12 @@
                 
                 if (scrollY <= 50) {
                     // At the very top (with small buffer) - not scrolled much
-                    newTextState = 'WE CREATE';
-                } else if (scrollY > 50 && !articlesInViewport) {
+                    newTextState = 'CRAFTING';
+                } else if (scrollY > 185 && scrollY < 315 && !articlesInViewport) {
                     // Scrolled but articles section not yet in viewport
-                    newTextState = 'EXPLORE OUR PROJECTS';
-                } else if (articlesInViewport) {
-                    // Articles section is now in viewport
-                    newTextState = ' ';
+                    newTextState = 'SEE PROJECTS';
+                } else if (articlesInViewport){
+                    newTextState = 'IXL';
                 }
                 
                 // Only change text if state actually changed
@@ -3176,20 +3364,24 @@
                 const sectionHeight = sectionRect.height;
                 const viewportHeight = window.innerHeight;
                 
-                // More precise scroll progress calculation
-                const startTrigger = viewportHeight * 0.8; // Start when section is 80% up the viewport
-                const endTrigger = -sectionHeight * 0.2; // End when section is 20% below viewport
+                // More precise scroll progress calculation - text appears sooner
+                const startTrigger = viewportHeight * 0.6; // Start when section is 60% up the viewport (sooner)
+                const endTrigger = -sectionHeight * 0.1; // End when section is 10% below viewport
                 const scrollProgress = Math.max(0, Math.min(1, (startTrigger - sectionTop) / (startTrigger - endTrigger)));
                 
-                // Determine which word should be visible based on scroll progress - last word appears sooner
+                // Determine which word should be visible based on scroll progress - sequential animation
                 const totalWords = stickyTitleSpans.length;
                 let wordsToShow;
                 
-                if (scrollProgress <= 0.5) {
-                    // First half of scroll: show first two words
-                    wordsToShow = Math.floor(scrollProgress * 2);
+                if (scrollProgress <= 0.4) {
+                    // First 40% of scroll: show "EXPRESS YOUR BRAND" (first 3 words)
+                    wordsToShow = Math.floor(scrollProgress * 7.5); // 3 words / 0.4 = 7.5
+                } else if (scrollProgress <= 0.8) {
+                    // Next 40% of scroll: show "TELL YOUR STORY" (last 3 words)
+                    const secondPhaseProgress = (scrollProgress - 0.4) / 0.4; // Normalize to 0-1
+                    wordsToShow = 3 + Math.floor(secondPhaseProgress * 3); // Start from word 3, add up to 3 more
                 } else {
-                    // Second half of scroll: show all words including the last one
+                    // Final 20%: ensure all words are visible
                     wordsToShow = totalWords;
                 }
                 
