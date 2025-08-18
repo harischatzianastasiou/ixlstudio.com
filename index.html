@@ -163,7 +163,7 @@
         }
 
         .hero-author {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-size: clamp(0.8rem, 1vw, 1rem);
             font-weight: 400;
             color: #fff;
             letter-spacing: 3px;
@@ -356,7 +356,6 @@
             right: 0;
             width: 100vw; /* Full viewport width */
             max-width: none; /* Remove any max-width constraints */
-            background: rgba(139, 69, 19, 0.95) !important; /* Dark brown background */
             backdrop-filter: blur(10px);
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
@@ -385,7 +384,7 @@
 
         /* Maximum specificity to ensure filter is applied */
         .sticky-section .video-filter-wrapper .sticky-video {
-            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3) !important;
+            filter: contrast(1.1) saturate(1.5) hue-rotate(30deg) sepia(0.3) !important;
         }
 
         /* Wobble effect for sticky section */
@@ -406,7 +405,7 @@
             position: relative; /* Normal document flow positioning */
             width: 100vw; /* Full viewport width */
             max-width: none; /* Remove any max-width constraints */
-            background: #121212; /* Black background */
+            background:#392f29; /* Black background */
             z-index: 9000; /* Higher than first sticky section (100) but lower than projects-title (1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
             height: 100vh; /* Always full viewport height */
@@ -465,7 +464,7 @@
 
         /* Sticky hero text styling - big and prominent */
         .sticky-hero-title {
-            font-size: clamp(4rem, 12vw, 12rem); /* Much bigger font size for maximum impact */
+            font-size: clamp(2rem, 4vw, 4rem); /* Much bigger font size for maximum impact */
             font-weight: 700; /* Bold weight for better readability */
             line-height: 0.8; /* Tighter line height for big text */
             margin-bottom: 1rem; /* Space between title and subtitle */
@@ -548,7 +547,7 @@
         }
 
         .projects-studio-name-title {
-            font-size: clamp(2rem, 4vw, 3rem); /* Responsive font size */
+            font-size: clamp(1rem, 2vw, 2rem); /* Responsive font size */
             font-weight: 700;
             color: #fff;
             margin: 0;
@@ -828,8 +827,8 @@
         /* Project card with advanced animations */
         .project-card {
             position: relative;
-            width: 80%; /* Reduced width to make cards bigger with margins */
-            height: 200px; /* Much bigger height for larger project window */
+            width: 50%; /* Even smaller width for more compact project cards */
+            height: 30px; /* Even smaller height for compact project cards */
             overflow: hidden;
             border-radius: 12px; /* Slightly larger border radius */
             cursor: pointer;
@@ -1231,9 +1230,9 @@
             }
             
             .project-card {
-                width: calc(50% - 1rem); /* 2 cards per row */
-                height: 300px; /* Much bigger height for larger project windows */
-                min-height: 300px; /* Ensure minimum height */
+                width: calc(35% - 1rem); /* Smaller width for more compact cards */
+                height: 80px; /* Even smaller height for compact project cards */
+                min-height: 80px; /* Ensure minimum height */
             }
             
             .articles-grid {
@@ -1253,9 +1252,9 @@
             }
             
             .project-card {
-                width: calc(50% - 1rem); /* 2 cards per row */
-                height: 250px; /* Bigger height for medium screens */
-                min-height: 250px; /* Ensure minimum height */
+                width: calc(35% - 1rem); /* Even smaller width for more compact cards */
+                height: 80px; /* Even smaller height for medium screens */
+                min-height: 80px; /* Ensure minimum height */
             }
             
             .articles {
@@ -2003,8 +2002,8 @@
             }
             
             .project-card {
-                width: 90%; /* Slightly wider on mobile */
-                height: 120px; /* Much bigger height for mobile */
+                width: 60%; /* Smaller width for mobile */
+                height: 40px; /* Even smaller height for mobile */
             }
             
             .project-title {
@@ -3155,7 +3154,7 @@
             // Set initial video settings
             stickyVideo.playbackRate = 0.6;
             stickyVideo.addEventListener('loadedmetadata', function() {
-                stickyVideo.currentTime = stickyVideo.duration * 0.098;
+                stickyVideo.currentTime = stickyVideo.duration * 0.2;
             });
             
             // Add speed boost when video starts
