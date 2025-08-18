@@ -1074,7 +1074,7 @@
             padding: 0 2rem; /* Remove top/bottom padding to eliminate gaps */
             width: 100vw; /* Full viewport width */
             margin: 0; /* No margin for full width */
-            margin-top: -250px; /* Move articles section higher up by 100px */
+            margin-top: -200px; /* Move articles section higher up by 100px */
             background: #121212;
             min-height: 100vh;
             display: flex;
@@ -1086,7 +1086,7 @@
         /* Mobile-specific styling for articles section */
         @media (max-width: 768px) {
             .articles {
-                margin-top: -100px !important; /* Move articles section higher up by 300px on mobile */
+                margin-top: -150px !important; /* Move articles section higher up by 300px on mobile */
             }
         }
 
@@ -2905,7 +2905,7 @@
                     newTextState = 'EXPLORE OUR PROJECTS';
                 } else if (articlesInViewport) {
                     // Articles section is now in viewport
-                    newTextState = 'READ OUR ARTICLES';
+                    newTextState = ' ';
                 }
                 
                 // Only change text if state actually changed
