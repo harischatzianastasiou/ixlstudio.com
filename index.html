@@ -33,7 +33,7 @@
 
         /* Regular header navigation */
         .header {
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -360,13 +360,20 @@
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
             height: fit-content; /* Fit content exactly */
-            min-height: 90vh; /* 100vh - header height + hero height */
+            min-height: 50vh; /* 100vh - header height + hero height */
             max-height: none; /* Remove any maximum height */
             overflow: visible; /* Allow content to determine height */
             margin-bottom: 0; /* Ensure no bottom margin */
             display: flex; /* Use flexbox for proper alignment */
             align-items: center; /* Center vertically */
             justify-content: center; /* Center horizontally */
+            background: #121212; /* Default background */
+            transition: background 0.3s ease-out;
+        }
+
+        /* Sticky section background color changes when activated */
+        body.sticky-section-active .sticky-section {
+            background: #392f29;
         }
 
         /* Video background for sticky section */
@@ -631,10 +638,28 @@
             letter-spacing: -0.02em;
         }
 
+        /* Projects title section - default state */
+        .projects-title-section {
+            background: #121212;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Projects title section - default state */
+        .projects-title-section {
+            background: #121212;
+            transition: background 0.3s ease-out;
+        }
+
         /* Projects title section background color changes when activated */
         body.projects-title-active .projects-title-section {
-            background-color: #3f3128; /* Same dark brown background as sticky section */
-            transition: background-color 0.8s ease-in-out;
+            background: #452f22;
+        }
+
+        /* Projects title section fade out animation when deactivated */
+        body:not(.projects-title-active) .projects-title-section {
+            background: #121212;
         }
 
         /* Meet the creator link - positioned on left at same height as author name */
@@ -746,7 +771,7 @@
 
         .meet-creator-link-left a:hover {
             color: #fff;
-            background: rgba(139, 69, 19, 0.95); /* Brown color ending the travelling animation */
+            background: rgba(30, 20, 14, 0.95); /* Brown color ending the travelling animation */
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
         }
@@ -2308,7 +2333,7 @@
             /* Additional fixes for very small screens */
             .sticky-section {
                 top: 60px; /* Adjust for smaller header on very small screens */
-                min-height: 85vh; /* Slightly smaller minimum height */
+                min-height: 70vh; /* Slightly smaller minimum height */
             }
 
             /* Ensure smooth scrolling on very small screens */
@@ -2919,7 +2944,7 @@
                 if (originalStickySection) {
                     const shouldBeBlack = scrollY >= window.innerHeight; // Change to black after scrolling past viewport height
                     const currentBackground = originalStickySection.style.background;
-                    const targetBackground = shouldBeBlack ? '#121212' : 'rgba(139, 69, 19, 0.95)';
+                    const targetBackground = shouldBeBlack ? '#121212' : '#121212';
                     
                     // Only update if background needs to change
                     if (currentBackground !== targetBackground) {
@@ -2956,38 +2981,169 @@
             animatedElements.forEach(el => observer.observe(el));
         }
 
-        // Projects title section activation
-        function setupProjectsTitleActivation() {
-            const projectsTitleSection = document.querySelector('.projects-title-section');
-            
-            if (!projectsTitleSection) {
-                console.log('Projects title section not found');
-                return;
-            }
-            
-            console.log('Setting up projects title activation for:', projectsTitleSection);
-            
-            const observerOptions = {
-                threshold: 0.3, // Trigger when 30% of section is visible
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    console.log('Projects title intersection observed:', entry.isIntersecting);
-                    if (entry.isIntersecting) {
-                        console.log('Projects title section is intersecting - activating color change');
-                        document.body.classList.add('projects-title-active');
-                    } else {
-                        console.log('Projects title section is not intersecting - deactivating color change');
-                        document.body.classList.remove('projects-title-active');
-                    }
-                });
-            }, observerOptions);
-            
-            observer.observe(projectsTitleSection);
-            console.log('Observer attached to projects title section');
-        }
+                 // Sticky section activation with scroll-driven color transition
+         function setupStickySectionActivation() {
+             const stickySection = document.querySelector('.sticky-section');
+             
+             if (!stickySection) {
+                 console.log('Sticky section not found');
+                 return;
+             }
+             
+             console.log('Setting up sticky section activation for:', stickySection);
+             
+             let isInView = false;
+             let scrollTimeout;
+             
+             const observerOptions = {
+                 threshold: 0.3, // Trigger when 30% of section is visible
+                 rootMargin: '0px 0px -100px 0px'
+             };
+             
+             const observer = new IntersectionObserver((entries) => {
+                 entries.forEach(entry => {
+                     console.log('Sticky section intersection observed:', entry.isIntersecting);
+                     isInView = entry.isIntersecting;
+                     
+                     if (entry.isIntersecting) {
+                         console.log('Sticky section is intersecting - ready for scroll-driven animation');
+                         // Don't immediately activate, wait for scroll
+                     } else {
+                         console.log('Sticky section is not intersecting - deactivating');
+                         document.body.classList.remove('sticky-section-active');
+                         clearTimeout(scrollTimeout);
+                     }
+                 });
+             }, observerOptions);
+             
+             // Scroll event listener for scroll-driven animation
+             let lastScrollTop = 0;
+             let scrollProgress = 0;
+             
+             window.addEventListener('scroll', () => {
+                 if (!isInView) return;
+                 
+                 const currentScrollTop = window.pageYOffset;
+                 const scrollDelta = Math.abs(currentScrollTop - lastScrollTop);
+                 
+                 // Only progress animation if actively scrolling
+                 if (scrollDelta > 0) {
+                     // Increase progress based on scroll speed
+                     scrollProgress = Math.min(1, scrollProgress + (scrollDelta * 0.005));
+                     
+                     // Apply color based on scroll progress
+                     const startColor = [18, 18, 18]; // #121212
+                     const endColor = [57, 47, 41];   // #392f29
+                     
+                     const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * scrollProgress);
+                     const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * scrollProgress);
+                     const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * scrollProgress);
+                     
+                     stickySection.style.background = `rgb(${r}, ${g}, ${b})`;
+                     
+                     // Clear existing timeout
+                     clearTimeout(scrollTimeout);
+                     
+                     // Set timeout to pause animation when scrolling stops
+                     scrollTimeout = setTimeout(() => {
+                         console.log('Scrolling stopped - sticky section animation paused');
+                         // Animation pauses here, waiting for next scroll
+                     }, 100); // 100ms delay before considering scroll stopped
+                     
+                     // Activate class when fully scrolled
+                     if (scrollProgress >= 1) {
+                         document.body.classList.add('sticky-section-active');
+                     }
+                 }
+                 
+                 lastScrollTop = currentScrollTop;
+             });
+             
+             observer.observe(stickySection);
+             console.log('Observer and scroll listener attached to sticky section');
+         }
+
+         // Projects title section activation with scroll-driven color transition
+         function setupProjectsTitleActivation() {
+             const projectsTitleSection = document.querySelector('.projects-title-section');
+             
+             if (!projectsTitleSection) {
+                 console.log('Projects title section not found');
+                 return;
+             }
+             
+             console.log('Setting up projects title activation for:', projectsTitleSection);
+             
+             let isInView = false;
+             let scrollTimeout;
+             
+             const observerOptions = {
+                 threshold: 0.3, // Trigger when 30% of section is visible
+                 rootMargin: '0px 0px -100px 0px'
+             };
+             
+             const observer = new IntersectionObserver((entries) => {
+                 entries.forEach(entry => {
+                     console.log('Projects title intersection observed:', entry.isIntersecting);
+                     isInView = entry.isIntersecting;
+                     
+                     if (entry.isIntersecting) {
+                         console.log('Projects title section is intersecting - ready for scroll-driven animation');
+                         // Don't immediately activate, wait for scroll
+                     } else {
+                         console.log('Projects title section is not intersecting - deactivating');
+                         document.body.classList.remove('projects-title-active');
+                         clearTimeout(scrollTimeout);
+                     }
+                 });
+             }, observerOptions);
+             
+             // Scroll event listener for scroll-driven animation
+             let lastScrollTop = 0;
+             let scrollProgress = 0;
+             
+             window.addEventListener('scroll', () => {
+                 if (!isInView) return;
+                 
+                 const currentScrollTop = window.pageYOffset;
+                 const scrollDelta = Math.abs(currentScrollTop - lastScrollTop);
+                 
+                 // Only progress animation if actively scrolling
+                 if (scrollDelta > 0) {
+                     // Increase progress based on scroll speed
+                     scrollProgress = Math.min(1, scrollProgress + (scrollDelta * 0.001));
+                     
+                     // Apply color based on scroll progress
+                     const startColor = [18, 18, 18]; // #121212
+                     const endColor = [69, 47, 34];   // #452f22
+                     
+                     const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * scrollProgress);
+                     const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * scrollProgress);
+                     const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * scrollProgress);
+                     
+                     projectsTitleSection.style.background = `rgb(${r}, ${g}, ${b})`;
+                     
+                     // Clear existing timeout
+                     clearTimeout(scrollTimeout);
+                     
+                     // Set timeout to pause animation when scrolling stops
+                     scrollTimeout = setTimeout(() => {
+                         console.log('Scrolling stopped - animation paused');
+                         // Animation pauses here, waiting for next scroll
+                     }, 100); // 100ms delay before considering scroll stopped
+                     
+                     // Activate class when fully scrolled
+                     if (scrollProgress >= 1) {
+                         document.body.classList.add('projects-title-active');
+                     }
+                 }
+                 
+                 lastScrollTop = currentScrollTop;
+             });
+             
+             observer.observe(projectsTitleSection);
+             console.log('Observer and scroll listener attached to projects title section');
+         }
 
         // Second sticky section animation trigger - scroll-based
         function setupSecondStickyAnimation() {
@@ -3288,7 +3444,8 @@
             setupWobbleEffect();
             setupStickySectionAnimation();
             setupSecondStickyAnimation();
-            setupProjectsTitleActivation();
+            setupStickySectionActivation();
+         setupProjectsTitleActivation();
             setupStickySectionEffects();
             setupDynamicHeroText();
             setupMobileViewportHandling(); // Add mobile viewport handling
