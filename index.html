@@ -91,12 +91,12 @@
 
         /* Main content */
         .main-content {
-            padding-top: 90px; /* Account for fixed header */
+            padding-top: 70px; /* Account for fixed header */
         }
 
         /* Hero section */
         .hero {
-            min-height: 35vh; /* Reduced height further */
+            min-height: 20vh; /* Reduced height further */
             position: fixed;
             top: 0;
             left: 0;
@@ -104,7 +104,7 @@
             background: #121212;
             color: #fff;
             overflow: hidden;
-            z-index: 9998; /* Very high z-index to ensure visibility above sticky projects section */
+            z-index: 8000; /* Very high z-index to ensure visibility above sticky projects section */
         }
 
         /* Video background */
@@ -135,7 +135,7 @@
             transform: translateX(-50%);
             text-align: center;
             z-index: 10;
-            padding-bottom: 1rem; /* Small padding from the very bottom */
+            padding-bottom: 0rem; /* Small padding from the very bottom */
         }
 
         .hero-name {
@@ -351,7 +351,7 @@
         /* Sticky Section after hero - same behavior as hero */
         .sticky-section {
             position: sticky; /* Changed to sticky */
-            top: 0; /* Stick to the top when scrolling */
+            top: 90px; /* Stick to the top when scrolling, accounting for header height */
             left: 0;
             right: 0;
             width: 100vw; /* Full viewport width */
@@ -361,7 +361,7 @@
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
             height: fit-content; /* Fit content exactly */
-            min-height: 60vh; /* Increased minimum height for desktop */
+            min-height: 90vh; /* 100vh - header height + hero height */
             max-height: none; /* Remove any maximum height */
             overflow: visible; /* Allow content to determine height */
             margin-bottom: 0; /* Ensure no bottom margin */
@@ -407,7 +407,7 @@
             width: 100vw; /* Full viewport width */
             max-width: none; /* Remove any max-width constraints */
             background: #121212; /* Black background */
-            z-index: 222200; /* Higher than first sticky section (100) but lower than projects-title (1000) */
+            z-index: 9000; /* Higher than first sticky section (100) but lower than projects-title (1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
             height: 100vh; /* Always full viewport height */
             overflow: visible; /* Allow content to determine height */
@@ -1105,7 +1105,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 25rem; /* Push article cards further down */
+            margin-top: 0rem; /* Push article cards further down */
             margin-bottom: 4rem;
             width: 100%;
             max-width: 100%;
@@ -1856,7 +1856,7 @@
 
             /* Hero section mobile responsiveness */
             .hero {
-                min-height: 25vh; /* Reduced height for mobile */
+                min-height: 18vh; /* Reduced height for mobile */
                 padding: 0 1rem;
                 display: flex; /* Use flexbox for proper alignment */
                 flex-direction: column; /* Stack vertically */
@@ -1865,7 +1865,7 @@
             }
 
             .hero-text {
-                padding-bottom: 0.5rem; /* Reduced padding for mobile */
+                padding-bottom: -4rem; /* Reduced padding for mobile */
                 max-width: 100%; /* Full width on mobile */
                 position: relative; /* Change from absolute to relative */
                 left: auto; /* Remove absolute positioning */
@@ -1879,13 +1879,15 @@
 
             /* Sticky section mobile responsiveness */
             .sticky-section {
+                position: sticky;
                 height: fit-content; /* Fit content exactly */
-                min-height: 40vh; /* Increased minimum height for mobile */
-                padding: 1rem 0; /* Remove horizontal padding for full width on mobile */
-                width: 100vw; /* Full viewport width on mobile */
+                min-height: 90vh; /* Increased minimum height for mobile */
+                padding: 0 0; /* Remove horizontal padding for full width on mobile */
+                width: 100%; /* Full viewport width on mobile */
                 display: flex; /* Use flexbox for proper alignment */
                 align-items: center; /* Center vertically */
                 justify-content: center; /* Center horizontally */
+                top: 70px; /* Stick below header (70px) + hero section (18vh) */
             }
 
             .sticky-content {
@@ -2318,7 +2320,7 @@
         <!-- Articles/Blog Section -->
         <section class="articles">
             <div class="articles-content">
-                <!-- <h2 class="section-title" style="color: #fff;">HARIS CHATZIANASTASIOU</h2> -->
+                <h4 style="color: #fff;">ARTICLES</h2>
                 
                 <!-- Articles grid -->
                 <div class="articles-grid" id="articles-grid">
