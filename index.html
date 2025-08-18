@@ -356,7 +356,6 @@
             right: 0;
             width: 100vw; /* Full viewport width */
             max-width: none; /* Remove any max-width constraints */
-            backdrop-filter: blur(10px);
             z-index: 100; /* Between projects (z-index: 10) and projects title (z-index: 1000) */
             padding: 2rem 0; /* Remove horizontal padding for full width */
             height: fit-content; /* Fit content exactly */
@@ -3024,12 +3023,13 @@
                  if (!isInView) return;
                  
                  const currentScrollTop = window.pageYOffset;
-                 const scrollDelta = Math.abs(currentScrollTop - lastScrollTop);
+                 const scrollDelta = currentScrollTop - lastScrollTop; // Detect scroll direction
+                 const scrollSpeed = Math.abs(scrollDelta);
                  
-                 // Only progress animation if actively scrolling
-                 if (scrollDelta > 0) {
+                 // Only progress animation if scrolling down (positive delta)
+                 if (scrollSpeed > 0 && scrollDelta > 0) {
                      // Increase progress based on scroll speed
-                     scrollProgress = Math.min(1, scrollProgress + (scrollDelta * 0.005));
+                     scrollProgress = Math.min(1, scrollProgress + (scrollSpeed * 0.005));
                      
                      // Apply color based on scroll progress
                      const startColor = [18, 18, 18]; // #121212
