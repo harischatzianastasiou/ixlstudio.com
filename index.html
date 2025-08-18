@@ -2196,6 +2196,127 @@
                 max-width: 300px;
             }
         
+        /* Mobile-specific sticky section fixes to prevent URL bar interference */
+        @media (max-width: 768px) {
+            /* Fix for mobile browsers with dynamic URL bar */
+            .sticky-section {
+                position: sticky;
+                top: 70px; /* Stick below header (70px) */
+                height: fit-content; /* Fit content exactly */
+                min-height: 90vh; /* Increased minimum height for mobile */
+                padding: 0; /* Remove horizontal padding for full width on mobile */
+                width: 100%; /* Full viewport width on mobile */
+                display: flex; /* Use flexbox for proper alignment */
+                align-items: center; /* Center vertically */
+                justify-content: center; /* Center horizontally */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting sticky behavior */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 100; /* Keep z-index consistent */
+            }
+
+            /* Fix for second sticky section on mobile */
+            .sticky-section-second {
+                position: relative; /* Keep as relative on mobile */
+                height: 100vh; /* Full viewport height */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 9000; /* Keep z-index consistent */
+            }
+
+            /* Fix for projects title section on mobile */
+            .projects-title-section {
+                position: relative; /* Ensure proper positioning */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 1000; /* Keep z-index consistent */
+            }
+
+            /* Fix for hero section on mobile */
+            .hero {
+                position: fixed; /* Keep fixed positioning */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 8000; /* Keep z-index consistent */
+            }
+
+            /* Fix for projects section on mobile */
+            .projects {
+                position: fixed; /* Keep fixed positioning */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 10; /* Keep z-index consistent */
+            }
+
+            /* Fix for articles section on mobile */
+            .articles {
+                position: relative; /* Ensure proper positioning */
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                z-index: 2000; /* Keep z-index consistent */
+            }
+
+            /* Additional mobile-specific body fixes */
+            body {
+                /* Prevent mobile browser URL bar interference */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+                /* Prevent viewport height changes from affecting scroll behavior */
+                height: 100%; /* Ensure full height */
+                overflow-x: hidden; /* Prevent horizontal scroll */
+                /* Force hardware acceleration for better performance */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+            }
+
+            /* Fix for main content container on mobile */
+            .main-content {
+                /* Prevent mobile browser URL bar interference */
+                -webkit-transform: translateZ(0); /* Force hardware acceleration */
+                transform: translateZ(0); /* Force hardware acceleration */
+                /* Prevent viewport height changes from affecting positioning */
+                will-change: transform; /* Optimize for animations */
+                /* Ensure proper stacking context */
+                position: relative; /* Ensure proper positioning */
+            }
+        }
+
+        /* Extra small screen optimizations */
+        @media (max-width: 480px) {
+            /* Additional fixes for very small screens */
+            .sticky-section {
+                top: 60px; /* Adjust for smaller header on very small screens */
+                min-height: 85vh; /* Slightly smaller minimum height */
+            }
+
+            /* Ensure smooth scrolling on very small screens */
+            html {
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+                scroll-behavior: smooth; /* Smooth scrolling behavior */
+            }
+        }
     </style>
 </head>
 <body>
@@ -3074,6 +3195,84 @@
         //     observer.observe(projectsTitleSection);
         // }
 
+        // Mobile viewport handling to prevent URL bar interference
+        function setupMobileViewportHandling() {
+            // Check if we're on a mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (!isMobile) return; // Only apply fixes on mobile devices
+            
+            console.log('Mobile device detected - applying viewport fixes');
+            
+            // Store initial viewport height
+            let initialViewportHeight = window.innerHeight;
+            let currentViewportHeight = initialViewportHeight;
+            
+            // Function to handle viewport changes (URL bar show/hide)
+            function handleViewportChange() {
+                const newViewportHeight = window.innerHeight;
+                
+                // Only handle significant changes (more than 50px difference)
+                if (Math.abs(newViewportHeight - currentViewportHeight) > 50) {
+                    console.log('Viewport height changed from', currentViewportHeight, 'to', newViewportHeight);
+                    
+                    // Update current viewport height
+                    currentViewportHeight = newViewportHeight;
+                    
+                    // Force reflow of sticky sections to prevent positioning issues
+                    const stickySections = document.querySelectorAll('.sticky-section, .sticky-section-second, .projects-title-section');
+                    stickySections.forEach(section => {
+                        // Force a reflow by temporarily changing and restoring a property
+                        const originalTransform = section.style.transform;
+                        section.style.transform = 'translateZ(0) scale(1.001)';
+                        
+                        // Use requestAnimationFrame to ensure the change is applied
+                        requestAnimationFrame(() => {
+                            section.style.transform = originalTransform;
+                        });
+                    });
+                    
+                    // Force reflow of fixed sections
+                    const fixedSections = document.querySelectorAll('.hero, .projects');
+                    fixedSections.forEach(section => {
+                        const originalTransform = section.style.transform;
+                        section.style.transform = 'translateZ(0) scale(1.001)';
+                        
+                        requestAnimationFrame(() => {
+                            section.style.transform = originalTransform;
+                        });
+                    });
+                }
+            }
+            
+            // Debounced viewport change handler to prevent excessive calls
+            let viewportChangeTimeout;
+            function debouncedViewportChange() {
+                clearTimeout(viewportChangeTimeout);
+                viewportChangeTimeout = setTimeout(handleViewportChange, 100);
+            }
+            
+            // Listen for viewport changes
+            window.addEventListener('resize', debouncedViewportChange);
+            window.addEventListener('orientationchange', debouncedViewportChange);
+            
+            // Also listen for scroll events that might indicate URL bar changes
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // If scroll position changes significantly, it might be due to URL bar
+                if (Math.abs(scrollTop - lastScrollTop) > 100) {
+                    debouncedViewportChange();
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+            
+            // Initial viewport setup
+            handleViewportChange();
+        }
+
         // Initialize all functionality
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded - Starting initialization...');
@@ -3092,6 +3291,7 @@
             setupProjectsTitleActivation();
             setupStickySectionEffects();
             setupDynamicHeroText();
+            setupMobileViewportHandling(); // Add mobile viewport handling
             
             console.log('About to call setupProjectsScrollLock...');
             setupProjectsScrollLock();
