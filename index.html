@@ -355,7 +355,7 @@
             margin-bottom: 1.5rem; /* Increased spacing */
             letter-spacing: -0.03em; /* Tighter letter spacing for modern look */
             color: #ffffff;
-            text-transform: uppercase;
+            text-transform: none; /* Keep lowercase as written in HTML */
             position: relative; /* Added for pseudo-element */
         }
 
@@ -384,7 +384,7 @@
             color: #cccccc; /* Brighter color for better contrast */
             margin-bottom: 2.5rem; /* Increased spacing */
             letter-spacing: 3px; /* Increased letter spacing */
-            text-transform: uppercase;
+            text-transform: none; /* Keep lowercase as written in HTML */
             opacity: 0.9; /* Slight transparency for depth */
         }
 
@@ -1451,7 +1451,7 @@
         }
 
         .service-card {
-            background: rgba(61,51,42,255);
+            background: #000000; /* Changed from brown to black */
             border: 1px solid rgba(255, 255, 255, 0.1); /* Updated border for modern look */
             border-radius: 16px; /* Reduced border radius for modern look */
             padding: 3rem 2.5rem; /* Increased padding */
@@ -1480,9 +1480,9 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(100, 149, 237, 0.02) 0%, 
-                rgba(100, 149, 237, 0.05) 50%, 
-                rgba(100, 149, 237, 0.02) 100%);
+                rgba(5, 17, 9, 0.02) 0%, 
+                rgba(5, 17, 9, 0.05) 50%, 
+                rgba(5, 17, 9, 0.02) 100%); /* Changed from blue to dark green */
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 1;
@@ -1497,7 +1497,7 @@
             height: 100%;
             background: linear-gradient(135deg, 
                 rgb(37, 35, 33) 0%, 
-                rgb(61, 51, 42) 50%, 
+                rgb(29, 29, 29) 50%, 
                 rgb(32, 29, 27) 100%);
             transform: translateY(100%);
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1544,8 +1544,8 @@
             border-color: rgba(23, 24, 26, 0.3);
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(100, 149, 237, 0.2),
-                0 0 40px rgba(100, 149, 237, 0.1);
+                0 0 0 1px rgba(5, 17, 9, 0.2), /* Changed from blue to dark green */
+                0 0 40px rgba(5, 17, 9, 0.1); /* Changed from blue to dark green */
         }
 
         .service-card:hover::after {
@@ -1622,9 +1622,9 @@
 
         /* Focus styling for accessibility */
         .service-card:focus {
-            outline: 2px solid rgba(100, 149, 237, 0.8);
+            outline: 2px solid #1a1a1a; /* Changed to neutral dark gray - less brown */
             outline-offset: 4px;
-            box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+            box-shadow: 0 0 20px rgba(26, 26, 26, 0.3); /* Changed to match neutral dark gray */
         }
 
         /* Ensure cards are focusable and have proper cursor */
@@ -1654,159 +1654,13 @@
         /* Projects Section */
         .projects-section {
             padding: 10rem 4rem; /* Increased padding for more breathing room */
-            background: rgba(14,27,6,255); /* Dark green background as requested */
+            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Warm brown gradient */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
         }
 
-        /* Dynamic Color Picker for Projects Section */
-        .color-picker-container {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
 
-        .color-picker-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .color-picker-label {
-            color: #ffffff;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-
-        .color-picker {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .color-option {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .color-option:hover {
-            transform: scale(1.1);
-            border-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .color-option.active {
-            border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
-        .color-option::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 12px;
-            height: 12px;
-            background: #ffffff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .color-option.active::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        /* Predefined color options */
-        .color-option[data-color="default"] { background: linear-gradient(135deg, #131313 0%, #2b1f17 50%, #3d332a 100%); }
-        .color-option[data-color="blue"] { background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #2d3748 100%); }
-        .color-option[data-color="green"] { background: linear-gradient(135deg, #0a1a0a 0%, #1a3a1a 50%, #2d4a2d 100%); }
-        .color-option[data-color="purple"] { background: linear-gradient(135deg, #1a0a1a 0%, #3a1a3a 50%, #4a2d4a 100%); }
-        .color-option[data-color="red"] { background: linear-gradient(135deg, #1a0a0a 0%, #3a1a1a 50%, #4a2d2d 100%); }
-        .color-option[data-color="orange"] { background: linear-gradient(135deg, #1a0f0a 0%, #3a2a1a 50%, #4a3a2d 100%); }
-
-        /* Responsive design for color picker */
-        @media (max-width: 768px) {
-            .color-picker-container {
-                top: 1rem;
-                right: 1rem;
-                padding: 0.6rem 0.8rem;
-                flex-direction: column;
-                gap: 0.4rem;
-                border-radius: 25px;
-                min-width: auto;
-            }
-
-            .color-picker-label {
-                font-size: 0.8rem;
-                letter-spacing: 0.3px;
-            }
-
-            .color-picker {
-                gap: 0.25rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .color-option {
-                width: 24px;
-                height: 24px;
-                border-width: 1.5px;
-            }
-
-            .color-option::before {
-                width: 8px;
-                height: 8px;
-            }
-        }
-
-        /* Extra small mobile devices */
-        @media (max-width: 480px) {
-            .color-picker-container {
-                top: 0.5rem;
-                right: 0.5rem;
-                padding: 0.5rem 0.6rem;
-                gap: 0.3rem;
-            }
-
-            .color-picker-label {
-                font-size: 0.7rem;
-            }
-
-            .color-picker {
-                gap: 0.2rem;
-            }
-
-            .color-option {
-                width: 20px;
-                height: 20px;
-                border-width: 1px;
-            }
-
-            .color-option::before {
-                width: 6px;
-                height: 6px;
-            }
-        }
 
         /* Floating decorative elements for projects section */
         .projects-section::before,
@@ -1898,7 +1752,7 @@
         /* Articles Section */
         .articles-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #e2e2e2 0%, #e2e2e2 50%, #e2e2e2  100%); /* Updated to match hero background exactly */
+            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109  100%); /* Updated to match hero background exactly */
             position: relative;
             transition: background 0.8s ease;
             overflow: hidden;
@@ -1926,7 +1780,7 @@
 
         /* Override text colors for Articles section with white background */
         .articles-section .section-title {
-            color: #000000; /* Black text for white background */
+            color: #ffffff; /* Black text for white background */
         }
 
         .articles-section .section-subtitle {
@@ -2457,10 +2311,10 @@
 
         .contact-item:hover {
             transform: translateY(-8px) scale(1.02); /* Enhanced hover effect */
-            background: #271735; /* Purple background on hover as requested */
+            background: #051109; /* Dark green background on hover as requested */
             border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3), 
-                        0 0 20px rgba(138, 43, 226, 0.2); /*S Purple glow effect */
+            box-shadow: 0 15px 40px rgba(5, 17, 9, 0.3), 
+                        0 0 20px rgba(5, 17, 9, 0.2); /* Dark green glow effect */
         }
 
         .contact-icon {
@@ -3488,10 +3342,10 @@
             <div class="hero-content">
                 <!-- IXL Logo - positioned above the title for visual hierarchy -->
                 <img src="ixl.png" alt="IXL Studio Logo" class="hero-logo">
-                <h1 class="hero-title">I CRAFT DIGITAL STORIES<span class="hero-dot">.</span></h1>
-                <p class="hero-subtitle">HARIS CHATZIANASTASIOU</p>
+                <h1 class="hero-title">i craft digital stories<span class="hero-dot">.</span></h1>
+                <p class="hero-subtitle">haris chatzianastasiou</p>
                         <p class="hero-description">
-              Let's create your vision together.
+              let's create your vision together.
         </p>
             </div>
             
@@ -3570,7 +3424,7 @@
                             </div>
                         </div>
                         <div class="about-header-text">
-                            <h2 class="section-title">Who I Am</h2>
+                            <h2 class="section-title">who am i</h2>
                             <p class="section-subtitle">
                                 I'm Haris Chatzianastasiou, a passionate full-stack developer based in Thessaloniki, Greece, with a deep commitment to creating digital experiences that matter.
                             </p>
@@ -3642,17 +3496,6 @@
             </div>
         </section>
 
-        <!-- Animated Skills Section -->
-        <section class="animated-skills-section">
-            <div class="skills-container">
-                <div class="skills-text-animation">
-                    <span class="skill-word" data-word="DESIGN">explore</span>
-                    <span class="skill-word" data-word="CODE">create</span>
-                    <span class="skill-word" data-word="DEPLOY">evolve</span>
-                </div>
-            </div>
-        </section>
-
         <!-- Services Section -->
         <section id="services" class="services-section">
             <!-- Video background -->
@@ -3663,7 +3506,7 @@
             </div>
             <div class="services-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">What I Do</h2>
+                    <h2 class="section-title">what i do</h2>
                     <p class="section-subtitle">
                         Helping you express your brand and tell your story. I design, code, deploy, and maintain your ideas to be placed on the web.
                     </p>
@@ -3705,18 +3548,6 @@
 
         <!-- Projects Section -->
         <section id="projects" class="projects-section">
-            <!-- Dynamic Color Picker -->
-            <div class="color-picker-container">
-                <span class="color-picker-label">Theme</span>
-                <div class="color-picker">
-                    <div class="color-option active" data-color="default" title="Default Theme"></div>
-                    <div class="color-option" data-color="blue" title="Blue Theme"></div>
-                    <div class="color-option" data-color="green" title="Green Theme"></div>
-                    <div class="color-option" data-color="purple" title="Purple Theme"></div>
-                    <div class="color-option" data-color="red" title="Red Theme"></div>
-                    <div class="color-option" data-color="orange" title="Orange Theme"></div>
-                </div>
-            </div>
             
             <!-- Floating decorative elements - positioned to avoid content overlap -->
             <div class="floating-element geometric" style="top: 8%; left: 8%;"></div>
@@ -3749,7 +3580,7 @@
             
             <div class="projects-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">My Work</h2>
+                    <h2 class="section-title">my work</h2>
                     <!-- <p class="section-subtitle">
                         Showcasing  projects that demonstrate my expertise in creating digital experiences.
                     </p> -->
@@ -3798,7 +3629,7 @@
             
             <div class="articles-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">Articles</h2>
+                    <h2 class="section-title">articles</h2>
                     <p class="section-subtitle">
                         Insights and thoughts on development
                     </p>
@@ -5408,238 +5239,7 @@
                 }
             });
 
-            // Dynamic Color Picker for Projects Section
-            // Initialize color picker functionality
-            const colorPicker = {
-                // Define color themes with their gradient values
-                themes: {
-                    default: 'linear-gradient(135deg, #131313 0%, #2b1f17 50%, #3d332a 100%)',
-                    blue: 'linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #2d3748 100%)',
-                    green: 'linear-gradient(135deg, #0a1a0a 0%, #1a3a1a 50%, #2d4a2d 100%)',
-                    purple: 'linear-gradient(135deg, #1a0a1a 0%, #3a1a3a 50%, #4a2d4a 100%)',
-                    red: 'linear-gradient(135deg, #1a0a0a 0%, #3a1a1a 50%, #4a2d2d 100%)',
-                    orange: 'linear-gradient(135deg, #1a0f0a 0%, #3a2a1a 50%, #4a3a2d 100%)'
-                },
-                
-                // Track initialization status
-                initialized: false,
-                
-                // Initialize the color picker
-                init: function() {
-                    console.log('Color picker init called'); // Debug log
-                    
-                    // Prevent double initialization
-                    if (this.initialized) {
-                        console.log('Color picker already initialized, skipping'); // Debug log
-                        return;
-                    }
-                    
-                    // Get all color option elements
-                    const colorOptions = document.querySelectorAll('.color-option');
-                    const projectsSection = document.querySelector('.projects-section');
-                    
-                    console.log('Found color options:', colorOptions.length); // Debug log
-                    console.log('Found projects section:', projectsSection); // Debug log
-                    
-                    // Check if elements exist
-                    if (colorOptions.length === 0) {
-                        console.error('No color options found!'); // Debug log
-                        return;
-                    }
-                    
-                    if (!projectsSection) {
-                        console.error('Projects section not found!'); // Debug log
-                        return;
-                    }
-                    
-                    // Add click event listeners to each color option
-                    colorOptions.forEach((option, index) => {
-                        console.log(`Adding click listener to option ${index}:`, option); // Debug log
-                        option.addEventListener('click', function(e) {
-                            console.log('Color option clicked!', this.getAttribute('data-color')); // Debug log
-                            e.preventDefault(); // Prevent any default behavior
-                            e.stopPropagation(); // Stop event bubbling
-                            const selectedColor = this.getAttribute('data-color');
-                            colorPicker.changeTheme(selectedColor);
-                        });
-                        
-                        // Also add a test click to verify the element is clickable
-                        option.style.pointerEvents = 'auto';
-                        option.style.userSelect = 'none';
-                    });
-                    
-                    // Store reference to projects section for animations
-                    this.projectsSection = projectsSection;
-                    
-                    // Initialize with default theme
-                    this.currentTheme = 'default';
-                    
-                    // Mark as initialized
-                    this.initialized = true;
-                    
-                    console.log('Color picker initialization complete'); // Debug log
-                },
-                
-                // Change the theme with GSAP animation
-                changeTheme: function(themeName) {
-                    console.log('Changing theme to:', themeName); // Debug log
-                    
-                    // Update active state in UI
-                    this.updateActiveState(themeName);
-                    
-                    // Get the new gradient value
-                    const newGradient = this.themes[themeName];
-                    console.log('New gradient:', newGradient); // Debug log
-                    
-                    // Animate the background change using GSAP
-                    gsap.to(this.projectsSection, {
-                        background: newGradient,
-                        duration: 1.2, // Smooth 1.2 second transition
-                        ease: "power2.out", // Smooth easing function
-                        onStart: () => {
-                            console.log('GSAP animation started'); // Debug log
-                            // Add a subtle scale effect to the section during transition
-                            gsap.to(this.projectsSection, {
-                                scale: 1.001, // Very subtle scale
-                                duration: 0.6,
-                                ease: "power2.out",
-                                yoyo: true, // Scale back to normal
-                                repeat: 1
-                            });
-                        },
-                        onComplete: () => {
-                            console.log('GSAP animation completed'); // Debug log
-                            // Add a subtle glow effect when transition completes
-                            gsap.to(this.projectsSection, {
-                                boxShadow: '0 0 30px rgba(255, 255, 255, 0.1)',
-                                duration: 0.3,
-                                ease: "power2.out",
-                                yoyo: true,
-                                repeat: 1
-                            });
-                        }
-                    });
-                    
-                    // Animate floating elements with the new theme
-                    this.animateFloatingElements(themeName);
-                    
-                    // Update current theme
-                    this.currentTheme = themeName;
-                    
-                    // Save theme preference to localStorage
-                    localStorage.setItem('projectsTheme', themeName);
-                },
-                
-                // Update the active state in the color picker UI
-                updateActiveState: function(themeName) {
-                    console.log('Updating active state to:', themeName); // Debug log
-                    
-                    // Remove active class from all options
-                    document.querySelectorAll('.color-option').forEach(option => {
-                        option.classList.remove('active');
-                    });
-                    
-                    // Add active class to selected option
-                    const selectedOption = document.querySelector(`[data-color="${themeName}"]`);
-                    if (selectedOption) {
-                        selectedOption.classList.add('active');
-                        
-                        // Add a subtle bounce animation to the selected option
-                        gsap.to(selectedOption, {
-                            scale: 1.2,
-                            duration: 0.2,
-                            ease: "back.out(1.7)",
-                            yoyo: true,
-                            repeat: 1
-                        });
-                    }
-                },
-                
-                // Animate floating elements based on theme
-                animateFloatingElements: function(themeName) {
-                    const floatingElements = document.querySelectorAll('.projects-section .floating-element');
-                    
-                    // Create different animation patterns based on theme
-                    const animationPatterns = {
-                        default: { rotation: 360, scale: 1.1, duration: 2 },
-                        blue: { rotation: -360, scale: 0.9, duration: 1.8 },
-                        green: { rotation: 180, scale: 1.2, duration: 2.2 },
-                        purple: { rotation: -180, scale: 0.8, duration: 1.6 },
-                        red: { rotation: 720, scale: 1.3, duration: 2.5 },
-                        orange: { rotation: -720, scale: 0.7, duration: 1.4 }
-                    };
-                    
-                    const pattern = animationPatterns[themeName] || animationPatterns.default;
-                    
-                    // Animate each floating element with staggered timing
-                    floatingElements.forEach((element, index) => {
-                        gsap.to(element, {
-                            rotation: pattern.rotation,
-                            scale: pattern.scale,
-                            duration: pattern.duration,
-                            ease: "power2.inOut",
-                            delay: index * 0.1, // Stagger the animations
-                            yoyo: true,
-                            repeat: 1
-                        });
-                    });
-                },
-                
-                // Load saved theme preference
-                loadSavedTheme: function() {
-                    const savedTheme = localStorage.getItem('projectsTheme');
-                    if (savedTheme && this.themes[savedTheme]) {
-                        this.changeTheme(savedTheme);
-                    } else {
-                        // Set red as default theme if no saved theme exists
-                        this.changeTheme('red');
-                    }
-                }
-            };
-            
-            // Initialize color picker when DOM is loaded
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('DOM Content Loaded - initializing color picker'); // Debug log
-                colorPicker.init();
-                colorPicker.loadSavedTheme();
-            });
-            
-            // Fallback initialization on window load
-            window.addEventListener('load', function() {
-                console.log('Window Loaded - checking color picker'); // Debug log
-                // Check if color picker was already initialized
-                const colorOptions = document.querySelectorAll('.color-option');
-                if (colorOptions.length > 0 && !colorPicker.initialized) {
-                    console.log('Re-initializing color picker on window load'); // Debug log
-                    colorPicker.init();
-                    colorPicker.loadSavedTheme();
-                }
-            });
-            
-            // Also try immediate initialization if DOM is already ready
-            if (document.readyState === 'loading') {
-                console.log('DOM still loading, will initialize on DOMContentLoaded'); // Debug log
-            } else {
-                console.log('DOM already ready, initializing immediately'); // Debug log
-                colorPicker.init();
-                colorPicker.loadSavedTheme();
-            }
-            
-            // Test function to verify color picker is working
-            function testColorPicker() {
-                console.log('Testing color picker functionality...'); // Debug log
-                const colorOptions = document.querySelectorAll('.color-option');
-                console.log('Found color options for testing:', colorOptions.length); // Debug log
-                
-                colorOptions.forEach((option, index) => {
-                    console.log(`Testing option ${index}:`, option); // Debug log
-                    console.log('Option data-color:', option.getAttribute('data-color')); // Debug log
-                    console.log('Option clickable:', option.style.cursor === 'pointer' || option.classList.contains('color-option')); // Debug log
-                });
-            }
-            
-            // Run test after a short delay
-            setTimeout(testColorPicker, 1000);
+
 
             // Expandable Sections Functionality
             // Initialize expandable sections when DOM is loaded
