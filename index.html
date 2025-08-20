@@ -28,8 +28,12 @@
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth; /* Consistent smooth scrolling */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scroll-padding-top: 90px; /* Account for fixed header */
+            /* Performance optimizations for animations */
+            will-change: scroll-position;
+            transform: translateZ(0); /* Force hardware acceleration */
         }
 
         /* Header */
@@ -47,6 +51,9 @@
             backdrop-filter: blur(20px);
             height: 90px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            /* Performance optimization for fixed header */
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .logo-container {
@@ -172,6 +179,9 @@
             position: relative;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
             overflow: hidden;
+            /* Performance optimization for animations */
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         /* Video background styling for hero section */
@@ -223,6 +233,9 @@
             transform: translateY(-50px) scale(0.8); /* Start in animated position */
             filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3)); /* Add subtle shadow for depth */
             transition: all 0.3s ease; /* Smooth transitions for hover effects */
+            /* Performance optimization for animations */
+            will-change: transform, opacity;
+            transform: translateZ(0);
         }
 
         /* Hover effect for the logo */
@@ -2227,6 +2240,18 @@
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
+        // Performance optimization: Set GSAP defaults for better performance
+        gsap.defaults({
+            ease: "power2.out", // Use simpler easing by default
+            duration: 0.8 // Shorter default duration
+        });
+
+        // Performance optimization: Configure ScrollTrigger for better performance
+        ScrollTrigger.config({
+            limitCallbacks: true, // Limit callback frequency
+            syncInterval: 16 // Sync to 60fps
+        });
+
         // Set initial states immediately to prevent flash
         gsap.set('.fade-in', { opacity: 0, y: 30 });
         gsap.set('.slide-in-left', { opacity: 0, x: -50 });
@@ -2241,53 +2266,52 @@
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', function() {
 
-            // Hero section animations - morphing wave effect
+            // Hero section animations - optimized for performance
             const heroTimeline = gsap.timeline();
             
-            // Set remaining initial states for wave animation
-            gsap.set('.hero-subtitle', { opacity: 0, x: 200, rotationY: -90 });
+            // Set remaining initial states for wave animation - simplified transforms
+            gsap.set('.hero-subtitle', { opacity: 0, x: 200 }); // Removed rotationY for better performance
             gsap.set('.hero-description', { opacity: 0, y: 100, scale: 0.5 });
             
-            // Create wave-like animation sequence
+            // Create wave-like animation sequence - optimized easing and durations
             heroTimeline
                 .to('.hero-logo', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.8,
-                    ease: "back.out(1.7)"
+                    duration: 0.6, // Reduced duration for snappier feel
+                    ease: "power2.out" // Changed from back.out for better performance
                 })
                 .to('.hero-title', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
                     alpha: 1,
-                    duration: 0.9,
+                    duration: 0.7, // Reduced duration
                     ease: "power2.out"
                 })
                 .to('.hero-subtitle', {
                     opacity: 1,
                     x: 0,
-                    rotationY: 0,
-                    duration: 1.5,
-                    ease: "elastic.out(1, 0.5)"
-                }, "-=1")
+                    duration: 1.0, // Reduced duration and removed rotationY
+                    ease: "power2.out" // Changed from elastic for better performance
+                }, "-=0.8")
                 .to('.hero-description', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1,
-                    ease: "back.out(1.7)"
-                }, "-=0.8")
+                    duration: 0.8, // Reduced duration
+                    ease: "power2.out" // Changed from back.out
+                }, "-=0.6")
                 .to('.hero-cta', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1,
-                    ease: "back.out(1.7)"
-                }, "-=0.9");
+                    duration: 0.8, // Reduced duration
+                    ease: "power2.out" // Changed from back.out
+                }, "-=0.7");
 
-            // Add letter-by-letter animation for "DIGITAL STORIES" text
+            // Add letter-by-letter animation for "DIGITAL STORIES" text - optimized
             const digitalStoriesText = document.querySelector('.hero-subtitle');
             if (digitalStoriesText) {
                 // Prepare digital stories text for letter-by-letter animation
@@ -2295,65 +2319,64 @@
                 const digitalChars = originalDigitalText.split(''); // Split into individual characters
                 digitalStoriesText.innerHTML = digitalChars.map(char => `<span class="digital-char">${char}</span>`).join(''); // Wrap each character in a span
                 
-                // Set initial state for all characters (invisible and moved down)
-                gsap.set('.digital-char', { opacity: 0, y: 30, rotationX: -45 });
+                // Set initial state for all characters - simplified transforms
+                gsap.set('.digital-char', { opacity: 0, y: 20 }); // Removed rotationX for better performance
                 
-                // Add letter-by-letter animation with wave timing
+                // Add letter-by-letter animation with optimized timing
                 heroTimeline.to('.digital-char', {
                     opacity: 1,
                     y: 0,
-                    rotationX: 0,
-                    duration: 1.2,
-                    stagger: 0.06,
-                    ease: "elastic.out(1, 0.3)"
-                }, "-=1.2"); // Start during the subtitle wave animation
+                    duration: 0.8, // Reduced duration
+                    stagger: 0.03, // Reduced stagger for faster animation
+                    ease: "power2.out" // Changed from elastic for better performance
+                }, "-=0.8"); // Adjusted timing
             }
 
-                    // Cinematic section intro animations
+            // Cinematic section intro animations - optimized for performance
         function createSectionIntroAnimation(sectionSelector, animationType = 'slide') {
             const section = document.querySelector(sectionSelector);
             if (!section) return;
 
-            // Set initial state based on animation type
+                // Set initial state based on animation type - simplified transforms
             switch(animationType) {
                 case 'slide':
                     gsap.set(section, { 
                         opacity: 0, 
-                        y: 100,
-                        scale: 0.95,
-                        rotationX: 15
-                    });
+                            y: 80, // Reduced distance
+                            scale: 0.98 // Reduced scale change
+                        }); // Removed rotationX for better performance
                     break;
                 case 'zoom':
                     gsap.set(section, { 
                         opacity: 0, 
-                        scale: 1.2,
-                        y: 50
+                            scale: 1.1, // Reduced scale change
+                            y: 40 // Reduced distance
                     });
                     break;
                 case 'reveal':
                     gsap.set(section, { 
                         opacity: 0, 
-                        clipPath: "inset(0 100% 0 0)",
-                        y: 30
-                    });
+                            y: 30 // Simplified to just opacity and y
+                        }); // Removed clipPath for better performance
                     break;
                 case 'fade':
                     gsap.set(section, { 
                         opacity: 0, 
-                        y: 60,
-                        filter: "blur(10px)"
-                    });
+                            y: 40 // Reduced distance
+                        }); // Removed filter blur for better performance
                     break;
             }
 
-            // Create the intro animation
+                // Create the intro animation - optimized ScrollTrigger settings
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
                     start: "top 85%",
                     end: "top 50%",
-                    toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        // Add performance optimizations
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                 }
             });
 
@@ -2363,9 +2386,8 @@
                         opacity: 1,
                         y: 0,
                         scale: 1,
-                        rotationX: 0,
-                        duration: 1.2,
-                        ease: "power3.out"
+                            duration: 0.8, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
                 case 'zoom':
@@ -2373,26 +2395,24 @@
                         opacity: 1,
                         scale: 1,
                         y: 0,
-                        duration: 1.5,
-                        ease: "back.out(1.7)"
+                            duration: 1.0, // Reduced duration
+                            ease: "power2.out" // Changed from back.out
                     });
                     break;
                 case 'reveal':
                     tl.to(section, {
                         opacity: 1,
-                        clipPath: "inset(0 0% 0 0)",
                         y: 0,
-                        duration: 1.3,
-                        ease: "power2.inOut"
+                            duration: 0.9, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
                 case 'fade':
                     tl.to(section, {
                         opacity: 1,
                         y: 0,
-                        filter: "blur(0px)",
-                        duration: 1.8,
-                        ease: "power2.out"
+                            duration: 1.2, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
             }
@@ -2405,7 +2425,7 @@
         createSectionIntroAnimation('#about', 'reveal');
         // Removed cinematic animation from contact section
 
-        // Cinematic section title animations
+            // Cinematic section title animations - optimized
         function createTitleAnimation(sectionSelector) {
             const section = document.querySelector(sectionSelector);
             if (!section) return;
@@ -2416,48 +2436,50 @@
             if (title) {
                 gsap.set(title, { 
                     opacity: 0, 
-                    y: 50,
-                    scale: 0.8,
-                    rotationY: 45
-                });
+                        y: 40, // Reduced distance
+                        scale: 0.9 // Reduced scale change
+                    }); // Removed rotationY for better performance
                 
                 gsap.to(title, {
                     scrollTrigger: {
                         trigger: section,
                         start: "top 75%",
                         end: "top 60%",
-                        toggleActions: "play none none reverse"
+                            toggleActions: "play none none reverse",
+                            // Add performance optimizations
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                     },
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    rotationY: 0,
-                    duration: 1.5,
-                    ease: "back.out(1.7)",
-                    delay: 0.3
+                        duration: 1.0, // Reduced duration
+                        ease: "power2.out", // Changed from back.out
+                        delay: 0.2 // Reduced delay
                 });
             }
             
             if (subtitle) {
                 gsap.set(subtitle, { 
                     opacity: 0, 
-                    y: 30,
-                    filter: "blur(5px)"
-                });
+                        y: 20 // Reduced distance
+                    }); // Removed filter blur for better performance
                 
                 gsap.to(subtitle, {
                     scrollTrigger: {
                         trigger: section,
                         start: "top 75%",
                         end: "top 60%",
-                        toggleActions: "play none none reverse"
+                            toggleActions: "play none none reverse",
+                            // Add performance optimizations
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                     },
                     opacity: 1,
                     y: 0,
-                    filter: "blur(0px)",
-                    duration: 1.2,
-                    ease: "power2.out",
-                    delay: 0.6
+                        duration: 0.8, // Reduced duration
+                        ease: "power2.out", // Simplified easing
+                        delay: 0.4 // Reduced delay
                 });
             }
         }
@@ -2468,9 +2490,9 @@
         createTitleAnimation('#articles');
         // Removed title animation from contact section
 
-        // Floating elements scroll animations
+            // Floating elements scroll animations - optimized
         function createFloatingElementAnimations() {
-            // Projects section floating elements
+                // Projects section floating elements - simplified animations
             const projectsFloatingElements = document.querySelectorAll('#projects .floating-element');
             projectsFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2478,17 +2500,19 @@
                         trigger: '#projects',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -50 : 50) * (index + 1),
-                    x: (index % 2 === 0 ? -30 : 30) * (index + 1),
-                    rotation: (index + 1) * 45,
-                    scale: 1 + (index * 0.1),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -30 : 30) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -20 : 20) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 30, // Reduced rotation
+                        scale: 1 + (index * 0.05), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // About section floating elements
+                // About section floating elements - simplified animations
             const aboutFloatingElements = document.querySelectorAll('#about .floating-element');
             aboutFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2496,17 +2520,19 @@
                         trigger: '#about',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -40 : 40) * (index + 1),
-                    x: (index % 2 === 0 ? -25 : 25) * (index + 1),
-                    rotation: (index + 1) * 30,
-                    scale: 1 + (index * 0.08),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -25 : 25) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -15 : 15) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 20, // Reduced rotation
+                        scale: 1 + (index * 0.04), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // Articles section floating elements
+                // Articles section floating elements - simplified animations
             const articlesFloatingElements = document.querySelectorAll('#articles .floating-element');
             articlesFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2514,27 +2540,30 @@
                         trigger: '#articles',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -35 : 35) * (index + 1),
-                    x: (index % 2 === 0 ? -20 : 20) * (index + 1),
-                    rotation: (index + 1) * 25,
-                    scale: 1 + (index * 0.06),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -20 : 20) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -10 : 10) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 15, // Reduced rotation
+                        scale: 1 + (index * 0.03), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // Animate the pseudo-elements with scroll
+                // Animate the pseudo-elements with scroll - simplified
             gsap.to('#projects::before', {
                 scrollTrigger: {
                     trigger: '#projects',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: -100,
-                rotation: 360,
-                scale: 1.2,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: -60, // Reduced movement
+                    rotation: 180, // Reduced rotation
+                    scale: 1.1, // Reduced scale change
                 ease: "none"
             });
 
@@ -2545,11 +2574,12 @@
                     trigger: '#about',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: -120,
-                rotation: 240,
-                scale: 1.3,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: -80, // Reduced movement
+                    rotation: 120, // Reduced rotation
+                    scale: 1.2, // Reduced scale change
                 ease: "none"
             });
 
@@ -2558,11 +2588,12 @@
                     trigger: '#about',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: 60,
-                rotation: -120,
-                scale: 0.9,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: 40, // Reduced movement
+                    rotation: -60, // Reduced rotation
+                    scale: 0.95, // Reduced scale change
                 ease: "none"
             });
         }
@@ -2570,16 +2601,18 @@
         // Initialize floating element animations
         createFloatingElementAnimations();
 
-        // Enhanced element animations
+            // Enhanced element animations - optimized
             gsap.utils.toArray('.fade-in').forEach(element => {
                 gsap.to(element, {
                     scrollTrigger: {
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                duration: 0.8,
+                    duration: 0.6, // Reduced duration
                     y: 0,
                     opacity: 1,
                 scale: 1,
@@ -2593,9 +2626,11 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 0.6,
+                    duration: 0.5, // Reduced duration
                     x: 0,
                     opacity: 1,
                     ease: "power2.out"
@@ -2608,9 +2643,11 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 0.6,
+                    duration: 0.5, // Reduced duration
                     x: 0,
                     opacity: 1,
                     ease: "power2.out"
@@ -2623,101 +2660,95 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 1,
+                    duration: 0.8, // Reduced duration
                     scale: 1,
                     opacity: 1,
-                    ease: "power3.out"
+                    ease: "power2.out" // Simplified easing
                 });
             });
 
-            // Stagger animations for service cards
+            // Stagger animations for service cards - optimized
             gsap.set('.service-card', {
                 opacity: 0,
-                y: 100
+                y: 80 // Reduced distance
             });
             gsap.to('.service-card', {
                 scrollTrigger: {
                     trigger: '.services-grid',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 0.4,
+                duration: 0.3, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.1,
+                stagger: 0.08, // Reduced stagger
                 ease: "power2.out"
             });
 
-            // Stagger animations for project cards
+            // Stagger animations for project cards - optimized
             gsap.set('.project-card', {
                 opacity: 0,
-                y: 100
+                y: 80 // Reduced distance
             });
             gsap.to('.project-card', {
                 scrollTrigger: {
                     trigger: '.projects-grid',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 0.4,
+                duration: 0.3, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.1,
+                stagger: 0.08, // Reduced stagger
                 ease: "power2.out"
             });
 
-            // Stagger animations for contact items
+            // Stagger animations for contact items - optimized
             gsap.set('.contact-item', {
                 opacity: 0,
-                y: 50
+                y: 40 // Reduced distance
             });
             gsap.to('.contact-item', {
                 scrollTrigger: {
                     trigger: '.contact-info',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 1,
+                duration: 0.8, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.2,
-                ease: "power3.out"
+                stagger: 0.15, // Reduced stagger
+                ease: "power2.out" // Simplified easing
             });
 
-            // Parallax effect for hero background
+            // Parallax effect for hero background - optimized
             gsap.to('.hero::before', {
                 scrollTrigger: {
                     trigger: '.hero',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: true
+                    scrub: 1,
+                    fastScrollEnd: true
                 },
-                y: -100,
+                y: -60, // Reduced movement
                 ease: "none"
             });
 
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        gsap.to(window, {
-                            duration: 1.5,
-                            scrollTo: {
-                                y: target,
-                                offsetY: 90
-                            },
-                            ease: "power3.inOut"
-                        });
-                    }
-                });
-            });
+            // Navigation scrolling is now handled by the consistent scrollToSection function
+            // This removes conflicting GSAP scroll behavior for better UX
 
             // Header background animation on scroll
             gsap.to('.header', {
@@ -3206,24 +3237,23 @@
             new ArticlesPagination();
         });
 
-        // Direct navigation function
-        function navigateToSection(sectionId) {
+        // Direct navigation function - Simple and consistent scrolling
+        function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
                 const targetPosition = section.offsetTop - headerHeight;
                 
-                // Use requestAnimationFrame for smoother scrolling
-                requestAnimationFrame(() => {
+                // Use consistent smooth scrolling with controlled duration
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
-                    });
                 });
             }
         }
 
-        // Single navigation setup
+        // Remove the old navigateToSection function and replace with consistent implementation
+        // Single navigation setup with improved user experience
         document.addEventListener('DOMContentLoaded', function() {
             // Remove any existing event listeners
             const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
@@ -3232,12 +3262,12 @@
                 // Clear any existing onclick handlers
                 link.onclick = null;
                 
-                // Set direct onclick handler
+                // Set direct onclick handler with consistent behavior
                 link.onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     const targetId = this.getAttribute('href').substring(1);
-                    navigateToSection(targetId);
+                    scrollToSection(targetId);
                     
                     // Close mobile menu if open
                     const navMenu = document.querySelector('.nav-menu');
@@ -3264,9 +3294,58 @@
             document.addEventListener('click', function(e) {
                 if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                     navMenu.classList.remove('active');
-                    mobileMenuBtn.classList.remove('active');
+                    mobileBtn.classList.remove('active');
                 }
             });
+        });
+
+        // Test function to verify scroll behavior (can be removed in production)
+        function testScrollBehavior() {
+            console.log('Testing scroll behavior...');
+            const sections = ['home', 'services', 'projects', 'articles', 'about', 'contact'];
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    console.log(`${sectionId}: Found at position ${section.offsetTop}`);
+                } else {
+                    console.warn(`${sectionId}: Section not found`);
+                }
+            });
+        }
+
+        // Performance monitoring function (can be removed in production)
+        function monitorPerformance() {
+            let frameCount = 0;
+            let lastTime = performance.now();
+            
+            function countFrames() {
+                frameCount++;
+                const currentTime = performance.now();
+                
+                if (currentTime - lastTime >= 1000) {
+                    const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                    console.log(`Animation FPS: ${fps}`);
+                    
+                    if (fps < 50) {
+                        console.warn('Performance warning: Low FPS detected. Consider reducing animation complexity.');
+                    }
+                    
+                    frameCount = 0;
+                    lastTime = currentTime;
+                }
+                
+                requestAnimationFrame(countFrames);
+            }
+            
+            requestAnimationFrame(countFrames);
+        }
+
+        // Call test function when page loads (remove in production)
+        document.addEventListener('DOMContentLoaded', function() {
+            testScrollBehavior();
+            // Start performance monitoring (remove in production)
+            monitorPerformance();
         });
     </script>
 </body>
