@@ -2266,23 +2266,18 @@
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', function() {
 
-            // Mobile video prevention - prevent MP4 videos from loading on mobile devices
-            // This improves performance and saves data usage on mobile
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
-            
-            if (isMobile) {
-                // Find all video elements with MP4 sources and remove them
-                const videoElements = document.querySelectorAll('video');
-                videoElements.forEach(video => {
-                    // Check if video has MP4 source
-                    const mp4Source = video.querySelector('source[src*=".mp4"]');
-                    if (mp4Source) {
-                        // Remove the video element entirely to prevent loading
-                        video.parentElement.removeChild(video);
-                        console.log('Removed MP4 video on mobile device for better performance');
-                    }
-                });
-            }
+            // Video prevention - prevent MP4 videos from loading on all devices
+            // This improves performance and saves data usage
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach(video => {
+                // Check if video has MP4 source
+                const mp4Source = video.querySelector('source[src*=".mp4"]');
+                if (mp4Source) {
+                    // Remove the video element entirely to prevent loading
+                    video.parentElement.removeChild(video);
+                    console.log('Removed MP4 video for better performance');
+                }
+            });
 
             // Hero section animations - optimized for performance
             const heroTimeline = gsap.timeline();
