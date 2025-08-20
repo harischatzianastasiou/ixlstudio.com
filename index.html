@@ -1257,27 +1257,64 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
             position: relative;
             cursor: pointer;
             backdrop-filter: blur(10px);
+            transform-style: preserve-3d; /* Enable 3D transforms */
+            perspective: 1000px; /* Add perspective for 3D effects */
         }
 
         .article-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-12px) rotateX(5deg) scale(1.02); /* Enhanced 3D hover effect */
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 
+                        0 0 30px rgba(100, 149, 237, 0.2); /* Add blue glow effect */
+            border-color: rgba(100, 149, 237, 0.3); /* Blue border on hover */
+        }
+
+        /* Add animated gradient border effect */
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, 
+                rgba(100, 149, 237, 0.3), 
+                rgba(70, 130, 180, 0.3), 
+                rgba(100, 149, 237, 0.3));
+            background-size: 200% 200%;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Gradient animation for article cards */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .article-image {
             width: 100%;
             height: 150px;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
+            filter: brightness(0.9) contrast(1.1); /* Initial filter effect */
         }
 
         .article-card:hover .article-image {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-2px); /* Enhanced scale and movement */
+            filter: brightness(1.1) contrast(1.2) saturate(1.1); /* Enhanced filter on hover */
         }
 
         .article-content {
@@ -1286,15 +1323,48 @@
 
         .article-category {
             display: inline-block;
-            background: rgba(98, 88, 62, 0.3);
-            color: #d4c4a8;
-            padding: 0.3rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            background: linear-gradient(135deg, 
+                rgba(255, 165, 0, 0.2), 
+                rgba(255, 140, 0, 0.2)); /* Warm amber gradient background */
+            color: rgba(255, 165, 0, 0.9); /* Amber text color */
+            padding: 0.4rem 1rem; /* Slightly larger padding */
+            border-radius: 15px; /* More rounded corners */
+            font-size: 0.75rem;
+            font-weight: 700; /* Bolder font */
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.8rem;
+            letter-spacing: 1.2px; /* Increased letter spacing */
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 165, 0, 0.2); /* Subtle border */
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 165, 0, 0.3), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .article-card:hover .article-category::before {
+            left: 100%; /* Shimmer effect on hover */
+        }
+
+        .article-card:hover .article-category {
+            background: linear-gradient(135deg, 
+                rgba(255, 165, 0, 0.3), 
+                rgba(255, 140, 0, 0.3)); /* Brighter on hover */
+            color: rgba(255, 255, 255, 0.95); /* White text on hover */
+            border-color: rgba(255, 165, 0, 0.4);
+            transform: translateY(-2px); /* Slight lift effect */
         }
 
         .article-title {
@@ -1606,8 +1676,69 @@
         /* Contact Section */
         .contact-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #2d1a0f 0%, #452b1a 50%, #62583e 100%); /* Brown gradient matching site palette */
+            background: linear-gradient(135deg, #2d1a0f 0%, #3d2817 50%, #4a3f2e 100%); /* Warm brown gradient */
             position: relative;
+            overflow: hidden; /* Enable overflow for animated elements */
+        }
+
+        /* Animated background elements for contact section */
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+            animation: contactGlow 12s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 165, 0, 0.03) 90deg,
+                transparent 180deg,
+                rgba(255, 140, 0, 0.02) 270deg,
+                transparent 360deg
+            );
+            animation: contactRotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Contact section background animations */
+        @keyframes contactGlow {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            33% { 
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+            66% { 
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes contactRotate {
+            0% { 
+                transform: rotate(0deg);
+            }
+            100% { 
+                transform: rotate(360deg);
+            }
         }
 
         .contact-container {
@@ -1625,11 +1756,11 @@
 
         .contact-item {
             padding: 2rem 1.5rem; /* Reduced padding like service cards */
-            background: rgba(36, 28, 24, 0.9); /* Dark background like service cards */
-            border: 1px solid rgba(160, 82, 45, 0.3); /* Border like service cards */
+            background: rgba(45, 26, 15, 0.9); /* Dark brown background matching new theme */
+            border: 1px solid rgba(255, 165, 0, 0.3); /* Amber border matching new theme */
             border-radius: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -1637,10 +1768,11 @@
         }
 
         .contact-item:hover {
-            transform: translateY(-5px);
-            background: rgb(17, 16, 15); /* Darker background on hover like service cards */
-            border-color: rgba(100, 86, 51, 0.4);
-            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            transform: translateY(-8px) scale(1.02); /* Enhanced hover effect */
+            background: rgba(61, 40, 23, 0.95); /* Brighter brown background on hover */
+            border-color: rgba(255, 165, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 165, 0, 0.2), 
+                        0 0 20px rgba(255, 165, 0, 0.1); /* Amber glow effect */
         }
 
         .contact-icon {
@@ -1650,8 +1782,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #452b1a; /* Brand color like service icons */
-            transition: all 0.3s ease;
+            color: rgba(255, 165, 0, 0.8); /* Amber color matching new theme */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
         }
 
         /* SVG icon styling for contact icons */
@@ -1663,8 +1795,8 @@
         }
 
         .contact-item:hover .contact-icon {
-            color: #ffffff; /* White on hover like service icons */
-            transform: scale(1.1); /* Scale up on hover */
+            color: rgba(255, 255, 255, 0.95); /* White on hover */
+            transform: scale(1.15) rotate(5deg); /* Enhanced scale and rotation */
         }
 
         .contact-label {
@@ -1682,14 +1814,32 @@
         }
 
         .contact-value a {
-            color: #452b1a; /* Brand color for links */
+            color: rgba(255, 165, 0, 0.9); /* Amber color for links matching new theme */
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+
+        .contact-value a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(255, 165, 0, 0.8), 
+                rgba(255, 140, 0, 0.8));
+            transition: width 0.3s ease;
         }
 
         .contact-value a:hover {
-            color: #ffffff; /* White on hover */
+            color: rgba(255, 255, 255, 0.95); /* White on hover */
+        }
+
+        .contact-value a:hover::after {
+            width: 100%; /* Animated underline effect */
         }
 
         /* Footer */
@@ -2656,7 +2806,7 @@
         createSectionIntroAnimation('#projects', 'zoom');
         createSectionIntroAnimation('#articles', 'fade');
         createSectionIntroAnimation('#about', 'reveal');
-        // Removed cinematic animation from contact section
+        createSectionIntroAnimation('#contact', 'fade'); // Changed to fade animation for different effect
 
             // Cinematic section title animations - optimized
         function createTitleAnimation(sectionSelector) {
@@ -2721,7 +2871,7 @@
         createTitleAnimation('#services');
         createTitleAnimation('#projects');
         createTitleAnimation('#articles');
-        // Removed title animation from contact section
+        createTitleAnimation('#contact'); // Added back contact title animation
 
             // Floating elements scroll animations - optimized
         function createFloatingElementAnimations() {
@@ -2833,6 +2983,32 @@
 
         // Initialize floating element animations
         createFloatingElementAnimations();
+
+        // Enhanced contact section animations
+        gsap.utils.toArray('.contact-item').forEach((item, index) => {
+            gsap.set(item, { 
+                opacity: 0, 
+                y: 60, // Increased distance for more dramatic effect
+                scale: 0.9 // Add scale effect
+            });
+            
+            gsap.to(item, {
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: "top 75%",
+                    end: "top 60%",
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
+                },
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.0,
+                delay: index * 0.2, // Stagger the animations
+                ease: "back.out(1.7)" // Dynamic easing
+            });
+        });
 
             // Enhanced element animations - optimized
             gsap.utils.toArray('.fade-in').forEach(element => {
@@ -3482,16 +3658,65 @@
             }
             
             animateArticles() {
-                // Reset animations for new articles
-                gsap.set('.article-card', { opacity: 0, y: 50 });
+                // Reset animations for new articles with enhanced initial states
+                gsap.set('.article-card', { 
+                    opacity: 0, 
+                    y: 80, // Increased distance for more dramatic effect
+                    scale: 0.9, // Add scale effect
+                    rotationX: 15 // Add subtle 3D rotation
+                });
                 
-                // Animate articles in sequence
+                // Enhanced article animations with creative effects
                 gsap.to('.article-card', {
                     opacity: 1,
                     y: 0,
-                    duration: 0.8,
-                    stagger: 0.2,
-                    ease: "power2.out"
+                    scale: 1,
+                    rotationX: 0,
+                    duration: 1.2, // Longer duration for smoother effect
+                    stagger: 0.3, // Increased stagger for better visual flow
+                    ease: "back.out(1.7)", // More dynamic easing
+                    onComplete: () => {
+                        // Add hover effect animations after cards appear
+                        gsap.utils.toArray('.article-card').forEach((card, index) => {
+                            // Add floating animation to each card
+                            gsap.to(card, {
+                                y: -5, // Subtle floating effect
+                                duration: 2,
+                                ease: "power2.inOut",
+                                yoyo: true,
+                                repeat: -1,
+                                delay: index * 0.2 // Stagger the floating
+                            });
+                        });
+                    }
+                });
+                
+                // Animate article content elements with staggered timing
+                gsap.to('.article-card .article-category', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.5 // Start after cards appear
+                });
+                
+                gsap.to('.article-card .article-title', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.7
+                });
+                
+                gsap.to('.article-card .article-excerpt', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.9
                 });
             }
             
