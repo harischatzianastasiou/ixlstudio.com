@@ -184,26 +184,123 @@
             transform: translateZ(0);
         }
 
-        /* Video background styling for hero section */
-        .hero .video-filter-wrapper {
+        /* Animated background effect to replace video */
+        .animated-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: rgba(18, 18, 18, 0.5); /* Increased opacity for more visible #121212 background */
-            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
+            overflow: hidden;
         }
 
-        .hero .sticky-video {
+        .bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
-            pointer-events: none;
-            user-select: none;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        }
+
+        /* Layer 1: Subtle gradient movement */
+        .bg-layer-1 {
+            background: linear-gradient(45deg, 
+                rgba(10, 10, 10, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 25%, 
+                rgba(10, 10, 10, 0.8) 50%, 
+                rgba(26, 26, 26, 0.6) 75%, 
+                rgba(10, 10, 10, 0.8) 100%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        /* Layer 2: Blue accent movement */
+        .bg-layer-2 {
+            background: radial-gradient(circle at 30% 20%, 
+                rgba(100, 149, 237, 0.15) 0%, 
+                transparent 50%);
+            animation: goldenShift 12s ease-in-out infinite;
+        }
+
+        /* Layer 3: Secondary blue accent */
+        .bg-layer-3 {
+            background: radial-gradient(circle at 70% 80%, 
+                rgba(70, 130, 180, 0.1) 0%, 
+                transparent 50%);
+            animation: goldenShift2 15s ease-in-out infinite reverse;
+        }
+
+        /* Layer 4: Subtle texture movement */
+        .bg-layer-4 {
+            background: 
+                radial-gradient(circle at 20% 60%, 
+                    rgba(255, 255, 255, 0.02) 0%, 
+                    transparent 30%),
+                radial-gradient(circle at 80% 40%, 
+                    rgba(255, 255, 255, 0.02) 0%, 
+                    transparent 30%);
+            animation: textureMove 20s linear infinite;
+        }
+
+        /* Layer 5: Dynamic overlay */
+        .bg-layer-5 {
+            background: 
+                linear-gradient(90deg, 
+                    transparent 0%, 
+                    rgba(100, 149, 237, 0.05) 50%, 
+                    transparent 100%);
+            animation: overlaySweep 10s ease-in-out infinite;
+        }
+
+        /* Animation keyframes */
+        @keyframes gradientShift {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            25% { transform: translateX(-2%) translateY(-1%) scale(1.02); }
+            50% { transform: translateX(1%) translateY(-2%) scale(0.98); }
+            75% { transform: translateX(-1%) translateY(1%) scale(1.01); }
+        }
+
+        @keyframes goldenShift {
+            0%, 100% { 
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.15;
+            }
+            33% { 
+                transform: translateX(5%) translateY(-3%) scale(1.1);
+                opacity: 0.2;
+            }
+            66% { 
+                transform: translateX(-3%) translateY(5%) scale(0.9);
+                opacity: 0.1;
+            }
+        }
+
+        @keyframes goldenShift2 {
+            0%, 100% { 
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.1;
+            }
+            50% { 
+                transform: translateX(-5%) translateY(-5%) scale(1.2);
+                opacity: 0.15;
+            }
+        }
+
+        @keyframes textureMove {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            100% { transform: translateX(10%) translateY(-10%) rotate(360deg); }
+        }
+
+        @keyframes overlaySweep {
+            0%, 100% { 
+                transform: translateX(-100%) translateY(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translateX(0%) translateY(0);
+                opacity: 0.05;
+            }
         }
 
         .hero::before {
@@ -802,21 +899,91 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        /* Elegant grid background pattern */
+        .services-grid::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: -2rem;
+            right: -2rem;
+            bottom: -2rem;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(100, 149, 237, 0.03) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(100, 149, 237, 0.03) 50%, transparent 51%);
+            background-size: 60px 60px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .services-grid.animate::before {
+            opacity: 1;
         }
 
         .service-card {
-            background: rgba(36, 28, 24, 0.9);
-            border: 1px solid rgba(160, 82, 45, 0.3);
-            border-radius: 20px;
-            padding: 2rem 1.5rem; /* Reduced padding to decrease height */
+            background: rgba(18, 18, 18, 0.95);
+            border: 2px solid rgba(100, 149, 237, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(100, 149, 237, 0.05);
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+        }
+
+        /* Elegant card background with gradient */
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(100, 149, 237, 0.02) 0%, 
+                rgba(100, 149, 237, 0.05) 50%, 
+                rgba(100, 149, 237, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        /* Scroll-based color filling animation */
+        .service-card .fill-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(100, 149, 237, 0.1) 0%, 
+                rgba(100, 149, 237, 0.2) 50%, 
+                rgba(100, 149, 237, 0.1) 100%);
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .service-card.fill-active .fill-animation {
+            transform: translateY(0);
+        }
+
+        /* Card content positioning */
+        .service-card > * {
+            position: relative;
+            z-index: 3;
         }
 
         .service-card::before {
@@ -845,24 +1012,62 @@
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            background: rgb(17, 16, 15);
-            border-color: rgba(100, 86, 51, 0.4);
-            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(100, 149, 237, 0.3);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(100, 149, 237, 0.2),
+                0 0 40px rgba(100, 149, 237, 0.1);
         }
 
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Elegant icon container with background */
         .service-icon {
-            width: 60px; /* Fixed width for consistent sizing */
-            height: 60px; /* Fixed height for consistent sizing */
-            margin: 0 auto 1.5rem auto; /* Reduced bottom margin */
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #452b1a; /* Brand color for icons */
-            transition: all 0.3s ease; /* Smooth transitions for hover effects */
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            background: rgba(100, 149, 237, 0.05);
+            border-radius: 50%;
+            border: 2px solid rgba(100, 149, 237, 0.1);
         }
 
-        /* SVG icon styling */
+        /* Letter icon styling */
+        .icon-letter {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            transition: color 0.3s ease, transform 0.6s ease;
+        }
+
+        .service-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(100, 149, 237, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover .service-icon::before {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        /* SVG icon styling - keeping for potential future use */
         .service-icon svg {
             width: 100%; /* Fill the container */
             height: 100%; /* Fill the container */
@@ -872,8 +1077,32 @@
 
         /* Hover effect for icons */
         .service-card:hover .service-icon {
-            color: #ffffff; /* White color on hover */
-            transform: scale(1.1); /* Slight scale up on hover */
+            transform: scale(1.1);
+            background: rgba(100, 149, 237, 0.1);
+            border-color: rgba(100, 149, 237, 0.3);
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.2);
+        }
+
+        /* Keep letters white on hover and add 360-degree rotation */
+        .service-card:hover .icon-letter,
+        .service-card:active .icon-letter,
+        .service-card:focus .icon-letter {
+            color: rgba(255, 255, 255, 1);
+            transform: rotate(360deg);
+            transition: color 0.3s ease, transform 0.6s ease;
+        }
+
+        /* Focus styling for accessibility */
+        .service-card:focus {
+            outline: 2px solid rgba(100, 149, 237, 0.8);
+            outline-offset: 4px;
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+        }
+
+        /* Ensure cards are focusable and have proper cursor */
+        .service-card {
+            cursor: pointer;
+            user-select: none;
         }
 
         .service-title {
@@ -894,7 +1123,7 @@
         /* Projects Section */
         .projects-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #0e070e 0%, #1a1614 100%);
+            background: linear-gradient(135deg, #36114f 0%, #1a1614 100%);
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
@@ -1859,11 +2088,13 @@
     <main class="main-content">
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <!-- Video background -->
-            <div class="video-filter-wrapper">
-                <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
-                    <source src="1.mp4" type="video/mp4">
-                </video>
+            <!-- Animated background effect to replace video -->
+            <div class="animated-background">
+                <div class="bg-layer bg-layer-1"></div>
+                <div class="bg-layer bg-layer-2"></div>
+                <div class="bg-layer bg-layer-3"></div>
+                <div class="bg-layer bg-layer-4"></div>
+                <div class="bg-layer bg-layer-5"></div>
             </div>
             <div class="hero-content">
                 <!-- IXL Logo - positioned above the title for visual hierarchy -->
@@ -1892,41 +2123,30 @@
                     </p>
                 </div>
                 <div class="services-grid">
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="UI/UX Design Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 12l2 2 4-4"/>
-                                <path d="M21 12c-1 0-2-1-2-2s1-2 2-2 2 1 2 2-1 2-2 2z"/>
-                                <path d="M3 12c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2z"/>
-                                <path d="M12 3c0 1-1 2-2 2s-2-1-2-2 1-2 2-2 2 1 2 2z"/>
-                                <path d="M12 21c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2z"/>
-                            </svg>
+                            <span class="icon-letter">I</span>
                         </div>
                         <h3 class="service-title">UI/UX Design</h3>
                         <p class="service-description">
                             User-centered design that combines aesthetics with functionality.
                         </p>
                     </div>
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="Frontend Development Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
+                            <span class="icon-letter">X</span>
                         </div>
                         <h3 class="service-title">Frontend Development</h3>
                         <p class="service-description">
                             Modern, responsive user interfaces built with React and vanilla JavaScript.
                         </p>
                     </div>
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="Backend Development Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 12l2 2 4-4"/>
-                                <path d="M21 12c-1 0-2-1-2-2s1-2 2-2 2 1 2 2-1 2-2 2z"/>
-                                <path d="M3 12c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2z"/>
-                                <path d="M12 3c0 1-1 2-2 2s-2-1-2-2 1-2 2-2 2 1 2 2z"/>
-                                <path d="M12 21c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2z"/>
-                            </svg>
+                            <span class="icon-letter">L</span>
                         </div>
                         <h3 class="service-title">Backend Development</h3>
                         <p class="service-description">
@@ -2684,6 +2904,80 @@
                 });
             });
 
+            // Elegant services grid animations with scroll-based color filling
+            const servicesGrid = document.querySelector('.services-grid');
+            const serviceCards = document.querySelectorAll('.service-card');
+
+            // Animate grid background pattern
+            ScrollTrigger.create({
+                trigger: servicesGrid,
+                start: "top 80%",
+                end: "bottom 20%",
+                onEnter: () => {
+                    servicesGrid.classList.add('animate');
+                },
+                onLeave: () => {
+                    servicesGrid.classList.remove('animate');
+                },
+                onEnterBack: () => {
+                    servicesGrid.classList.add('animate');
+                },
+                onLeaveBack: () => {
+                    servicesGrid.classList.remove('animate');
+                }
+            });
+
+            // Staggered card animations with color filling effect
+            serviceCards.forEach((card, index) => {
+                // Initial card animation
+                gsap.fromTo(card, 
+                    {
+                        opacity: 0,
+                        y: 60,
+                        scale: 0.9,
+                        rotationX: 15
+                    },
+                    {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            end: "bottom 15%",
+                            toggleActions: "play none none reverse",
+                            fastScrollEnd: true
+                        },
+                        duration: 0.8,
+                        delay: index * 0.2, // Stagger effect
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        rotationX: 0,
+                        ease: "power2.out"
+                    }
+                );
+
+                // Color filling animation on scroll
+                ScrollTrigger.create({
+                    trigger: card,
+                    start: "top 70%",
+                    end: "bottom 30%",
+                    onEnter: () => {
+                        card.classList.add('fill-active');
+                    },
+                    onLeave: () => {
+                        card.classList.remove('fill-active');
+                    },
+                    onEnterBack: () => {
+                        card.classList.add('fill-active');
+                    },
+                    onLeaveBack: () => {
+                        card.classList.remove('fill-active');
+                    }
+                });
+
+                            // Remove the continuous rotation animation - letters should stay straight
+            // We'll handle rotation only on hover with CSS
+            });
+
             // Stagger animations for service cards - optimized
             gsap.set('.service-card', {
                 opacity: 0,
@@ -3359,6 +3653,64 @@
             testScrollBehavior();
             // Start performance monitoring (remove in production)
             monitorPerformance();
+            
+            // Enhanced service card interaction handling for both desktop and mobile
+            const serviceCards = document.querySelectorAll('.service-card');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+            
+            serviceCards.forEach(card => {
+                const iconLetter = card.querySelector('.icon-letter');
+                
+                // Function to rotate letter 360 degrees
+                function rotateLetter() {
+                    iconLetter.style.transform = 'rotate(360deg)';
+                    iconLetter.style.transition = 'transform 0.6s ease';
+                }
+                
+                // Function to reset letter rotation
+                function resetLetter() {
+                    setTimeout(() => {
+                        iconLetter.style.transform = 'rotate(0deg)';
+                    }, 600); // Match the CSS transition duration
+                }
+                
+                // Focus event - rotate when card gets focus
+                card.addEventListener('focus', function(e) {
+                    rotateLetter();
+                });
+                
+                // Blur event - reset when card loses focus
+                card.addEventListener('blur', function(e) {
+                    resetLetter();
+                });
+                
+                // Mouse enter event for desktop hover
+                card.addEventListener('mouseenter', function(e) {
+                    if (!isMobile) {
+                        rotateLetter();
+                    }
+                });
+                
+                // Mouse leave event for desktop
+                card.addEventListener('mouseleave', function(e) {
+                    if (!isMobile) {
+                        resetLetter();
+                    }
+                });
+                
+                // Mobile touch handling
+                if (isMobile) {
+                    // Touch start event
+                    card.addEventListener('touchstart', function(e) {
+                        rotateLetter();
+                    });
+                    
+                    // Touch end event - reset after animation
+                    card.addEventListener('touchend', function(e) {
+                        resetLetter();
+                    });
+                }
+            });
         });
     </script>
 </body>
