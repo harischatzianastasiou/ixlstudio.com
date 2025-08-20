@@ -28,8 +28,12 @@
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth; /* Consistent smooth scrolling */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scroll-padding-top: 90px; /* Account for fixed header */
+            /* Performance optimizations for animations */
+            will-change: scroll-position;
+            transform: translateZ(0); /* Force hardware acceleration */
         }
 
         /* Header */
@@ -47,6 +51,9 @@
             backdrop-filter: blur(20px);
             height: 90px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            /* Performance optimization for fixed header */
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .logo-container {
@@ -168,32 +175,133 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Changed from center to create asymmetrical layout */
             position: relative;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #131313 0%, #4d2405 50%, #3d332a  100%);
             overflow: hidden;
+            padding: 0 8rem; /* Added horizontal padding for better spacing */
+            /* Performance optimization for animations */
+            will-change: transform;
+            transform: translateZ(0);
         }
 
-        /* Video background styling for hero section */
-        .hero .video-filter-wrapper {
+        /* Animated background effect to replace video */
+        .animated-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: rgba(18, 18, 18, 0.5); /* Increased opacity for more visible #121212 background */
-            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
+            overflow: hidden;
         }
 
-        .hero .sticky-video {
+        .bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
-            pointer-events: none;
-            user-select: none;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        }
+
+        /* Layer 1: Subtle gradient movement */
+        .bg-layer-1 {
+            background: linear-gradient(45deg, 
+                rgba(10, 10, 10, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 25%, 
+                rgba(10, 10, 10, 0.8) 50%, 
+                rgba(26, 26, 26, 0.6) 75%, 
+                rgba(10, 10, 10, 0.8) 100%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        /* Layer 2: Blue accent movement */
+        .bg-layer-2 {
+            background: radial-gradient(circle at 30% 20%, 
+                rgba(100, 149, 237, 0.15) 0%, 
+                transparent 50%);
+            animation: goldenShift 12s ease-in-out infinite;
+        }
+
+        /* Layer 3: Secondary blue accent */
+        .bg-layer-3 {
+            background: radial-gradient(circle at 70% 80%, 
+                rgba(70, 130, 180, 0.1) 0%, 
+                transparent 50%);
+            animation: goldenShift2 15s ease-in-out infinite reverse;
+        }
+
+        /* Layer 4: Subtle texture movement */
+        .bg-layer-4 {
+            background: 
+                radial-gradient(circle at 20% 60%, 
+                    rgba(255, 255, 255, 0.02) 0%, 
+                    transparent 30%),
+                radial-gradient(circle at 80% 40%, 
+                    rgba(255, 255, 255, 0.02) 0%, 
+                    transparent 30%);
+            animation: textureMove 20s linear infinite;
+        }
+
+        /* Layer 5: Dynamic overlay */
+        .bg-layer-5 {
+            background: 
+                linear-gradient(90deg, 
+                    transparent 0%, 
+                    rgba(100, 149, 237, 0.05) 50%, 
+                    transparent 100%);
+            animation: overlaySweep 10s ease-in-out infinite;
+        }
+
+        /* Animation keyframes */
+        @keyframes gradientShift {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            25% { transform: translateX(-2%) translateY(-1%) scale(1.02); }
+            50% { transform: translateX(1%) translateY(-2%) scale(0.98); }
+            75% { transform: translateX(-1%) translateY(1%) scale(1.01); }
+        }
+
+        @keyframes goldenShift {
+            0%, 100% { 
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.15;
+            }
+            33% { 
+                transform: translateX(5%) translateY(-3%) scale(1.1);
+                opacity: 0.2;
+            }
+            66% { 
+                transform: translateX(-3%) translateY(5%) scale(0.9);
+                opacity: 0.1;
+            }
+        }
+
+        @keyframes goldenShift2 {
+            0%, 100% { 
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.1;
+            }
+            50% { 
+                transform: translateX(-5%) translateY(-5%) scale(1.2);
+                opacity: 0.15;
+            }
+        }
+
+        @keyframes textureMove {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            100% { transform: translateX(10%) translateY(-10%) rotate(360deg); }
+        }
+
+        @keyframes overlaySweep {
+            0%, 100% { 
+                transform: translateX(-100%) translateY(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translateX(0%) translateY(0);
+                opacity: 0.05;
+            }
         }
 
         .hero::before {
@@ -203,26 +311,30 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(184, 134, 11, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 20%, rgba(54, 27, 6, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(61, 51, 42, 0.1) 0%, transparent 50%); /* Updated to new palette colors */
             pointer-events: none;
         }
 
         .hero-content {
-            text-align: center;
+            text-align: left; /* Changed from center to left for asymmetrical layout */
             z-index: 10;
             position: relative;
+            max-width: 800px; /* Added max-width for better content control */
         }
 
         /* Hero Logo - positioned above the title with proper sizing and spacing */
         .hero-logo {
-            width: clamp(80px, 15vw, 150px); /* Responsive width that scales with viewport */
+            width: clamp(60px, 12vw, 120px); /* Reduced size for better proportion */
             height: auto; /* Maintain aspect ratio */
-            margin-bottom: 2rem; /* Space between logo and title */
+            margin-bottom: 1.5rem; /* Reduced spacing */
             opacity: 0; /* Start hidden for animation */
             transform: translateY(-50px) scale(0.8); /* Start in animated position */
             filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3)); /* Add subtle shadow for depth */
             transition: all 0.3s ease; /* Smooth transitions for hover effects */
+            /* Performance optimization for animations */
+            will-change: transform, opacity;
+            transform: translateZ(0);
         }
 
         /* Hover effect for the logo */
@@ -232,61 +344,169 @@
         }
 
         .hero-title {
-            font-size: clamp(2rem, 6vw, 6rem);
+            font-size: clamp(3rem, 8vw, 8rem); /* Increased size for more impact */
             font-weight: 900;
-            line-height: 0.8;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
+            line-height: 0.85; /* Adjusted line height */
+            margin-bottom: 1.5rem; /* Increased spacing */
+            letter-spacing: -0.03em; /* Tighter letter spacing for modern look */
             color: #ffffff;
             text-transform: uppercase;
+            position: relative; /* Added for pseudo-element */
+        }
+
+        /* Add modern underline effect to title */
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px; /* Fixed width for modern look */
+            height: 4px;
+            background: linear-gradient(90deg, #051109, rgba(5, 17, 9, 0.5));
+            border-radius: 2px;
         }
 
         .hero-subtitle {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            font-weight: 400;
-            color: #888;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
+            font-size: clamp(1.4rem, 3.5vw, 2.5rem); /* Increased size */
+            font-weight: 300; /* Lighter weight for modern look */
+            color: #cccccc; /* Brighter color for better contrast */
+            margin-bottom: 2.5rem; /* Increased spacing */
+            letter-spacing: 3px; /* Increased letter spacing */
             text-transform: uppercase;
+            opacity: 0.9; /* Slight transparency for depth */
         }
 
         .hero-description {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: #aaa;
-            max-width: 600px;
-            margin: 0 auto 3rem auto;
-            line-height: 1.6;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem); /* Increased size */
+            color: #aaaaaa;
+            max-width: 500px; /* Reduced max-width for better readability */
+            margin: 0 0 4rem 0; /* Adjusted margins */
+            line-height: 1.8; /* Increased line height */
+            font-weight: 400;
+            opacity: 0.8; /* Added transparency for modern look */
         }
 
         .hero-cta {
             display: inline-block;
-            padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, #452b1a 0%, #2d1a0f 100%);
+            padding: 1.5rem 4rem; /* Increased padding */
+            background: linear-gradient(135deg, #051109 0%, rgba(5, 17, 9, 0.8) 100%); /* Updated to new theme color */
             color: #fff;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 600; /* Slightly lighter weight */
+            font-size: 1.1rem; /* Increased size */
             text-transform: uppercase;
             letter-spacing: 2px;
             border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(69, 43, 26, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
+            box-shadow: 0 15px 40px rgba(5, 17, 9, 0.3); /* Updated shadow */
             opacity: 0; /* Hide initially to prevent flash */
             transform: translateY(-100px) scale(0.5); /* Start in animated position */
+            position: relative; /* Added for hover effects */
+            overflow: hidden; /* For pseudo-element effects */
+        }
+
+        /* Modern button hover effect */
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
         }
 
         .hero-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(69, 43, 26, 0.4);
+            transform: translateY(-5px); /* Increased lift */
+            box-shadow: 0 20px 50px rgba(5, 17, 9, 0.4); /* Enhanced shadow */
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Add floating elements to hero for modern look */
+        .hero-floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: floatHero 20s ease-in-out infinite;
+        }
+
+        .hero-floating-element:nth-child(1) {
+            top: 20%;
+            right: 15%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .hero-floating-element:nth-child(2) {
+            top: 60%;
+            right: 25%;
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform: rotate(45deg);
+            animation-delay: -5s;
+        }
+
+        .hero-floating-element:nth-child(3) {
+            top: 30%;
+            right: 8%;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation-delay: -10s;
+        }
+
+        @keyframes floatHero {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            33% { transform: translateY(-20px) rotate(120deg); opacity: 0.15; }
+            66% { transform: translateY(15px) rotate(240deg); opacity: 0.08; }
         }
 
         /* About Section */
         .about-section {
-            padding: 8rem 4rem;
-            background: #ffffff; /* Solid white background */
+            padding: 10rem 4rem; /* Increased padding for more breathing room */
+            background: rgba(14,27,6,255); /* Same background as services section */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
+        }
+
+        /* Video background styling for about section - same as services */
+        .about-section .video-filter-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: rgba(14,27,6,255); /* Same background as services section */
+            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
+        }
+
+        .about-section .sticky-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
+            pointer-events: none;
+            user-select: none;
         }
 
         /* Floating decorative elements for about section */
@@ -295,12 +515,12 @@
             position: absolute;
             width: 300px;
             height: 300px;
-            border: 3px solid rgba(0, 0, 0, 0.05);
+            border: 3px solid rgba(255, 255, 255, 0.05); /* Updated to white with low opacity for dark background */
             border-radius: 50%;
             top: 5%;
             right: 10%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1; /* Above video background */
             animation: float3 12s ease-in-out infinite;
         }
 
@@ -309,12 +529,12 @@
             position: absolute;
             width: 150px;
             height: 150px;
-            border: 2px solid rgba(0, 0, 0, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.03); /* Updated to white with low opacity for dark background */
             border-radius: 50%;
             bottom: 20%;
             left: 5%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1; /* Above video background */
             animation: float4 8s ease-in-out infinite reverse;
         }
 
@@ -337,6 +557,8 @@
             flex-direction: column;
             gap: 3rem;
             align-items: center;
+            position: relative;
+            z-index: 1; /* Above video background */
         }
 
         .about-section-title {
@@ -344,7 +566,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #000000; /* Black text for white background */
+            color: #ffffff; /* White text for dark background */
             margin-bottom: 1rem;
         }
 
@@ -362,7 +584,7 @@
             line-height: 1.1;
             text-transform: uppercase;
             letter-spacing: -0.02em;
-            color: #000000; /* Black text for white background */
+            color: #ffffff; /* White text for dark background */
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -401,12 +623,12 @@
         .content-section-education,
         .content-section-experience {
             padding: 2rem 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.1); /* Dark border for white background */
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* White border for dark background */
         }
 
         .content-section-contact {
             padding: 2rem 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.1); /* Dark border for white background */
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* White border for dark background */
         }
 
         /* Always expanded sections */
@@ -431,7 +653,7 @@
             margin-top: 1rem;
             background: rgba(255, 255, 255, 0.95); /* More opaque white background */
             border-radius: 10px;
-            border-left: 3px solid #62583e;
+            border-left: 3px solid #051109; /* Updated to match the new theme color */
             backdrop-filter: blur(10px); /* Blur effect for better readability */
             color: #000000; /* Black text for white background */
             text-align: left; /* Left-align text for better readability */
@@ -462,7 +684,7 @@
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border-bottom: 2px solid #452b1a;
+            border-bottom: 2px solid #051109; /* Updated to match the new theme color */
             padding-bottom: 0.5rem;
         }
 
@@ -486,20 +708,20 @@
         }
 
         .expandable-content .contact-link {
-            color: #452b1a !important; /* Brand color for links */
+            color: #051109 !important; /* Updated to match the new theme color */
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .expandable-content .contact-link:hover {
-            color: #2d1a0f !important; /* Darker brand color on hover */
+            color: rgba(5, 17, 9, 0.7) !important; /* Lighter version of the theme color on hover */
             text-decoration: underline;
         }
 
         /* CV-like structure improvements */
         .expandable-content h3 {
-            color: #452b1a !important;
+            color: #051109 !important; /* Updated to match the new theme color */
             font-size: 1.2rem;
             font-weight: 600;
             margin: 1.5rem 0 0.5rem 0;
@@ -560,7 +782,7 @@
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border-bottom: 2px solid #452b1a;
+            border-bottom: 2px solid #051109; /* Updated to match the new theme color */
             padding-bottom: 0.5rem;
         }
 
@@ -584,20 +806,20 @@
         }
 
         .expandable-content.expanded .contact-link {
-            color: #452b1a !important; /* Brand color for links */
+            color: #051109 !important; /* Updated to match the new theme color */
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .expandable-content.expanded .contact-link:hover {
-            color: #2d1a0f !important; /* Darker brand color on hover */
+            color: rgba(5, 17, 9, 0.7) !important; /* Lighter version of the theme color on hover */
             text-decoration: underline;
         }
 
         /* CV-like structure improvements */
         .expandable-content.expanded h3 {
-            color: #452b1a !important;
+            color: #051109 !important; /* Updated to match the new theme color */
             font-size: 1.2rem;
             font-weight: 600;
             margin: 1.5rem 0 0.5rem 0;
@@ -663,7 +885,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 1rem;
-            color: #000000; /* Black text for white background */
+            color: #ffffff; /* White text for dark background */
         }
 
         .content-text {
@@ -734,7 +956,7 @@
 
         /* Services Section */
         .services-section {
-            padding: 8rem 4rem;
+            padding: 10rem 4rem; /* Increased padding for more breathing room */
             position: relative;
             overflow: hidden;
         }
@@ -747,7 +969,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: rgba(18, 18, 18, 0.5); /* Increased opacity for more visible #121212 background */
+            background: rgba(14,27,6,255); /* Increased opacity for more visible #121212 background */
             filter: contrast(1.1) saturate(1.2) hue-rotate(30deg) sepia(0.3);
         }
 
@@ -762,48 +984,144 @@
         }
 
         .services-container {
-            max-width: 1200px;
+            max-width: 1400px; /* Increased max-width for better layout */
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
 
         .section-header {
-            text-align: center;
-            margin-bottom: 6rem;
+            text-align: left; /* Changed to left alignment for modern look */
+            margin-bottom: 8rem; /* Increased spacing */
+            max-width: 600px; /* Added max-width for better typography */
         }
 
         .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
+            font-size: clamp(3rem, 6vw, 5rem); /* Increased size for more impact */
+            font-weight: 900; /* Increased weight */
+            margin-bottom: 2rem; /* Increased spacing */
             color: #ffffff;
+            line-height: 0.9; /* Tighter line height for modern look */
+            letter-spacing: -0.02em; /* Tighter letter spacing */
         }
 
         .section-subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem); /* Increased size */
+            color: #cccccc; /* Brighter color */
+            max-width: 500px; /* Reduced max-width for better readability */
+            margin: 0; /* Removed auto margin */
+            line-height: 1.6; /* Increased line height */
+            font-weight: 300; /* Lighter weight for modern look */
+            opacity: 0.8; /* Added transparency for depth */
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: 1fr 1fr 1fr; /* Fixed 3-column layout for better control */
+            gap: 3rem; /* Increased gap for better spacing */
+            position: relative;
+            padding: 2rem 0;
+            align-items: start; /* Align items to top for better visual balance */
+        }
+
+        /* Responsive grid adjustments */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr 1fr; /* 2 columns on medium screens */
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 2rem;
+            }
+        }
+
+        /* Elegant grid background pattern */
+        .services-grid::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: -2rem;
+            right: -2rem;
+            bottom: -2rem;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(100, 149, 237, 0.03) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(100, 149, 237, 0.03) 50%, transparent 51%);
+            background-size: 60px 60px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .services-grid.animate::before {
+            opacity: 1;
         }
 
         .service-card {
-            background: rgba(36, 28, 24, 0.9);
-            border: 1px solid rgba(160, 82, 45, 0.3);
-            border-radius: 20px;
-            padding: 2rem 1.5rem; /* Reduced padding to decrease height */
-            text-align: center;
-            transition: all 0.3s ease;
+            background: rgba(61,51,42,255);
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Updated border for modern look */
+            border-radius: 16px; /* Reduced border radius for modern look */
+            padding: 3rem 2.5rem; /* Increased padding */
+            text-align: left; /* Changed to left alignment for modern look */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.05); /* Updated shadow */
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            min-height: 320px; /* Added minimum height for consistency */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Better content distribution */
+        }
+
+        /* Elegant card background with gradient */
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(100, 149, 237, 0.02) 0%, 
+                rgba(100, 149, 237, 0.05) 50%, 
+                rgba(100, 149, 237, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        /* Scroll-based color filling animation */
+        .service-card .fill-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgb(37, 35, 33) 0%, 
+                rgb(61, 51, 42) 50%, 
+                rgb(32, 29, 27) 100%);
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .service-card.fill-active .fill-animation {
+            transform: translateY(0);
+        }
+
+        /* Card content positioning */
+        .service-card > * {
+            position: relative;
+            z-index: 3;
         }
 
         .service-card::before {
@@ -813,7 +1131,7 @@
             left: var(--mouse-x, 50%);
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.06) 30%, rgba(255, 255, 255, 0.03) 60%, transparent 70%); /* Very subtle white gradient for hover circle */
+            background: radial-gradient(circle, rgba(61,51,42, 0.479) 0%, rgba(61,51,42, 0.479) 30%, rgba(61,51,42, 0.479) 60%, transparent 70%); /* Very subtle white gradient for hover circle */
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: top 0.05s ease, left 0.05s ease, opacity 0.3s ease;
@@ -832,24 +1150,62 @@
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            background: rgb(17, 16, 15);
-            border-color: rgba(100, 86, 51, 0.4);
-            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(23, 24, 26, 0.3);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(100, 149, 237, 0.2),
+                0 0 40px rgba(100, 149, 237, 0.1);
         }
 
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Elegant icon container with background */
         .service-icon {
-            width: 60px; /* Fixed width for consistent sizing */
-            height: 60px; /* Fixed height for consistent sizing */
-            margin: 0 auto 1.5rem auto; /* Reduced bottom margin */
+            width: 60px; /* Reduced size for better proportion */
+            height: 60px;
+            margin: 0 0 2rem 0; /* Removed auto margins, added bottom margin */
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #452b1a; /* Brand color for icons */
-            transition: all 0.3s ease; /* Smooth transitions for hover effects */
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            background: rgba(5, 17, 9, 0.8); /* Updated to theme color */
+            border-radius: 12px; /* Changed to rounded rectangle for modern look */
+            border: 1px solid rgba(5, 17, 9, 0.3); /* Updated border */
         }
 
-        /* SVG icon styling */
+        /* Letter icon styling */
+        .icon-letter {
+            font-size: 1.8rem; /* Reduced size */
+            font-weight: 700;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            transition: color 0.3s ease, transform 0.6s ease;
+        }
+
+        .service-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(14,27,6,0.1) 0%, transparent 50%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover .service-icon::before {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        /* SVG icon styling - keeping for potential future use */
         .service-icon svg {
             width: 100%; /* Fill the container */
             height: 100%; /* Fill the container */
@@ -859,29 +1215,56 @@
 
         /* Hover effect for icons */
         .service-card:hover .service-icon {
-            color: #ffffff; /* White color on hover */
-            transform: scale(1.1); /* Slight scale up on hover */
+            transform: scale(1.1);
+            background: rgb(17, 17, 17);
+            border-color: rgba(54,27,6,0.3);
+            box-shadow: 0 0 20px rgba(54,27,6,0.2);
+        }
+
+        /* Keep letters white on hover and add 360-degree rotation */
+        .service-card:hover .icon-letter,
+        .service-card:active .icon-letter,
+        .service-card:focus .icon-letter {
+            color: rgba(255, 255, 255, 1);
+            transform: rotate(360deg);
+            transition: color 0.3s ease, transform 0.6s ease;
+        }
+
+        /* Focus styling for accessibility */
+        .service-card:focus {
+            outline: 2px solid rgba(100, 149, 237, 0.8);
+            outline-offset: 4px;
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+        }
+
+        /* Ensure cards are focusable and have proper cursor */
+        .service-card {
+            cursor: pointer;
+            user-select: none;
         }
 
         .service-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem; /* Increased size */
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 0.75rem; /* Reduced margin to decrease height */
+            margin-bottom: 1rem; /* Increased margin */
             text-transform: uppercase;
             letter-spacing: 1px;
+            line-height: 1.2; /* Added line height */
         }
 
         .service-description {
-            font-size: 1rem;
-            color: #f0f0f0;
-            line-height: 1.6;
+            font-size: 1.1rem; /* Increased size */
+            color: #cccccc; /* Updated color */
+            line-height: 1.7; /* Increased line height */
+            font-weight: 300; /* Lighter weight for modern look */
+            opacity: 0.9; /* Added transparency for depth */
         }
 
         /* Projects Section */
         .projects-section {
-            padding: 8rem 4rem;
-            background: linear-gradient(135deg, #0e070e 0%, #1a1614 100%);
+            padding: 10rem 4rem; /* Increased padding for more breathing room */
+            background: linear-gradient(135deg, #131313 0%, #2b1f17 50%, #3d332a  100%); /* Updated to match hero background exactly */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
@@ -977,7 +1360,7 @@
         /* Articles Section */
         .articles-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #1a1614 0%, #2d1a0f 100%);
+            background: linear-gradient(135deg, #131313 0%, #2b1f17 50%, #3d332a  100%); /* Updated to match hero background exactly */
             position: relative;
             transition: background 0.8s ease;
             overflow: hidden;
@@ -1015,27 +1398,64 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
             position: relative;
             cursor: pointer;
             backdrop-filter: blur(10px);
+            transform-style: preserve-3d; /* Enable 3D transforms */
+            perspective: 1000px; /* Add perspective for 3D effects */
         }
 
         .article-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-12px) rotateX(5deg) scale(1.02); /* Enhanced 3D hover effect */
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 
+                        0 0 30px rgba(100, 149, 237, 0.2); /* Add blue glow effect */
+            border-color: rgba(100, 149, 237, 0.3); /* Blue border on hover */
+        }
+
+        /* Add animated gradient border effect */
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, 
+                rgba(100, 149, 237, 0.3), 
+                rgba(70, 130, 180, 0.3), 
+                rgba(100, 149, 237, 0.3));
+            background-size: 200% 200%;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Gradient animation for article cards */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .article-image {
             width: 100%;
             height: 150px;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
+            filter: brightness(0.9) contrast(1.1); /* Initial filter effect */
         }
 
         .article-card:hover .article-image {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-2px); /* Enhanced scale and movement */
+            filter: brightness(1.1) contrast(1.2) saturate(1.1); /* Enhanced filter on hover */
         }
 
         .article-content {
@@ -1044,15 +1464,48 @@
 
         .article-category {
             display: inline-block;
-            background: rgba(98, 88, 62, 0.3);
-            color: #d4c4a8;
-            padding: 0.3rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            background: linear-gradient(135deg, 
+                rgba(5, 17, 9, 0.2), 
+                rgba(5, 17, 9, 0.2)); /* Dark green gradient background using #051109 */
+            color: #051109; /* Dark green text color */
+            padding: 0.4rem 1rem; /* Slightly larger padding */
+            border-radius: 15px; /* More rounded corners */
+            font-size: 0.75rem;
+            font-weight: 700; /* Bolder font */
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.8rem;
+            letter-spacing: 1.2px; /* Increased letter spacing */
+            margin-bottom: 1rem;
+            border: 1px solid rgba(5, 17, 9, 0.3); /* Subtle border using #051109 */
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(5, 17, 9, 0.3), 
+                transparent); /* Updated to use #051109 */
+            transition: left 0.5s ease;
+        }
+
+        .article-card:hover .article-category::before {
+            left: 100%; /* Shimmer effect on hover */
+        }
+
+        .article-card:hover .article-category {
+            background: linear-gradient(135deg, 
+                rgba(5, 17, 9, 0.4), 
+                rgba(5, 17, 9, 0.4)); /* Brighter #051109 on hover */
+            color: rgba(255, 255, 255, 0.95); /* White text on hover */
+            border-color: rgba(5, 17, 9, 0.6); /* Updated border color */
+            transform: translateY(-2px); /* Slight lift effect */
         }
 
         .article-title {
@@ -1364,8 +1817,69 @@
         /* Contact Section */
         .contact-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #2d1a0f 0%, #452b1a 50%, #62583e 100%); /* Brown gradient matching site palette */
+            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Warm brown gradient */
             position: relative;
+            overflow: hidden; /* Enable overflow for animated elements */
+        }
+
+        /* Animated background elements for contact section */
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+            animation: contactGlow 12s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 165, 0, 0.03) 90deg,
+                transparent 180deg,
+                rgba(255, 140, 0, 0.02) 270deg,
+                transparent 360deg
+            );
+            animation: contactRotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Contact section background animations */
+        @keyframes contactGlow {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            33% { 
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+            66% { 
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes contactRotate {
+            0% { 
+                transform: rotate(0deg);
+            }
+            100% { 
+                transform: rotate(360deg);
+            }
         }
 
         .contact-container {
@@ -1383,11 +1897,11 @@
 
         .contact-item {
             padding: 2rem 1.5rem; /* Reduced padding like service cards */
-            background: rgba(36, 28, 24, 0.9); /* Dark background like service cards */
-            border: 1px solid rgba(160, 82, 45, 0.3); /* Border like service cards */
+            background: rgba(45, 26, 15, 0.9); /* Dark brown background matching new theme */
+            border: 1px solid rgba(255, 165, 0, 0.3); /* Amber border matching new theme */
             border-radius: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -1395,10 +1909,11 @@
         }
 
         .contact-item:hover {
-            transform: translateY(-5px);
-            background: rgb(17, 16, 15); /* Darker background on hover like service cards */
-            border-color: rgba(100, 86, 51, 0.4);
-            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            transform: translateY(-8px) scale(1.02); /* Enhanced hover effect */
+            background: rgba(61, 40, 23, 0.95); /* Brighter brown background on hover */
+            border-color: rgba(255, 165, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 165, 0, 0.2), 
+                        0 0 20px rgba(255, 165, 0, 0.1); /* Amber glow effect */
         }
 
         .contact-icon {
@@ -1408,8 +1923,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #452b1a; /* Brand color like service icons */
-            transition: all 0.3s ease;
+            color: #051109; /* Dark green color matching the new theme */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
         }
 
         /* SVG icon styling for contact icons */
@@ -1421,8 +1936,8 @@
         }
 
         .contact-item:hover .contact-icon {
-            color: #ffffff; /* White on hover like service icons */
-            transform: scale(1.1); /* Scale up on hover */
+            color: rgba(255, 255, 255, 0.95); /* White on hover */
+            transform: scale(1.15) rotate(5deg); /* Enhanced scale and rotation */
         }
 
         .contact-label {
@@ -1440,14 +1955,32 @@
         }
 
         .contact-value a {
-            color: #452b1a; /* Brand color for links */
+            color: #051109; /* Dark green color for links matching new theme */
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+
+        .contact-value a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(5, 17, 9, 0.8), 
+                rgba(5, 17, 9, 0.8)); /* Updated to use #051109 */
+            transition: width 0.3s ease;
         }
 
         .contact-value a:hover {
-            color: #ffffff; /* White on hover */
+            color: rgba(255, 255, 255, 0.95); /* White on hover */
+        }
+
+        .contact-value a:hover::after {
+            width: 100%; /* Animated underline effect */
         }
 
         /* Footer */
@@ -1815,6 +2348,21 @@
         .scale-in {
             /* GSAP will handle the animation */
         }
+
+        /* Specific styling for expandable headers in about section */
+        .about-section .expandable-header .content-title {
+            color: #ffffff; /* White text for dark background */
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0; /* Remove bottom margin since it's in a header */
+            transition: all 0.3s ease;
+        }
+
+        .about-section .expandable-header .content-title:hover {
+            color: rgba(255, 255, 255, 0.8); /* Slightly transparent white on hover */
+        }
     </style>
 </head>
 <body>
@@ -1846,20 +2394,31 @@
     <main class="main-content">
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <!-- Video background -->
-            <div class="video-filter-wrapper">
-                <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
-                    <source src="1.mp4" type="video/mp4">
-                </video>
+            <!-- Animated background effect to replace video -->
+            <div class="animated-background">
+                <div class="bg-layer bg-layer-1"></div>
+                <div class="bg-layer bg-layer-2"></div>
+                <div class="bg-layer bg-layer-3"></div>
+                <div class="bg-layer bg-layer-4"></div>
+                <div class="bg-layer bg-layer-5"></div>
             </div>
+            
+            <!-- Floating elements for modern look -->
+            <div class="hero-floating-elements">
+                <div class="hero-floating-element"></div>
+                <div class="hero-floating-element"></div>
+                <div class="hero-floating-element"></div>
+            </div>
+            
             <div class="hero-content">
                 <!-- IXL Logo - positioned above the title for visual hierarchy -->
                 <img src="ixl.png" alt="IXL Studio Logo" class="hero-logo">
                 <h1 class="hero-title">IXLSTUDIO</h1>
-                <p class="hero-subtitle">CRAFTING DIGITAL STORIES.</p>
-                <p class="hero-description" >
-                    IXL <br> × <br> Haris Chatzianastasiou
+                <p class="hero-subtitle">CRAFTING DIGITAL STORIES</p>
+                <p class="hero-description">
+                    Full-stack development studio creating modern web experiences that combine cutting-edge technology with timeless design principles.
                 </p>
+                <a href="#projects" class="hero-cta" onclick="scrollToSection('projects')">View Our Work</a>
             </div>
         </section>
 
@@ -1873,51 +2432,40 @@
             </div>
             <div class="services-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">Services</h2>
+                    <h2 class="section-title">What We Do</h2>
                     <p class="section-subtitle">
-                        Complete full-stack development solutions from frontend to backend, design to deployment.
+                        Comprehensive digital solutions that transform ideas into powerful, scalable applications.
                     </p>
                 </div>
                 <div class="services-grid">
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="UI/UX Design Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 12l2 2 4-4"/>
-                                <path d="M21 12c-1 0-2-1-2-2s1-2 2-2 2 1 2 2-1 2-2 2z"/>
-                                <path d="M3 12c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2z"/>
-                                <path d="M12 3c0 1-1 2-2 2s-2-1-2-2 1-2 2-2 2 1 2 2z"/>
-                                <path d="M12 21c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2z"/>
-                            </svg>
+                            <span class="icon-letter">I</span>
                         </div>
                         <h3 class="service-title">UI/UX Design</h3>
                         <p class="service-description">
-                            User-centered design that combines aesthetics with functionality.
+                            Creating intuitive user experiences through thoughtful design that balances aesthetics with functionality, ensuring every interaction feels natural and engaging.
                         </p>
                     </div>
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="Frontend Development Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
+                            <span class="icon-letter">X</span>
                         </div>
                         <h3 class="service-title">Frontend Development</h3>
                         <p class="service-description">
-                            Modern, responsive user interfaces built with React and vanilla JavaScript.
+                            Building modern, responsive interfaces using cutting-edge technologies like React and vanilla JavaScript, delivering seamless user experiences across all devices.
                         </p>
                     </div>
-                    <div class="service-card scale-in">
+                    <div class="service-card scale-in" tabindex="0" role="button" aria-label="Backend Development Service">
+                        <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 12l2 2 4-4"/>
-                                <path d="M21 12c-1 0-2-1-2-2s1-2 2-2 2 1 2 2-1 2-2 2z"/>
-                                <path d="M3 12c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2z"/>
-                                <path d="M12 3c0 1-1 2-2 2s-2-1-2-2 1-2 2-2 2 1 2 2z"/>
-                                <path d="M12 21c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2z"/>
-                            </svg>
+                            <span class="icon-letter">L</span>
                         </div>
                         <h3 class="service-title">Backend Development</h3>
                         <p class="service-description">
-                            Robust server-side solutions using Java and Spring Boot.
+                            Developing robust, scalable server-side solutions with Java and Spring Boot, ensuring your applications are secure, fast, and ready for growth.
                         </p>
                     </div>
                 </div>
@@ -1957,9 +2505,9 @@
             
             <div class="projects-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">Featured Projects</h2>
+                    <h2 class="section-title">Our Work</h2>
                     <p class="section-subtitle">
-                        Discover latest work
+                        Showcasing innovative projects that demonstrate our expertise in creating exceptional digital experiences.
                     </p>
                 </div>
                 <div class="projects-grid">
@@ -2044,52 +2592,58 @@
 
         <!-- About Section -->
         <section id="about" class="about-section">
+            <!-- Video background - same as services section -->
+            <div class="video-filter-wrapper">
+                <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
+                    <source src="1.mp4" type="video/mp4">
+                </video>
+            </div>
             <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
-            <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);"></div>
-            <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(0,0,0,0.04);"></div>
-            <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent);"></div>
-            <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(0,0,0,0.07);"></div>
-            <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(0,0,0,0.03);"></div>
-            <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent);"></div>
-            <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(0,0,0,0.04);"></div>
-            <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.09), transparent);"></div>
-            <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(0,0,0,0.03);"></div>
-            <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.07), transparent);"></div>
-            <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(0,0,0,0.04);"></div>
-            <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(0,0,0,0.07);"></div>
-            <div class="floating-element diamond" style="bottom: 15%; right: 18%; border-color: rgba(0,0,0,0.04);"></div>
-            <div class="floating-element dot" style="bottom: 25%; left: 6%; background: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element triangle" style="bottom: 35%; right: 25%; transform: rotate(270deg); border-bottom-color: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(0,0,0,0.04);"></div>
-            <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(0,0,0,0.09);"></div>
-            <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(0,0,0,0.07);"></div>
-            <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);"></div>
-            <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(0,0,0,0.10);"></div>
-            <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(0,0,0,0.05);"></div>
-            <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.11), transparent);"></div>
-            <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(0,0,0,0.09);"></div>
-            <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(0,0,0,0.07);"></div>
-            <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(0,0,0,0.06);"></div>
-            <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(0,0,0,0.09);"></div>
-            <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(0,0,0,0.10), transparent);"></div>
-            <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(0,0,0,0.07);"></div>
-            <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(0,0,0,0.08);"></div>
-            <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(0,0,0,0.06);"></div>
+            <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
+            <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
+            <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
+            <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
+            <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
+            <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
+            <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
+            <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
+            <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
+            <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
+            <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
+            <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+            <div class="floating-element diamond" style="bottom: 15%; right: 18%; border-color: rgba(255,255,255,0.04);"></div>
+            <div class="floating-element dot" style="bottom: 25%; left: 6%; background: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element triangle" style="bottom: 35%; right: 25%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
+            <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
+            <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
+            <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+            <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
+            <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
+            <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
+            <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
+            <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
+            <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
+            <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
+            <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
+            <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+            <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
+            <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
             
             <div class="about-container">
                 <!-- Content sections - Natural reading flow -->
@@ -2102,15 +2656,15 @@
                         </div>
                     </div>
                     <h1 class="quote-text fade-in" id="animatedQuote">
-                        Meet the creator
+                        Who We Are
                     </h1>
                         
                     </div>
 
-                    <div class="philosophy-text">
-                            My name is Haris Chatzianastasiou. I'm a full-stack developer based in Thessaloniki, Greece.<br><br> 
-                            I believe that every project should tell a unique story. An experience that resonates with users, all while serving its functional purpose effectively and reliably.<br><br>
-                            <strong>IXLstudio</strong> is a place to share this vision. Feel free to explore my projects, read about development insights, or reach out if you have an interesting project I could help you with.
+                    <div class="philosophy-text" style="color: #ffffff;">
+                            I'm Haris Chatzianastasiou, a passionate full-stack developer based in Thessaloniki, Greece, with a deep commitment to creating digital experiences that matter.<br><br> 
+                            At IXLstudio, we believe that exceptional software is born from the perfect marriage of innovative technology and thoughtful design. Every project we undertake is an opportunity to craft something unique—a digital story that not only serves its purpose but creates meaningful connections with users.<br><br>
+                            Our approach combines cutting-edge development practices with timeless design principles, ensuring that every solution we deliver is both technically robust and aesthetically compelling. Whether you're looking to build the next big thing or refine an existing platform, we're here to turn your vision into reality.
                         </div>
 
                     <!-- Education section -->
@@ -2227,6 +2781,18 @@
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
+        // Performance optimization: Set GSAP defaults for better performance
+        gsap.defaults({
+            ease: "power2.out", // Use simpler easing by default
+            duration: 0.8 // Shorter default duration
+        });
+
+        // Performance optimization: Configure ScrollTrigger for better performance
+        ScrollTrigger.config({
+            limitCallbacks: true, // Limit callback frequency
+            syncInterval: 16 // Sync to 60fps
+        });
+
         // Set initial states immediately to prevent flash
         gsap.set('.fade-in', { opacity: 0, y: 30 });
         gsap.set('.slide-in-left', { opacity: 0, x: -50 });
@@ -2241,53 +2807,65 @@
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', function() {
 
-            // Hero section animations - morphing wave effect
+            // Video prevention - prevent MP4 videos from loading on all devices
+            // This improves performance and saves data usage
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach(video => {
+                // Check if video has MP4 source
+                const mp4Source = video.querySelector('source[src*=".mp4"]');
+                if (mp4Source) {
+                    // Remove the video element entirely to prevent loading
+                    video.parentElement.removeChild(video);
+                    console.log('Removed MP4 video for better performance');
+                }
+            });
+
+            // Hero section animations - optimized for performance
             const heroTimeline = gsap.timeline();
             
-            // Set remaining initial states for wave animation
-            gsap.set('.hero-subtitle', { opacity: 0, x: 200, rotationY: -90 });
+            // Set remaining initial states for wave animation - simplified transforms
+            gsap.set('.hero-subtitle', { opacity: 0, x: 200 }); // Removed rotationY for better performance
             gsap.set('.hero-description', { opacity: 0, y: 100, scale: 0.5 });
             
-            // Create wave-like animation sequence
+            // Create wave-like animation sequence - optimized easing and durations
             heroTimeline
                 .to('.hero-logo', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.8,
-                    ease: "back.out(1.7)"
+                    duration: 0.6, // Reduced duration for snappier feel
+                    ease: "power2.out" // Changed from back.out for better performance
                 })
                 .to('.hero-title', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
                     alpha: 1,
-                    duration: 0.9,
+                    duration: 0.7, // Reduced duration
                     ease: "power2.out"
                 })
                 .to('.hero-subtitle', {
                     opacity: 1,
                     x: 0,
-                    rotationY: 0,
-                    duration: 1.5,
-                    ease: "elastic.out(1, 0.5)"
-                }, "-=1")
+                    duration: 1.0, // Reduced duration and removed rotationY
+                    ease: "power2.out" // Changed from elastic for better performance
+                }, "-=0.8")
                 .to('.hero-description', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1,
-                    ease: "back.out(1.7)"
-                }, "-=0.8")
+                    duration: 0.8, // Reduced duration
+                    ease: "power2.out" // Changed from back.out
+                }, "-=0.6")
                 .to('.hero-cta', {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1,
-                    ease: "back.out(1.7)"
-                }, "-=0.9");
+                    duration: 0.8, // Reduced duration
+                    ease: "power2.out" // Changed from back.out
+                }, "-=0.7");
 
-            // Add letter-by-letter animation for "DIGITAL STORIES" text
+            // Add letter-by-letter animation for "DIGITAL STORIES" text - optimized
             const digitalStoriesText = document.querySelector('.hero-subtitle');
             if (digitalStoriesText) {
                 // Prepare digital stories text for letter-by-letter animation
@@ -2295,65 +2873,64 @@
                 const digitalChars = originalDigitalText.split(''); // Split into individual characters
                 digitalStoriesText.innerHTML = digitalChars.map(char => `<span class="digital-char">${char}</span>`).join(''); // Wrap each character in a span
                 
-                // Set initial state for all characters (invisible and moved down)
-                gsap.set('.digital-char', { opacity: 0, y: 30, rotationX: -45 });
+                // Set initial state for all characters - simplified transforms
+                gsap.set('.digital-char', { opacity: 0, y: 20 }); // Removed rotationX for better performance
                 
-                // Add letter-by-letter animation with wave timing
+                // Add letter-by-letter animation with optimized timing
                 heroTimeline.to('.digital-char', {
                     opacity: 1,
                     y: 0,
-                    rotationX: 0,
-                    duration: 1.2,
-                    stagger: 0.06,
-                    ease: "elastic.out(1, 0.3)"
-                }, "-=1.2"); // Start during the subtitle wave animation
+                    duration: 0.8, // Reduced duration
+                    stagger: 0.03, // Reduced stagger for faster animation
+                    ease: "power2.out" // Changed from elastic for better performance
+                }, "-=0.8"); // Adjusted timing
             }
 
-                    // Cinematic section intro animations
+            // Cinematic section intro animations - optimized for performance
         function createSectionIntroAnimation(sectionSelector, animationType = 'slide') {
             const section = document.querySelector(sectionSelector);
             if (!section) return;
 
-            // Set initial state based on animation type
+                // Set initial state based on animation type - simplified transforms
             switch(animationType) {
                 case 'slide':
                     gsap.set(section, { 
                         opacity: 0, 
-                        y: 100,
-                        scale: 0.95,
-                        rotationX: 15
-                    });
+                            y: 80, // Reduced distance
+                            scale: 0.98 // Reduced scale change
+                        }); // Removed rotationX for better performance
                     break;
                 case 'zoom':
                     gsap.set(section, { 
                         opacity: 0, 
-                        scale: 1.2,
-                        y: 50
+                            scale: 1.1, // Reduced scale change
+                            y: 40 // Reduced distance
                     });
                     break;
                 case 'reveal':
                     gsap.set(section, { 
                         opacity: 0, 
-                        clipPath: "inset(0 100% 0 0)",
-                        y: 30
-                    });
+                            y: 30 // Simplified to just opacity and y
+                        }); // Removed clipPath for better performance
                     break;
                 case 'fade':
                     gsap.set(section, { 
                         opacity: 0, 
-                        y: 60,
-                        filter: "blur(10px)"
-                    });
+                            y: 40 // Reduced distance
+                        }); // Removed filter blur for better performance
                     break;
             }
 
-            // Create the intro animation
+                // Create the intro animation - optimized ScrollTrigger settings
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
                     start: "top 85%",
                     end: "top 50%",
-                    toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        // Add performance optimizations
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                 }
             });
 
@@ -2363,9 +2940,8 @@
                         opacity: 1,
                         y: 0,
                         scale: 1,
-                        rotationX: 0,
-                        duration: 1.2,
-                        ease: "power3.out"
+                            duration: 0.8, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
                 case 'zoom':
@@ -2373,26 +2949,24 @@
                         opacity: 1,
                         scale: 1,
                         y: 0,
-                        duration: 1.5,
-                        ease: "back.out(1.7)"
+                            duration: 1.0, // Reduced duration
+                            ease: "power2.out" // Changed from back.out
                     });
                     break;
                 case 'reveal':
                     tl.to(section, {
                         opacity: 1,
-                        clipPath: "inset(0 0% 0 0)",
                         y: 0,
-                        duration: 1.3,
-                        ease: "power2.inOut"
+                            duration: 0.9, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
                 case 'fade':
                     tl.to(section, {
                         opacity: 1,
                         y: 0,
-                        filter: "blur(0px)",
-                        duration: 1.8,
-                        ease: "power2.out"
+                            duration: 1.2, // Reduced duration
+                            ease: "power2.out" // Simplified easing
                     });
                     break;
             }
@@ -2403,9 +2977,9 @@
         createSectionIntroAnimation('#projects', 'zoom');
         createSectionIntroAnimation('#articles', 'fade');
         createSectionIntroAnimation('#about', 'reveal');
-        // Removed cinematic animation from contact section
+        createSectionIntroAnimation('#contact', 'fade'); // Changed to fade animation for different effect
 
-        // Cinematic section title animations
+            // Cinematic section title animations - optimized
         function createTitleAnimation(sectionSelector) {
             const section = document.querySelector(sectionSelector);
             if (!section) return;
@@ -2416,48 +2990,50 @@
             if (title) {
                 gsap.set(title, { 
                     opacity: 0, 
-                    y: 50,
-                    scale: 0.8,
-                    rotationY: 45
-                });
+                        y: 40, // Reduced distance
+                        scale: 0.9 // Reduced scale change
+                    }); // Removed rotationY for better performance
                 
                 gsap.to(title, {
                     scrollTrigger: {
                         trigger: section,
                         start: "top 75%",
                         end: "top 60%",
-                        toggleActions: "play none none reverse"
+                            toggleActions: "play none none reverse",
+                            // Add performance optimizations
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                     },
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    rotationY: 0,
-                    duration: 1.5,
-                    ease: "back.out(1.7)",
-                    delay: 0.3
+                        duration: 1.0, // Reduced duration
+                        ease: "power2.out", // Changed from back.out
+                        delay: 0.2 // Reduced delay
                 });
             }
             
             if (subtitle) {
                 gsap.set(subtitle, { 
                     opacity: 0, 
-                    y: 30,
-                    filter: "blur(5px)"
-                });
+                        y: 20 // Reduced distance
+                    }); // Removed filter blur for better performance
                 
                 gsap.to(subtitle, {
                     scrollTrigger: {
                         trigger: section,
                         start: "top 75%",
                         end: "top 60%",
-                        toggleActions: "play none none reverse"
+                            toggleActions: "play none none reverse",
+                            // Add performance optimizations
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                     },
                     opacity: 1,
                     y: 0,
-                    filter: "blur(0px)",
-                    duration: 1.2,
-                    ease: "power2.out",
-                    delay: 0.6
+                        duration: 0.8, // Reduced duration
+                        ease: "power2.out", // Simplified easing
+                        delay: 0.4 // Reduced delay
                 });
             }
         }
@@ -2466,11 +3042,11 @@
         createTitleAnimation('#services');
         createTitleAnimation('#projects');
         createTitleAnimation('#articles');
-        // Removed title animation from contact section
+        createTitleAnimation('#contact'); // Added back contact title animation
 
-        // Floating elements scroll animations
+            // Floating elements scroll animations - optimized
         function createFloatingElementAnimations() {
-            // Projects section floating elements
+                // Projects section floating elements - simplified animations
             const projectsFloatingElements = document.querySelectorAll('#projects .floating-element');
             projectsFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2478,17 +3054,19 @@
                         trigger: '#projects',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -50 : 50) * (index + 1),
-                    x: (index % 2 === 0 ? -30 : 30) * (index + 1),
-                    rotation: (index + 1) * 45,
-                    scale: 1 + (index * 0.1),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -30 : 30) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -20 : 20) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 30, // Reduced rotation
+                        scale: 1 + (index * 0.05), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // About section floating elements
+                // About section floating elements - simplified animations
             const aboutFloatingElements = document.querySelectorAll('#about .floating-element');
             aboutFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2496,17 +3074,19 @@
                         trigger: '#about',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -40 : 40) * (index + 1),
-                    x: (index % 2 === 0 ? -25 : 25) * (index + 1),
-                    rotation: (index + 1) * 30,
-                    scale: 1 + (index * 0.08),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -25 : 25) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -15 : 15) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 20, // Reduced rotation
+                        scale: 1 + (index * 0.04), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // Articles section floating elements
+                // Articles section floating elements - simplified animations
             const articlesFloatingElements = document.querySelectorAll('#articles .floating-element');
             articlesFloatingElements.forEach((element, index) => {
                 gsap.to(element, {
@@ -2514,27 +3094,30 @@
                         trigger: '#articles',
                         start: "top bottom",
                         end: "bottom top",
-                        scrub: 1
-                    },
-                    y: (index % 2 === 0 ? -35 : 35) * (index + 1),
-                    x: (index % 2 === 0 ? -20 : 20) * (index + 1),
-                    rotation: (index + 1) * 25,
-                    scale: 1 + (index * 0.06),
+                            scrub: 1,
+                            // Add performance optimizations
+                            fastScrollEnd: true
+                        },
+                        y: (index % 2 === 0 ? -20 : 20) * (index + 1), // Reduced movement
+                        x: (index % 2 === 0 ? -10 : 10) * (index + 1), // Reduced movement
+                        rotation: (index + 1) * 15, // Reduced rotation
+                        scale: 1 + (index * 0.03), // Reduced scale change
                     ease: "none"
                 });
             });
 
-            // Animate the pseudo-elements with scroll
+                // Animate the pseudo-elements with scroll - simplified
             gsap.to('#projects::before', {
                 scrollTrigger: {
                     trigger: '#projects',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: -100,
-                rotation: 360,
-                scale: 1.2,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: -60, // Reduced movement
+                    rotation: 180, // Reduced rotation
+                    scale: 1.1, // Reduced scale change
                 ease: "none"
             });
 
@@ -2545,11 +3128,12 @@
                     trigger: '#about',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: -120,
-                rotation: 240,
-                scale: 1.3,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: -80, // Reduced movement
+                    rotation: 120, // Reduced rotation
+                    scale: 1.2, // Reduced scale change
                 ease: "none"
             });
 
@@ -2558,11 +3142,12 @@
                     trigger: '#about',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: 1
-                },
-                y: 60,
-                rotation: -120,
-                scale: 0.9,
+                        scrub: 1,
+                        fastScrollEnd: true
+                    },
+                    y: 40, // Reduced movement
+                    rotation: -60, // Reduced rotation
+                    scale: 0.95, // Reduced scale change
                 ease: "none"
             });
         }
@@ -2570,16 +3155,44 @@
         // Initialize floating element animations
         createFloatingElementAnimations();
 
-        // Enhanced element animations
+        // Enhanced contact section animations
+        gsap.utils.toArray('.contact-item').forEach((item, index) => {
+            gsap.set(item, { 
+                opacity: 0, 
+                y: 60, // Increased distance for more dramatic effect
+                scale: 0.9 // Add scale effect
+            });
+            
+            gsap.to(item, {
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: "top 75%",
+                    end: "top 60%",
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
+                },
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.0,
+                delay: index * 0.2, // Stagger the animations
+                ease: "back.out(1.7)" // Dynamic easing
+            });
+        });
+
+            // Enhanced element animations - optimized
             gsap.utils.toArray('.fade-in').forEach(element => {
                 gsap.to(element, {
                     scrollTrigger: {
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                duration: 0.8,
+                    duration: 0.6, // Reduced duration
                     y: 0,
                     opacity: 1,
                 scale: 1,
@@ -2593,9 +3206,11 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 0.6,
+                    duration: 0.5, // Reduced duration
                     x: 0,
                     opacity: 1,
                     ease: "power2.out"
@@ -2608,9 +3223,11 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 0.6,
+                    duration: 0.5, // Reduced duration
                     x: 0,
                     opacity: 1,
                     ease: "power2.out"
@@ -2623,101 +3240,169 @@
                         trigger: element,
                         start: "top 80%",
                         end: "bottom 20%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        fastScrollEnd: true,
+                        preventOverlaps: true
                     },
-                    duration: 1,
+                    duration: 0.8, // Reduced duration
                     scale: 1,
                     opacity: 1,
-                    ease: "power3.out"
+                    ease: "power2.out" // Simplified easing
                 });
             });
 
-            // Stagger animations for service cards
+            // Elegant services grid animations with scroll-based color filling
+            const servicesGrid = document.querySelector('.services-grid');
+            const serviceCards = document.querySelectorAll('.service-card');
+
+            // Animate grid background pattern
+            ScrollTrigger.create({
+                trigger: servicesGrid,
+                start: "top 80%",
+                end: "bottom 20%",
+                onEnter: () => {
+                    servicesGrid.classList.add('animate');
+                },
+                onLeave: () => {
+                    servicesGrid.classList.remove('animate');
+                },
+                onEnterBack: () => {
+                    servicesGrid.classList.add('animate');
+                },
+                onLeaveBack: () => {
+                    servicesGrid.classList.remove('animate');
+                }
+            });
+
+            // Staggered card animations with color filling effect
+            serviceCards.forEach((card, index) => {
+                // Initial card animation
+                gsap.fromTo(card, 
+                    {
+                        opacity: 0,
+                        y: 60,
+                        scale: 0.9,
+                        rotationX: 15
+                    },
+                    {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            end: "bottom 15%",
+                            toggleActions: "play none none reverse",
+                            fastScrollEnd: true
+                        },
+                        duration: 0.8,
+                        delay: index * 0.2, // Stagger effect
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        rotationX: 0,
+                        ease: "power2.out"
+                    }
+                );
+
+                // Color filling animation on scroll
+                ScrollTrigger.create({
+                    trigger: card,
+                    start: "top 70%",
+                    end: "bottom 30%",
+                    onEnter: () => {
+                        card.classList.add('fill-active');
+                    },
+                    onLeave: () => {
+                        card.classList.remove('fill-active');
+                    },
+                    onEnterBack: () => {
+                        card.classList.add('fill-active');
+                    },
+                    onLeaveBack: () => {
+                        card.classList.remove('fill-active');
+                    }
+                });
+
+                            // Remove the continuous rotation animation - letters should stay straight
+            // We'll handle rotation only on hover with CSS
+            });
+
+            // Stagger animations for service cards - optimized
             gsap.set('.service-card', {
                 opacity: 0,
-                y: 100
+                y: 80 // Reduced distance
             });
             gsap.to('.service-card', {
                 scrollTrigger: {
                     trigger: '.services-grid',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 0.4,
+                duration: 0.3, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.1,
+                stagger: 0.08, // Reduced stagger
                 ease: "power2.out"
             });
 
-            // Stagger animations for project cards
+            // Stagger animations for project cards - optimized
             gsap.set('.project-card', {
                 opacity: 0,
-                y: 100
+                y: 80 // Reduced distance
             });
             gsap.to('.project-card', {
                 scrollTrigger: {
                     trigger: '.projects-grid',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 0.4,
+                duration: 0.3, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.1,
+                stagger: 0.08, // Reduced stagger
                 ease: "power2.out"
             });
 
-            // Stagger animations for contact items
+            // Stagger animations for contact items - optimized
             gsap.set('.contact-item', {
                 opacity: 0,
-                y: 50
+                y: 40 // Reduced distance
             });
             gsap.to('.contact-item', {
                 scrollTrigger: {
                     trigger: '.contact-info',
                     start: "top 80%",
                     end: "bottom 20%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none reverse",
+                    fastScrollEnd: true,
+                    preventOverlaps: true
                 },
-                duration: 1,
+                duration: 0.8, // Reduced duration
                 y: 0,
                 opacity: 1,
-                stagger: 0.2,
-                ease: "power3.out"
+                stagger: 0.15, // Reduced stagger
+                ease: "power2.out" // Simplified easing
             });
 
-            // Parallax effect for hero background
+            // Parallax effect for hero background - optimized
             gsap.to('.hero::before', {
                 scrollTrigger: {
                     trigger: '.hero',
                     start: "top bottom",
                     end: "bottom top",
-                    scrub: true
+                    scrub: 1,
+                    fastScrollEnd: true
                 },
-                y: -100,
+                y: -60, // Reduced movement
                 ease: "none"
             });
 
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        gsap.to(window, {
-                            duration: 1.5,
-                            scrollTo: {
-                                y: target,
-                                offsetY: 90
-                            },
-                            ease: "power3.inOut"
-                        });
-                    }
-                });
-            });
+            // Navigation scrolling is now handled by the consistent scrollToSection function
+            // This removes conflicting GSAP scroll behavior for better UX
 
             // Header background animation on scroll
             gsap.to('.header', {
@@ -2965,6 +3650,20 @@
             }
         });
 
+        // Video speed control for about section background video
+        document.addEventListener('DOMContentLoaded', function() {
+            const aboutVideo = document.querySelector('.about-section .sticky-video');
+            if (aboutVideo) {
+                // Set video playback rate to 0.5 (half speed)
+                aboutVideo.playbackRate = 0.5;
+                
+                // Ensure video loads at full quality
+                aboutVideo.addEventListener('loadedmetadata', function() {
+                    aboutVideo.playbackRate = 0.5;
+                });
+            }
+        });
+
         // Video speed control for hero section background video
         document.addEventListener('DOMContentLoaded', function() {
             const heroVideo = document.querySelector('.hero .sticky-video');
@@ -3144,16 +3843,65 @@
             }
             
             animateArticles() {
-                // Reset animations for new articles
-                gsap.set('.article-card', { opacity: 0, y: 50 });
+                // Reset animations for new articles with enhanced initial states
+                gsap.set('.article-card', { 
+                    opacity: 0, 
+                    y: 80, // Increased distance for more dramatic effect
+                    scale: 0.9, // Add scale effect
+                    rotationX: 15 // Add subtle 3D rotation
+                });
                 
-                // Animate articles in sequence
+                // Enhanced article animations with creative effects
                 gsap.to('.article-card', {
                     opacity: 1,
                     y: 0,
-                    duration: 0.8,
-                    stagger: 0.2,
-                    ease: "power2.out"
+                    scale: 1,
+                    rotationX: 0,
+                    duration: 1.2, // Longer duration for smoother effect
+                    stagger: 0.3, // Increased stagger for better visual flow
+                    ease: "back.out(1.7)", // More dynamic easing
+                    onComplete: () => {
+                        // Add hover effect animations after cards appear
+                        gsap.utils.toArray('.article-card').forEach((card, index) => {
+                            // Add floating animation to each card
+                            gsap.to(card, {
+                                y: -5, // Subtle floating effect
+                                duration: 2,
+                                ease: "power2.inOut",
+                                yoyo: true,
+                                repeat: -1,
+                                delay: index * 0.2 // Stagger the floating
+                            });
+                        });
+                    }
+                });
+                
+                // Animate article content elements with staggered timing
+                gsap.to('.article-card .article-category', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.5 // Start after cards appear
+                });
+                
+                gsap.to('.article-card .article-title', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.7
+                });
+                
+                gsap.to('.article-card .article-excerpt', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    delay: 0.9
                 });
             }
             
@@ -3206,24 +3954,23 @@
             new ArticlesPagination();
         });
 
-        // Direct navigation function
-        function navigateToSection(sectionId) {
+        // Direct navigation function - Simple and consistent scrolling
+        function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
                 const targetPosition = section.offsetTop - headerHeight;
                 
-                // Use requestAnimationFrame for smoother scrolling
-                requestAnimationFrame(() => {
+                // Use consistent smooth scrolling with controlled duration
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
-                    });
                 });
             }
         }
 
-        // Single navigation setup
+        // Remove the old navigateToSection function and replace with consistent implementation
+        // Single navigation setup with improved user experience
         document.addEventListener('DOMContentLoaded', function() {
             // Remove any existing event listeners
             const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
@@ -3232,12 +3979,12 @@
                 // Clear any existing onclick handlers
                 link.onclick = null;
                 
-                // Set direct onclick handler
+                // Set direct onclick handler with consistent behavior
                 link.onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     const targetId = this.getAttribute('href').substring(1);
-                    navigateToSection(targetId);
+                    scrollToSection(targetId);
                     
                     // Close mobile menu if open
                     const navMenu = document.querySelector('.nav-menu');
@@ -3264,7 +4011,114 @@
             document.addEventListener('click', function(e) {
                 if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                     navMenu.classList.remove('active');
-                    mobileMenuBtn.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                }
+            });
+        });
+
+        // Test function to verify scroll behavior (can be removed in production)
+        function testScrollBehavior() {
+            console.log('Testing scroll behavior...');
+            const sections = ['home', 'services', 'projects', 'articles', 'about', 'contact'];
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    console.log(`${sectionId}: Found at position ${section.offsetTop}`);
+                } else {
+                    console.warn(`${sectionId}: Section not found`);
+                }
+            });
+        }
+
+        // Performance monitoring function (can be removed in production)
+        function monitorPerformance() {
+            let frameCount = 0;
+            let lastTime = performance.now();
+            
+            function countFrames() {
+                frameCount++;
+                const currentTime = performance.now();
+                
+                if (currentTime - lastTime >= 1000) {
+                    const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                    console.log(`Animation FPS: ${fps}`);
+                    
+                    if (fps < 50) {
+                        console.warn('Performance warning: Low FPS detected. Consider reducing animation complexity.');
+                    }
+                    
+                    frameCount = 0;
+                    lastTime = currentTime;
+                }
+                
+                requestAnimationFrame(countFrames);
+            }
+            
+            requestAnimationFrame(countFrames);
+        }
+
+        // Call test function when page loads (remove in production)
+        document.addEventListener('DOMContentLoaded', function() {
+            testScrollBehavior();
+            // Start performance monitoring (remove in production)
+            monitorPerformance();
+            
+            // Enhanced service card interaction handling for both desktop and mobile
+            const serviceCards = document.querySelectorAll('.service-card');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+            
+            serviceCards.forEach(card => {
+                const iconLetter = card.querySelector('.icon-letter');
+                
+                // Function to rotate letter 360 degrees
+                function rotateLetter() {
+                    iconLetter.style.transform = 'rotate(360deg)';
+                    iconLetter.style.transition = 'transform 0.6s ease';
+                }
+                
+                // Function to reset letter rotation
+                function resetLetter() {
+                    setTimeout(() => {
+                        iconLetter.style.transform = 'rotate(0deg)';
+                    }, 600); // Match the CSS transition duration
+                }
+                
+                // Focus event - rotate when card gets focus
+                card.addEventListener('focus', function(e) {
+                    rotateLetter();
+                });
+                
+                // Blur event - reset when card loses focus
+                card.addEventListener('blur', function(e) {
+                    resetLetter();
+                });
+                
+                // Mouse enter event for desktop hover
+                card.addEventListener('mouseenter', function(e) {
+                    if (!isMobile) {
+                        rotateLetter();
+                    }
+                });
+                
+                // Mouse leave event for desktop
+                card.addEventListener('mouseleave', function(e) {
+                    if (!isMobile) {
+                        resetLetter();
+                    }
+                });
+                
+                // Mobile touch handling
+                if (isMobile) {
+                    // Touch start event
+                    card.addEventListener('touchstart', function(e) {
+                        rotateLetter();
+                    });
+                    
+                    // Touch end event - reset after animation
+                    card.addEventListener('touchend', function(e) {
+                        resetLetter();
+                    });
                 }
             });
         });
