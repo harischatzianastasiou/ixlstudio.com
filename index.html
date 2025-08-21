@@ -187,7 +187,10 @@
             align-items: center;
             justify-content: flex-start; /* Changed from center to create asymmetrical layout */
             position: relative;
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); 
+                       background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
             overflow: hidden;
             padding: 0 8rem; /* Added horizontal padding for better spacing */
             /* Performance optimization for animations */
@@ -1079,7 +1082,7 @@
             font-weight: 700;
             font-size: 1.3rem;
             margin-bottom: 1rem;
-            text-transform: uppercase;
+            text-transform: none; /* Remove uppercase - show as written */
             letter-spacing: 0.05em;
             border-bottom: 2px solid #ffffff; /* White border to match new theme */
             padding-bottom: 0.5rem;
@@ -1195,7 +1198,7 @@
             font-weight: 700;
             font-size: 1.3rem;
             margin-bottom: 1rem;
-            text-transform: uppercase;
+            text-transform: none; /* Remove uppercase - show as written */
             letter-spacing: 0.05em;
             border-bottom: 2px solid #ffffff; /* White border to match new theme */
             padding-bottom: 0.5rem;
@@ -1310,7 +1313,8 @@
         .content-title {
             font-size: 1.2rem;
             font-weight: 700;
-            text-transform: uppercase;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
+            text-transform: none; /* Remove uppercase - show as written */
             letter-spacing: 0.05em;
             margin-bottom: 1rem;
             color: #ffffff; /* White text for dark background */
@@ -1799,7 +1803,6 @@
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 1rem; /* Increased margin */
-            text-transform: uppercase;
             letter-spacing: 1px;
             line-height: 1.2; /* Added line height */
         }
@@ -4009,7 +4012,7 @@
                 <h1 class="hero-title">i craft digital stories<span class="hero-dot">.</span></h1>
                 <p class="hero-subtitle">haris chatzianastasiou</p>
                         <p class="hero-description">
-              let's create your vision together.
+              Let's create your story together.
         </p>
             </div>
             
@@ -4160,7 +4163,7 @@
                 <div class="section-header fade-in" id="services-header">
                     <h2 class="section-title">what i do</h2>
                     <p class="section-subtitle">
-                        Helping you express your brand and tell your story. I design, code, deploy, and maintain your ideas to be placed on the web.
+                     helping you express your brand and tell your story. I design, code, deploy, and maintain your ideas to be placed on the web.
                     </p>
                 </div>
                 
@@ -4293,7 +4296,7 @@
                 <div class="section-header fade-in">
                     <h2 class="section-title">articles</h2>
                     <p class="section-subtitle">
-                        Insights and thoughts on development
+                        insights and thoughts on development
                     </p>
                 </div>
                 <div class="articles-grid" id="articlesGrid">
@@ -4331,7 +4334,7 @@
         <section id="contact" class="contact-section">
             <div class="contact-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title" id="contact-title">Get In Touch</h2>
+                    <h2 class="section-title" id="contact-title">get in touch</h2>
                     <p class="section-subtitle">
                         Ready to start your next project? Let's discuss your vision and bring it to life.
                     </p>
