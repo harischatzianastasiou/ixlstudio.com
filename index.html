@@ -47,16 +47,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.95); /* Black background */
+            background: rgba(255, 255, 255, 0.95); /* White background */
             backdrop-filter: blur(20px); /* Subtle blur for modern effect */
             height: 90px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle black border */
             /* Performance optimization for fixed header */
             will-change: transform;
             transform: translateZ(0);
             box-shadow: 
-                0 4px 20px rgba(0, 0, 0, 0.3),
-                0 1px 3px rgba(0, 0, 0, 0.2); /* Modern dark shadow */
+                0 4px 20px rgba(0, 0, 0, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.05); /* Light shadow for white header */
         }
 
         .logo-container {
@@ -68,7 +68,7 @@
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
-            color: #ffffff; /* White text for black header */
+            color: #000000; /* Black text for white header */
             text-decoration: none;
             white-space: nowrap;
             line-height: 1;
@@ -79,7 +79,7 @@
         .logo-subtitle {
             font-size: 0.7rem;
             font-weight: 400;
-            color: #cccccc; /* Light gray text for black header */
+            color: #666666; /* Dark gray text for white header */
             line-height: 1;
             margin-top: 0.2rem;
             letter-spacing: 1px;
@@ -87,17 +87,17 @@
             transition: color 0.3s ease;
         }
 
-        /* Header text color changes for dark background */
+        /* Header text color changes for white background */
         .header.scrolled .logo {
-            color: #ffffff;
+            color: #000000;
         }
 
         .header.scrolled .logo-subtitle {
-            color: #cccccc;
+            color: #666666;
         }
 
         .header.scrolled .nav-menu a {
-            color: #ffffff;
+            color: #000000;
         }
 
         .nav-menu {
@@ -107,7 +107,7 @@
         }
 
         .nav-menu a {
-            color: #ffffff; /* White text for black header */
+            color: #000000; /* Black text for white header */
             text-decoration: none;
             font-weight: 500;
             font-size: 0.9rem;
@@ -125,7 +125,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #ffffff, #cccccc); /* White gradient for black header */
+            background: linear-gradient(90deg, #000000, #666666); /* Black gradient for white header */
             transition: width 0.3s ease;
         }
 
@@ -150,11 +150,11 @@
         .mobile-menu-btn span {
             width: 100%;
             height: 3px;
-            background: #ffffff; /* White lines for black header */
+            background: #000000; /* Black lines for white header */
             margin: 3px 0;
             transition: all 0.3s ease;
             border-radius: 2px;
-            box-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); /* White shadow for better visibility */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Black shadow for better visibility */
         }
 
         /* Mobile menu button animation */
@@ -170,9 +170,9 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
-        /* Ensure mobile menu button is always white */
+        /* Ensure mobile menu button is always black */
         .header.scrolled .mobile-menu-btn span {
-            background: #ffffff !important;
+            background: #000000 !important;
         }
 
         /* Main content */
@@ -1090,11 +1090,17 @@
 
         .expandable-content .content-text {
             color: #cccccc !important; /* Light gray for content text */
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Match scroll-text font size */
+            font-weight: 300; /* Match scroll-text font weight */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
+            line-height: 1.7; /* Match scroll-text line height */
+            letter-spacing: 0.02em; /* Match scroll-text letter spacing */
             margin-bottom: 1rem;
             text-align: justify;
             text-transform: none; /* Remove uppercase, keep lowercase */
+            word-spacing: 0.03em; /* Match scroll-text word spacing */
+            -webkit-font-smoothing: antialiased; /* Match scroll-text font smoothing */
+            -moz-osx-font-smoothing: grayscale; /* Match scroll-text font smoothing */
         }
 
         .expandable-content .philosophy-text {
@@ -1138,11 +1144,17 @@
 
         .expandable-content p {
             color: #333333 !important;
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Match scroll-text font size */
+            font-weight: 300; /* Match scroll-text font weight */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
+            line-height: 1.7; /* Match scroll-text line height */
+            letter-spacing: 0.02em; /* Match scroll-text letter spacing */
             margin-bottom: 0.8rem;
             text-align: justify;
             text-transform: none; /* Remove uppercase, keep lowercase */
+            word-spacing: 0.03em; /* Match scroll-text word spacing */
+            -webkit-font-smoothing: antialiased; /* Match scroll-text font smoothing */
+            -moz-osx-font-smoothing: grayscale; /* Match scroll-text font smoothing */
         }
 
         .expandable-content ul {
@@ -1152,10 +1164,16 @@
 
         .expandable-content li {
             color: #333333 !important;
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Match scroll-text font size */
+            font-weight: 300; /* Match scroll-text font weight */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
+            line-height: 1.6; /* Match scroll-text line height */
+            letter-spacing: 0.02em; /* Match scroll-text letter spacing */
             margin-bottom: 0.5rem;
             font-style: italic; /* Make list items italic */
+            word-spacing: 0.03em; /* Match scroll-text word spacing */
+            -webkit-font-smoothing: antialiased; /* Match scroll-text font smoothing */
+            -moz-osx-font-smoothing: grayscale; /* Match scroll-text font smoothing */
         }
 
         /* Ensure all text elements within expandable content are properly colored */
@@ -1610,7 +1628,7 @@
             transform: scale(1) translateY(0);
             visibility: visible;
             background: transparent; /* Dark background when active */
-            border-color: rgba(255, 167, 38, 0.3);
+            border-color: rgba(0, 0, 0, 0.3);
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(255, 167, 38, 0.2),
@@ -3487,6 +3505,17 @@
             display: block;
             margin-bottom: 0.5rem; /* Reduced margin for tighter spacing - creates one line break */
             line-height: 1.8;
+            cursor: pointer; /* Show pointer cursor to indicate interactivity */
+            transition: all 0.3s ease; /* Smooth transition for touch feedback */
+        }
+
+        /* Mobile touch enhancements */
+        @media (max-width: 768px) {
+            .scroll-text .sentence {
+                padding: 0.5rem 0; /* Add padding for better touch target */
+                touch-action: manipulation; /* Optimize touch behavior */
+                -webkit-tap-highlight-color: transparent; /* Remove default tap highlight */
+            }
         }
 
         .scroll-text .word {
@@ -4079,12 +4108,10 @@
                                 <div class="content-text">
                                     <strong>Master of Science in Artificial Intelligence</strong><br>
                                     European University of Cyprus, 2025 – Ongoing<br>
-                                    Currently pursuing advanced studies in AI and machine learning technologies.
                                 </div>
                                 <div class="content-text">
                                     <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
                                     University of Thessaly, 2017-2022<br>
-                                    Comprehensive foundation in computer science with specialized focus on biomedical applications and informatics.
                                 </div>
                         </div>
                         <div class="content-section-experience">
@@ -4095,11 +4122,11 @@
                                     Netcompany-Intrasoft, April 2024 – Current<br>
                                     Thessaloniki, Greece<br><br>
                                     <ul>    
-                                    <em>• Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP) using <code>Java EE/Oracle ADF</code>, implementing the historic 2024 judicial reform.<br>
-                                    • Participated in the migration of Greek courts into OSDDY-PP using <code>PL/SQL</code>, providing <strong>technical leadership</strong>, and achieving 92% reduction in processing time (60min to 5min) with an automated migration toolkit.<br>
-                                    • Developed an electronic legal document filing system using <code>PL/SQL</code>, designing services for judicial documents.<br>
-                                    • Established <code>Oracle BI</code> reporting system using <code>SQL/Oracle BI</code> for automated generation of judicial documents.</em>
-                                    </em>    
+                                    Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP) using <code>Java EE/Oracle ADF</code>, implementing the historic 2024 judicial reform.<br>
+                                    Participated in the migration of Greek courts into OSDDY-PP using <code>PL/SQL</code>, providing <strong>technical leadership</strong>, and achieving 92% reduction in processing time (60min to 5min) with an automated migration toolkit.<br>
+                                    Developed an electronic legal document filing system using <code>PL/SQL</code>, designing services for judicial documents.<br>
+                                    Established <code>Oracle BI</code> reporting system using <code>SQL/Oracle BI</code> for automated generation of judicial documents.</em>
+                                       
                                     </ul>
                                 </div>
                                 <div class="content-text">
@@ -4107,11 +4134,11 @@
                                     Ernst & Young (EY), August 2022 – April 2024<br>
                                     Thessaloniki, Greece<br><br>
                                     <ul>
-                                    <em>
-                                    • Designed end-to-end claims payment system for a major UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
-                                    • Managed core non-life insurance system for a global reinsurer using <code>PL/SQL</code>.<br>
-                                    • Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication and agile methodology.
-                                    </em>
+                                    
+                                    Designed end-to-end claims payment system for a major UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
+                                    Managed core non-life insurance system for a global reinsurer using <code>PL/SQL</code>.<br>
+                                    Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication and agile methodology.
+                                    
                                     </ul>
                                 </div>
                             </div>
@@ -5962,8 +5989,9 @@
                         allSentences[0].classList.add('active');
                     }
                     
-                    // Add hover functionality for desktop
+                    // Add hover functionality for desktop and touch functionality for mobile
                     allSentences.forEach((sentence, index) => {
+                        // Desktop hover functionality
                         sentence.addEventListener('mouseenter', () => {
                             // Only trigger on desktop (not touch devices)
                             if (!('ontouchstart' in window)) {
@@ -5976,6 +6004,26 @@
                             if (!('ontouchstart' in window)) {
                                 // Return to scroll-based state when mouse leaves
                                 handleScrollReading();
+                            }
+                        });
+
+                        // Mobile touch functionality
+                        sentence.addEventListener('touchstart', (e) => {
+                            // Only trigger on touch devices
+                            if ('ontouchstart' in window) {
+                                e.preventDefault(); // Prevent default touch behavior
+                                showSingleSentence(index);
+                            }
+                        });
+
+                        sentence.addEventListener('touchend', (e) => {
+                            // Only trigger on touch devices
+                            if ('ontouchstart' in window) {
+                                e.preventDefault(); // Prevent default touch behavior
+                                // Return to scroll-based state after a short delay
+                                setTimeout(() => {
+                                    handleScrollReading();
+                                }, 2000); // Show active sentence for 2 seconds after touch
                             }
                         });
                     });
