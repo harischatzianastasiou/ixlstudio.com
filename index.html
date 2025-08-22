@@ -82,13 +82,14 @@
 
         .logo {
             font-size: 1.4rem;
-            font-weight: 800;
+            font-weight: 700;
             color: #000000;
             text-decoration: none;
             white-space: nowrap;
             line-height: 1;
             letter-spacing: 2px;
             transition: color 0.3s ease;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro Display font */
         }
 
         .logo-subtitle {
@@ -204,11 +205,11 @@
             justify-content: flex-start; /* Changed from center to create asymmetrical layout */
             position: relative;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(222, 222, 222, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(222, 222, 222, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(222, 222, 222, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(0, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 0, 0, 0.08) 0%, transparent 50%);
             overflow: hidden;
-            padding: 0 0 0 4rem; /* Reduced left padding to move text more left, kept right padding */
+            padding: 0 0 0 12rem; /* Reduced left padding to move text more left, kept right padding */
             /* Performance optimization for animations */
             will-change: transform;
             transform: translateZ(0);
@@ -1831,7 +1832,7 @@
             z-index: 1;
         }
 
-        /* Scroll-based color filling animation */
+        /* GSAP-powered directional fill animation */
         .service-card .fill-animation {
             position: absolute;
             top: 0;
@@ -1842,15 +1843,30 @@
                 rgb(37, 35, 33) 0%, 
                 rgb(29, 29, 29) 50%, 
                 rgb(32, 29, 27) 100%);
-            transform: translateY(100%);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(100%); /* Start from bottom */
             z-index: 2;
+            /* Remove CSS transition - GSAP will handle animations */
         }
 
-        .service-card.fill-active .fill-animation,
-        .service-card:hover .fill-animation,
-        .service-card.viewport-center-active .fill-animation {
-            transform: translateY(0);
+        /* Directional fill states - will be controlled by GSAP */
+        .service-card.fill-from-top .fill-animation {
+            transform: translateY(-100%); /* Start from top */
+        }
+
+        .service-card.fill-from-bottom .fill-animation {
+            transform: translateY(100%); /* Start from bottom */
+        }
+
+        .service-card.fill-from-left .fill-animation {
+            transform: translateX(-100%); /* Start from left */
+        }
+
+        .service-card.fill-from-right .fill-animation {
+            transform: translateX(100%); /* Start from right */
+        }
+
+        .service-card.fill-active .fill-animation {
+            transform: translate(0, 0); /* Fully filled */
         }
 
         /* Card content positioning */
@@ -1866,6 +1882,12 @@
             transform: translateY(-4px);
             border-color: rgba(23, 24, 26, 0.3);
             box-shadow: none !important; /* Explicitly remove any box-shadow */
+        }
+
+        /* GSAP will handle fill animations, so remove CSS-based fill triggers */
+        .service-card:hover .fill-animation,
+        .service-card.viewport-center-active .fill-animation {
+            /* GSAP will control this */
         }
 
         .service-card:hover::after,
@@ -2185,7 +2207,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for dark background */
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
             position: relative;
             cursor: pointer;
             backdrop-filter: blur(10px);
@@ -2216,7 +2237,6 @@
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
             opacity: 0;
-            transition: opacity 0.4s ease;
             animation: gradientShift 3s ease-in-out infinite;
         }
 
@@ -2234,14 +2254,10 @@
             width: 100%;
             height: 150px;
             object-fit: cover;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Enhanced transition */
             filter: brightness(0.9) contrast(1.1); /* Initial filter effect */
         }
 
-        .article-card:hover .article-image {
-            transform: scale(1.03) translateY(-1px); /* Smoother scale and movement */
-            filter: brightness(1.1) contrast(1.2) saturate(1.1); /* Enhanced filter on hover */
-        }
+        /* Removed hover effects for article image to keep it static */
 
         .article-content {
             padding: 1.2rem;
@@ -2261,7 +2277,6 @@
             letter-spacing: 1.2px; /* Increased letter spacing */
             margin-bottom: 1rem;
             border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for dark background */
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -2277,20 +2292,9 @@
                 transparent, 
                 #051109, 
                 transparent); /* Updated to use #051109 */
-            transition: left 0.5s ease;
         }
 
-        .article-card:hover .article-category::before {
-            left: 100%; /* Shimmer effect on hover */
-        }
-
-        .article-card:hover .article-category {
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%);
-
-            color: rgba(255, 255, 255, 0.95); /* White text on hover */
-            border-color: rgba(5, 17, 9, 0.6); /* Updated border color */
-            transform: translateY(-2px); /* Slight lift effect */
-        }
+        /* Removed hover effects for article category to keep it static */
 
         .article-title {
             font-size: 1.2rem;
@@ -2737,6 +2741,9 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            display: block; /* Ensure anchor tags display as blocks */
+            text-decoration: none; /* Remove default underline */
+            color: inherit; /* Inherit text color */
         }
 
         .contact-item:hover {
@@ -2783,35 +2790,7 @@
         .contact-value {
             font-size: 1rem;
             color: #ffffff; /* White text for black background */
-        }
-
-        .contact-value a {
-            color: #ffffff; /* White color for links on black background */
-            text-decoration: none;
-            transition: all 0.3s ease;
             font-weight: 500;
-            position: relative;
-        }
-
-        .contact-value a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                rgba(255, 255, 255, 0.8), 
-                rgba(255, 255, 255, 0.8)); /* White underline for black background */
-            transition: width 0.3s ease;
-        }
-
-        .contact-value a:hover {
-            color: #ffffff; /* White on hover (stays white) */
-        }
-
-        .contact-value a:hover::after {
-            width: 100%; /* Animated underline effect */
         }
 
         /* Footer */
@@ -3389,6 +3368,40 @@
             .services-section {
                 padding: 2rem 1.5rem; /* Reduced top padding to decrease gap from about section on mobile */
             }
+            
+            /* Disable viewport center animations on mobile - only allow hover */
+            .service-card.viewport-center-active {
+                transform: none !important;
+                border-color: rgba(255, 255, 255, 0.1) !important;
+            }
+            
+            .service-card.viewport-center-active::after {
+                opacity: 0 !important;
+            }
+            
+            .service-card.viewport-center-active .fill-animation {
+                transform: translateY(100%) !important;
+            }
+            
+            .service-card.viewport-center-active .service-icon {
+                background: rgba(5, 17, 9, 0.8) !important;
+                border-color: rgba(5, 17, 9, 0.3) !important;
+                box-shadow: none !important;
+            }
+            
+            .service-card.viewport-center-active .service-icon::before {
+                transform: translate(-50%, -50%) scale(0) !important;
+            }
+            
+            .service-card.viewport-center-active .icon-letter {
+                transform: rotate(0deg) !important;
+            }
+            
+            /* Disable project card viewport center animations on mobile */
+            .project-card.viewport-center .project-title {
+                opacity: 0 !important;
+                transform: translateY(20px) !important;
+            }
 
             /* Improved touch interactions for mobile */
             .service-card:active {
@@ -3865,6 +3878,11 @@
             .scroll-text {
                 width: 100%; /* Take full available width */
                 max-width: 1000px; /* Even wider on desktop */
+            }
+            
+            /* Make hero title smaller on desktop */
+            .hero-title {
+                font-size: clamp(3rem, 6vw, 5rem) !important; /* Reduced from 8rem to 5rem max */
             }
         }
 
@@ -4458,16 +4476,17 @@
                             </div>
                         </div>
                         <div class="about-header-text">
-                            <h2 class="section-title" id="who-am-i-title">who am i</h2>
+                            <h2 class="section-title" id="who-am-i-title">meet the creator    </h2>
                             <p class="scroll-text" id="scroll-text-1-content">
-                                I'm Haris Chatzianastasiou, the founder of IXLStudio and a passionate full-stack developer based in Thessaloniki, Greece.
+                                I'm Haris Chatzianastasiou, a passionate full-stack developer based in Thessaloniki, Greece, who loves creating software solutions that unite aesthetics and functionality.
                             </p>
                             <p class="scroll-text">
-                                With experience spanning both private and public sectors, I bring a diverse perspective to every project.
+                                My engineering background includes financial solutions and insurance in the private sector, as well as working with the National Justice of Greece in the public sector.
                             </p>
                             <p class="scroll-text">
-                                My background includes financial solutions and insurance in the private sector, as well as working with the National Justice of Greece in the public sector.
+                                Recently, I built a Greek chess app called <em>skgchess</em>.
                             </p>
+                            
                         </div>
                         <div class="content-section-education">
                             <div class="expandable-content expanded" id="education-content">
@@ -4497,9 +4516,9 @@
             </div>
             <div class="services-container">
                 <div class="section-header" id="services-header">
-                    <h2 class="section-title">what i do</h2>
+                    <h2 class="section-title">services</h2>
                     <p class="section-subtitle">
-                        covering everything from brand planning down to technical details. Software solutions that are customized to match exactly what you want to achieve and <em>tell your story</em>. </p>
+                        covering everything from brand expression down to technical details. Software solutions that are customized to match what you want and <em>tell your story</em>. </p>
                 </div>
                 
                 <!-- Tunnel Animation Elements -->
@@ -4584,10 +4603,10 @@
                     <h2 class="section-title">work</h2>
                     
                         <p class="scroll-text work-quote" id="scroll-text-1-content">
-                            "Every project should tell a unique story.<br>
+                            "<em>Every project should tell a unique story.<br>
                             An experience that resonates with users,<br>
                             all while serving its functional purpose<br>
-                            effectively and reliably."
+                            effectively and reliably.</em>"
                         </p>
                     
                 </div>
@@ -4633,8 +4652,8 @@
                         Thessaloniki, Greece<br><br>
                         <ul>
                         
-                        Designed end-to-end claims payment system for a major UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
-                        Managed core non-life insurance system for a global reinsurer using <code>PL/SQL</code>.<br>
+                        Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
+                        Managed core non-life insurance system for a <strong>global</strong> reinsurer using <code>PL/SQL</code>.<br>
                         Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication and agile methodology.
                         
                         </ul>
@@ -4709,7 +4728,7 @@
                     </p>
                 </div>
                 <div class="contact-info">
-                    <div class="contact-item scale-in">
+                    <a href="mailto:harischatzi@tutanota.com" class="contact-item scale-in">
                         <div class="contact-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -4718,10 +4737,10 @@
                         </div>
                         <div class="contact-label">Email</div>
                         <div class="contact-value">
-                            <a href="mailto:harischatzi@tutanota.com">harischatzi@tutanota.com</a>
+                            harischatzi@tutanota.com
                         </div>
-                    </div>
-                    <div class="contact-item scale-in">
+                    </a>
+                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item scale-in">
                         <div class="contact-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
@@ -4731,11 +4750,9 @@
                         </div>
                         <div class="contact-label">LinkedIn</div>
                         <div class="contact-value">
-                            <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank">
-                                Haris Chatzianastasiou
-                            </a>
+                            Haris Chatzianastasiou
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -5661,12 +5678,12 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Add hover effect when card is visible (removed replay prevention)
+                        // Add hover effect when card is visible and keep it permanently
                         entry.target.classList.add('scroll-active');
-                    } else {
-                        // Remove effect when card is not visible
-                        entry.target.classList.remove('scroll-active');
+                        // Once a card has been animated, it stays in that state
+                        // We don't remove the class when it goes out of view
                     }
+                    // Removed the else clause that was removing the scroll-active class
                 });
             }, {
                 threshold: 0.6, // Trigger when 60% of card is visible
@@ -5681,12 +5698,22 @@
         // Initialize scroll hover effect
         setupScrollHoverEffect();
 
-        // Viewport center detection for project card titles
+        // Viewport center detection for project card titles (desktop only)
         function setupViewportCenterDetection() {
             const projectCards = document.querySelectorAll('.project-card');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
             
             // Function to check if card center is in 50% of viewport
             function checkViewportCenter() {
+                // Only run on desktop (not mobile)
+                if (isMobile) {
+                    // Remove any existing viewport center classes on mobile
+                    projectCards.forEach(card => {
+                        card.classList.remove('viewport-center');
+                    });
+                    return;
+                }
+                
                 const viewportHeight = window.innerHeight;
                 const viewportCenter = viewportHeight / 2; // Center of viewport
                 const tolerance = viewportHeight * 0.25; // 25% tolerance (50% total area)
@@ -6216,19 +6243,11 @@
             }
             
             animateArticles() {
-                // Reset animations for new articles with enhanced initial states
+                // Set articles to their final position immediately
                 gsap.set('.article-card', { 
-                    opacity: 0, 
-                    y: 80, // Increased distance for more dramatic effect
-                    scale: 0.9, // Add scale effect
-                    rotationX: 15 // Add subtle 3D rotation
-                });
-                
-                // Simple article display - no complex animations
-                gsap.set('.article-card', {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1
+                    opacity: 1, 
+                    y: 0, // Final position
+                    scale: 1 // Keep scale at 1 to maintain consistent width
                 });
             }
             
@@ -6857,8 +6876,17 @@
             const serviceCards = document.querySelectorAll('.service-card');
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
             
-            // Function to check if service card center is in 50% of viewport
+            // Function to check if service card center is in 50% of viewport (desktop only)
             function checkServiceCardViewportCenter() {
+                // Only run on desktop (not mobile)
+                if (isMobile) {
+                    // Remove any existing viewport center classes on mobile
+                    serviceCards.forEach(card => {
+                        card.classList.remove('viewport-center-active');
+                    });
+                    return;
+                }
+                
                 const viewportHeight = window.innerHeight;
                 const viewportCenter = viewportHeight / 2; // Center of viewport
                 const tolerance = viewportHeight * 0.25; // 25% tolerance (50% total area)
@@ -6887,6 +6915,209 @@
             
             // Initial check
             checkServiceCardViewportCenter();
+
+            // ===== GSAP DIRECTIONAL FILL ANIMATION SYSTEM =====
+            
+            // Track scroll direction and position
+            let lastScrollY = window.scrollY;
+            let scrollDirection = 'down'; // 'up' or 'down'
+            let lastScrollTime = Date.now();
+            
+            // Track mouse position for directional hover effects
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            // Update scroll direction on scroll
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                const currentTime = Date.now();
+                
+                // Determine scroll direction
+                if (currentScrollY > lastScrollY) {
+                    scrollDirection = 'down';
+                } else if (currentScrollY < lastScrollY) {
+                    scrollDirection = 'up';
+                }
+                
+                lastScrollY = currentScrollY;
+                lastScrollTime = currentTime;
+            });
+            
+            // Track mouse position
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // GSAP Timeline for each service card
+            const serviceCardTimelines = new Map();
+            
+            // Initialize GSAP timelines for each service card
+            serviceCards.forEach((card, index) => {
+                const fillAnimation = card.querySelector('.fill-animation');
+                
+                // Create timeline for this card
+                const timeline = gsap.timeline({ paused: true });
+                
+                // Store timeline reference
+                serviceCardTimelines.set(card, timeline);
+                
+                // Set initial state
+                gsap.set(fillAnimation, { 
+                    transform: 'translateY(100%)' // Start from bottom
+                });
+                
+                // Create fill animation
+                timeline.to(fillAnimation, {
+                    transform: 'translateY(0)',
+                    duration: 0.6,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Function to determine fill direction based on context
+            function getFillDirection(card, triggerType = 'scroll') {
+                const rect = card.getBoundingClientRect();
+                const cardCenterX = rect.left + rect.width / 2;
+                const cardCenterY = rect.top + rect.height / 2;
+                
+                if (triggerType === 'scroll') {
+                    // For scroll-based animations, use scroll direction
+                    return scrollDirection === 'down' ? 'top' : 'bottom';
+                } else if (triggerType === 'hover') {
+                    // For hover animations, use mouse position relative to card center
+                    const deltaX = mouseX - cardCenterX;
+                    const deltaY = mouseY - cardCenterY;
+                    
+                    // Determine which edge is closest to mouse
+                    const absX = Math.abs(deltaX);
+                    const absY = Math.abs(deltaY);
+                    
+                    if (absX > absY) {
+                        // Mouse is more horizontal relative to card
+                        return deltaX > 0 ? 'left' : 'right';
+                    } else {
+                        // Mouse is more vertical relative to card
+                        return deltaY > 0 ? 'top' : 'bottom';
+                    }
+                }
+                
+                return 'bottom'; // Default fallback
+            }
+            
+            // Function to animate fill based on direction
+            function animateFill(card, direction, duration = 0.6) {
+                const fillAnimation = card.querySelector('.fill-animation');
+                const timeline = serviceCardTimelines.get(card);
+                
+                if (!timeline || !fillAnimation) return;
+                
+                // Stop any existing animation
+                timeline.kill();
+                
+                // Set starting position based on direction
+                let startTransform = '';
+                switch (direction) {
+                    case 'top':
+                        startTransform = 'translateY(-100%)';
+                        break;
+                    case 'bottom':
+                        startTransform = 'translateY(100%)';
+                        break;
+                    case 'left':
+                        startTransform = 'translateX(-100%)';
+                        break;
+                    case 'right':
+                        startTransform = 'translateX(100%)';
+                        break;
+                    default:
+                        startTransform = 'translateY(100%)';
+                }
+                
+                // Set initial position
+                gsap.set(fillAnimation, { transform: startTransform });
+                
+                // Animate to filled state
+                gsap.to(fillAnimation, {
+                    transform: 'translate(0, 0)',
+                    duration: duration,
+                    ease: 'power2.out'
+                });
+            }
+            
+            // Function to reverse fill animation
+            function reverseFill(card, direction, duration = 0.4) {
+                const fillAnimation = card.querySelector('.fill-animation');
+                
+                if (!fillAnimation) return;
+                
+                // Determine end position based on direction
+                let endTransform = '';
+                switch (direction) {
+                    case 'top':
+                        endTransform = 'translateY(-100%)';
+                        break;
+                    case 'bottom':
+                        endTransform = 'translateY(100%)';
+                        break;
+                    case 'left':
+                        endTransform = 'translateX(-100%)';
+                        break;
+                    case 'right':
+                        endTransform = 'translateX(100%)';
+                        break;
+                    default:
+                        endTransform = 'translateY(100%)';
+                }
+                
+                // Animate back to starting position
+                gsap.to(fillAnimation, {
+                    transform: endTransform,
+                    duration: duration,
+                    ease: 'power2.in'
+                });
+            }
+            
+            // Enhanced viewport center detection with directional fill
+            function checkServiceCardViewportCenter() {
+                if (isMobile) {
+                    serviceCards.forEach(card => {
+                        card.classList.remove('viewport-center-active');
+                        // Reverse any active fill animations on mobile
+                        const fillAnimation = card.querySelector('.fill-animation');
+                        if (fillAnimation) {
+                            gsap.to(fillAnimation, {
+                                transform: 'translateY(100%)',
+                                duration: 0.3,
+                                ease: 'power2.in'
+                            });
+                        }
+                    });
+                    return;
+                }
+                
+                const viewportHeight = window.innerHeight;
+                const viewportCenter = viewportHeight / 2;
+                const tolerance = viewportHeight * 0.25;
+                
+                serviceCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2;
+                    const isInCenter = Math.abs(cardCenter - viewportCenter) <= tolerance;
+                    
+                    if (isInCenter && !card.classList.contains('viewport-center-active')) {
+                        // Card just entered center - animate fill
+                        card.classList.add('viewport-center-active');
+                        const direction = getFillDirection(card, 'scroll');
+                        animateFill(card, direction, 0.8);
+                    } else if (!isInCenter && card.classList.contains('viewport-center-active')) {
+                        // Card just left center - reverse fill
+                        card.classList.remove('viewport-center-active');
+                        const direction = getFillDirection(card, 'scroll');
+                        reverseFill(card, direction, 0.4);
+                    }
+                });
+            }
             
             serviceCards.forEach(card => {
                 const iconLetter = card.querySelector('.icon-letter');
@@ -6914,17 +7145,29 @@
                     resetLetter();
                 });
                 
-                // Mouse enter event for desktop hover (still works for manual hover)
+                // Enhanced mouse enter event with directional fill
                 card.addEventListener('mouseenter', function(e) {
                     if (!isMobile) {
                         rotateLetter();
+                        
+                        // Only trigger fill animation if card is not already viewport-center-active
+                        if (!card.classList.contains('viewport-center-active')) {
+                            const direction = getFillDirection(card, 'hover');
+                            animateFill(card, direction, 0.5);
+                        }
                     }
                 });
                 
-                // Mouse leave event for desktop
+                // Enhanced mouse leave event with directional fill reverse
                 card.addEventListener('mouseleave', function(e) {
                     if (!isMobile) {
                         resetLetter();
+                        
+                        // Only reverse fill if card is not viewport-center-active
+                        if (!card.classList.contains('viewport-center-active')) {
+                            const direction = getFillDirection(card, 'hover');
+                            reverseFill(card, direction, 0.3);
+                        }
                     }
                 });
                 
