@@ -7135,22 +7135,6 @@
             
             // Enhanced viewport center detection with directional fill
             function checkServiceCardViewportCenter() {
-                if (isMobile) {
-                    serviceCards.forEach(card => {
-                        card.classList.remove('viewport-center-active');
-                        // Reverse any active fill animations on mobile
-                        const fillAnimation = card.querySelector('.fill-animation');
-                        if (fillAnimation) {
-                            gsap.to(fillAnimation, {
-                                transform: 'translateY(100%)',
-                                duration: 0.3,
-                                ease: 'power2.in'
-                            });
-                        }
-                    });
-                    return;
-                }
-                
                 const viewportHeight = window.innerHeight;
                 const viewportCenter = viewportHeight / 2;
                 const tolerance = viewportHeight * 0.25;
@@ -7226,76 +7210,16 @@
                     }
                 });
                 
-                // Mobile touch handling with directional fill
+                // Mobile touch handling - simplified for scroll-based animations
                 if (isMobile) {
-                    let touchStartTime = 0;
-                    let touchStartX = 0;
-                    let touchStartY = 0;
-                    
-                    // Touch start event
+                    // Touch start event - only rotate letter
                     card.addEventListener('touchstart', function(e) {
-                        e.preventDefault(); // Prevent default touch behavior
-                        
-                        const touch = e.touches[0];
-                        touchStartTime = Date.now();
-                        touchStartX = touch.clientX;
-                        touchStartY = touch.clientY;
-                        
                         rotateLetter();
-                        
-                        // Trigger fill animation on touch start
-                        if (!card.classList.contains('viewport-center-active')) {
-                            // For mobile, we'll use a simple direction based on touch position
-                            const rect = card.getBoundingClientRect();
-                            const cardCenterX = rect.left + rect.width / 2;
-                            const cardCenterY = rect.top + rect.height / 2;
-                            
-                            const deltaX = touchStartX - cardCenterX;
-                            const deltaY = touchStartY - cardCenterY;
-                            
-                            let direction = 'bottom'; // Default
-                            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                                direction = deltaX > 0 ? 'left' : 'right';
-                            } else {
-                                direction = deltaY > 0 ? 'top' : 'bottom';
-                            }
-                            
-                            animateFill(card, direction, 0.4);
-                        }
                     });
                     
-                    // Touch end event - reset after animation
+                    // Touch end event - reset letter rotation
                     card.addEventListener('touchend', function(e) {
-                        const touchEndTime = Date.now();
-                        const touchDuration = touchEndTime - touchStartTime;
-                        
                         resetLetter();
-                        
-                        // Reverse fill animation after a short delay
-                        setTimeout(() => {
-                            if (!card.classList.contains('viewport-center-active')) {
-                                const rect = card.getBoundingClientRect();
-                                const cardCenterX = rect.left + rect.width / 2;
-                                const cardCenterY = rect.top + rect.height / 2;
-                                
-                                const deltaX = touchStartX - cardCenterX;
-                                const deltaY = touchStartY - cardCenterY;
-                                
-                                let direction = 'bottom'; // Default
-                                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                                    direction = deltaX > 0 ? 'left' : 'right';
-                                } else {
-                                    direction = deltaY > 0 ? 'top' : 'bottom';
-                                }
-                                
-                                reverseFill(card, direction, 0.3);
-                            }
-                        }, 200); // Short delay to show the fill effect
-                    });
-                    
-                    // Prevent default touch behaviors that might interfere
-                    card.addEventListener('touchmove', function(e) {
-                        e.preventDefault();
                     });
                 }
             });
