@@ -24,7 +24,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #0a0a0a;
+            background-color: #051109;
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -34,9 +34,25 @@
             /* Performance optimizations for animations */
             will-change: scroll-position;
             transform: translateZ(0); /* Force hardware acceleration */
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        /* Prevent horizontal scrolling on all elements */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        /* Ensure all sections don't overflow */
+        section {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
 
-        /* Header */
+        /* Header - Matching ixlstudio.html */
         .header {
             position: fixed;
             top: 0;
@@ -47,17 +63,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.95); /* White background */
-            backdrop-filter: blur(20px); /* Subtle blur for modern effect */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             height: 90px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle black border */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             /* Performance optimization for fixed header */
             will-change: transform;
             transform: translateZ(0);
-            box-shadow: 
-                0 4px 20px rgba(0, 0, 0, 0.1),
-                0 1px 3px rgba(0, 0, 0, 0.05); /* Light shadow for white header */
         }
+
+
 
         .logo-container {
             display: flex;
@@ -68,7 +83,7 @@
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
-            color: #000000; /* Black text for white header */
+            color: #000000;
             text-decoration: none;
             white-space: nowrap;
             line-height: 1;
@@ -79,7 +94,7 @@
         .logo-subtitle {
             font-size: 0.7rem;
             font-weight: 400;
-            color: #666666; /* Dark gray text for white header */
+            color: #666;
             line-height: 1;
             margin-top: 0.2rem;
             letter-spacing: 1px;
@@ -87,17 +102,17 @@
             transition: color 0.3s ease;
         }
 
-        /* Header text color changes for white background */
+        /* Header text color changes for dark background */
         .header.scrolled .logo {
-            color: #000000;
+            color: #ffffff;
         }
 
         .header.scrolled .logo-subtitle {
-            color: #666666;
+            color: #cccccc;
         }
 
         .header.scrolled .nav-menu a {
-            color: #000000;
+            color: #ffffff;
         }
 
         .nav-menu {
@@ -107,7 +122,7 @@
         }
 
         .nav-menu a {
-            color: #000000; /* Black text for white header */
+            color: #000000;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.9rem;
@@ -125,7 +140,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #000000, #666666); /* Black gradient for white header */
+            background: linear-gradient(90deg, #452b1a, #2d1a0f);
             transition: width 0.3s ease;
         }
 
@@ -150,11 +165,10 @@
         .mobile-menu-btn span {
             width: 100%;
             height: 3px;
-            background: #000000; /* Black lines for white header */
+            background: #000000;
             margin: 3px 0;
             transition: all 0.3s ease;
             border-radius: 2px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Black shadow for better visibility */
         }
 
         /* Mobile menu button animation */
@@ -174,6 +188,8 @@
         .header.scrolled .mobile-menu-btn span {
             background: #000000 !important;
         }
+
+
 
         /* Main content */
         .main-content {
@@ -215,33 +231,33 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Match site theme */
         }
 
         /* Layer 1: Subtle gradient movement */
         .bg-layer-1 {
             background: linear-gradient(45deg, 
-                rgba(10, 10, 10, 0.8) 0%, 
-                rgba(26, 26, 26, 0.6) 25%, 
-                rgba(10, 10, 10, 0.8) 50%, 
-                rgba(26, 26, 26, 0.6) 75%, 
-                rgba(10, 10, 10, 0.8) 100%);
+                rgba(5, 17, 9, 0.8) 0%, 
+                rgba(8, 20, 12, 0.6) 25%, 
+                rgba(5, 17, 9, 0.8) 50%, 
+                rgba(10, 22, 14, 0.6) 75%, 
+                rgba(5, 17, 9, 0.8) 100%); /* Theme color variations */
 
         }
 
-        /* Layer 2: Blue accent movement */
+        /* Layer 2: Subtle accent movement */
         .bg-layer-2 {
             background: radial-gradient(circle at 30% 20%, 
-                rgba(100, 149, 237, 0.15) 0%, 
-                transparent 50%);
+                rgba(255, 255, 255, 0.05) 0%, 
+                transparent 50%); /* White accent instead of blue */
 
         }
 
-        /* Layer 3: Secondary blue accent */
+        /* Layer 3: Secondary accent */
         .bg-layer-3 {
             background: radial-gradient(circle at 70% 80%, 
-                rgba(70, 130, 180, 0.1) 0%, 
-                transparent 50%);
+                rgba(255, 255, 255, 0.03) 0%, 
+                transparent 50%); /* White accent instead of blue */
 
         }
 
@@ -262,8 +278,8 @@
             background: 
                 linear-gradient(90deg, 
                     transparent 0%, 
-                    rgba(100, 149, 237, 0.05) 50%, 
-                    transparent 100%);
+                    rgba(255, 255, 255, 0.02) 50%, 
+                    transparent 100%); /* White overlay instead of blue */
 
         }
 
@@ -333,7 +349,7 @@
             text-align: left; /* Changed from center to left for asymmetrical layout */
             z-index: 10;
             position: relative;
-            max-width: 800px; /* Match services section header width */
+            max-width: 100%; /* Match services section header width */
         }
 
         /* Hero Logo - positioned above the title with proper sizing and spacing */
@@ -372,6 +388,8 @@
             color: #ffffff;
             text-transform: none; /* Keep lowercase as written in HTML */
             position: relative; /* Added for pseudo-element */
+            width: 800px;
+            max-width: 100%; /* Ensure it doesn't overflow on mobile */
         }
 
         /* Add modern underline effect to title */
@@ -405,11 +423,11 @@
 
         .hero-description {
             font-size: clamp(1.1rem, 2.5vw, 1.4rem); /* Increased size */
-            color: #aaaaaa;
+            color: #cccccc;
             max-width: 500px; /* Reduced max-width for better readability */
             margin: -1rem 0 4rem 0; /* Negative top margin to move text higher */
             line-height: 1.8; /* Increased line height */
-            font-weight: 400;
+            font-weight: 300;
             opacity: 0.8; /* Added transparency for modern look */
             text-align: left; /* Align text to the left */
             margin-left: 0; /* Remove any left margin to move text more left */
@@ -794,7 +812,7 @@
 
         /* About Section */
         .about-section {
-            padding: 0rem 4rem; /* Increased padding for more breathing room */
+            padding: 8rem 4rem 0rem 4rem; /* Added top padding to increase gap from hero section */
             background: linear-gradient(135deg, #05120a 0%, #05120a 50%, #05120a 100%) !important; /* Force background just slightly lighter than #051109 */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
@@ -876,7 +894,9 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            margin-bottom: -4rem;
+            margin-bottom: 0; /* Remove negative margin that might cut content */
+            min-height: auto; /* Allow natural height */
+            overflow: visible; /* Ensure content is visible */
         }
 
         /* About IXL Content positioned on the right */
@@ -896,6 +916,8 @@
             max-width: 100%;
             margin: 0;
             transition: opacity 0.3s ease;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro Display font */
+
         }
 
         /* Profile Section Styling */
@@ -960,9 +982,31 @@
                 text-align: center !important; /* Center the "I'm Haris..." text on mobile */
             }
 
+            /* Adjust title heights on mobile */
+            .about-header-text .section-title,
+            .about-ixl-content-right .section-title {
+                min-height: 80px; /* Smaller height on mobile */
+            }
+
             /* Reduce gap under about-ixl section on mobile */
             .about-ixl-section {
                 padding: 0.5rem 0.25rem !important; /* Almost no padding to eliminate gap completely */
+            }
+
+            /* Hero title mobile adjustments */
+            .hero-title {
+                width: 100% !important; /* Full width on mobile */
+                font-size: clamp(2.5rem, 6vw, 4rem) !important; /* Smaller font size on mobile */
+                line-height: 1.1 !important; /* Better line height for mobile */
+                text-align: center !important; /* Center align on mobile */
+                word-wrap: break-word !important; /* Allow text to wrap */
+                hyphens: auto !important; /* Enable hyphenation */
+            }
+
+            /* Hero content mobile adjustments */
+            .hero-content {
+                text-align: center !important; /* Center all hero content on mobile */
+                padding: 0 1rem !important; /* Add some padding on mobile */
             }
         }
 
@@ -1033,6 +1077,60 @@
         /* Who am i section - constant white opacity and left alignment */
         .about-header-text {
             margin-top: 3rem;
+        }
+        
+        /* Ensure "who am i" text stays on one line */
+        .about-header-text .section-title {
+            white-space: nowrap; /* Prevents text from wrapping to multiple lines */
+            overflow: hidden; /* Hides any overflow if text is too long */
+            text-overflow: ellipsis; /* Adds ellipsis if text is cut off */
+            min-height: 120px; /* Increase minimum height for more presence */
+            display: flex; /* Use flexbox for better height control */
+            align-items: center; /* Center text vertically */
+        }
+        
+        /* Ensure "what is ixlstudio?" text stays on one line */
+        .about-ixl-content-right .section-title {
+            white-space: nowrap; /* Prevents text from wrapping to multiple lines */
+            overflow: hidden; /* Hides any overflow if text is too long */
+            text-overflow: ellipsis; /* Adds ellipsis if text is cut off */
+            min-height: 120px; /* Increase minimum height for more presence */
+            display: flex; /* Use flexbox for better height control */
+            align-items: center; /* Center text vertically */
+        }
+        
+        /* Reading effect animation styles */
+        .reading-title {
+            display: inline-block; /* Allow for letter spacing */
+        }
+        
+        .reading-title .letter {
+            display: inline-block; /* Each letter as a block */
+            opacity: 0; /* Start invisible */
+            transform: translateY(20px); /* Start slightly below */
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+        
+        /* Only animate letters when section is active */
+        .reading-title[data-animated="true"] .letter {
+            animation: letterReveal 0.5s ease forwards; /* Animation for each letter */
+        }
+        
+        /* Letter reveal animation */
+        @keyframes letterReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Space character styling */
+        .reading-title .letter.space {
+            width: 0.3em; /* Space width */
         }
         
         .about-header-text .scroll-text {
@@ -1501,7 +1599,7 @@
 
         /* Services Section */
         .services-section {
-            padding: 10rem 4rem; /* Increased padding for more breathing room */
+            padding: 4rem 4rem; /* Reduced top padding to decrease gap from about section */
             position: relative;
             overflow: hidden;
         }
@@ -1711,18 +1809,9 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start; /* Changed from space-between to prevent height changes */
-            opacity: 0; /* Start completely hidden */
-            transform: scale(0.8) translateY(50px); /* Start smaller and below */
-            visibility: hidden; /* Completely hidden initially */
-        }
-
-        .service-card.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            visibility: visible;
-            background: transparent; /* Dark background when active */
-            border-color: rgba(0, 0, 0, 0.3);
-            box-shadow: none !important; /* Explicitly remove any box-shadow */
+            opacity: 1; /* Visible from start */
+            transform: scale(1) translateY(0); /* Normal size and position */
+            visibility: visible; /* Visible from start */
         }
 
         /* Elegant card background with gradient */
@@ -1758,7 +1847,9 @@
             z-index: 2;
         }
 
-        .service-card.fill-active .fill-animation {
+        .service-card.fill-active .fill-animation,
+        .service-card:hover .fill-animation,
+        .service-card.viewport-center-active .fill-animation {
             transform: translateY(0);
         }
 
@@ -1770,13 +1861,15 @@
 
 
 
-        .service-card:hover {
+        .service-card:hover,
+        .service-card.viewport-center-active {
             transform: translateY(-4px);
             border-color: rgba(23, 24, 26, 0.3);
             box-shadow: none !important; /* Explicitly remove any box-shadow */
         }
 
-        .service-card:hover::after {
+        .service-card:hover::after,
+        .service-card.viewport-center-active::after {
             opacity: 1;
         }
 
@@ -1819,7 +1912,8 @@
             transition: transform 0.4s ease;
         }
 
-        .service-card:hover .service-icon::before {
+        .service-card:hover .service-icon::before,
+        .service-card.viewport-center-active .service-icon::before {
             transform: translate(-50%, -50%) scale(1.5);
         }
 
@@ -1832,7 +1926,8 @@
         }
 
         /* Hover effect for icons */
-        .service-card:hover .service-icon {
+        .service-card:hover .service-icon,
+        .service-card.viewport-center-active .service-icon {
             background: rgb(17, 17, 17);
             border-color: rgba(54,27,6,0.3);
             box-shadow: 0 0 15px rgba(54,27,6,0.15);
@@ -1847,6 +1942,14 @@
             transition: color 0.3s ease, transform 0.6s ease;
         }
 
+        .service-card:not(:focus) .icon-letter {
+            transform: rotate(0deg) !important;
+        }
+
+        .service-card:focus .icon-letter {
+            transform: rotate(360deg) !important;
+        }
+        
         /* Focus styling for accessibility */
         .service-card:focus {
             outline: 2px solid #1a1a1a; /* Changed to neutral dark gray - less brown */
@@ -1870,6 +1973,7 @@
 
         .service-description {
             font-size: 1.1rem; /* Increased size */
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro Display font */
             color: #cccccc; /* Updated color */
             line-height: 1.7; /* Increased line height */
             font-weight: 300; /* Lighter weight for modern look */
@@ -2003,7 +2107,7 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Center by default for mobile */
             justify-content: center;
             min-height: 100vh;
         }
@@ -2011,17 +2115,36 @@
         /* Override text colors for Articles section with white background */
         .articles-section .section-title {
             color: #ffffff; /* Black text for white background */
-            text-align: center;
+            text-align: center; /* Center by default for mobile */
         }
 
         .articles-section .section-subtitle {
             color: #cccccc; /* Light gray text for dark background */
-            text-align: center;
+            text-align: center; /* Center by default for mobile */
         }
 
-        /* Center the articles section header */
+        /* Left align the articles section header on desktop */
         .articles-section .section-header {
-            text-align: center;
+            text-align: center; /* Center by default for mobile */
+        }
+        
+        /* Desktop-specific left alignment for articles section */
+        @media (min-width: 769px) {
+            .articles-container {
+                align-items: flex-start; /* Move header to the left side on desktop */
+            }
+            
+            .articles-section .section-title {
+                text-align: left; /* Left align title on desktop */
+            }
+            
+            .articles-section .section-subtitle {
+                text-align: left; /* Left align subtitle on desktop */
+            }
+            
+            .articles-section .section-header {
+                text-align: left; /* Left align header on desktop */
+            }
         }
 
         /* Article card text colors for dark background */
@@ -2410,8 +2533,14 @@
             z-index: 10;
             transition: all 0.25s ease;
             letter-spacing: 0.5em;
-            opacity: 0;
+            opacity: 0; /* Hidden by default */
             white-space: nowrap; /* Prevent text from wrapping to multiple lines */
+        }
+        
+        /* Show title only when card center is in 50% of viewport */
+        .project-card.viewport-center .project-title {
+            opacity: 1; /* Show title when card center is in viewport center */
+            letter-spacing: 0.1em; /* Tighter letter spacing when visible */
         }
 
         .project-card.focused .project-title {
@@ -2511,7 +2640,7 @@
         /* Contact Section */
         .contact-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%);
+            background: #000000 !important;
             position: relative;
             overflow: hidden; /* Enable overflow for animated elements */
         }
@@ -3196,6 +3325,14 @@
         }
 
         @media (max-width: 768px) {
+            /* Prevent horizontal scrolling on mobile */
+            html, body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                position: relative;
+            }
+            
             /* Mobile-specific adjustments */
             .hero {
                 padding: 0 2rem;
@@ -3204,6 +3341,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: hidden;
             }
 
             .hero-content {
@@ -3237,11 +3377,17 @@
                 font-size: 1.5rem; /* Smaller icon letters on mobile */
             }
 
-            .services-section,
             .projects-section,
-            .articles-section,
-            .about-section {
+            .articles-section {
                 padding: 6rem 1.5rem; /* Adjusted padding for mobile */
+            }
+            
+            .about-section {
+                padding: 6rem 1.5rem 0rem 1.5rem; /* Reduced bottom padding for mobile */
+            }
+            
+            .services-section {
+                padding: 2rem 1.5rem; /* Reduced top padding to decrease gap from about section on mobile */
             }
 
             /* Improved touch interactions for mobile */
@@ -3576,13 +3722,14 @@
 
         /* Scroll-triggered Text Animation Sections */
         .scroll-text-section {
-            min-height: 100vh; /* Full viewport height for each section */
+            min-height: auto; /* Allow natural height based on content */
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Align to top instead of center */
             justify-content: center;
             background: transparent; /* Transparent background */
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* Allow content to be visible */
+            padding: 4rem 0; /* Add padding for spacing */
         }
 
         /* Subtle background animation for scroll text sections */
@@ -3662,6 +3809,8 @@
             opacity: 1; /* Start visible */
             transform: translateY(0); /* Start in position */
             padding: 2rem 0; /* Add vertical padding for better spacing */
+            min-height: auto; /* Allow natural height */
+            overflow: visible; /* Ensure content is visible */
         }
 
         .scroll-text-header {
@@ -3682,18 +3831,33 @@
             line-height: 1.7;
             color: #e0e0e0;
             letter-spacing: 0.02em;
-            margin: 0;
-            text-align: left; /* Left align like a document */
+            margin: 0 0 1rem 0; /* Add bottom margin for spacing between paragraphs */
+            text-align: left; /* Justify text for even left and right edges */
             white-space: normal; /* Allow natural line breaks */
             overflow: visible; /* Show all text */
             width: 100%; /* Take full available width */
             max-width: 800px; /* Wider for better text flow */
-            margin: 0; /* Remove auto margin for left alignment */
             text-indent: 0; /* No paragraph indentation */
             word-spacing: 0.03em; /* Slight word spacing for better readability */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            hyphens: auto; /* Enable automatic hyphenation for better line breaks */
+            -webkit-hyphens: auto; /* Webkit browser support */
+            -ms-hyphens: auto; /* IE/Edge support */
             /* Each letter will be animated individually */
+        }
+        
+        /* Work quote specific styling for better desktop structure */
+        .work-quote {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Keep original font size */
+            font-weight: 300; /* Keep original font weight */
+            line-height: 1.8; /* Better line spacing for readability */
+            max-width: 600px; /* Optimal width for quote readability */
+            margin: 2rem auto 3rem auto; /* Better vertical spacing */
+            color: #e0e0e0; /* Keep original color */
+            letter-spacing: 0.02em; /* Keep original letter spacing */
+            word-spacing: 0.03em; /* Keep original word spacing */
+            text-align: center; /* Center align for work section */
         }
 
         /* Desktop-specific wider text */
@@ -3704,12 +3868,17 @@
             }
         }
 
+        /* Remove bottom margin from last paragraph to avoid extra spacing */
+        .scroll-text:last-child {
+            margin-bottom: 0;
+        }
+
         /* Sentence, word and letter styling for animation */
         .scroll-text .sentence {
             display: block;
             margin-bottom: 0.5rem; /* Reduced margin for tighter spacing - creates one line break */
             line-height: 1.8;
-            cursor: pointer; /* Show pointer cursor to indicate interactivity */
+            cursor: text; /* Text selection cursor - like normal text content */
             transition: all 0.3s ease; /* Smooth transition for touch feedback */
         }
 
@@ -4212,10 +4381,11 @@
             <div class="hero-content">
                 <!-- IXL Logo - positioned above the title for visual hierarchy -->
                 <img src="ixl.png" alt="IXL Studio Logo" class="hero-logo">
-                <h1 class="hero-title">i craft digital stories<span class="hero-dot">.</span></h1>
+                <h1 class="hero-title">crafting digital stories<span class="hero-dot">.</span></h1>
                 <p class="hero-subtitle">haris chatzianastasiou</p>
                 <p class="hero-description">
-                    Let's create your story together.
+                    X <br>
+                    IXLSTUDIO
                 </p>
             </div>
             
@@ -4229,67 +4399,7 @@
             </div>
         </section>
 
-            <!-- Services Section -->
-            <section id="services" class="services-section">
-            <!-- Video background -->
-            <div class="video-filter-wrapper">
-                <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
-                    <source src="1.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="services-container">
-                <div class="section-header fade-in" id="services-header">
-                    <h2 class="section-title">services</h2>
-                    <p class="section-subtitle">
-                        helping you express your brand and tell your story. I design, code, deploy, and maintain your ideas to be placed on the web.
-                    </p>
-                </div>
-                
-                <!-- Tunnel Animation Elements -->
-                <div class="tunnel-animation-container" id="tunnel-container">
-                    <div class="big-letter" id="big-letter">I</div>
-                    <div class="tunnel" id="tunnel">
-                        <div class="tunnel-path"></div>
-                        <div class="ball" id="ball"></div>
-                    </div>
-                </div>
-                
-                <div class="services-grid" id="services-grid">
-                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="UI/UX Design Service">
-                        <div class="fill-animation"></div>
-                        <div class="service-icon">
-                            <span class="icon-letter">I</span>
-                        </div>
-                        <h3 class="service-title">UI/UX Design</h3>
-                        <p class="service-description">
-                            Creating intuitive user experiences through thoughtful design that balances aesthetics with functionality, ensuring every interaction feels natural and engaging.
-                        </p>
-                    </div>
-                    <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="Frontend Development Service">
-                        <div class="fill-animation"></div>
-                        <div class="service-icon">
-                            <span class="icon-letter">X</span>
-                        </div>
-                        <h3 class="service-title">Frontend Development</h3>
-                        <p class="service-description">
-                            Building modern, responsive interfaces using cutting-edge technologies like React and vanilla JavaScript, delivering seamless user experiences across all devices.
-                        </p>
-                    </div>
-                    <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="Backend Development Service">
-                        <div class="fill-animation"></div>
-                        <div class="service-icon">
-                            <span class="icon-letter">L</span>
-                        </div>
-                        <h3 class="service-title">Backend Development</h3>
-                        <p class="service-description">
-                            Developing robust, scalable server-side solutions with Java and Spring Boot, ensuring your applications are secure, fast, and ready for growth.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section - Profile and Title -->
+            <!-- About Section - Profile and Title -->
         <section id="about" class="about-section">
             <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
             <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
@@ -4348,16 +4458,16 @@
                             </div>
                         </div>
                         <div class="about-header-text">
-                            <h2 class="section-title">who am i</h2>
-                            <section id="scroll-text-combined" class="scroll-text-section">
-                                <div class="scroll-text-container">
-                                    <div class="scroll-text-content">
-                                        <p class="scroll-text" id="scroll-text-1-content">
-                                            I'm Haris Chatzianastasiou, a passionate full-stack developer based in Thessaloniki, Greece.
-                                        </p>
-                                    </div>
-                                </div>
-                            </section>
+                            <h2 class="section-title" id="who-am-i-title">who am i</h2>
+                            <p class="scroll-text" id="scroll-text-1-content">
+                                I'm Haris Chatzianastasiou, the founder of IXLStudio and a passionate full-stack developer based in Thessaloniki, Greece.
+                            </p>
+                            <p class="scroll-text">
+                                With experience spanning both private and public sectors, I bring a diverse perspective to every project.
+                            </p>
+                            <p class="scroll-text">
+                                My background includes financial solutions and insurance in the private sector, as well as working with the National Justice of Greece in the public sector.
+                            </p>
                         </div>
                         <div class="content-section-education">
                             <div class="expandable-content expanded" id="education-content">
@@ -4373,20 +4483,64 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- Services Section -->
+            <section id="services" class="services-section">
+            <!-- Video background -->
+            <div class="video-filter-wrapper">
+                <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
+                    <source src="1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="services-container">
+                <div class="section-header" id="services-header">
+                    <h2 class="section-title">what i do</h2>
+                    <p class="section-subtitle">
+                        covering everything from brand planning down to technical details. Software solutions that are customized to match exactly what you want to achieve and <em>tell your story</em>. </p>
+                </div>
                 
-                <!-- About IXL Content - positioned on the right -->
-                <div class="about-ixl-content-right">
-                    <div class="section-header fade-in">
-                        <h2 class="section-title">what is ixl</h2>
+                <!-- Tunnel Animation Elements -->
+                <div class="tunnel-animation-container" id="tunnel-container">
+                    <div class="big-letter" id="big-letter">I</div>
+                    <div class="tunnel" id="tunnel">
+                        <div class="tunnel-path"></div>
+                        <div class="ball" id="ball"></div>
                     </div>
-                    <div class="about-ixl-text">
-                        <div class="scroll-text-container">
-                            <div class="scroll-text-content">
-                                <p class="scroll-text">
-                                    IXLstudio is a place where I share my vision : <em>every project should tell a unique story</em>. An experience that resonates with users, all while serving its functional purpose effectively and reliably.
-                                </p>
-                            </div>
+                </div>
+                
+                <div class="services-grid" id="services-grid">
+                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="UI/UX Design Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">I</span>
                         </div>
+                        <h3 class="service-title">UI/UX Design</h3>
+                        <p class="service-description">
+                            Creating intuitive user experiences through thoughtful design that balances aesthetics with functionality, ensuring every interaction feels natural and engaging.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="Frontend Development Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">X</span>
+                        </div>
+                        <h3 class="service-title">Frontend Development</h3>
+                        <p class="service-description">
+                            Building modern, responsive interfaces using cutting-edge technologies like React and vanilla JavaScript, delivering seamless user experiences across all devices.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="Backend Development Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">L</span>
+                        </div>
+                        <h3 class="service-title">Backend Development</h3>
+                        <p class="service-description">
+                            Developing robust, scalable server-side solutions with Java and Spring Boot, ensuring your applications are secure, fast, and ready for growth.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -4424,12 +4578,18 @@
             <div class="floating-element diamond" style="bottom: 48%; left: 96%;"></div>
             <div class="floating-element dot" style="bottom: 58%; right: 6%;"></div>
             
+            
             <div class="projects-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">explore work</h2>
-                    <!-- <p class="section-subtitle">
-                        Showcasing  projects that demonstrate my expertise in creating digital experiences.
-                    </p> -->
+                    <h2 class="section-title">work</h2>
+                    
+                        <p class="scroll-text work-quote" id="scroll-text-1-content">
+                            "Every project should tell a unique story.<br>
+                            An experience that resonates with users,<br>
+                            all while serving its functional purpose<br>
+                            effectively and reliably."
+                        </p>
+                    
                 </div>
                 <div class="projects-grid">
                     <div class="project-card" data-project="skg-chess">
@@ -4503,7 +4663,7 @@
             
             <div class="articles-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title">explore articles</h2>
+                    <h2 class="section-title">articles</h2>
                     <p class="section-subtitle">
                         insights and thoughts on development
                     </p>
@@ -4543,7 +4703,7 @@
         <section id="contact" class="contact-section">
             <div class="contact-container">
                 <div class="section-header fade-in">
-                    <h2 class="section-title" id="contact-title">work with me</h2>
+                    <h2 class="section-title" id="contact-title">contact</h2>
                     <p class="section-subtitle">
                         Ready to start your next project? Let's discuss your vision and bring it to life.
                     </p>
@@ -4618,6 +4778,7 @@
         gsap.set('.hero-subtitle', { opacity: 0 });
         gsap.set('.hero-title', { opacity: 0, y: 40, scale: 0.95 });
         gsap.set('.hero-logo', { opacity: 0, y: -50, scale: 0.8 }); /* Set initial state for logo */
+        // gsap.set('#services-header', { opacity: 0, y: 30 }); /* Removed animation for services header */
 
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', function() {
@@ -5229,7 +5390,7 @@
             // Animate grid background pattern
             ScrollTrigger.create({
                 trigger: servicesGrid,
-                start: "top 80%",
+                start: "top bottom-=150",
                 end: "bottom 20%",
                 onEnter: () => {
                     servicesGrid.classList.add('animate');
@@ -5245,45 +5406,14 @@
                 }
             });
 
-            // Staggered card animations with color filling effect - one-time only
+            // Service cards are visible from start - only hover effects
             serviceCards.forEach((card, index) => {
-                // Initial card animation - only once
-                gsap.fromTo(card, 
-                    {
-                        opacity: 0,
-                        y: 60,
-                        scale: 0.9,
-                        rotationX: 15
-                    },
-                    {
-                        scrollTrigger: {
-                            trigger: card,
-                            start: "top 85%",
-                            end: "bottom 15%",
-                            toggleActions: "play none none none", // Changed to prevent reverse
-                            fastScrollEnd: true
-                        },
-                        duration: 0.8,
-                        delay: index * 0.2, // Stagger effect
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        rotationX: 0,
-                        ease: "power2.out"
-                    }
-                );
-
-                // Color filling animation on scroll - only once
-                ScrollTrigger.create({
-                    trigger: card,
-                    start: "top 70%",
-                    end: "bottom 30%",
-                    onEnter: () => {
-                        if (!card.hasAttribute('data-animated')) {
-                            card.classList.add('fill-active');
-                            card.setAttribute('data-animated', 'true');
-                        }
-                    }
+                // Set cards to be visible from the start
+                gsap.set(card, {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    rotationX: 0
                 });
             });
 
@@ -5438,8 +5568,18 @@
             console.log('Found project cards:', projectCards.length); // Debug log
 
             projectCards.forEach(card => {
+                let touchStartTime = 0;
+                let touchStartY = 0;
+                let isScrolling = false;
+                
                 // Function to handle project card interaction
                 function handleProjectInteraction(e) {
+                    // Prevent accidental clicks during scrolling
+                    if (isScrolling) {
+                        e.preventDefault();
+                        return;
+                    }
+                    
                     e.preventDefault(); // Prevent default behavior
                     console.log('Project card interacted!'); // Debug log
                     console.log('Project:', this.getAttribute('data-project')); // Debug log
@@ -5472,10 +5612,42 @@
                         }, 800);
                     }
                 }
+                
+                // Touch start event to detect scrolling
+                card.addEventListener('touchstart', function(e) {
+                    touchStartTime = Date.now();
+                    touchStartY = e.touches[0].clientY;
+                    isScrolling = false;
+                });
+                
+                // Touch move event to detect scrolling
+                card.addEventListener('touchmove', function(e) {
+                    const touchY = e.touches[0].clientY;
+                    const touchDistance = Math.abs(touchY - touchStartY);
+                    
+                    // If user moved more than 10px vertically, consider it scrolling
+                    if (touchDistance > 10) {
+                        isScrolling = true;
+                    }
+                });
+                
+                // Touch end event to reset scrolling flag
+                card.addEventListener('touchend', function(e) {
+                    const touchDuration = Date.now() - touchStartTime;
+                    
+                    // Only trigger click if it was a short touch (less than 300ms) and not scrolling
+                    if (touchDuration < 300 && !isScrolling) {
+                        handleProjectInteraction.call(this, e);
+                    }
+                    
+                    // Reset flags after a delay
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 100);
+                });
 
-                // Add both click and touch events for better mobile support
+                // Add click event for desktop
                 card.addEventListener('click', handleProjectInteraction);
-                card.addEventListener('touchend', handleProjectInteraction);
             });
         }
 
@@ -5488,10 +5660,12 @@
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
-                        // Add hover effect when card is visible for the first time
+                    if (entry.isIntersecting) {
+                        // Add hover effect when card is visible (removed replay prevention)
                         entry.target.classList.add('scroll-active');
-                        entry.target.setAttribute('data-animated', 'true');
+                    } else {
+                        // Remove effect when card is not visible
+                        entry.target.classList.remove('scroll-active');
                     }
                 });
             }, {
@@ -5506,6 +5680,42 @@
 
         // Initialize scroll hover effect
         setupScrollHoverEffect();
+
+        // Viewport center detection for project card titles
+        function setupViewportCenterDetection() {
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            // Function to check if card center is in 50% of viewport
+            function checkViewportCenter() {
+                const viewportHeight = window.innerHeight;
+                const viewportCenter = viewportHeight / 2; // Center of viewport
+                const tolerance = viewportHeight * 0.25; // 25% tolerance (50% total area)
+                
+                projectCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2; // Center of the card
+                    
+                    // Check if card center is within the 50% viewport area
+                    const isInCenter = Math.abs(cardCenter - viewportCenter) <= tolerance;
+                    
+                    if (isInCenter) {
+                        card.classList.add('viewport-center'); // Add class to show title
+                    } else {
+                        card.classList.remove('viewport-center'); // Remove class to hide title
+                    }
+                });
+            }
+            
+            // Check on scroll and resize
+            window.addEventListener('scroll', checkViewportCenter);
+            window.addEventListener('resize', checkViewportCenter);
+            
+            // Initial check
+            checkViewportCenter();
+        }
+
+        // Initialize viewport center detection
+        setupViewportCenterDetection();
 
         // About section brightness effect on scroll
         function setupAboutSectionBrightness() {
@@ -5649,6 +5859,86 @@
 
         // Initialize education opacity effect
         setupEducationOpacity();
+
+        // Reading effect animation for titles
+        function setupReadingEffect() {
+            // Function to split text into letters and wrap them in spans
+            function splitTextIntoLetters(element) {
+                const text = element.textContent; // Get the original text
+                element.innerHTML = ''; // Clear the element
+                
+                // Split text into characters and create spans
+                for (let i = 0; i < text.length; i++) {
+                    const letter = document.createElement('span');
+                    letter.className = 'letter';
+                    
+                    // Handle spaces specially
+                    if (text[i] === ' ') {
+                        letter.className = 'letter space';
+                        letter.innerHTML = '&nbsp;'; // Non-breaking space
+                    } else {
+                        letter.textContent = text[i];
+                    }
+                    
+                    // Add animation delay based on letter position
+                    letter.style.animationDelay = `${i * 0.1}s`; // 0.1s delay between letters
+                    
+                    element.appendChild(letter);
+                }
+            }
+            
+            // Function to trigger animation when section becomes visible
+            function triggerReadingAnimation(element) {
+                if (!element.hasAttribute('data-animated')) {
+                    // Check if this is the "who am i?" title
+                    const isWhoAmI = element.id === 'who-am-i-title';
+                    const initialDelay = isWhoAmI ? 1000 : 0; // 1 second delay for "who am i?"
+                    
+                    // Split text into letters
+                    splitTextIntoLetters(element);
+                    
+                    // Add initial delay for "who am i?" title
+                    if (isWhoAmI) {
+                        const letters = element.querySelectorAll('.letter');
+                        letters.forEach((letter, index) => {
+                            const currentDelay = parseFloat(letter.style.animationDelay || '0');
+                            letter.style.animationDelay = `${(currentDelay + 1)}s`; // Add 1 second to existing delay
+                        });
+                    }
+                    
+                    // Mark as animated to prevent re-triggering
+                    element.setAttribute('data-animated', 'true');
+                }
+            }
+            
+            // Set up intersection observer for reading animations
+            const readingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Trigger animation when title comes into view
+                        triggerReadingAnimation(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5, // Trigger when 50% of the title is visible
+                rootMargin: '0px 0px -10% 0px' // Slight offset for better timing
+            });
+            
+            // Observe both titles
+            const whoAmITitle = document.getElementById('who-am-i-title');
+            const ixlstudioTitle = document.getElementById('ixlstudio-title');
+            
+            if (whoAmITitle) {
+                readingObserver.observe(whoAmITitle);
+            }
+            
+            if (ixlstudioTitle) {
+                readingObserver.observe(ixlstudioTitle);
+            }
+        }
+
+        // Initialize reading effect
+        setupReadingEffect();
 
         // About section functionality - sequential scroll-triggered animations
         document.addEventListener('DOMContentLoaded', function() {
@@ -6246,44 +6536,8 @@
                         allSentences[0].classList.add('active');
                     }
                     
-                    // Add hover functionality for desktop and touch functionality for mobile
-                    allSentences.forEach((sentence, index) => {
-                        // Desktop hover functionality
-                        sentence.addEventListener('mouseenter', () => {
-                            // Only trigger on desktop (not touch devices)
-                            if (!('ontouchstart' in window)) {
-                                showSingleSentence(index);
-                            }
-                        });
-                        
-                        sentence.addEventListener('mouseleave', () => {
-                            // Only trigger on desktop (not touch devices)
-                            if (!('ontouchstart' in window)) {
-                                // Return to scroll-based state when mouse leaves
-                                handleScrollReading();
-                            }
-                        });
-
-                        // Mobile touch functionality
-                        sentence.addEventListener('touchstart', (e) => {
-                            // Only trigger on touch devices
-                            if ('ontouchstart' in window) {
-                                e.preventDefault(); // Prevent default touch behavior
-                                showSingleSentence(index);
-                            }
-                        });
-
-                        sentence.addEventListener('touchend', (e) => {
-                            // Only trigger on touch devices
-                            if ('ontouchstart' in window) {
-                                e.preventDefault(); // Prevent default touch behavior
-                                // Return to scroll-based state after a short delay
-                                setTimeout(() => {
-                                    handleScrollReading();
-                                }, 2000); // Show active sentence for 2 seconds after touch
-                            }
-                        });
-                    });
+                    // No click/hover functionality - text is not interactive
+                    // All sentences will only animate based on scroll position
                 }
                 
                 // Function to show only one sentence at a time
@@ -6421,7 +6675,7 @@
                     const tunnelTimeline = gsap.timeline({
                         scrollTrigger: {
                             trigger: servicesSection,
-                            start: "top center",
+                            start: "top bottom-=100",
                             end: "bottom center",
                             scrub: 1,
                             onUpdate: (self) => {
@@ -6451,7 +6705,7 @@
                     const ballTimeline = gsap.timeline({
                         scrollTrigger: {
                             trigger: servicesSection,
-                            start: "top center",
+                            start: "top bottom-=100",
                             end: "bottom center",
                             scrub: 1
                         }
@@ -6478,11 +6732,11 @@
                 
                 // Handle scroll progress for card activations
                 const handleScrollProgress = (progress) => {
-                    // Calculate which card should be active
+                    // Calculate which card should be active - earlier triggers
                         let targetCardIndex = -1;
-                    if (progress > 0.15) targetCardIndex = 0;
-                    if (progress > 0.4) targetCardIndex = 1;
-                    if (progress > 0.65) targetCardIndex = 2;
+                    if (progress > 0.05) targetCardIndex = 0;
+                    if (progress > 0.25) targetCardIndex = 1;
+                    if (progress > 0.45) targetCardIndex = 2;
                     
                     // Activate cards based on progress
                     if (targetCardIndex >= 0 && targetCardIndex !== currentCardIndex) {
@@ -6490,15 +6744,15 @@
                         activateCard(targetCardIndex);
                     }
                     
-                    // Show header for early progress
-                    if (progress <= 0.25 && servicesHeader) {
-                        gsap.to(servicesHeader, {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.3,
-                            ease: "power2.out"
-                        });
-                    }
+                    // Show header for very early progress - REMOVED ANIMATION
+                    // if (progress <= 0.1 && servicesHeader) {
+                    //     gsap.to(servicesHeader, {
+                    //         opacity: 1,
+                    //         y: 0,
+                    //         duration: 0.3,
+                    //         ease: "power2.out"
+                    //     });
+                    // }
                     
                     // Check if all cards are active for grid layout
                         const activeCards = document.querySelectorAll('.service-card.active');
@@ -6599,9 +6853,40 @@
             // Initialize scroll text animator
             new ScrollTextAnimator();
             
-            // Enhanced service card interaction handling for both desktop and mobile
+            // Enhanced service card interaction handling with viewport center detection
             const serviceCards = document.querySelectorAll('.service-card');
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+            
+            // Function to check if service card center is in 50% of viewport
+            function checkServiceCardViewportCenter() {
+                const viewportHeight = window.innerHeight;
+                const viewportCenter = viewportHeight / 2; // Center of viewport
+                const tolerance = viewportHeight * 0.25; // 25% tolerance (50% total area)
+                
+                serviceCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2; // Center of the card
+                    const iconLetter = card.querySelector('.icon-letter');
+                    
+                    // Check if card center is within the 50% viewport area
+                    const isInCenter = Math.abs(cardCenter - viewportCenter) <= tolerance;
+                    
+                    if (isInCenter) {
+                        // Trigger full hover animation when card center is in viewport center
+                        card.classList.add('viewport-center-active');
+                    } else {
+                        // Reset when card center is not in viewport center
+                        card.classList.remove('viewport-center-active');
+                    }
+                });
+            }
+            
+            // Check on scroll and resize
+            window.addEventListener('scroll', checkServiceCardViewportCenter);
+            window.addEventListener('resize', checkServiceCardViewportCenter);
+            
+            // Initial check
+            checkServiceCardViewportCenter();
             
             serviceCards.forEach(card => {
                 const iconLetter = card.querySelector('.icon-letter');
@@ -6629,7 +6914,7 @@
                     resetLetter();
                 });
                 
-                // Mouse enter event for desktop hover
+                // Mouse enter event for desktop hover (still works for manual hover)
                 card.addEventListener('mouseenter', function(e) {
                     if (!isMobile) {
                         rotateLetter();
