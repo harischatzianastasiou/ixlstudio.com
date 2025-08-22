@@ -5744,6 +5744,61 @@
         // Initialize viewport center detection
         setupViewportCenterDetection();
 
+        // Mobile touch/hover handling for project cards
+        function setupProjectCardMobileInteractions() {
+            const projectCards = document.querySelectorAll('.project-card');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+            
+            if (!isMobile) return; // Only run on mobile
+            
+            projectCards.forEach(card => {
+                const projectTitle = card.querySelector('.project-title');
+                const projectCategory = card.querySelector('.project-category');
+                
+                // Touch start event - show project text
+                card.addEventListener('touchstart', function(e) {
+                    e.preventDefault(); // Prevent default touch behavior
+                    
+                    // Show project title and category
+                    if (projectTitle) {
+                        projectTitle.style.opacity = '1';
+                        projectTitle.style.letterSpacing = '0.1em';
+                        projectTitle.style.transition = 'all 0.25s ease';
+                    }
+                    
+                    if (projectCategory) {
+                        projectCategory.style.opacity = '1';
+                        projectCategory.style.transform = 'translateY(0)';
+                        projectCategory.style.transition = 'all 0.25s ease 0.1s';
+                    }
+                });
+                
+                // Touch end event - hide project text after delay
+                card.addEventListener('touchend', function(e) {
+                    // Hide project text after a short delay to show the effect
+                    setTimeout(() => {
+                        if (projectTitle) {
+                            projectTitle.style.opacity = '0';
+                            projectTitle.style.letterSpacing = 'normal';
+                        }
+                        
+                        if (projectCategory) {
+                            projectCategory.style.opacity = '0';
+                            projectCategory.style.transform = 'translateY(20px)';
+                        }
+                    }, 300); // 300ms delay to show the text
+                });
+                
+                // Prevent default touch behaviors that might interfere
+                card.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                });
+            });
+        }
+
+        // Initialize mobile project card interactions
+        setupProjectCardMobileInteractions();
+
         // About section brightness effect on scroll
         function setupAboutSectionBrightness() {
             const aboutSection = document.querySelector('.about-section');
@@ -7171,16 +7226,76 @@
                     }
                 });
                 
-                // Mobile touch handling
+                // Mobile touch handling with directional fill
                 if (isMobile) {
+                    let touchStartTime = 0;
+                    let touchStartX = 0;
+                    let touchStartY = 0;
+                    
                     // Touch start event
                     card.addEventListener('touchstart', function(e) {
+                        e.preventDefault(); // Prevent default touch behavior
+                        
+                        const touch = e.touches[0];
+                        touchStartTime = Date.now();
+                        touchStartX = touch.clientX;
+                        touchStartY = touch.clientY;
+                        
                         rotateLetter();
+                        
+                        // Trigger fill animation on touch start
+                        if (!card.classList.contains('viewport-center-active')) {
+                            // For mobile, we'll use a simple direction based on touch position
+                            const rect = card.getBoundingClientRect();
+                            const cardCenterX = rect.left + rect.width / 2;
+                            const cardCenterY = rect.top + rect.height / 2;
+                            
+                            const deltaX = touchStartX - cardCenterX;
+                            const deltaY = touchStartY - cardCenterY;
+                            
+                            let direction = 'bottom'; // Default
+                            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                                direction = deltaX > 0 ? 'left' : 'right';
+                            } else {
+                                direction = deltaY > 0 ? 'top' : 'bottom';
+                            }
+                            
+                            animateFill(card, direction, 0.4);
+                        }
                     });
                     
                     // Touch end event - reset after animation
                     card.addEventListener('touchend', function(e) {
+                        const touchEndTime = Date.now();
+                        const touchDuration = touchEndTime - touchStartTime;
+                        
                         resetLetter();
+                        
+                        // Reverse fill animation after a short delay
+                        setTimeout(() => {
+                            if (!card.classList.contains('viewport-center-active')) {
+                                const rect = card.getBoundingClientRect();
+                                const cardCenterX = rect.left + rect.width / 2;
+                                const cardCenterY = rect.top + rect.height / 2;
+                                
+                                const deltaX = touchStartX - cardCenterX;
+                                const deltaY = touchStartY - cardCenterY;
+                                
+                                let direction = 'bottom'; // Default
+                                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                                    direction = deltaX > 0 ? 'left' : 'right';
+                                } else {
+                                    direction = deltaY > 0 ? 'top' : 'bottom';
+                                }
+                                
+                                reverseFill(card, direction, 0.3);
+                            }
+                        }, 200); // Short delay to show the fill effect
+                    });
+                    
+                    // Prevent default touch behaviors that might interfere
+                    card.addEventListener('touchmove', function(e) {
+                        e.preventDefault();
                     });
                 }
             });
