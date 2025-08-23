@@ -809,6 +809,67 @@
                 font-size: clamp(1rem, 4.5vw, 1.5rem); /* Smaller font on very small screens */
                 padding: 0.2rem 0.6rem; /* Smaller padding */
             }
+
+            /* Extra small mobile Service Card Animations - Disable all except GSAP fill animation */
+            .service-card {
+                transition: none !important; /* Disable all CSS transitions on mobile */
+                transform: none !important; /* Disable all CSS transforms on mobile */
+            }
+
+            /* Disable hover effects on mobile */
+            .service-card:hover,
+            .service-card.viewport-center-active {
+                transform: none !important; /* No transform on hover */
+                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+            }
+
+            /* Disable icon hover effects on mobile */
+            .service-card:hover .service-icon,
+            .service-card.viewport-center-active .service-icon {
+                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
+                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+                transform: none !important; /* No transform */
+            }
+
+            /* Disable icon letter rotation on mobile */
+            .service-card:hover .icon-letter,
+            .service-card:active .icon-letter,
+            .service-card:focus .icon-letter {
+                transform: none !important; /* No rotation */
+                color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
+            }
+
+            /* Disable icon pseudo-element scaling on mobile */
+            .service-card:hover .service-icon::before,
+            .service-card.viewport-center-active .service-icon::before {
+                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
+            }
+
+            /* Disable card background gradient on mobile */
+            .service-card:hover::after,
+            .service-card.viewport-center-active::after {
+                opacity: 0 !important; /* No background gradient */
+            }
+
+            /* Keep GSAP fill animation working - don't disable this */
+            .service-card .fill-animation {
+                /* GSAP will handle this animation */
+            }
+
+            /* Disable all transitions on service card elements on mobile */
+            .service-icon {
+                transition: none !important; /* Disable icon transitions */
+            }
+
+            .icon-letter {
+                transition: none !important; /* Disable letter transitions */
+            }
+
+            .service-icon::before {
+                transition: none !important; /* Disable pseudo-element transitions */
+            }
         }
 
         /* About Section */
@@ -1008,6 +1069,67 @@
             .hero-content {
                 text-align: center !important; /* Center all hero content on mobile */
                 padding: 0 1rem !important; /* Add some padding on mobile */
+            }
+
+            /* Mobile Service Card Animations - Disable all except GSAP fill animation */
+            .service-card {
+                transition: none !important; /* Disable all CSS transitions on mobile */
+                transform: none !important; /* Disable all CSS transforms on mobile */
+            }
+
+            /* Disable hover effects on mobile */
+            .service-card:hover,
+            .service-card.viewport-center-active {
+                transform: none !important; /* No transform on hover */
+                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+            }
+
+            /* Disable icon hover effects on mobile */
+            .service-card:hover .service-icon,
+            .service-card.viewport-center-active .service-icon {
+                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
+                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+                transform: none !important; /* No transform */
+            }
+
+            /* Disable icon letter rotation on mobile */
+            .service-card:hover .icon-letter,
+            .service-card:active .icon-letter,
+            .service-card:focus .icon-letter {
+                transform: none !important; /* No rotation */
+                color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
+            }
+
+            /* Disable icon pseudo-element scaling on mobile */
+            .service-card:hover .service-icon::before,
+            .service-card.viewport-center-active .service-icon::before {
+                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
+            }
+
+            /* Disable card background gradient on mobile */
+            .service-card:hover::after,
+            .service-card.viewport-center-active::after {
+                opacity: 0 !important; /* No background gradient */
+            }
+
+            /* Keep GSAP fill animation working - don't disable this */
+            .service-card .fill-animation {
+                /* GSAP will handle this animation */
+            }
+
+            /* Disable all transitions on service card elements on mobile */
+            .service-icon {
+                transition: none !important; /* Disable icon transitions */
+            }
+
+            .icon-letter {
+                transition: none !important; /* Disable letter transitions */
+            }
+
+            .service-icon::before {
+                transition: none !important; /* Disable pseudo-element transitions */
             }
         }
 
