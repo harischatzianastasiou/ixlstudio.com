@@ -215,6 +215,15 @@
             transform: translateZ(0);
         }
 
+        @media (max-width: 768px) {
+            .hero {
+                background: 
+                radial-gradient(circle at 20% 80%, rgba(222, 222, 222, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(222, 222, 222, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(222, 222, 222, 0.08) 0%, transparent 50%);
+            }
+        }
+
         /* Animated background effect to replace video */
         .animated-background {
             position: absolute;
