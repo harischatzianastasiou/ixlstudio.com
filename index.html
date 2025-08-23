@@ -1233,7 +1233,31 @@
 
         /* Other Experience section margin */
         .content-section-experience {
-            margin-top: 10rem;
+            margin-top: 0rem; /* Reduced from 10rem for better alignment */
+            margin-left: -2.2rem !important;
+        }
+
+        /* Desktop-specific alignment improvements */
+        @media (min-width: 1024px) {
+            .content-section-experience {
+                margin-top: 2rem; /* Even less space on desktop */
+                margin-left: 0; /* Ensure left alignment */
+                max-width: 100%; /* Full width on desktop */
+            }
+            
+            .content-section-experience .expandable-content {
+                padding-left: 0; /* Remove any left padding */
+                margin-left: 0; /* Remove any left margin */
+            }
+            
+            /* Better spacing for scroll-text elements */
+            .about-header-text .scroll-text {
+                margin-bottom: 1.5rem; /* Consistent spacing between paragraphs */
+            }
+            
+            .about-header-text .scroll-text:last-of-type {
+                margin-bottom: 1rem; /* Less space before experience section */
+            }
         }
 
         /* Experience title initial opacity */
@@ -1538,6 +1562,63 @@
             word-wrap: break-word; /* Allow long words to wrap */
             overflow-wrap: break-word; /* Modern word wrapping */
             hyphens: auto; /* Enable automatic hyphenation */
+        }
+
+        /* Job styling for better structure */
+        .content-text h3 {
+            color: #ffffff !important; /* White for job titles */
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 2rem 0 0.5rem 0;
+            text-transform: none; /* Keep original case */
+            letter-spacing: 0.02em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+            padding-bottom: 0.5rem;
+        }
+
+        .content-text .job-meta {
+            color: #cccccc !important; /* Light gray for job metadata */
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin: 0.5rem 0 1.5rem 0;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .content-text ul {
+            margin: 1rem 0 2rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .content-text li {
+            color: #cccccc !important; /* Light gray for list items */
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+            font-style: normal; /* Remove italic for better readability */
+            text-align: left; /* Left align for better readability */
+        }
+
+        .content-text code {
+            background: rgba(255, 255, 255, 0.1); /* Subtle background for code */
+            color: #ffffff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Spacing between job sections */
+        .experience-job-1,
+        .experience-job-2 {
+            margin-bottom: 3rem; /* Add space between job sections */
+            padding-bottom: 2rem; /* Add padding at bottom */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+        }
+
+        .experience-job-2 {
+            border-bottom: none; /* Remove border from last job */
+            margin-bottom: 0; /* Remove margin from last job */
         }
 
         .expandable-content.expanded p {
@@ -2034,7 +2115,7 @@
         .service-card:focus .icon-letter {
             transform: rotate(360deg) !important;
         }
-        
+
         /* Focus styling for accessibility */
         .service-card:focus {
             outline: 2px solid #1a1a1a; /* Changed to neutral dark gray - less brown */
@@ -4059,7 +4140,7 @@
         /* Explore section expandables styling */
         .explore-section .content-section-education,
         .explore-section .content-section-experience {
-            margin-bottom: 3rem;
+            margin-bottom: 0;
             opacity: 0;
             transform: translateY(50px);
         }
@@ -4465,10 +4546,10 @@
                 <img src="ixl.png" alt="IXL Studio Logo" class="hero-logo">
                 <h1 class="hero-title">crafting digital stories<span class="hero-dot">.</span></h1>
                 <p class="hero-subtitle">haris chatzianastasiou</p>
-                <p class="hero-description">
+                        <p class="hero-description">
                     X <br>
-                    IXLSTUDIO
-                </p>
+                    IXLSTUDIO software solutions
+        </p>
             </div>
             
             <!-- Shape Animation Container - positioned on the right side -->
@@ -4481,97 +4562,11 @@
             </div>
         </section>
 
-            <!-- About Section - Profile and Title -->
-        <section id="about" class="about-section">
-            <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
-            <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
-            <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
-            <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
-            <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
-            <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
-            <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
-            <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
-            <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
-            <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
-            <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
-            <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
-            <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-            <div class="floating-element diamond" style="bottom: 15%; right: 18%; border-color: rgba(255,255,255,0.04);"></div>
-            <div class="floating-element dot" style="bottom: 25%; left: 6%; background: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element triangle" style="bottom: 35%; right: 25%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
-            <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
-            <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
-            <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
-            <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
-            <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
-            <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
-            <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
-            <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
-            <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
-            <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
-            <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
-            <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-            <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
-            <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
-            
-            <div class="about-container">
-                <!-- Section Header with Photo and Title -->
-                <div class="section-header fade-in">
-                    <div class="about-header-content">
-                        <div class="profile-section fade-in">
-                            <div class="profile-container">
-                                <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
-                            </div>
-                        </div>
-                        <div class="about-header-text">
-                            <h2 class="section-title" id="who-am-i-title">meet the creator    </h2>
-                            <p class="scroll-text" id="scroll-text-1-content">
-                                I'm Haris Chatzianastasiou, a passionate full-stack developer based in Thessaloniki, Greece, who loves creating software solutions that unite aesthetics and functionality.
-                            </p>
-                            <p class="scroll-text">
-                                My engineering background includes financial solutions and insurance in the private sector, as well as working with the National Justice of Greece in the public sector.
-                            </p>
-                            <p class="scroll-text">
-                                Recently, I built a Greek chess app called <em>skgchess</em>.
-                            </p>
-                            
-                        </div>
-                        <div class="content-section-education">
-                            <div class="expandable-content expanded" id="education-content">
-                                <div class="content-title">Education Journey</div>
-                                <div class="content-text">
-                                    <strong>Master of Science in Artificial Intelligence</strong><br>
-                                    European University of Cyprus, 2025 – Ongoing<br>
-                                </div>
-                                <div class="content-text">
-                                    <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
-                                    University of Thessaly, 2017-2022<br>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        
+        
 
         <!-- Services Section -->
-            <section id="services" class="services-section">
+        <section id="services" class="services-section">
             <!-- Video background -->
             <div class="video-filter-wrapper">
                 <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
@@ -4582,7 +4577,7 @@
                 <div class="section-header" id="services-header">
                     <h2 class="section-title">services</h2>
                     <p class="section-subtitle">
-                        covering everything from brand expression down to technical details. Software solutions that are customized to match what you want and <em>tell your story</em>. </p>
+                        seamlessly connecting brand expression with technical execution. Software solutions that are customized to match what you want, <em>tell your story</em> and provide measurable business value.</p>
                 </div>
                 
                 <!-- Tunnel Animation Elements -->
@@ -4595,34 +4590,94 @@
                 </div>
                 
                 <div class="services-grid" id="services-grid">
-                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="UI/UX Design Service">
+                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
                             <span class="icon-letter">I</span>
+                        </div>
+                        <h3 class="service-title">Brand Expression</h3>
+                        <p class="service-description">
+                            brand colors to CSS variables, typography to font hierarchy, voice to content structure, narrative to information architecture, personality to interactions.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="SEO & Performance Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">X</span>
+                        </div>
+                        <h3 class="service-title">SEO & Performance</h3>
+                        <p class="service-description">
+                            search engine optimization, performance optimization, accessibility standards, analytics tracking, conversion optimization, mobile responsiveness.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="UI/UX Design Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">L</span>
                         </div>
                         <h3 class="service-title">UI/UX Design</h3>
                         <p class="service-description">
                             thoughtful design that balances aesthetics with functionality.
                         </p>
                     </div>
-                    <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="Frontend Development Service">
+                    <div class="service-card" data-card="3" tabindex="0" role="button" aria-label="Frontend Development Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">X</span>
+                            <span class="icon-letter">S</span>
                         </div>
                         <h3 class="service-title">Frontend Development</h3>
                         <p class="service-description">
                             seamless user experience across all devices.
                         </p>
                     </div>
-                    <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="Backend Development Service">
+                    <div class="service-card" data-card="4" tabindex="0" role="button" aria-label="Backend Development Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">L</span>
+                            <span class="icon-letter">T</span>
                         </div>
                         <h3 class="service-title">Backend Development</h3>
                         <p class="service-description">
                             robust, scalable server-side solutions.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="5" tabindex="0" role="button" aria-label="Deployment Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">U</span>
+                        </div>
+                        <h3 class="service-title">Deployment</h3>
+                        <p class="service-description">
+                            server setup, hosting configuration, domain management, SSL certificates, backup systems, monitoring tools.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="6" tabindex="0" role="button" aria-label="Custom Applications Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">D</span>
+                        </div>
+                        <h3 class="service-title">Custom Applications</h3>
+                        <p class="service-description">
+                            progressive web apps, mobile apps, custom dashboards, API development, third-party integrations, automation tools.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="7" tabindex="0" role="button" aria-label="Maintenance & Support Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">I</span>
+                        </div>
+                        <h3 class="service-title">Maintenance & Support</h3>
+                        <p class="service-description">
+                            website maintenance, security updates, performance monitoring, bug fixes, content updates, technical support.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="8" tabindex="0" role="button" aria-label="Conversion Optimization Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">O</span>
+                        </div>
+                        <h3 class="service-title">Conversion Optimization</h3>
+                        <p class="service-description">
+                            landing page copy, call-to-action optimization, lead magnets, email sequences, conversion funnels, A/B testing.
                         </p>
                     </div>
                 </div>
@@ -4695,32 +4750,116 @@
                     </div>
                 </div>
             </div>
-            <div class="content-section-experience">
-                <div class="expandable-content expanded" id="experience-content">
-                    <div class="content-title">Other Experience</div>
-                    <div class="content-text experience-job-1">
-                        <strong>Software Engineer</strong><br>
-                        Netcompany-Intrasoft, April 2024 – Current<br>
-                        Thessaloniki, Greece<br><br>
-                        <ul>    
-                        Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP) using <code>Java EE/Oracle ADF</code>, implementing the historic 2024 judicial reform.<br>
-                        Participated in the migration of Greek courts into OSDDY-PP using <code>PL/SQL</code>, providing <strong>technical leadership</strong>, and achieving 92% reduction in processing time (60min to 5min) with an automated migration toolkit.<br>
-                        Developed an electronic legal document filing system using <code>PL/SQL</code>, designing services for judicial documents.<br>
-                        Established <code>Oracle BI</code> reporting system using <code>SQL/Oracle BI</code> for automated generation of judicial documents.</em>
-                           
-                        </ul>
-                    </div>
-                    <div class="content-text experience-job-2">
-                        <strong>Software Engineer Consultant</strong><br>
-                        Ernst & Young (EY), August 2022 – April 2024<br>
-                        Thessaloniki, Greece<br><br>
-                        <ul>
-                        
-                        Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product using <code>PL/SQL</code>, collaborating with Product Owner, and developing a comprehensive <code>Oracle PL/SQL</code> batch processing suite.<br>
-                        Managed core non-life insurance system for a <strong>global</strong> reinsurer using <code>PL/SQL</code>.<br>
-                        Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication and agile methodology.
-                        
-                        </ul>
+        </section>
+
+            <!-- About Section - Profile and Title -->
+            <section id="about" class="about-section">
+                <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
+                <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
+                <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
+                <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
+                <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
+                <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
+                <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
+                <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
+                <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
+                <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+                <div class="floating-element diamond" style="bottom: 15%; right: 18%; border-color: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element dot" style="bottom: 25%; left: 6%; background: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element triangle" style="bottom: 35%; right: 25%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
+                <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
+                <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+                <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
+                <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
+                <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
+                <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
+                <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
+                <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
+                <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+                <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
+                <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
+                
+                <div class="about-container">
+                    <!-- Section Header with Photo and Title -->
+                    <div class="section-header fade-in">
+                        <div class="about-header-content">
+                            <div class="profile-section fade-in">
+                                <div class="profile-container">
+                                    <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
+                                </div>
+                            </div>
+                            <div class="about-header-text">
+                                <h2 class="section-title" id="who-am-i-title">behind ixlstudio</h2>
+                                <p class="scroll-text" id="scroll-text-1-content">
+                                    Welcome! I'm Haris Chatzianastasiou, creator of IXLstudio and a passionate full-stack developer based in Thessaloniki, Greece.
+                                </p>
+                                <p class="scroll-text">
+                                    <strong>IXLstudio</strong> is the creative space where my vision for software takes shape. The ultimate goal is to unite aesthetics and functionality by delivering websites that not only look great but also perform great, engage users effectively, and provide measurable business value.
+                                </p>
+                                <div class="content-section-experience">
+                                    <div class="expandable-content expanded" id="experience-content">
+                                        <div class="content-title">Employment Experience</div>
+                                        
+                                        <!-- Current Role -->
+                                        <div class="content-text experience-job-1">
+                                            <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
+                                            
+                                            <ul>
+                                                <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
+                                                <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
+                                                <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <!-- Previous Role -->
+                                        <div class="content-text experience-job-2">
+                                            <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
+                                            
+                                            <ul>
+                                                <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
+                                                <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
+                                                <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="content-section-education">
+                                <div class="expandable-content expanded" id="education-content">
+                                    <div class="content-title">Education Journey</div>
+                                    <div class="content-text">
+                                        <strong>Master of Science in Artificial Intelligence</strong><br>
+                                        European University of Cyprus, 2025 – Ongoing<br>
+                                    </div>
+                                    <div class="content-text">
+                                        <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
+                                        University of Thessaly, 2017-2022<br>
+                                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4814,9 +4953,9 @@
                         </div>
                         <div class="contact-label">LinkedIn</div>
                         <div class="contact-value">
-                            Haris Chatzianastasiou
+                                Haris Chatzianastasiou
                         </div>
-                    </a>
+                            </a>
                 </div>
             </div>
         </section>
@@ -5491,9 +5630,9 @@
             serviceCards.forEach((card, index) => {
                 // Set cards to be visible from the start
                 gsap.set(card, {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
                     rotationX: 0
                 });
             });
@@ -5693,7 +5832,7 @@
                         }, 800);
                     }
                 }
-                
+
                 // Touch start event to detect scrolling
                 card.addEventListener('touchstart', function(e) {
                     touchStartTime = Date.now();
@@ -6309,7 +6448,7 @@
             animateArticles() {
                 // Set articles to their final position immediately
                 gsap.set('.article-card', { 
-                    opacity: 1, 
+                    opacity: 1,
                     y: 0, // Final position
                     scale: 1 // Keep scale at 1 to maintain consistent width
                 });
