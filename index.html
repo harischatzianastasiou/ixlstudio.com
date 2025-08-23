@@ -810,58 +810,65 @@
                 padding: 0.2rem 0.6rem; /* Smaller padding */
             }
 
-            /* Extra small mobile Service Card Animations - Now enabled for GSAP animations */
+            /* Extra small mobile Service Card Animations - Disable all except GSAP fill animation */
             .service-card {
-                /* Allow all transitions and transforms for GSAP animations */
+                transition: none !important; /* Disable all CSS transitions on mobile */
+                transform: none !important; /* Disable all CSS transforms on mobile */
             }
 
-            /* Enable hover effects on mobile for GSAP */
+            /* Disable hover effects on mobile */
             .service-card:hover,
             .service-card.viewport-center-active {
-                /* GSAP will handle these animations */
+                transform: none !important; /* No transform on hover */
+                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
             }
 
-            /* Enable icon hover effects on mobile for GSAP */
+            /* Disable icon hover effects on mobile */
             .service-card:hover .service-icon,
             .service-card.viewport-center-active .service-icon {
-                /* GSAP will handle these animations */
+                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
+                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+                transform: none !important; /* No transform */
             }
 
-            /* Enable icon letter rotation on mobile for GSAP */
+            /* Disable icon letter rotation on mobile */
             .service-card:hover .icon-letter,
             .service-card:active .icon-letter,
             .service-card:focus .icon-letter {
-                /* GSAP will handle these animations */
+                transform: none !important; /* No rotation */
+                color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
             }
 
-            /* Enable icon pseudo-element scaling on mobile for GSAP */
+            /* Disable icon pseudo-element scaling on mobile */
             .service-card:hover .service-icon::before,
             .service-card.viewport-center-active .service-icon::before {
-                /* GSAP will handle these animations */
+                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
             }
 
-            /* Enable card background gradient on mobile for GSAP */
+            /* Disable card background gradient on mobile */
             .service-card:hover::after,
             .service-card.viewport-center-active::after {
-                /* GSAP will handle these animations */
+                opacity: 0 !important; /* No background gradient */
             }
 
-            /* GSAP fill animation working on mobile */
+            /* Keep GSAP fill animation working - don't disable this */
             .service-card .fill-animation {
                 /* GSAP will handle this animation */
             }
 
-            /* Enable all transitions on service card elements on mobile for GSAP */
+            /* Disable all transitions on service card elements on mobile */
             .service-icon {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable icon transitions */
             }
 
             .icon-letter {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable letter transitions */
             }
 
             .service-icon::before {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable pseudo-element transitions */
             }
         }
 
@@ -1064,58 +1071,65 @@
                 padding: 0 1rem !important; /* Add some padding on mobile */
             }
 
-            /* Mobile Service Card Animations - Now enabled for GSAP animations */
+            /* Mobile Service Card Animations - Disable all except GSAP fill animation */
             .service-card {
-                /* Allow all transitions and transforms for GSAP animations */
+                transition: none !important; /* Disable all CSS transitions on mobile */
+                transform: none !important; /* Disable all CSS transforms on mobile */
             }
 
-            /* Enable hover effects on mobile for GSAP */
+            /* Disable hover effects on mobile */
             .service-card:hover,
             .service-card.viewport-center-active {
-                /* GSAP will handle these animations */
+                transform: none !important; /* No transform on hover */
+                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
             }
 
-            /* Enable icon hover effects on mobile for GSAP */
+            /* Disable icon hover effects on mobile */
             .service-card:hover .service-icon,
             .service-card.viewport-center-active .service-icon {
-                /* GSAP will handle these animations */
+                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
+                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
+                box-shadow: none !important; /* No shadow */
+                transform: none !important; /* No transform */
             }
 
-            /* Enable icon letter rotation on mobile for GSAP */
+            /* Disable icon letter rotation on mobile */
             .service-card:hover .icon-letter,
             .service-card:active .icon-letter,
             .service-card:focus .icon-letter {
-                /* GSAP will handle these animations */
+                transform: none !important; /* No rotation */
+                color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
             }
 
-            /* Enable icon pseudo-element scaling on mobile for GSAP */
+            /* Disable icon pseudo-element scaling on mobile */
             .service-card:hover .service-icon::before,
             .service-card.viewport-center-active .service-icon::before {
-                /* GSAP will handle these animations */
+                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
             }
 
-            /* Enable card background gradient on mobile for GSAP */
+            /* Disable card background gradient on mobile */
             .service-card:hover::after,
             .service-card.viewport-center-active::after {
-                /* GSAP will handle these animations */
+                opacity: 0 !important; /* No background gradient */
             }
 
-            /* GSAP fill animation working on mobile */
+            /* Keep GSAP fill animation working - don't disable this */
             .service-card .fill-animation {
                 /* GSAP will handle this animation */
             }
 
-            /* Enable all transitions on service card elements on mobile for GSAP */
+            /* Disable all transitions on service card elements on mobile */
             .service-icon {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable icon transitions */
             }
 
             .icon-letter {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable letter transitions */
             }
 
             .service-icon::before {
-                /* Allow transitions for GSAP animations */
+                transition: none !important; /* Disable pseudo-element transitions */
             }
         }
 
@@ -6986,6 +7000,15 @@
             
             // Function to check if service card center is in 50% of viewport (desktop only)
             function checkServiceCardViewportCenter() {
+                // Only run on desktop (not mobile)
+                if (isMobile) {
+                    // Remove any existing viewport center classes on mobile
+                    serviceCards.forEach(card => {
+                        card.classList.remove('viewport-center-active');
+                    });
+                    return;
+                }
+                
                 const viewportHeight = window.innerHeight;
                 const viewportCenter = viewportHeight / 2; // Center of viewport
                 const tolerance = viewportHeight * 0.25; // 25% tolerance (50% total area)
@@ -7177,8 +7200,17 @@
                 });
             }
             
-            // Enhanced viewport center detection with directional fill (desktop and mobile)
+            // Enhanced viewport center detection with directional fill (desktop only)
             function checkServiceCardViewportCenter() {
+                // Only run on desktop (not mobile)
+                if (isMobile) {
+                    // Remove any existing viewport center classes on mobile
+                    serviceCards.forEach(card => {
+                        card.classList.remove('viewport-center-active');
+                    });
+                    return;
+                }
+                
                 const viewportHeight = window.innerHeight;
                 const viewportCenter = viewportHeight / 2;
                 const tolerance = viewportHeight * 0.25;
@@ -7228,97 +7260,30 @@
                     resetLetter();
                 });
                 
-                // Enhanced mouse enter event with directional fill (desktop and mobile)
+                // Enhanced mouse enter event with directional fill (desktop only)
                 card.addEventListener('mouseenter', function(e) {
-                    rotateLetter();
-                    
-                    // Only trigger fill animation if card is not already viewport-center-active
-                    if (!card.classList.contains('viewport-center-active')) {
-                        const direction = getFillDirection(card, 'hover');
-                        animateFill(card, direction, 0.5);
-                    }
-                });
-                
-                // Enhanced mouse leave event with directional fill reverse (desktop and mobile)
-                card.addEventListener('mouseleave', function(e) {
-                    resetLetter();
-                    
-                    // Only reverse fill if card is not viewport-center-active
-                    if (!card.classList.contains('viewport-center-active')) {
-                        const direction = getFillDirection(card, 'hover');
-                        reverseFill(card, direction, 0.3);
-                    }
-                });
-                
-                // Mobile touch handling with directional fill
-                let touchStartTime = 0;
-                let touchStartX = 0;
-                let touchStartY = 0;
-                
-                // Touch start event
-                card.addEventListener('touchstart', function(e) {
-                    e.preventDefault(); // Prevent default touch behavior
-                    
-                    const touch = e.touches[0];
-                    touchStartTime = Date.now();
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    
-                    rotateLetter();
-                    
-                    // Trigger fill animation on touch start
-                    if (!card.classList.contains('viewport-center-active')) {
-                        // For mobile, we'll use a simple direction based on touch position
-                        const rect = card.getBoundingClientRect();
-                        const cardCenterX = rect.left + rect.width / 2;
-                        const cardCenterY = rect.top + rect.height / 2;
+                    if (!isMobile) {
+                        rotateLetter();
                         
-                        const deltaX = touchStartX - cardCenterX;
-                        const deltaY = touchStartY - cardCenterY;
-                        
-                        let direction = 'bottom'; // Default
-                        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                            direction = deltaX > 0 ? 'left' : 'right';
-                        } else {
-                            direction = deltaY > 0 ? 'top' : 'bottom';
-                        }
-                        
-                        animateFill(card, direction, 0.4);
-                    }
-                });
-                
-                // Touch end event - reset after animation
-                card.addEventListener('touchend', function(e) {
-                    const touchEndTime = Date.now();
-                    const touchDuration = touchEndTime - touchStartTime;
-                    
-                    resetLetter();
-                    
-                    // Reverse fill animation after a short delay
-                    setTimeout(() => {
+                        // Only trigger fill animation if card is not already viewport-center-active
                         if (!card.classList.contains('viewport-center-active')) {
-                            const rect = card.getBoundingClientRect();
-                            const cardCenterX = rect.left + rect.width / 2;
-                            const cardCenterY = rect.top + rect.height / 2;
-                            
-                            const deltaX = touchStartX - cardCenterX;
-                            const deltaY = touchStartY - cardCenterY;
-                            
-                            let direction = 'bottom'; // Default
-                            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                                direction = deltaX > 0 ? 'left' : 'right';
-                            } else {
-                                direction = deltaY > 0 ? 'top' : 'bottom';
-                            }
-                            
+                            const direction = getFillDirection(card, 'hover');
+                            animateFill(card, direction, 0.5);
+                        }
+                    }
+                });
+                
+                // Enhanced mouse leave event with directional fill reverse (desktop only)
+                card.addEventListener('mouseleave', function(e) {
+                    if (!isMobile) {
+                        resetLetter();
+                        
+                        // Only reverse fill if card is not viewport-center-active
+                        if (!card.classList.contains('viewport-center-active')) {
+                            const direction = getFillDirection(card, 'hover');
                             reverseFill(card, direction, 0.3);
                         }
-                    }, 200); // Short delay to show the fill effect
-                });
-                
-                // Prevent default touch behaviors that might interfere
-                card.addEventListener('touchmove', function(e) {
-                    e.preventDefault();
+                    }
                 });
             });
 
