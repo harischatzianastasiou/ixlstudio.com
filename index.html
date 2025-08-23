@@ -819,27 +819,42 @@
                 padding: 0.2rem 0.6rem; /* Smaller padding */
             }
 
-            /* Extra small mobile Service Card Animations - Disable all except GSAP fill animation */
-            .service-card {
-                transition: none !important; /* Disable all CSS transitions on mobile */
-                transform: none !important; /* Disable all CSS transforms on mobile */
+            /* About text extra small mobile styling - match section-subtitle */
+            .about-ixl-text .scroll-text,
+            .about-header-text .scroll-text {
+                font-size: clamp(1.3rem, 4.5vw, 2rem) !important; /* Match section-subtitle size */
+                line-height: 1.7 !important; /* Match section-subtitle line height */
+                letter-spacing: 0.01em !important; /* Match section-subtitle letter spacing */
+                max-width: 100% !important; /* Full width on mobile */
+                text-align: center !important; /* Center aligned on mobile */
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important; /* Match section-subtitle font family */
             }
 
-            /* Disable hover effects on mobile */
+            /* Service card description extra small mobile styling - match section-subtitle */
+            .service-description {
+                font-size: clamp(1.3rem, 4.5vw, 2rem) !important; /* Match section-subtitle size */
+                line-height: 1.7 !important; /* Match section-subtitle line height */
+                letter-spacing: 0.01em !important; /* Match section-subtitle letter spacing */
+                max-width: 100% !important; /* Full width on mobile */
+                text-align: center !important; /* Center aligned on mobile */
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important; /* Match section-subtitle font family */
+            }
+
+            /* Extra small mobile Service Card Animations - Now enabled for GSAP animations */
+            .service-card {
+                /* Allow all transitions and transforms for GSAP animations */
+            }
+
+            /* Enable hover effects on mobile for GSAP */
             .service-card:hover,
             .service-card.viewport-center-active {
-                transform: none !important; /* No transform on hover */
-                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
-                box-shadow: none !important; /* No shadow */
+                /* GSAP will handle these animations */
             }
 
-            /* Disable icon hover effects on mobile */
+            /* Enable icon hover effects on mobile for GSAP */
             .service-card:hover .service-icon,
             .service-card.viewport-center-active .service-icon {
-                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
-                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
-                box-shadow: none !important; /* No shadow */
-                transform: none !important; /* No transform */
+                /* GSAP will handle these animations */
             }
 
             /* Disable icon letter rotation on mobile */
@@ -850,26 +865,26 @@
                 color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
             }
 
-            /* Disable icon pseudo-element scaling on mobile */
+            /* Enable icon pseudo-element scaling on mobile for GSAP */
             .service-card:hover .service-icon::before,
             .service-card.viewport-center-active .service-icon::before {
-                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
+                /* GSAP will handle these animations */
             }
 
-            /* Disable card background gradient on mobile */
+            /* Enable card background gradient on mobile for GSAP */
             .service-card:hover::after,
             .service-card.viewport-center-active::after {
-                opacity: 0 !important; /* No background gradient */
+                /* GSAP will handle these animations */
             }
 
-            /* Keep GSAP fill animation working - don't disable this */
+            /* GSAP fill animation working on mobile */
             .service-card .fill-animation {
                 /* GSAP will handle this animation */
             }
 
-            /* Disable all transitions on service card elements on mobile */
+            /* Enable all transitions on service card elements on mobile for GSAP */
             .service-icon {
-                transition: none !important; /* Disable icon transitions */
+                /* Allow transitions for GSAP animations */
             }
 
             .icon-letter {
@@ -877,7 +892,7 @@
             }
 
             .service-icon::before {
-                transition: none !important; /* Disable pseudo-element transitions */
+                /* Allow transitions for GSAP animations */
             }
         }
 
@@ -1080,27 +1095,42 @@
                 padding: 0 1rem !important; /* Add some padding on mobile */
             }
 
-            /* Mobile Service Card Animations - Disable all except GSAP fill animation */
-            .service-card {
-                transition: none !important; /* Disable all CSS transitions on mobile */
-                transform: none !important; /* Disable all CSS transforms on mobile */
+            /* About text mobile styling - match section-subtitle */
+            .about-ixl-text .scroll-text,
+            .about-header-text .scroll-text {
+                font-size: clamp(1.3rem, 4.5vw, 2rem) !important; /* Match section-subtitle size */
+                line-height: 1.7 !important; /* Match section-subtitle line height */
+                letter-spacing: 0.01em !important; /* Match section-subtitle letter spacing */
+                max-width: 100% !important; /* Full width on mobile */
+                text-align: center !important; /* Center aligned on mobile */
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important; /* Match section-subtitle font family */
             }
 
-            /* Disable hover effects on mobile */
+            /* Service card description mobile styling - match section-subtitle */
+            .service-description {
+                font-size: clamp(1.3rem, 4.5vw, 2rem) !important; /* Match section-subtitle size */
+                line-height: 1.7 !important; /* Match section-subtitle line height */
+                letter-spacing: 0.01em !important; /* Match section-subtitle letter spacing */
+                max-width: 100% !important; /* Full width on mobile */
+                text-align: center !important; /* Center aligned on mobile */
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important; /* Match section-subtitle font family */
+            }
+
+            /* Mobile Service Card Animations - Now enabled for GSAP animations */
+            .service-card {
+                /* Allow all transitions and transforms for GSAP animations */
+            }
+
+            /* Enable hover effects on mobile for GSAP */
             .service-card:hover,
             .service-card.viewport-center-active {
-                transform: none !important; /* No transform on hover */
-                border-color: rgba(255, 255, 255, 0.1) !important; /* Keep original border */
-                box-shadow: none !important; /* No shadow */
+                /* GSAP will handle these animations */
             }
 
-            /* Disable icon hover effects on mobile */
+            /* Enable icon hover effects on mobile for GSAP */
             .service-card:hover .service-icon,
             .service-card.viewport-center-active .service-icon {
-                background: rgba(5, 17, 9, 0.8) !important; /* Keep original background */
-                border-color: rgba(5, 17, 9, 0.3) !important; /* Keep original border */
-                box-shadow: none !important; /* No shadow */
-                transform: none !important; /* No transform */
+                /* GSAP will handle these animations */
             }
 
             /* Disable icon letter rotation on mobile */
@@ -1111,26 +1141,26 @@
                 color: rgba(255, 255, 255, 0.9) !important; /* Keep original color */
             }
 
-            /* Disable icon pseudo-element scaling on mobile */
+            /* Enable icon pseudo-element scaling on mobile for GSAP */
             .service-card:hover .service-icon::before,
             .service-card.viewport-center-active .service-icon::before {
-                transform: translate(-50%, -50%) scale(0) !important; /* No scaling */
+                /* GSAP will handle these animations */
             }
 
-            /* Disable card background gradient on mobile */
+            /* Enable card background gradient on mobile for GSAP */
             .service-card:hover::after,
             .service-card.viewport-center-active::after {
-                opacity: 0 !important; /* No background gradient */
+                /* GSAP will handle these animations */
             }
 
-            /* Keep GSAP fill animation working - don't disable this */
+            /* GSAP fill animation working on mobile */
             .service-card .fill-animation {
                 /* GSAP will handle this animation */
             }
 
-            /* Disable all transitions on service card elements on mobile */
+            /* Enable all transitions on service card elements on mobile for GSAP */
             .service-icon {
-                transition: none !important; /* Disable icon transitions */
+                /* Allow transitions for GSAP animations */
             }
 
             .icon-letter {
@@ -1138,7 +1168,7 @@
             }
 
             .service-icon::before {
-                transition: none !important; /* Disable pseudo-element transitions */
+                /* Allow transitions for GSAP animations */
             }
         }
 
@@ -1471,116 +1501,6 @@
         /* CV-like structure improvements */
         .expandable-content h3 {
             color: #051109 !important; /* Updated to match the new theme color */
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.5rem 0;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .expandable-content h4 {
-            color: #000000 !important;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .expandable-content p {
-            color: #333333 !important;
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Match scroll-text font size */
-            font-weight: 300; /* Match scroll-text font weight */
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
-            line-height: 1.7; /* Match scroll-text line height */
-            letter-spacing: 0.02em; /* Match scroll-text letter spacing */
-            margin-bottom: 0.8rem;
-            text-align: justify;
-            text-transform: none; /* Remove uppercase, keep lowercase */
-            word-spacing: 0.03em; /* Match scroll-text word spacing */
-            -webkit-font-smoothing: antialiased; /* Match scroll-text font smoothing */
-            -moz-osx-font-smoothing: grayscale; /* Match scroll-text font smoothing */
-        }
-
-        .expandable-content ul {
-            margin: 0.5rem 0 1rem 0;
-            padding-left: 1.5rem;
-        }
-
-        .expandable-content li {
-            color: #333333 !important;
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Match scroll-text font size */
-            font-weight: 300; /* Match scroll-text font weight */
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
-            line-height: 1.6; /* Match scroll-text line height */
-            letter-spacing: 0.02em; /* Match scroll-text letter spacing */
-            margin-bottom: 0.5rem;
-            font-style: italic; /* Make list items italic */
-            word-spacing: 0.03em; /* Match scroll-text word spacing */
-            -webkit-font-smoothing: antialiased; /* Match scroll-text font smoothing */
-            -moz-osx-font-smoothing: grayscale; /* Match scroll-text font smoothing */
-        }
-
-        /* Ensure all text elements within expandable content are properly colored */
-        .expandable-content.expanded h1,
-        .expandable-content.expanded h2,
-        .expandable-content.expanded h3,
-        .expandable-content.expanded h4,
-        .expandable-content.expanded h5,
-        .expandable-content.expanded h6 {
-            color: #ffffff !important; /* White text for headings */
-        }
-
-        .expandable-content.expanded p,
-        .expandable-content.expanded span,
-        .expandable-content.expanded div {
-            color: #cccccc !important; /* Light gray for body text */
-        }
-
-        /* Specific styling for different text types in expandable content */
-        .expandable-content.expanded .content-title {
-            color: #ffffff !important; /* White for section titles */
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            text-transform: none; /* Remove uppercase - show as written */
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid rgba(103, 82, 44, 0.15);  /* Brown border */
-            padding-bottom: 0.5rem;
-        }
-
-        .expandable-content.expanded .content-text {
-            color: #cccccc !important; /* Light gray for content text */
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            text-align: justify;
-            text-transform: none; /* Remove uppercase, keep lowercase */
-        }
-
-        .expandable-content.expanded .philosophy-text {
-            color: #cccccc !important; /* Light gray for philosophy text */
-            font-size: 1rem;
-            line-height: 1.7;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            text-align: justify;
-            text-transform: none; /* Remove uppercase, keep lowercase */
-        }
-
-        .expandable-content.expanded .contact-link {
-            color: #ffffff !important; /* White for contact links */
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .expandable-content.expanded .contact-link:hover {
-            color: #cccccc !important; /* Light gray on hover */
-            text-decoration: underline;
-        }
-
-        /* CV-like structure improvements */
-        .expandable-content.expanded h3 {
-            color: #ffffff !important; /* White for h3 headings */
             font-size: 1.2rem;
             font-weight: 600;
             margin: 1.5rem 0 0.5rem 0;
@@ -3278,10 +3198,6 @@
 
         /* Animation classes - removed all transforms to make elements visible by default */
         .fade-in {
-            /* GSAP will handle the animation */
-        }
-
-        .slide-in-left {
             /* GSAP will handle the animation */
         }
 
