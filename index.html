@@ -24,7 +24,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #051109;
+            background-color: #0a1a0f;
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -241,17 +241,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Match site theme */
+            background: linear-gradient(135deg, #0a1a0f 0%, #0a1a0f 50%, #0a1a0f 100%); /* Match site theme */
         }
 
         /* Layer 1: Subtle gradient movement */
         .bg-layer-1 {
             background: linear-gradient(45deg, 
-                rgba(5, 17, 9, 0.8) 0%, 
-                rgba(8, 20, 12, 0.6) 25%, 
-                rgba(5, 17, 9, 0.8) 50%, 
-                rgba(10, 22, 14, 0.6) 75%, 
-                rgba(5, 17, 9, 0.8) 100%); /* Theme color variations */
+                rgba(10, 26, 15, 0.8) 0%, 
+                rgba(13, 29, 18, 0.6) 25%, 
+                rgba(10, 26, 15, 0.8) 50%, 
+                rgba(15, 31, 20, 0.6) 75%, 
+                rgba(10, 26, 15, 0.8) 100%); /* Theme color variations */
 
         }
 
@@ -911,7 +911,7 @@
         /* About Section */
         .about-section {
             padding: 8rem 4rem 0rem 4rem; /* Added top padding to increase gap from hero section */
-            background: linear-gradient(135deg, #05120a 0%, #05120a 50%, #05120a 100%) !important; /* Force background just slightly lighter than #051109 */
+            background: linear-gradient(135deg, #05230f 0%, #05230f 50%, #05230f 100%) !important; /* Force background just slightly lighter than #0a1a0f */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
@@ -1227,7 +1227,7 @@
         /* Experience job sections initial opacity */
         .experience-job-1,
         .experience-job-2 {
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.5s ease;
         }
 
@@ -1262,13 +1262,13 @@
 
         /* Experience title initial opacity */
         .content-section-experience .content-title {
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.5s ease;
         }
 
         /* Education section initial opacity */
         .content-section-education {
-            opacity: 0.3;
+            opacity: 0.8;
             transition: opacity 0.5s ease;
         }
 
@@ -1757,7 +1757,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Match articles section background */
+            background: linear-gradient(135deg, #05230f 0%, #05230f 50%, #05230f 100%); /* Match articles section background */
         }
 
         .services-section .sticky-video {
@@ -1927,7 +1927,7 @@
             transform: translateX(-50%);
             width: 40px; /* Slightly larger for better visibility */
             height: 40px; /* Slightly larger for better visibility */
-            background: radial-gradient(circle, #ffffff 0%, #051109 50%, #051109 100%);
+            background: radial-gradient(circle, #ffffff 0%, #0a1a0f 50%, #0a1a0f 100%);
             border-radius: 50%;
             box-shadow: 
                 0 0 30px rgba(100, 181, 246, 0.2),
@@ -1968,9 +1968,9 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(5, 17, 9, 0.02) 0%, 
-                rgba(5, 17, 9, 0.05) 50%, 
-                rgba(5, 17, 9, 0.02) 100%); /* Changed from blue to dark green */
+                rgba(10, 26, 15, 0.02) 0%, 
+                rgba(10, 26, 15, 0.05) 50%, 
+                rgba(10, 26, 15, 0.02) 100%); /* Changed from blue to dark green */
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 1;
@@ -2149,7 +2149,7 @@
         /* Projects Section */
         .projects-section {
             padding: 10rem 4rem; /* Increased padding for more breathing room */
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%); /* Warm brown gradient */
+            background: linear-gradient(135deg, #05230f 0%, #05230f 50%, #05230f 100%); /* Warm brown gradient */
             position: relative;
             transition: background 0.8s ease; /* Smooth transition for background color changes */
             overflow: hidden; /* Contain floating elements */
@@ -2247,7 +2247,7 @@
         /* Articles Section */
         .articles-section {
             padding: 8rem 4rem;
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109  100%); /* Updated to match hero background exactly */
+            background: linear-gradient(135deg, #05230f 0%, #05230f 50%, #05230f  100%); /* Updated to match hero background exactly */
             position: relative;
             transition: background 0.8s ease;
             overflow: hidden;
@@ -2346,7 +2346,7 @@
         }
 
         .article-card {
-            background: linear-gradient(135deg, #051109 0%, #051109 50%, #051109 100%);
+            background: linear-gradient(135deg, #0a1a0f 0%, #0a1a0f 50%, #0a1a0f 100%);
             /* Dark background */
             border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for dark background */
             border-radius: 20px;
@@ -4016,6 +4016,18 @@
             text-align: center; /* Center align for work section */
         }
 
+        /* Override sentence opacity for work quote */
+        .work-quote .sentence {
+            opacity: 1 !important; /* Full opacity for work quote sentences */
+        }
+
+        .work-quote .sentence.active {
+            opacity: 1 !important; /* Full opacity when active */
+        }
+
+        .work-quote .sentence.visible {
+            opacity: 1 !important; /* Full opacity when visible */
+        }
 
 
         /* Desktop-specific wider text */
@@ -4394,7 +4406,7 @@
         /* Content Sections for Education and Experience */
         .content-sections {
             padding: 6rem 4rem;
-            background: linear-gradient(135deg, #051109 0%, #0a0a0a 50%, #051109 100%);
+            background: linear-gradient(135deg, #0a1a0f 0%, #0a0a0a 50%, #0a1a0f 100%);
             position: relative;
             overflow: hidden;
         }
@@ -4590,10 +4602,20 @@
                 </div>
                 
                 <div class="services-grid" id="services-grid">
-                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
+                    <div class="service-card" data-card="8" tabindex="0" role="button" aria-label="Conversion Optimization Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
                             <span class="icon-letter">I</span>
+                        </div>
+                        <h3 class="service-title">Conversion Optimization</h3>
+                        <p class="service-description">
+                            landing page copy, call-to-action optimization, lead magnets, email sequences, conversion funnels, A/B testing.
+                        </p>
+                    </div>
+                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
+                        <div class="fill-animation"></div>
+                        <div class="service-icon">
+                            <span class="icon-letter">X</span>
                         </div>
                         <h3 class="service-title">Brand Expression</h3>
                         <p class="service-description">
@@ -4603,7 +4625,7 @@
                     <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="SEO & Performance Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">X</span>
+                            <span class="icon-letter">L</span>
                         </div>
                         <h3 class="service-title">SEO & Performance</h3>
                         <p class="service-description">
@@ -4613,7 +4635,7 @@
                     <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="UI/UX Design Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">L</span>
+                            <span class="icon-letter">S</span>
                         </div>
                         <h3 class="service-title">UI/UX Design</h3>
                         <p class="service-description">
@@ -4623,7 +4645,7 @@
                     <div class="service-card" data-card="3" tabindex="0" role="button" aria-label="Frontend Development Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">S</span>
+                            <span class="icon-letter">T</span>
                         </div>
                         <h3 class="service-title">Frontend Development</h3>
                         <p class="service-description">
@@ -4633,7 +4655,7 @@
                     <div class="service-card" data-card="4" tabindex="0" role="button" aria-label="Backend Development Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">T</span>
+                            <span class="icon-letter">U</span>
                         </div>
                         <h3 class="service-title">Backend Development</h3>
                         <p class="service-description">
@@ -4643,7 +4665,7 @@
                     <div class="service-card" data-card="5" tabindex="0" role="button" aria-label="Deployment Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">U</span>
+                            <span class="icon-letter">D</span>
                         </div>
                         <h3 class="service-title">Deployment</h3>
                         <p class="service-description">
@@ -4653,7 +4675,7 @@
                     <div class="service-card" data-card="6" tabindex="0" role="button" aria-label="Custom Applications Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">D</span>
+                            <span class="icon-letter">I</span>
                         </div>
                         <h3 class="service-title">Custom Applications</h3>
                         <p class="service-description">
@@ -4663,21 +4685,11 @@
                     <div class="service-card" data-card="7" tabindex="0" role="button" aria-label="Maintenance & Support Service">
                         <div class="fill-animation"></div>
                         <div class="service-icon">
-                            <span class="icon-letter">I</span>
+                            <span class="icon-letter">O</span>
                         </div>
                         <h3 class="service-title">Maintenance & Support</h3>
                         <p class="service-description">
                             website maintenance, security updates, performance monitoring, bug fixes, content updates, technical support.
-                        </p>
-                    </div>
-                    <div class="service-card" data-card="8" tabindex="0" role="button" aria-label="Conversion Optimization Service">
-                        <div class="fill-animation"></div>
-                        <div class="service-icon">
-                            <span class="icon-letter">O</span>
-                        </div>
-                        <h3 class="service-title">Conversion Optimization</h3>
-                        <p class="service-description">
-                            landing page copy, call-to-action optimization, lead magnets, email sequences, conversion funnels, A/B testing.
                         </p>
                     </div>
                 </div>
@@ -6039,20 +6051,10 @@
                     scrollProgress = Math.max(0, Math.min(1, scrollProgress)); // Clamp between 0 and 1
                 }
 
-                // Two phases: first job with title (0-0.5), second job (0.5-1.0)
-                if (scrollProgress <= 0.5) {
-                    // Phase 1: Title and first job appear together
-                    const firstPhaseOpacity = 0.3 + ((scrollProgress / 0.5) * 0.4); // 0.3 to 0.7
-                    experienceTitle.style.opacity = firstPhaseOpacity;
-                    job1.style.opacity = firstPhaseOpacity;
-                    job2.style.opacity = 0;
-                } else {
-                    // Phase 2: Second job appears
-                    experienceTitle.style.opacity = 0.7;
-                    job1.style.opacity = 0.7;
-                    const job2Opacity = 0.3 + (((scrollProgress - 0.5) / 0.5) * 0.4); // 0.3 to 0.7
-                    job2.style.opacity = job2Opacity;
-                }
+                // All elements stay at full opacity
+                experienceTitle.style.opacity = 0.8;
+                job1.style.opacity = 1;
+                job2.style.opacity = 1;
             });
         }
 
@@ -6081,8 +6083,8 @@
                     scrollProgress = Math.max(0, Math.min(1, scrollProgress)); // Clamp between 0 and 1
                 }
 
-                // Apply opacity based on scroll progress (start at 0.3, go to 0.7)
-                const opacity = 0.3 + (scrollProgress * 0.4);
+                // Apply opacity based on scroll progress (start at 1, stay at 1)
+                const opacity = 0.8;
                 educationSection.style.opacity = opacity;
             });
         }
