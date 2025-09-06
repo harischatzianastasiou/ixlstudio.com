@@ -71,7 +71,32 @@
 
             max-width: 100vw;
 
+            cursor: default !important; /* Prevent text cursor from appearing on text elements */
+
         }
+
+        /* Global cursor fix for all elements */
+        * {
+            cursor: default !important;
+            user-select: none !important; /* Prevent text selection which can cause text cursor */
+        }
+
+        /* Restore pointer cursor for clickable elements */
+        button, a, [role="button"], [tabindex], .clickable, .service-card, .project-card, .article-card, .nav-menu, .logo, .logo-container{
+            cursor: pointer !important;
+        }
+
+        /* Specific cursor fixes for header elements */
+        .header .logo, 
+        .header .logo-container, 
+        .header .logo img,
+        .header .nav-menu a,
+        .header .nav-menu li,
+        .header .mobile-menu-btn {
+            cursor: pointer !important;
+        }
+
+
 
         
 
@@ -113,7 +138,7 @@
             z-index: 999999999 !important; /* Highest z-index to stay on top */
             padding: 1.5rem 4rem !important; /* Maintain padding */
             display: flex !important; /* Flexbox layout */
-            justify-content: space-between !important; /* Space items apart */
+            justify-content: center !important; /* Center the logo horizontally */
             align-items: center !important; /* Center items vertically */
             background: rgba(245, 245, 245, 0.95) !important; /* Semi-transparent background */
             backdrop-filter: blur(20px) !important; /* Blur effect */
@@ -161,7 +186,7 @@
             transition: color 0.3s ease;
 
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro Display font */
-
+    
         }
 
 
@@ -610,7 +635,6 @@
 
         .logo-section::before {
             top: 10%;
-            left: 10%;
             animation: float1 12s ease-in-out infinite;
         }
 
@@ -1373,6 +1397,32 @@
 
         }
 
+        /* Hero Shape Animation - positioned on the left side for symmetry */
+
+        .hero-shape-animation-left {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 50%; /* Take up the left half of the hero */
+
+            height: 100%;
+
+            z-index: 5; /* Above background layers but below content */
+
+            pointer-events: none; /* Don't interfere with interactions */
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
 
 
         /* Base shape styles */
@@ -1405,7 +1455,7 @@
 
             right: 20%;
 
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24); /* Red gradient */
+            background: linear-gradient(135deg, #4ecdc4, #44a08d); /* Teal gradient - similar to left */
 
         }
 
@@ -1453,7 +1503,7 @@
 
             right: 50%;
 
-            background: linear-gradient(135deg, #f9ca24, #f0932b); /* Yellow-orange gradient */
+            background: linear-gradient(135deg, #45b7d1, #96c93d); /* Blue-green gradient - similar to left */
 
         }
 
@@ -1468,6 +1518,78 @@
             top: 70%;
 
             right: 40%;
+
+            background: linear-gradient(135deg, #4ecdc4, #44a08d); /* Teal gradient - similar to left */
+
+        }
+
+        /* Left-side shapes with mirrored positioning for symmetry */
+
+        .shape-left-1 {
+
+            width: 120px;
+
+            height: 120px;
+
+            top: 20%;
+
+            left: 20%; /* Mirrored from right: 20% */
+
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24); /* Red gradient */
+
+        }
+
+        .shape-left-2 {
+
+            width: 80px;
+
+            height: 80px;
+
+            top: 40%;
+
+            left: 35%; /* Mirrored from right: 35% */
+
+            background: linear-gradient(135deg, #4ecdc4, #44a08d); /* Teal gradient */
+
+        }
+
+        .shape-left-3 {
+
+            width: 100px;
+
+            height: 100px;
+
+            top: 60%;
+
+            left: 15%; /* Mirrored from right: 15% */
+
+            background: linear-gradient(135deg, #45b7d1, #96c93d); /* Blue-green gradient */
+
+        }
+
+        .shape-left-4 {
+
+            width: 60px;
+
+            height: 60px;
+
+            top: 30%;
+
+            left: 50%; /* Mirrored from right: 50% */
+
+            background: linear-gradient(135deg, #f9ca24, #f0932b); /* Yellow-orange gradient */
+
+        }
+
+        .shape-left-5 {
+
+            width: 90px;
+
+            height: 90px;
+
+            top: 70%;
+
+            left: 40%; /* Mirrored from right: 40% */
 
             background: linear-gradient(135deg, #6c5ce7, #a29bfe); /* Purple gradient */
 
@@ -4652,26 +4774,27 @@
 
         /* Removed bottom right circle from projects section */
 
-        /* Desktop projects layout */
+        /* Desktop projects layout - centered */
         @media (min-width: 769px) {
             .projects-section .section-header {
                 display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                text-align: left;
+                flex-direction: column; /* Stack title and quote vertically */
+                justify-content: center; /* Center content horizontally */
+                align-items: center; /* Center content vertically */
+                text-align: center; /* Center text alignment */
             }
 
             .projects-section .section-title {
-                text-align: left;
+                text-align: center; /* Center the title */
                 flex: 0 0 auto;
-                margin-bottom: 0;
+                margin-bottom: 2rem; /* Add space between title and quote */
             }
 
             .projects-section .work-quote {
-                text-align: left;
+                text-align: center !important; /* Center the quote with high priority */
                 flex: 0 0 auto;
-                margin-left: 2rem;
-                max-width: 400px;
+                margin-left: 0; /* Remove left margin */
+                max-width: 600px; /* Increase max width for better readability */
             }
         }
 
@@ -4909,13 +5032,13 @@
 
         
 
-        /* Desktop-specific left alignment for articles section */
+        /* Desktop-specific center alignment for articles section */
 
         @media (min-width: 769px) {
 
             .articles-container {
 
-                align-items: flex-start; /* Move header to the left side on desktop */
+                align-items: center; /* Center header on desktop */
 
             }
 
@@ -4923,7 +5046,7 @@
 
             .articles-section .section-title {
 
-                text-align: left; /* Left align title on desktop */
+                text-align: center; /* Center align title on desktop */
 
             }
 
@@ -4931,7 +5054,7 @@
 
             .articles-section .section-subtitle {
 
-                text-align: left; /* Left align subtitle on desktop */
+                text-align: center; /* Center align subtitle on desktop */
 
             }
 
@@ -4939,7 +5062,7 @@
 
             .articles-section .section-header {
 
-                text-align: left; /* Left align header on desktop */
+                text-align: center; /* Center align header on desktop */
 
             }
 
@@ -7950,7 +8073,7 @@
 
                 letter-spacing: 0.8px;
 
-                margin-left: -1.5rem;
+                margin-top : 0px;
 
             }
 
@@ -8427,7 +8550,7 @@
 
             line-height: 1.8;
 
-            cursor: text; /* Text selection cursor - like normal text content */
+            cursor: default; /* Normal cursor - indicates non-editable content */
 
             transition: all 0.3s ease; /* Smooth transition for touch feedback */
 
@@ -9374,7 +9497,7 @@
         <div class="logo-container">
 
             <a href="index.html" class="logo">
-                <img src="ixllogo3.png" alt="IXL Studio Logo" style="height: 15px; width: auto;;">
+                <img src="hc.png" alt="IXL Studio Logo" style="height: 100px; width: auto; margin-top:15px;">
             </a>
 
         </div>
@@ -9420,7 +9543,7 @@
 
             <div class="topbar-content">
 
-            <div class="topbar-text" id="topbarText">A PLACE FOR</div>
+            <div class="topbar-text" id="topbarText">A Fullstack developer</div>
             </div>
 
          </section>
@@ -9477,15 +9600,21 @@
 
             
 
+            <!-- Shape Animation Container - positioned on the left side for symmetry -->
+
+            <div class="hero-shape-animation-left">
+
+                <div class="shape shape-left-2"></div>
+
+                <div class="shape shape-left-3"></div>
+
+            </div>
+
             <!-- Shape Animation Container - positioned on the right side -->
 
             <div class="hero-shape-animation">
 
                 <div class="shape shape-1"></div>
-
-                <div class="shape shape-2"></div>
-
-                <div class="shape shape-3"></div>
 
                 <div class="shape shape-4"></div>
 
@@ -9517,7 +9646,7 @@
 
             <div class="logo-container">
 
-                <button class="craft-button" onclick="scrollToSection('contact')">CRAFT WITH US</button>
+                <button class="craft-button" onclick="scrollToSection('contact')">CRAFT WITH ME</button>
 
             </div>
 
@@ -9555,7 +9684,7 @@
 
                     <p class="section-subtitle" id="services-subtitle">
 
-                        Covering everything from brand expression down to technical execution. Software solutions that are customized to <em>tell your story</em> and provide measurable business value.</p>
+                        Covering everything from brand expression down to technical execution.</p>
 
                 </div>
 
@@ -9581,25 +9710,7 @@
 
                 <div class="services-grid" id="services-grid">
 
-                    <div class="service-card" data-card="8" tabindex="0" role="button" aria-label="Conversion Optimization Service">
-
-                        <div class="fill-animation"></div>
-
-                        <div class="service-icon">
-
-                            <span class="icon-letter">I</span>
-
-                        </div>
-
-                        <h3 class="service-title">Conversion Optimization</h3>
-
-                        <p class="service-description">
-
-                            landing page copy, call-to-action optimization, lead magnets, email sequences, conversion funnels, A/B testing.
-
-                        </p>
-
-                    </div>
+                   
 
                     <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
 
@@ -9607,55 +9718,15 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">X</span>
+                            <span class="icon-letter">𓂃</span>
 
                         </div>
 
-                        <h3 class="service-title">Brand Expression</h3>
+                        <h3 class="service-title">BRAND EXPRESSION</h3>
 
                         <p class="service-description">
 
-                            brand colors to CSS variables, typography to font hierarchy, voice to content structure, narrative to information architecture, personality to interactions.
-
-                        </p>
-
-                    </div>
-
-                    <div class="service-card" data-card="1" tabindex="0" role="button" aria-label="SEO & Performance Service">
-
-                        <div class="fill-animation"></div>
-
-                        <div class="service-icon">
-
-                            <span class="icon-letter">L</span>
-
-                        </div>
-
-                        <h3 class="service-title">SEO & Performance</h3>
-
-                        <p class="service-description">
-
-                            search engine optimization, performance optimization, accessibility standards, analytics tracking, conversion optimization, mobile responsiveness.
-
-                        </p>
-
-                    </div>
-
-                    <div class="service-card" data-card="2" tabindex="0" role="button" aria-label="UI/UX Design Service">
-
-                        <div class="fill-animation"></div>
-
-                        <div class="service-icon">
-
-                            <span class="icon-letter">S</span>
-
-                        </div>
-
-                        <h3 class="service-title">UI/UX Design</h3>
-
-                        <p class="service-description">
-
-                            thoughtful design that balances aesthetics with functionality.
+                            Translating voice to content structure, narrative to information architecture, personality to interactions.
 
                         </p>
 
@@ -9667,15 +9738,15 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">T</span>
+                            <span class="icon-letter">╯</span>
 
                         </div>
 
-                        <h3 class="service-title">Frontend Development</h3>
+                        <h3 class="service-title">FRONTEND DEVELOPMENT</h3>
 
                         <p class="service-description">
 
-                            seamless user experience across all devices.
+                            Creating responsive, interactive websites with modern frameworks and optimized performance.
 
                         </p>
 
@@ -9687,15 +9758,15 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">U</span>
+                            <span class="icon-letter">﹏</span>
 
                         </div>
 
-                        <h3 class="service-title">Backend Development</h3>
+                        <h3 class="service-title">BACKEND DEVELOPMENT</h3>
 
                         <p class="service-description">
 
-                            robust, scalable server-side solutions.
+                            Developing robust server-side solutions that are secure, fast, and ready for growth.
 
                         </p>
 
@@ -9707,35 +9778,15 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">D</span>
+                            <span class="icon-letter">︵</span>
 
                         </div>
 
-                        <h3 class="service-title">Deployment</h3>
+                        <h3 class="service-title">DEPLOYMENT</h3>
 
                         <p class="service-description">
 
-                            server setup, hosting configuration, domain management, SSL certificates, backup systems, monitoring tools.
-
-                        </p>
-
-                    </div>
-
-                    <div class="service-card" data-card="6" tabindex="0" role="button" aria-label="Custom Applications Service">
-
-                        <div class="fill-animation"></div>
-
-                        <div class="service-icon">
-
-                            <span class="icon-letter">I</span>
-
-                        </div>
-
-                        <h3 class="service-title">Custom Applications</h3>
-
-                        <p class="service-description">
-
-                            progressive web apps, mobile apps, custom dashboards, API development, third-party integrations, automation tools.
+                            Deploying through server setup, hosting configuration, domain management, SSL certificates, backup systems, and monitoring tools.
 
                         </p>
 
@@ -9747,15 +9798,15 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">O</span>
+                            <span class="icon-letter">𓎟</span>
 
                         </div>
 
-                        <h3 class="service-title">Maintenance & Support</h3>
+                        <h3 class="service-title">MAINTENANCE & SUPPORT</h3>
 
                         <p class="service-description">
 
-                            website maintenance, security updates, performance monitoring, bug fixes, content updates, technical support.
+                            Ensuring everything runs smoothly with comprehensive maintenance and technical support.
 
                         </p>
 
@@ -9844,17 +9895,7 @@
                     <h2 class="section-title" style="text-transform: none;">Projects</h2>
                     
 
-                        <p class="scroll-text work-quote" id="scroll-text-1-content">
-
-                            "<em>Every project should tell a unique story.<br>
-
-                            An experience that resonates with users,<br>
-
-                            all while serving its functional purpose<br>
-
-                            effectively and reliably.</em>"
-
-                        </p>
+                      
 
                     
 
@@ -10021,19 +10062,19 @@
 
                             <div class="about-header-text">
 
-                                <h2 class="section-title" id="who-am-i-title">Behind IXLstudio</h2>
+                                <h2 class="section-title" id="who-am-i-title">Meet the developer</h2>
 
                                 <p class="scroll-text" id="scroll-text-1-content">
 
-                                    Welcome! I'm Haris Chatzianastasiou, creator of IXLstudio and a passionate full-stack developer based in Thessaloniki, Greece.
+                                    My name is Haris Chatzianastasiou, and I am a passionate full-stack developer living in Thessaloniki, Greece, where I work as a software developer, both on the frontend as well as the backend.
+                                  
+                                    Frontend development allows me to express my appreciation for everything visual: colors, structure, content, and aesthetics that tell a story and create a unique narrative. My goal is to structure these elements so they authentically express the brand vision or concept of the project.
 
+                                    From a business perspective, innovative concepts and optimistic visions typically demand solutions resolved around data. When applications need to transfer data between users and servers or store information in databases, this creates the foundation for backend development—the server-side logic that handles data processing, database management, and API communications. While functionality is essential, two critical factors are equally important: <em>security and scalability</em>.  Everyone wants their product to operate securely while remaining prepared for future growth and expansion. This need comes as a great challenge to me, and I enjoy searching for ways to effectively come up with a suitable solution.
+                                    
+                                    The two parts, frontend and backend, can be combined to create exceptional things, which is precisely why I chose to pursue full-stack development. My mission is to collaborate on such transformative projects and assist passionate individuals and organizations in bringing their unique visions to life.                     
                                 </p>
 
-                                <p class="scroll-text">
-
-                                    <strong>IXLstudio</strong> is the creative space where my vision for software takes shape. The ultimate goal is to unite aesthetics and functionality by delivering websites that not only look great but also perform great, engage users effectively, and provide measurable business value.
-
-                                </p>
 
                                 <div class="content-section-experience">
 
@@ -10327,13 +10368,13 @@
 
         <div class="footer-content">
 
-            <div class="footer-logo">IXL <br> X <br> HARIS CHATZIANASTASIOU</div>
+            <div class="footer-logo">FULLSTACK DEVELOPER</div>
 
             <p class="footer-text">
 
                 Crafting digital stories that unite aesthetics and functionality. 
 
-                © 2025 IXLStudio. All rights reserved.
+                © 2025 harischatzianastasiou.dev. All rights reserved.
 
             </p>
 
@@ -10567,7 +10608,11 @@
 
             function initShapeAnimation() {
 
-                const shapes = document.querySelectorAll('.shape'); // Get all shape elements
+                const rightShapes = document.querySelectorAll('.hero-shape-animation .shape'); // Get right side shape elements
+
+                const leftShapes = document.querySelectorAll('.hero-shape-animation-left .shape'); // Get left side shape elements
+
+                const allShapes = [...leftShapes, ...rightShapes]; // Combine both sides starting from left
 
                 const heroSubtitle = document.querySelector('.hero-subtitle'); // Get the IXLSTUDIO text
 
@@ -10619,7 +10664,7 @@
 
                 function showAllShapes() {
 
-                    shapes.forEach((shape, index) => {
+                    allShapes.forEach((shape, index) => {
 
                         // Set initial morph class for each shape
 
@@ -10657,7 +10702,7 @@
 
                     // Reset all shapes to low opacity and default color
 
-                    shapes.forEach((shape, index) => {
+                    allShapes.forEach((shape, index) => {
 
                         gsap.to(shape, {
 
@@ -10677,9 +10722,9 @@
 
                     // Highlight the current active shape
 
-                    const activeShape = shapes[currentShapeIndex];
+                    const activeShape = allShapes[currentShapeIndex];
 
-                    const activeColor = shapeColors[currentShapeIndex];
+                    const activeColor = shapeColors[currentShapeIndex % shapeColors.length]; // Use modulo to cycle through colors
 
                     
 
@@ -10757,7 +10802,7 @@
 
                     setTimeout(() => {
 
-                        currentShapeIndex = (currentShapeIndex + 1) % shapes.length; // Move to next shape
+                        currentShapeIndex = (currentShapeIndex + 1) % allShapes.length; // Move to next shape
 
                         startShapeSequence(); // Continue the sequence
 
@@ -12946,7 +12991,7 @@
             const servicesSubtitle = document.getElementById('services-subtitle'); // Get the services subtitle element
             if (servicesSubtitle) {
                 // Store the original text with <em> tags
-                const originalText = "Software solutions that are customized to tell your story and provide measurable business value.";
+                const originalText = "From brand expression to technical execution.";
                 
                 // Split the text into characters while preserving the <em> tag
                 let newHTML = ''; // Initialize empty HTML string
@@ -15229,7 +15274,7 @@
                 const topbar = document.querySelector('.topbar'); // Get the topbar element
                 const sections = ['home', 'services', 'projects', 'about', 'articles', 'contact']; // Array of section IDs
                 const sectionTexts = {
-                    'home': 'A PLACE FOR', // Text for hero section
+                    'home': 'A Fullstack Developer', // Text for hero section
                     'services': 'SERVICES', // Text for services section
                     'projects': 'PROJECTS', // Text for projects section
                     'about': 'CREATOR', // Text for about section
