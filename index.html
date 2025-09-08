@@ -498,6 +498,10 @@
             .nav-menu {
                 align-items: flex-end; /* Align items to the right on desktop only */
             }
+
+            .about-header-text{
+                margin-left : 3rem;
+            }
         }
 
         /* Hero Section */
@@ -550,6 +554,14 @@
 
                 height: 30vh; /* Further reduced height for mobile - even less tall */
 
+            }
+
+            .mobile-menu-btn{
+                margin-left: auto; /* push the button to the right in normal flow */
+                position: absolute; /* anchor it within the header */
+                right: 1rem; /* distance from the right edge */
+                top: 50%; /* align vertically with header */
+                transform: translateY(-50%); /* perfect vertical centering */
             }
 
         }
@@ -2527,6 +2539,10 @@
 
             }
 
+            .profile-container{
+                margin-top : 8rem;
+            }
+
 
 
             /* Center about-ixl text on mobile */
@@ -3124,6 +3140,37 @@
 
             opacity: 1 !important;
 
+        }
+
+        /* About paragraph styling */
+        .about-paragraph {
+            margin-bottom: 2rem; /* Space between paragraphs */
+        }
+
+        .about-paragraph:last-of-type {
+            margin-bottom: 1rem; /* Less space before experience section */
+        }
+
+        .paragraph-title {
+            font-size: clamp(1.4rem, 3.5vw, 2rem); /* Responsive title size */
+            font-weight: 600; /* Medium weight for titles */
+            color: #ffffff; /* White color for titles */
+            margin-bottom: 0.8rem; /* Space between title and content */
+            text-align: left; /* Left align titles */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            letter-spacing: 0.02em; /* Slight letter spacing for readability */
+        }
+
+        /* Mobile adjustments for paragraph titles */
+        @media (max-width: 768px) {
+            .paragraph-title {
+                text-align: center !important; /* Center titles on mobile */
+                font-size: clamp(1.2rem, 4vw, 1.8rem); /* Slightly smaller on mobile */
+            }
+            
+            .about-paragraph {
+                margin-bottom: 1.5rem; /* Reduced spacing on mobile */
+            }
         }
 
 
@@ -9293,6 +9340,38 @@
 
         }
 
+        /* Mobile centering for Employment Experience */
+        @media (max-width: 768px) {
+            .content-section-experience {
+                margin-left: 0 !important; /* Remove any negative left margin on mobile */
+            }
+
+            .content-sections .content-section-experience {
+                text-align: center; /* Center all text inside experience card */
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .content-section-experience .expandable-content {
+                margin-left: auto; /* Center inner container */
+                margin-right: auto;
+            }
+
+            #experience-content .content-title,
+            #experience-content .content-text,
+            #experience-content .job-meta {
+                text-align: center; /* Ensure headings and text are centered */
+            }
+
+            #experience-content ul {
+                padding-left: 0; /* Remove left padding for lists on mobile */
+                list-style-position: inside; /* Keep bullets aligned when centered */
+                text-align: center; /* Center list text */
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
 
 
         .content-sections .expandable-header {
@@ -9646,7 +9725,7 @@
 
             <div class="logo-container">
 
-                <button class="craft-button" onclick="scrollToSection('contact')">CRAFT WITH ME</button>
+                <a href="#about" class="craft-button" onclick="scrollToSection('about'); return false;">EXPLORE</a>
 
             </div>
 
@@ -9658,7 +9737,7 @@
 
         
 
-
+        
 
         <!-- Services Section -->
 
@@ -9675,6 +9754,241 @@
                 </video>
 
             </div>
+
+            <section id="about" class="about-section">
+
+                <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
+
+                <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
+
+                <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
+
+                <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
+
+                <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
+
+                <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
+
+                <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
+
+                <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
+
+                <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
+
+                <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
+
+                <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
+
+                <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
+
+                <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
+
+                <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
+
+                <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
+
+                <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
+
+                <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+
+                <div class="floating-element diamond" style="bottom: 15%; right: 22%; border-color: rgba(255,255,255,0.04);"></div>
+                <div class="floating-element dot" style="bottom: 25%; left: 4%; background: rgba(255,255,255,0.06);"></div>
+                <div class="floating-element triangle" style="bottom: 35%; right: 12%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
+                <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
+
+                <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
+
+                <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
+
+                <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+
+                <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
+
+                <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
+
+                <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
+
+                <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
+
+                <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
+
+                <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
+
+                <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
+
+                <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
+
+                <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+
+                <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
+
+                <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
+
+                
+
+                <div class="about-container">
+
+                    <!-- Section Header with Photo and Title -->
+
+                    <div class="section-header fade-in">
+
+                        <div class="about-header-content">
+
+                            <div class="profile-section fade-in">
+
+                                <div class="profile-container">
+
+                                    <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
+
+                                </div>
+
+                            </div>
+
+                            <div class="about-header-text">
+
+                                <h2 class="section-title" id="who-am-i-title">MY JOURNEY</h2>
+
+                                <!-- Introduction Paragraph -->
+                                <div class="about-paragraph">
+                                    <!-- <h3 class="paragraph-title">Who I am</h3> -->
+                                    <p class="scroll-text" id="scroll-text-1-intro">
+                                        Welcome to my place on the web. My name is Haris Chatzianastasiou, and I am a software developer living in Thessaloniki, Greece. For the last 3 years I have been working in the IT industry and have been involved in large projects in the private and public sector (<a href="#experience-content">see below</a>) . Previously, I obtained a Bachelor’s degree in Computer Science with Biomedical Information (graduating in 2022), and a few months ago I started my Master's degree in Artificial Intelligence.
+                                    </p>
+
+
+                                </div>
+
+                                <!-- Frontend Development Paragraph -->
+                                <div class="about-paragraph">
+                                    <h3 class="paragraph-title">Why fullstack</h3>
+                                    <p class="scroll-text" id="scroll-text-1-frontend">
+                                        I believe that software, like any service, is there to meet a need and fulfill its purpose. Several factors have to come together to achieve this. Data-driven products must work reliably and securely and be easily scalable to support future growth. The content that users see should be structured in a way that conveys the product's importance, expresses the brand's identity, and engages the user, while navigation flow should be intuitive, as a negative user experience can significantly lead to lost sales and conversions, decreased customer retention, and damage to brand reputation.                                    
+                                        <p class="scroll-text">
+                                            The tasks described span the key disciplines of software creation—backend and frontend development, along with UX design. While I appreciate the distinct problem‑solving each area requires, I find it most rewarding to connect these disciplines and deliver seamless end‑to‑end solutions.
+
+                                        </p>
+
+                                        <p class="scroll-text">
+                                            Every finished product tells a unique story, and I view my work as a way to explore the world by crafting those stories. Whether I'm working on a large corporate project, bringing a brand's vision to life, or helping a local business build an online presence, at the center of each project are people ready to tell a story to the world.
+                                        </p>
+                                            
+                                        <p class="scroll-text">
+                                            My goal is to collaborate with such people to create meaningful work and achieve success together. Learn more about my services and projects below, and if you have an interesting idea, I’d be happy to help.                                        </p>
+
+
+                                <div class="content-section-experience">
+
+                                    <div class="expandable-content expanded" id="experience-content">
+
+                                        <div class="content-title">Employment Experience</div>
+
+                                        
+
+                                        <!-- Current Role -->
+
+                                        <div class="content-text experience-job-1">
+
+                                            <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
+
+                                            
+
+                                            <ul>
+
+                                                <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
+
+                                                <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
+
+                                                <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
+
+                                            </ul>
+
+                                        </div>
+
+                                        
+
+                                        <!-- Previous Role -->
+
+                                        <div class="content-text experience-job-2">
+
+                                            <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
+
+                                            
+
+                                            <ul>
+
+                                                <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
+
+                                                <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
+
+                                                <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                
+
+                            </div>
+
+
+
+                            <div class="content-section-education">
+
+                                <div class="expandable-content expanded" id="education-content">
+
+                                    <div class="content-title">Education</div>
+
+                                    <div class="content-text">
+
+                                        <strong>Master of Science in Artificial Intelligence</strong><br>
+
+                                        European University of Cyprus, 2025 – Ongoing<br>
+
+                                    </div>
+
+                                    <div class="content-text">
+
+                                        <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
+
+                                        University of Thessaly, 2017-2022<br>
+
+                                    </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
 
             <div class="services-container">
 
@@ -9949,224 +10263,7 @@
 
             <!-- About Section - Profile and Title -->
 
-            <section id="about" class="about-section">
 
-                <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
-
-                <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
-
-                <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
-
-                <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
-
-                <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
-
-                <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
-
-                <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
-
-                <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
-
-                <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
-
-                <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
-
-                <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
-
-                <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
-
-                <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
-
-                <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
-
-                <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
-
-                <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
-
-                <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-
-                <div class="floating-element diamond" style="bottom: 15%; right: 22%; border-color: rgba(255,255,255,0.04);"></div>
-                <div class="floating-element dot" style="bottom: 25%; left: 4%; background: rgba(255,255,255,0.06);"></div>
-                <div class="floating-element triangle" style="bottom: 35%; right: 12%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
-                <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
-
-                <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
-
-                <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
-
-                <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
-
-                <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
-
-                <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
-
-                <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
-
-                <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
-
-                <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
-
-                <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
-
-                <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
-
-                <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
-
-                <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-
-                <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
-
-                <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
-
-                
-
-                <div class="about-container">
-
-                    <!-- Section Header with Photo and Title -->
-
-                    <div class="section-header fade-in">
-
-                        <div class="about-header-content">
-
-                            <div class="profile-section fade-in">
-
-                                <div class="profile-container">
-
-                                    <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
-
-                                </div>
-
-                            </div>
-
-                            <div class="about-header-text">
-
-                                <h2 class="section-title" id="who-am-i-title">Meet the developer</h2>
-
-                                <p class="scroll-text" id="scroll-text-1-content">
-
-                                    My name is Haris Chatzianastasiou, and I am a passionate full-stack developer living in Thessaloniki, Greece, where I work as a software developer, both on the frontend as well as the backend.
-                                  
-                                    Frontend development allows me to express my appreciation for everything visual: colors, structure, content, and aesthetics that tell a story and create a unique narrative. My goal is to structure these elements so they authentically express the brand vision or concept of the project.
-
-                                    From a business perspective, innovative concepts and optimistic visions typically demand solutions resolved around data. When applications need to transfer data between users and servers or store information in databases, this creates the foundation for backend development—the server-side logic that handles data processing, database management, and API communications. While functionality is essential, two critical factors are equally important: <em>security and scalability</em>.  Everyone wants their product to operate securely while remaining prepared for future growth and expansion. This need comes as a great challenge to me, and I enjoy searching for ways to effectively come up with a suitable solution.
-                                    
-                                    The two parts, frontend and backend, can be combined to create exceptional things, which is precisely why I chose to pursue full-stack development. My mission is to collaborate on such transformative projects and assist passionate individuals and organizations in bringing their unique visions to life.                     
-                                </p>
-
-
-                                <div class="content-section-experience">
-
-                                    <div class="expandable-content expanded" id="experience-content">
-
-                                        <div class="content-title">Employment Experience</div>
-
-                                        
-
-                                        <!-- Current Role -->
-
-                                        <div class="content-text experience-job-1">
-
-                                            <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
-
-                                            
-
-                                            <ul>
-
-                                                <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
-
-                                                <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
-
-                                                <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
-
-                                            </ul>
-
-                                        </div>
-
-                                        
-
-                                        <!-- Previous Role -->
-
-                                        <div class="content-text experience-job-2">
-
-                                            <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
-
-                                            
-
-                                            <ul>
-
-                                                <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
-
-                                                <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
-
-                                                <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
-
-                                            </ul>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                
-
-                            </div>
-
-
-
-                            <div class="content-section-education">
-
-                                <div class="expandable-content expanded" id="education-content">
-
-                                    <div class="content-title">Education Journey</div>
-
-                                    <div class="content-text">
-
-                                        <strong>Master of Science in Artificial Intelligence</strong><br>
-
-                                        European University of Cyprus, 2025 – Ongoing<br>
-
-                                    </div>
-
-                                    <div class="content-text">
-
-                                        <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
-
-                                        University of Thessaly, 2017-2022<br>
-
-                                    </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
 
 
 
@@ -13506,27 +13603,19 @@
 
         function scrollToSection(sectionId) {
 
-            const section = document.getElementById(sectionId);
+            const section = document.getElementById(sectionId); // find the target element by id
 
-            if (section) {
+            if (!section) return; // stop if not found
 
-                const headerHeight = document.querySelector('.header').offsetHeight;
+            const header = document.querySelector('.header'); // find fixed header
 
-                const targetPosition = section.offsetTop - headerHeight;
+            const headerHeight = header ? header.offsetHeight : 0; // get header height if exists
 
-                
+            const absoluteTop = section.getBoundingClientRect().top + window.pageYOffset; // absolute Y
 
-                // Use consistent smooth scrolling with controlled duration
+            const targetPosition = absoluteTop - headerHeight; // adjust for header overlap
 
-                    window.scrollTo({
-
-                        top: targetPosition,
-
-                        behavior: 'smooth'
-
-                });
-
-            }
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' }); // smooth scroll
 
         }
 
