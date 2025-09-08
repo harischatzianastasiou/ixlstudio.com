@@ -508,7 +508,7 @@
 
         .hero {
 
-            min-height: 50vh;
+            min-height: 100vh;
 
             display: flex;
 
@@ -552,8 +552,17 @@
 
                 radial-gradient(circle at 40% 40%, rgba(222, 222, 222, 0.08) 0%, transparent 50%);
 
-                height: 30vh; /* Further reduced height for mobile - even less tall */
+                height: 100vh; /* Full viewport height on mobile */
 
+            }
+
+            /* Mobile tweaks for hero spacing */
+            .hero-title {
+                margin-top: -1rem; /* More upward on mobile */
+            }
+
+            .hero .craft-button {
+                margin-top: 6rem; /* Larger gap on mobile */
             }
 
             .mobile-menu-btn{
@@ -690,6 +699,8 @@
         /* Craft button styling */
 
         .craft-button {
+
+            display: inline-block;
 
             background: transparent;
 
@@ -1097,6 +1108,8 @@
 
             line-height: 0.85; /* Adjusted line height */
 
+            margin-top: -1.8rem; /* Move title further upward */
+
             margin-bottom: 1.5rem; /* Increased spacing */
 
             letter-spacing: -0.03em; /* Tighter letter spacing for modern look */
@@ -1110,6 +1123,15 @@
             width: 800px;
 
             max-width: 100%; /* Ensure it doesn't overflow on mobile */
+
+        }
+
+
+        /* Extra spacing for the Explore button specifically in hero */
+
+        .hero .craft-button {
+
+            margin-top: 8rem; /* Push Explore further down on desktop */
 
         }
 
@@ -2233,7 +2255,7 @@
 
             padding: 8rem 4rem 0rem 4rem; /* Added top padding to increase gap from hero section */
 
-            background: linear-gradient(135deg, #0d3219 0%, #0d3219 50%, #0d3219 100%) !important; /* Force background just slightly lighter than #0a1a0f */
+            background: linear-gradient(135deg, #0e331a 0%, #0e331a 50%, #0e331a 100%) !important; /* Force background just slightly lighter than #0a1a0f */
 
             position: relative;
 
@@ -3981,7 +4003,7 @@
 
             z-index: 0;
 
-            background: linear-gradient(135deg, #092913 0%, #092913 50%, #092913 100%); /* Match articles section background */
+            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17 100%); /* Match articles section background */
 
         }
 
@@ -4765,7 +4787,7 @@
 
             padding: 10rem 4rem; /* Increased padding for more breathing room */
 
-            background: linear-gradient(135deg, #092913 0%, #092913 50%, #092913 100%); /* Warm brown gradient */
+            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17 100%); /* Warm brown gradient */
 
             position: relative;
 
@@ -4985,7 +5007,7 @@
 
             padding: 8rem 4rem;
 
-            background: linear-gradient(135deg, #092913 0%, #092913 50%, #092913  100%); /* Updated to match hero background exactly */
+            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17  100%); /* Updated to match hero background exactly */
 
             position: relative;
 
@@ -9542,6 +9564,7 @@
 
         /* Craft button styling */
         .craft-button {
+            display: inline-block;
             background: transparent;
             border: 2px solid #ffffff;
             color: #ffffff;
@@ -9675,6 +9698,7 @@
 
 
                 
+                <a href="#about" class="craft-button" onclick="scrollToSection('about'); return false;">EXPLORE</a>
 
             </div>
 
@@ -9702,6 +9726,8 @@
 
             </div>
 
+            
+            
         </section>
 
 
@@ -9714,23 +9740,7 @@
 
         <!-- Logo Section -->
 
-        <section id="logo-section" class="logo-section">
 
-            <!-- Animated floating elements -->
-            <div class="floating-element geometric" style="top: 15%; left: 8%; transform: rotate(30deg);"></div>
-            <div class="floating-element circle" style="top: 25%; right: 12%;"></div>
-            <div class="floating-element line" style="top: 35%; left: 85%; transform: rotate(-45deg);"></div>
-            <div class="floating-element geometric" style="top: 55%; left: 5%; transform: rotate(120deg);"></div>
-            <div class="floating-element circle" style="top: 65%; right: 8%;"></div>
-            <div class="floating-element line" style="top: 75%; left: 90%; transform: rotate(60deg);"></div>
-
-            <div class="logo-container">
-
-                <a href="#about" class="craft-button" onclick="scrollToSection('about'); return false;">EXPLORE</a>
-
-            </div>
-
-        </section>
 
 
 
