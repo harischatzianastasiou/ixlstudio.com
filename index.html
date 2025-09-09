@@ -138,7 +138,7 @@
             z-index: 999999999 !important; /* Highest z-index to stay on top */
             padding: 1.5rem 4rem !important; /* Maintain padding */
             display: flex !important; /* Flexbox layout */
-            justify-content: center !important; /* Center the logo horizontally */
+            justify-content: center !important; /* Center the logo */
             align-items: center !important; /* Center items vertically */
             background: rgba(245, 245, 245, 0.95) !important; /* Semi-transparent background */
             backdrop-filter: blur(20px) !important; /* Blur effect */
@@ -163,7 +163,9 @@
 
             align-items: flex-start;
 
+
         }
+
 
 
 
@@ -239,6 +241,11 @@
 
 
 
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
         .nav-menu {
 
             display: none; /* Hide nav menu by default on all screen sizes */
@@ -267,11 +274,21 @@
 
             list-style: none;
 
+            width: 0; /* Take no space when hidden */
+
+            height: 0; /* Take no space when hidden */
+
+            overflow: hidden; /* Hide content when collapsed */
+
         }
 
         .nav-menu.active {
 
             display: flex; /* Show when active */
+
+            width: auto; /* Restore width when active */
+
+            height: auto; /* Restore height when active */
 
         }
 
@@ -331,11 +348,11 @@
 
 
 
-        /* Mobile menu button */
+        /* Mobile menu button - Clean implementation */
 
         .mobile-menu-btn {
 
-            display: flex; /* Show burger menu on all screen sizes */
+            display: flex;
 
             flex-direction: column;
 
@@ -343,9 +360,9 @@
 
             align-items: center;
 
-            width: 35px; /* Slightly larger for better touch target */
+            width: 35px;
 
-            height: 35px; /* Slightly larger for better touch target */
+            height: 35px;
 
             cursor: pointer;
 
@@ -353,7 +370,15 @@
 
             transition: all 0.3s ease;
 
-            padding: 5px; /* Add padding for better touch area */
+            padding: 5px;
+
+            position: absolute; /* Position absolutely within header */
+
+            right: 2rem; /* Distance from right edge */
+
+            top: 50%; /* Center vertically */
+
+            transform: translateY(-50%); /* Perfect vertical centering */
 
         }
 
@@ -363,7 +388,7 @@
 
             width: 100%;
 
-            height: 3px;
+            height: 2px; /* Reduced from 3px to make less bold */
 
             background: #000000;
 
@@ -371,7 +396,7 @@
 
             transition: all 0.3s ease;
 
-            border-radius: 2px;
+            border-radius: 1px; /* Reduced border radius */
 
         }
 
@@ -567,13 +592,6 @@
                 margin-top: 6rem; /* Larger gap on mobile */
             }
 
-            .mobile-menu-btn{
-                margin-left: auto; /* push the button to the right in normal flow */
-                position: absolute; /* anchor it within the header */
-                right: 1rem; /* distance from the right edge */
-                top: 50%; /* align vertically with header */
-                transform: translateY(-50%); /* perfect vertical centering */
-            }
 
         }
 
@@ -6549,29 +6567,9 @@
 
 
 
-            .mobile-menu-btn {
-
-                display: flex !important;
-
-                opacity: 1 !important;
-
-                visibility: visible !important;
-
-            }
 
 
 
-            .mobile-menu-btn span {
-
-                background: #000000 !important;
-
-                opacity: 1 !important;
-
-                visibility: visible !important;
-
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important; /* Enhanced shadow for better visibility */
-
-            }
 
 
 
@@ -7632,23 +7630,9 @@
 
 
 
-            /* Mobile menu button improvements */
-
-            .mobile-menu-btn {
-
-                padding: 0.5rem;
-
-            }
 
 
 
-            .mobile-menu-btn span {
-
-                height: 2px;
-
-                margin: 3px 0;
-
-            }
 
 
 
@@ -9177,15 +9161,6 @@
 
 
 
-            /* Ensure mobile menu button is always visible */
-
-            .mobile-menu-btn {
-
-                display: flex !important;
-
-                opacity: 1 !important;
-
-            }
 
 
 
@@ -9601,10 +9576,11 @@
         <div class="logo-container">
 
             <a href="index.html" class="logo">
-                <img src="hc.png" alt="IXL Studio Logo" style="height: 100px; width: auto; margin-top:15px;">
+                <img src="hc.png" alt="IXL Studio Logo" style="height: 25px; width: auto; margin-left: 10px;">
             </a>
 
         </div>
+
 
         <nav>
 
@@ -9648,7 +9624,7 @@
 
             <div class="topbar-content">
 
-            <div class="topbar-text" id="topbarText">A Fullstack developer</div>
+            <div class="topbar-text" id="topbarText"></div>
             </div>
 
          </section>
@@ -15378,7 +15354,7 @@
                 const topbar = document.querySelector('.topbar'); // Get the topbar element
                 const sections = ['home', 'services', 'projects', 'about', 'articles', 'contact']; // Array of section IDs
                 const sectionTexts = {
-                    'home': 'A Fullstack Developer', // Text for hero section
+                    'home': '', // Text for hero section
                     'services': 'SERVICES', // Text for services section
                     'projects': 'PROJECTS', // Text for projects section
                     'about': 'CREATOR', // Text for about section
