@@ -50,7 +50,7 @@
 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-            background: linear-gradient(135deg, #0c100e 0%, #5e605f 50%, #0a1a0f 100%); /* Match site theme */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
             color: #ffffff;
 
@@ -686,7 +686,7 @@
 
             justify-content: center;
 
-            background: linear-gradient(135deg, #062510 0%, #062510 50%, #062510 100%); /* Match site theme */
+            background: #2e4a3a; /* Solid color instead of gradient */
 
             position: relative;
 
@@ -873,7 +873,7 @@
 
             height: 100%;
 
-            background: linear-gradient(135deg, #0a1a0f 0%, #0a1a0f 50%, #0a1a0f 100%); /* Match site theme */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
         }
 
@@ -885,15 +885,15 @@
 
             background: linear-gradient(45deg, 
 
-                rgba(10, 26, 15, 0.8) 0%, 
+                rgba(46, 74, 58, 0.8) 0%, 
 
-                rgba(13, 29, 18, 0.6) 25%, 
+                rgba(46, 74, 58, 0.6) 25%, 
 
-                rgba(10, 26, 15, 0.8) 50%, 
+                rgba(46, 74, 58, 0.8) 50%, 
 
-                rgba(15, 31, 20, 0.6) 75%, 
+                rgba(46, 74, 58, 0.6) 75%, 
 
-                rgba(10, 26, 15, 0.8) 100%); /* Theme color variations */
+                rgba(46, 74, 58, 0.8) 100%); /* Consistent about section color variations */
 
 
 
@@ -1113,6 +1113,179 @@
 
         }
 
+        /* Hero Projects Window - Large screen coverage */
+        .hero-projects-window {
+            position: absolute; /* Position absolutely within hero section */
+            top: 0; /* Start from top of hero section */
+            left: 0; /* Start from left edge */
+            width: 100%; /* Full width coverage */
+            height: 100%; /* Full height coverage */
+            z-index: 5; /* Below hero content but above background */
+            display: flex; /* Flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            pointer-events: none; /* Allow clicks to pass through to content below */
+        }
+
+        .hero-projects-container {
+            width: 90%; /* 90% of screen width for large coverage */
+            max-width: 1200px; /* Maximum width for very large screens */
+            height: 80%; /* 80% of screen height for large coverage */
+            display: flex; /* Flexbox for layout */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .hero-projects-grid {
+            display: grid; /* Grid layout for projects */
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+            gap: 2rem; /* Space between project cards */
+            width: 100%; /* Full width of container */
+            height: 100%; /* Full height of container */
+        }
+
+        .hero-project-card {
+            position: relative; /* Relative positioning for overlay */
+            width: 100%; /* Full width of grid cell */
+            height: 100%; /* Full height of grid cell */
+            border-radius: 20px; /* Rounded corners */
+            overflow: hidden; /* Hide image overflow */
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+            transition: all 0.3s ease; /* Smooth transitions */
+            cursor: pointer; /* Pointer cursor on hover */
+            pointer-events: auto; /* Allow clicks on project cards */
+        }
+
+        .hero-project-card:hover {
+            transform: translateY(-10px) scale(1.05); /* Lift and scale on hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+
+        .hero-project-image {
+            width: 100%; /* Full width of card */
+            height: 100%; /* Full height of card */
+            object-fit: cover; /* Cover entire card area */
+            object-position: center; /* Center the image */
+            transition: transform 0.3s ease; /* Smooth image transitions */
+        }
+
+        .hero-project-card:hover .hero-project-image {
+            transform: scale(1.1); /* Scale image on hover */
+        }
+
+        .hero-project-overlay {
+            position: absolute; /* Absolute positioning over image */
+            bottom: 0; /* Position at bottom of card */
+            left: 0; /* Position at left edge */
+            right: 0; /* Position at right edge */
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); /* Gradient overlay */
+            padding: 2rem; /* Padding for text */
+            color: white; /* White text color */
+            transform: translateY(100%); /* Hide overlay by default */
+            transition: transform 0.3s ease; /* Smooth overlay transitions */
+        }
+
+        .hero-project-card:hover .hero-project-overlay {
+            transform: translateY(0); /* Show overlay on hover */
+        }
+
+        .hero-project-title {
+            font-size: 1.5rem; /* Large title font size */
+            font-weight: 600; /* Semi-bold font weight */
+            margin-bottom: 0.5rem; /* Space below title */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Modern font stack */
+        }
+
+        .hero-project-category {
+            font-size: 1rem; /* Medium category font size */
+            font-weight: 300; /* Light font weight */
+            opacity: 0.8; /* Slightly transparent */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Modern font stack */
+        }
+
+        /* Hero explore button styling */
+        .hero-explore-button {
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Semi-transparent white border */
+            color: white; /* White text color */
+            padding: 0.8rem 1.5rem; /* Comfortable padding */
+            border-radius: 25px; /* Rounded button */
+            font-size: 0.9rem; /* Medium font size */
+            font-weight: 600; /* Semi-bold font weight */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Modern font stack */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px; /* Letter spacing for style */
+            cursor: pointer; /* Pointer cursor */
+            transition: all 0.3s ease; /* Smooth transitions */
+            backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+            margin-top: 1rem; /* Space above button */
+            position: relative; /* Relative positioning */
+            z-index: 10; /* Above other overlay content */
+        }
+
+        .hero-explore-button:hover {
+            background: rgba(255, 255, 255, 0.3); /* More opaque on hover */
+            border-color: rgba(255, 255, 255, 0.8); /* Brighter border on hover */
+            transform: translateY(-2px); /* Lift button on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+        }
+
+        .hero-explore-button:active {
+            transform: translateY(0); /* Reset position when pressed */
+            background: rgba(255, 255, 255, 0.4); /* More opaque when pressed */
+        }
+
+        /* Hero project card click animation */
+        .hero-project-card.clicking {
+            animation: heroProjectClickAnimation 0.8s ease-in-out forwards;
+        }
+
+        @keyframes heroProjectClickAnimation {
+            0% {
+                transform: scale(1) translate(0, 0); /* Start at normal size */
+                z-index: 10; /* Normal z-index */
+            }
+            50% {
+                transform: scale(1.5) translate(0, 0); /* Scale up to 1.5x */
+                z-index: 1000; /* High z-index to appear above everything */
+            }
+            100% {
+                transform: scale(2) translate(0, 0); /* Scale up to 2x */
+                opacity: 0; /* Fade out */
+                z-index: 1000; /* Keep high z-index */
+            }
+        }
+
+        /* Tablet adjustments for hero projects window */
+        @media (min-width: 769px) and (max-width: 1023px) {
+            .hero-projects-window {
+                display: flex; /* Show projects window on tablets */
+            }
+
+            .hero-projects-container {
+                width: 85%; /* Slightly less width on tablets */
+                height: 70%; /* More height on tablets */
+            }
+
+            .hero-projects-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+                gap: 1.5rem; /* Medium gap on tablets */
+            }
+
+            .hero-project-card {
+                height: 250px; /* Medium height on tablets */
+            }
+        }
+
+        /* Show hero projects window on all screens */
+        @media (min-width: 1024px) {
+            .hero-projects-window {
+                display: flex; /* Show projects window on large screens */
+            }
+        }
+
 
 
         /* Hero Logo - positioned above the title with proper sizing and spacing */
@@ -1250,7 +1423,7 @@
 
             height: 4px;
 
-            background: linear-gradient(90deg, #051109, rgba(5, 17, 9, 0.5));
+            background: linear-gradient(90deg, #2e4a3a, rgba(46, 74, 58, 0.5));
 
             border-radius: 2px;
 
@@ -1324,7 +1497,7 @@
 
             padding: 1.5rem 4rem; /* Increased padding */
 
-            background: linear-gradient(135deg, #051109 0%, rgba(5, 17, 9, 0.8) 100%); /* Updated to new theme color */
+            background: linear-gradient(135deg, #2e4a3a 0%, rgba(46, 74, 58, 0.8) 100%); /* Consistent about section color */
 
             color: #fff;
 
@@ -1776,7 +1949,7 @@
 
             padding: 6rem 2rem; /* Responsive padding */
 
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); /* Dark gradient background */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
             position: relative;
 
@@ -2092,6 +2265,69 @@
 
             }
 
+            /* Hero projects window mobile adjustments */
+            .hero-projects-window {
+                display: flex; /* Show projects window on mobile */
+                z-index: 3; /* Lower z-index on mobile to stay below content */
+            }
+
+            .hero-projects-container {
+                width: 95%; /* More width on mobile for better coverage */
+                height: 70%; /* Responsive height that fits within hero */
+                max-width: none; /* Remove max-width restriction on mobile */
+            }
+
+            .hero-projects-grid {
+                display: flex; /* Use flexbox for equal distribution */
+                flex-direction: column; /* Stack cards vertically */
+                gap: 0.8rem; /* Smaller gap to fit 3 cards better */
+                height: 100%; /* Full height of container */
+            }
+
+            .hero-project-card {
+                height: auto; /* Auto height to fit available space */
+                min-height: 0; /* Allow cards to shrink */
+                flex: 1; /* Equal distribution of space */
+                border-radius: 15px; /* Slightly smaller border radius on mobile */
+            }
+
+            .hero-project-overlay {
+                padding: 1.5rem; /* Less padding on mobile */
+                transform: translateY(0); /* Always show overlay on mobile */
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); /* Slightly lighter overlay */
+            }
+
+            .hero-project-title {
+                font-size: 1.2rem; /* Smaller title on mobile */
+            }
+
+            .hero-project-category {
+                font-size: 0.9rem; /* Smaller category text on mobile */
+            }
+
+            /* Hero explore button mobile styling */
+            .hero-explore-button {
+                padding: 0.6rem 1.2rem; /* Smaller padding on mobile */
+                font-size: 0.8rem; /* Smaller font size on mobile */
+                margin-top: 0.8rem; /* Less margin on mobile */
+            }
+
+            /* Mobile touch interactions */
+            .hero-project-card:active {
+                transform: scale(0.95); /* Scale down when touched on mobile */
+                transition: transform 0.1s ease; /* Quick transition for touch feedback */
+            }
+
+            /* Disable hover effects on mobile */
+            .hero-project-card:hover {
+                transform: none; /* Disable hover transform on mobile */
+                box-shadow: none; /* Disable hover shadow on mobile */
+            }
+
+            .hero-project-card:hover .hero-project-image {
+                transform: none; /* Disable image hover transform on mobile */
+            }
+
 
 
             .hero-title {
@@ -2344,7 +2580,336 @@
 
         }
 
+        /* Agency Promo Section - Simple Bold Text Style */
+        .agency-promo-section {
+            background: #ffffff; /* Clean white background */
+            padding: 4rem 2rem; /* Reduced top padding to move text higher */
+            display: flex; /* Flexbox for centering */
+            align-items: flex-start; /* Align to top instead of center */
+            justify-content: flex-start; /* Start from left edge */
+            height: 100vh; /* Full viewport height */
+            padding-top: 6rem; /* Specific top padding to position text below header */
+        }
 
+        .agency-text {
+            text-align: left; /* Left-aligned text like Northern Web */
+            max-width: none; /* No width limit to reach edge */
+            width: 100%; /* Full width */
+        }
+
+        .agency-line-1,
+        .agency-line-2,
+        .agency-line-3,
+        .agency-line-4 {
+            font-family: 'Arial', sans-serif; /* Clean sans-serif font */
+            font-size: clamp(3rem, 6vw, 5rem); /* Bigger font size for impact */
+            font-weight: 400; /* Increased weight for more presence */
+            color: #000000; /* Pure black text */
+            margin: 0; /* Remove default margins */
+            line-height: 0.9; /* Very tight line spacing like Northern Web */
+            text-transform: uppercase; /* All uppercase like Northern Web */
+            letter-spacing: 0px; /* No letter spacing for clean look */
+        }
+
+        .bold {
+            font-weight: 700; /* Bold weight for emphasized words */
+        }
+
+        /* Special styling for HARIS CHATZIANASTASIOU to make it shine */
+        .agency-line-1 .bold {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+            background-size: 400% 400%; /* Large background for smooth animation */
+            -webkit-background-clip: text; /* Clip background to text */
+            background-clip: text; /* Standard property for text clipping */
+            -webkit-text-fill-color: transparent; /* Make text transparent to show gradient */
+            color: transparent; /* Fallback for browsers that don't support background-clip */
+            font-weight: 900; /* Extra bold for maximum impact */
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.5); /* Subtle glow effect */
+            animation: gradientShift 3s ease-in-out infinite, nameGlow 2s ease-in-out infinite alternate; /* Combined animations */
+            position: relative; /* For pseudo-element effects */
+            display: inline-block; /* Better control over the element */
+            transform: scale(1.1); /* Slightly larger than normal text */
+            letter-spacing: 2px; /* Increased letter spacing for elegance */
+        }
+
+        /* Gradient animation that shifts colors */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; } /* Start position of gradient */
+            25% { background-position: 100% 50%; } /* Move gradient to right */
+            50% { background-position: 100% 100%; } /* Move gradient to bottom-right */
+            75% { background-position: 0% 100%; } /* Move gradient to bottom-left */
+            100% { background-position: 0% 50%; } /* Return to start */
+        }
+
+        /* Glow animation that pulses the text shadow */
+        @keyframes nameGlow {
+            0% { 
+                text-shadow: 0 0 20px rgba(255, 107, 107, 0.3), 
+                           0 0 40px rgba(78, 205, 196, 0.2),
+                           0 0 60px rgba(69, 183, 209, 0.1); /* Multiple colored glows */
+            }
+            100% { 
+                text-shadow: 0 0 30px rgba(255, 107, 107, 0.6), 
+                           0 0 60px rgba(78, 205, 196, 0.4),
+                           0 0 90px rgba(69, 183, 209, 0.3); /* Intensified glow */
+            }
+        }
+
+        /* Hover effect for extra interactivity */
+        .agency-line-1 .bold:hover {
+            transform: scale(1.15); /* Slightly larger on hover */
+            animation-duration: 1s, 0.5s; /* Faster animations on hover */
+            filter: brightness(1.2); /* Brighter on hover */
+            cursor: pointer; /* Indicate it's interactive */
+        }
+
+        .agency-cta {
+            margin-top: 3rem; /* Space above the button */
+        }
+
+        .cta-button {
+            display: inline-block; /* Make button inline-block for proper sizing */
+            padding: 1rem 2rem; /* Padding for button */
+            background: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            text-decoration: none; /* Remove default link underline */
+            border: 2px solid #000000; /* Black border like Northern Web */
+            border-radius: 8px; /* Slightly rounded corners */
+            font-weight: 400; /* Regular weight */
+            font-size: 1.1rem; /* Button text size */
+            transition: all 0.3s ease; /* Smooth transitions */
+            text-transform: none; /* Keep original case for button text */
+        }
+
+        .cta-button:hover {
+            background: #000000; /* Black background on hover */
+            color: #ffffff; /* White text on hover */
+        }
+
+        /* Hide mobile line break on desktop */
+        .mobile-break {
+            display: none; /* Hide line break on desktop by default */
+        }
+
+        /* Scroll Indicator Styles */
+        .scroll-indicator {
+            position: absolute; /* Position absolutely within the section */
+            bottom: 2rem; /* Distance from bottom */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Perfect centering */
+            display: flex; /* Flexbox for alignment */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center align items */
+            color: #000000; /* Black color */
+            text-decoration: none; /* Remove underline */
+            opacity: 0.7; /* Slightly transparent */
+            transition: opacity 0.3s ease; /* Smooth transition */
+            z-index: 10; /* Above other content */
+        }
+
+        .scroll-indicator:hover {
+            opacity: 1; /* Full opacity on hover */
+        }
+
+        /* Mobile touch improvements */
+        @media (max-width: 768px) {
+            .scroll-indicator {
+                padding: 1rem; /* Larger touch target on mobile */
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1); /* Subtle tap highlight */
+                touch-action: manipulation; /* Optimize touch behavior */
+            }
+        }
+
+        /* New Mobile Scroll Indicator - More Prominent */
+        .mobile-scroll-indicator {
+            display: none; /* Hidden by default on desktop */
+            position: fixed; /* Fixed position for mobile */
+            bottom: 2rem; /* Distance from bottom */
+            right: 2rem; /* Distance from right edge */
+            width: 60px; /* Fixed width for touch target */
+            height: 60px; /* Fixed height for touch target */
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); /* White gradient background */
+            border-radius: 50%; /* Perfect circle */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Strong shadow for depth */
+            z-index: 1000; /* Above all other content */
+            cursor: pointer; /* Pointer cursor */
+            transition: all 0.3s ease; /* Smooth transitions */
+            border: 2px solid #000000; /* Black border for contrast */
+        }
+
+        /* Mobile scroll indicator hover effect */
+        .mobile-scroll-indicator:hover {
+            transform: scale(1.1); /* Slightly larger on hover */
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+        }
+
+        /* Mobile scroll indicator active/pressed effect */
+        .mobile-scroll-indicator:active {
+            transform: scale(0.95); /* Slightly smaller when pressed */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5); /* Reduced shadow when pressed */
+        }
+
+        /* Arrow inside mobile scroll indicator */
+        .mobile-scroll-arrow {
+            position: absolute; /* Absolute positioning within the circle */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Perfect centering */
+            width: 20px; /* Arrow width */
+            height: 20px; /* Arrow height */
+            border-right: 3px solid #000000; /* Right border - thicker for visibility */
+            border-bottom: 3px solid #000000; /* Bottom border - thicker for visibility */
+            transform: translate(-50%, -50%) rotate(45deg); /* Rotate to point down */
+            animation: mobileBounce 2s infinite; /* Bouncing animation */
+        }
+
+        /* Bouncing animation for mobile scroll arrow */
+        @keyframes mobileBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translate(-50%, -50%) rotate(45deg) translateY(0); /* Normal position */
+            }
+            40% {
+                transform: translate(-50%, -50%) rotate(45deg) translateY(-8px); /* Move up */
+            }
+            60% {
+                transform: translate(-50%, -50%) rotate(45deg) translateY(-4px); /* Move up less */
+            }
+        }
+
+        /* Show mobile scroll indicator only on mobile devices */
+        @media (max-width: 768px) {
+            .mobile-scroll-indicator {
+                display: flex; /* Show on mobile */
+                align-items: center; /* Center content vertically */
+                justify-content: center; /* Center content horizontally */
+            }
+        }
+
+        .scroll-text {
+            font-size: 0.8rem; /* Small text */
+            font-weight: 500; /* Medium weight */
+            margin-bottom: 0.5rem; /* Space below text */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px; /* Letter spacing */
+        }
+
+        .scroll-arrow {
+            width: 20px; /* Arrow width */
+            height: 20px; /* Arrow height */
+            border-right: 2px solid #000000; /* Right border */
+            border-bottom: 2px solid #000000; /* Bottom border */
+            transform: rotate(45deg); /* Rotate to point down */
+            animation: bounce 2s infinite; /* Bouncing animation */
+        }
+
+        /* Bouncing animation for scroll arrow */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: rotate(45deg) translateY(0); /* Normal position */
+            }
+            40% {
+                transform: rotate(45deg) translateY(-10px); /* Move up */
+            }
+            60% {
+                transform: rotate(45deg) translateY(-5px); /* Move up less */
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .agency-promo-section {
+                padding: 1rem 1rem; /* Even less top padding to move text higher on mobile */
+                padding-top: 2rem; /* Much less top padding for mobile - text closer to header */
+                height: 100vh; /* Full viewport height on mobile too */
+                justify-content: flex-start; /* Keep left alignment on mobile */
+                align-items: flex-start; /* Align to top on mobile too */
+            }
+
+            .agency-text {
+                text-align: left; /* Keep left alignment on mobile */
+                padding: 0 0.5rem; /* Add small padding to prevent edge cutoff */
+                max-width: 100%; /* Ensure it doesn't exceed screen width */
+            }
+
+            /* Show mobile line break on mobile devices */
+            .mobile-break {
+                display: block; /* Show line break on mobile */
+            }
+
+            /* Adjust the special name styling for mobile */
+            .agency-line-1 .bold {
+                transform: scale(1.3); /* Much bigger scale on mobile */
+                letter-spacing: 2px; /* More letter spacing on mobile */
+                font-size: clamp(3.5rem, 9vw, 4.5rem); /* Much bigger responsive font size for mobile */
+            }
+
+            /* Make all agency lines much bigger on mobile */
+            .agency-line-1,
+            .agency-line-2,
+            .agency-line-3,
+            .agency-line-4 {
+                font-size: clamp(2.8rem, 8vw, 3.8rem); /* Much bigger font size for mobile */
+                line-height: 0.95; /* Tighter line height for impact */
+            }
+
+            /* Reduce animation intensity on mobile for better performance */
+            .agency-line-1 .bold {
+                animation: gradientShift 4s ease-in-out infinite, nameGlow 3s ease-in-out infinite alternate;
+            }
+
+            /* Mobile scroll indicator adjustments */
+            .scroll-indicator {
+                bottom: 1.5rem; /* Closer to bottom on mobile */
+                opacity: 0.9; /* More visible on mobile */
+                display: flex !important; /* Force display on mobile */
+            }
+
+            .scroll-text {
+                font-size: 0.8rem; /* Slightly bigger text on mobile for visibility */
+                font-weight: 600; /* Bolder text on mobile */
+            }
+
+            .scroll-arrow {
+                width: 18px; /* Slightly bigger arrow on mobile */
+                height: 18px; /* Slightly bigger arrow on mobile */
+                border-width: 3px; /* Thicker borders on mobile */
+            }
+        }
+
+        /* Extra small screens - still much bigger */
+        @media (max-width: 480px) {
+            .agency-line-1,
+            .agency-line-2,
+            .agency-line-3,
+            .agency-line-4 {
+                font-size: clamp(2.2rem, 6vw, 3rem); /* Much bigger for very small screens */
+            }
+
+            .agency-line-1 .bold {
+                font-size: clamp(2.8rem, 7vw, 3.5rem); /* Much bigger name text on very small screens */
+                transform: scale(1.2); /* Bigger scale */
+            }
+
+            .agency-promo-section {
+                padding: 0.5rem 0.5rem; /* Even less padding on very small screens */
+                padding-top: 1.5rem; /* Much less top padding for very small mobile screens */
+            }
+
+            /* Extra small screen scroll indicator */
+            .scroll-indicator {
+                bottom: 1rem; /* Even closer to bottom on very small screens */
+                opacity: 1; /* Full opacity for maximum visibility */
+            }
+
+            .scroll-text {
+                font-size: 0.7rem; /* Smaller text on very small screens */
+            }
+
+            .scroll-arrow {
+                width: 16px; /* Smaller arrow on very small screens */
+                height: 16px; /* Smaller arrow on very small screens */
+            }
+        }
 
         /* About Section */
 
@@ -2352,7 +2917,7 @@
 
             padding: 8rem 4rem 0rem 4rem; /* Added top padding to increase gap from hero section */
 
-            background: linear-gradient(135deg, #0e331a 0%, #0e331a 50%, #0e331a 100%) !important; /* Force background just slightly lighter than #0a1a0f */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%) !important; /* Brighter about section background */
 
             position: relative;
 
@@ -2906,7 +3471,7 @@
 
         .about-section-title {
 
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
 
             font-weight: 800;
 
@@ -4103,7 +4668,7 @@
 
             z-index: 0;
 
-            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17 100%); /* Match articles section background */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
         }
 
@@ -4153,7 +4718,7 @@
 
         .section-title {
 
-            font-size: clamp(3rem, 6vw, 5rem); /* Increased size for more impact */
+            font-size: clamp(2.5rem, 5vw, 4rem); /* Balanced size - not too small, not too large */
 
             font-weight: 900; /* Increased weight */
 
@@ -4197,37 +4762,68 @@
 
             display: flex;
 
-            flex-direction: column;
+            flex-direction: row; /* Horizontal layout on desktop */
 
-            gap: 3rem; /* Increased gap for better spacing */
+            gap: 2rem; /* Reduced gap for horizontal layout */
 
             position: relative;
 
             padding: 2rem 0;
 
-            align-items: center; /* Center cards as they appear */
+            align-items: stretch; /* Make all cards same height */
 
-            max-width: 400px; /* Limit width for single column */
+            max-width: 1200px; /* Wider container for horizontal layout */
 
-            margin: 0 auto; /* Center the column */
+            margin: 0 auto; /* Center the grid */
+
+            justify-content: center; /* Center the cards horizontally */
 
         }
 
 
 
-        /* Keep cards in column layout - never change to grid */
+        /* Keep cards in horizontal layout on desktop when all cards are active */
 
         .services-grid.all-cards-active {
 
             display: flex;
 
-            flex-direction: column;
+            flex-direction: row; /* Horizontal layout when all cards are active */
 
-            align-items: center;
+            align-items: stretch; /* Make all cards same height */
+
+            justify-content: center; /* Center the cards horizontally */
 
         }
 
+        /* Override all-cards-active for mobile to keep column layout */
+        @media (max-width: 768px) {
+            .services-grid.all-cards-active {
+                flex-direction: column !important; /* Force column layout on mobile even when all cards active */
+                max-width: 400px !important; /* Force narrow container on mobile */
+            }
+            
+            .services-grid.all-cards-active .service-card {
+                width: auto !important; /* Auto width on mobile even when all cards active */
+                max-width: 100% !important; /* Full width on mobile */
+            }
+        }
 
+
+
+        /* Desktop service card width */
+        @media (min-width: 1025px) {
+            .service-card {
+                width: 300px; /* Fixed width for horizontal layout on desktop only */
+            }
+        }
+
+        /* Medium screen service card width */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .service-card {
+                width: 250px; /* Smaller width for medium screens to fit 3 cards */
+            }
+        }
 
         /* Responsive grid adjustments */
 
@@ -4235,9 +4831,11 @@
 
             .services-grid {
 
-                grid-template-columns: 1fr 1fr; /* 2 columns on medium screens */
+                flex-direction: row; /* Keep horizontal layout on medium screens */
 
-                gap: 2.5rem;
+                gap: 1.5rem; /* Smaller gap for medium screens */
+
+                max-width: 900px; /* Medium width container */
 
             }
 
@@ -4249,9 +4847,11 @@
 
             .services-grid {
 
-                grid-template-columns: 1fr; /* Single column on mobile */
+                flex-direction: column; /* Column layout ONLY on mobile */
 
                 gap: 2rem;
+
+                max-width: 400px; /* Narrower container for column layout */
 
             }
 
@@ -4525,11 +5125,11 @@
 
             background: linear-gradient(135deg, 
 
-                rgba(10, 26, 15, 0.02) 0%, 
+                rgba(46, 74, 58, 0.02) 0%, 
 
-                rgba(10, 26, 15, 0.05) 50%, 
+                rgba(46, 74, 58, 0.05) 50%, 
 
-                rgba(10, 26, 15, 0.02) 100%); /* Changed from blue to dark green */
+                rgba(46, 74, 58, 0.02) 100%); /* Consistent about section color */
 
             opacity: 0;
 
@@ -4557,11 +5157,11 @@
 
             background: linear-gradient(135deg, 
 
-            rgba(10, 26, 15) 0%, 
+            rgba(46, 74, 58) 0%, 
 
-            rgba(10, 26, 15) 50%, 
+            rgba(46, 74, 58) 50%, 
 
-            rgba(10, 26, 15) 100%);
+            rgba(46, 74, 58) 100%);
 
             transform: translateY(100%); /* Start from bottom */
 
@@ -4887,7 +5487,7 @@
 
             padding: 10rem 4rem; /* Increased padding for more breathing room */
 
-            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17 100%); /* Warm brown gradient */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
             position: relative;
 
@@ -5107,7 +5707,7 @@
 
             padding: 8rem 4rem;
 
-            background: linear-gradient(135deg, #0c2e17 0%, #0c2e17 50%, #0c2e17  100%); /* Updated to match hero background exactly */
+            background: linear-gradient(135deg, #2e4a3a 0%, #2e4a3a 50%, #2e4a3a 100%); /* Consistent about section color */
 
             position: relative;
 
@@ -6193,7 +6793,7 @@
 
             padding: 8rem 4rem;
 
-            background: #000000 !important;
+            background: #0f0703 !important; /* Restored original brown color */
 
             position: relative;
 
@@ -6894,7 +7494,7 @@
 
             .about-section-title {
 
-                font-size: clamp(1.5rem, 6vw, 2.5rem);
+                font-size: clamp(1.5rem, 4.5vw, 2.3rem);
 
                 text-align: center;
 
@@ -7508,7 +8108,7 @@
 
                 text-align: center; /* Center content on mobile */
 
-                height: 30vh; /* Further reduced height for mobile - even less tall */
+                min-height: 100vh; /* Standard hero height */
 
                 display: flex;
 
@@ -7560,7 +8160,9 @@
 
                 padding: 2rem 1.5rem; /* Reduced padding for mobile */
 
-                max-width: 300px; /* Smaller width for mobile */
+                width: auto; /* Auto width for mobile column layout */
+
+                max-width: 100%; /* Full width on mobile */
 
                 margin: 0 auto; /* Center the card */
 
@@ -7782,7 +8384,7 @@
 
             .section-title {
 
-                font-size: clamp(2rem, 6vw, 3rem);
+                font-size: clamp(1.8rem, 5vw, 3rem);
 
                 line-height: 1.3;
 
@@ -8006,7 +8608,7 @@
 
             .section-title {
 
-                font-size: clamp(2rem, 8vw, 3rem); /* Adjusted for very small screens */
+                font-size: clamp(1.8rem, 7vw, 3rem); /* Adjusted for very small screens */
 
                 line-height: 1.2;
 
@@ -8523,7 +9125,7 @@
 
         .scroll-text-header {
 
-            font-size: clamp(3rem, 6vw, 5rem); /* Same as section-title */
+            font-size: clamp(2.5rem, 5vw, 4rem); /* Balanced size to match section-title */
 
             font-weight: 900; /* Same as section-title */
 
@@ -9321,8 +9923,7 @@
             }
 
             .hero {
-                height: 45vh;
-                min-height: 45vh;
+                min-height: 100vh; /* Standard hero height */
             }
 
 
@@ -9334,11 +9935,55 @@
 
             }
 
+            /* Hero projects window adjustments for very small screens */
+            .hero-projects-window {
+                z-index: 2; /* Even lower z-index on very small screens */
+            }
+
+            .hero-projects-container {
+                width: 98%; /* Almost full width on very small screens */
+                height: 65%; /* Responsive height that fits within hero */
+            }
+
+            .hero-projects-grid {
+                display: flex; /* Use flexbox for equal distribution */
+                flex-direction: column; /* Stack cards vertically */
+                gap: 0.6rem; /* Even smaller gap on very small screens */
+                height: 100%; /* Full height of container */
+            }
+
+            .hero-project-card {
+                height: auto; /* Auto height to fit available space */
+                min-height: 0; /* Allow cards to shrink */
+                flex: 1; /* Equal distribution of space */
+                border-radius: 12px; /* Smaller border radius */
+            }
+
+            .hero-project-overlay {
+                padding: 1rem; /* Less padding on very small screens */
+            }
+
+            .hero-project-title {
+                font-size: 1rem; /* Smaller title on very small screens */
+            }
+
+            .hero-project-category {
+                font-size: 0.8rem; /* Smaller category text on very small screens */
+            }
+
+            /* Hero explore button very small screen styling */
+            .hero-explore-button {
+                padding: 0.5rem 1rem; /* Even smaller padding on very small screens */
+                font-size: 0.7rem; /* Smaller font size on very small screens */
+                margin-top: 0.6rem; /* Less margin on very small screens */
+            }
+
 
 
             .hero-title {
 
                 margin-bottom: 0.8rem;
+                margin-top : -20rem !important;
 
             }
 
@@ -9456,7 +10101,6 @@
 
             .logo-container{
                 margin-left : -10px;
-                margin-top : 10px;
             }
         }
 
@@ -9911,6 +10555,25 @@
 
     <!-- Main Content -->
     <main class="main-content">
+        <!-- Web Agency Promo Section -->
+        <section class="agency-promo-section">
+            <div class="agency-text">
+                <h1 class="agency-line-1">I AM <span class="bold"> HARIS <br class="mobile-break">CHATZIANASTASIOU</span>,</h1>
+                <h1 class="agency-line-2"><span class="bold">WEB DESIGN</span> SPECIALIST</h1>
+                <h1 class="agency-line-3">BASED IN <span class="bold">THESSALONIKI,</span></h1>
+                <h1 class="agency-line-4"><span class="bold">GREECE</span>.</h1>
+                <br><br><br>
+                <h1 class="agency-line-4"><span class="bold"> EXPLORE</span> MY WORK </span>.</h1>
+
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <a href="#home" class="scroll-indicator">
+                <span class="scroll-text">Scroll Down</span>
+                <div class="scroll-arrow"></div>
+            </a>
+        </section>
+
         <!-- Hero Section -->
         <section id="home" class="hero">
 
@@ -9950,12 +10613,40 @@
 
                 <!-- IXL Logo - positioned above the title for visual hierarchy -->
 
-                <h1 class="hero-title">Crafting Digital Stories<span class="hero-dot">.</span></h1>
+                <h1 class="hero-title">I Craft Digital Stories<span class="hero-dot">.</span></h1>
 
+            </div>
 
-                
-                <a href="#about" class="craft-button" onclick="scrollToSection('services'); return false;">EXPLORE</a>
-
+            <!-- Hero Projects Window - Large screen coverage -->
+            <div class="hero-projects-window">
+                <div class="hero-projects-container">
+                    <div class="hero-projects-grid">
+                        <div class="hero-project-card" data-project="skg-chess">
+                            <img src="retrochess2.jpg" alt="SKG Chess Project" class="hero-project-image">
+                            <div class="hero-project-overlay">
+                                <h3 class="hero-project-title">SKG Chess</h3>
+                                <p class="hero-project-category">Web Development</p>
+                                <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
+                            </div>
+                        </div>
+                        <div class="hero-project-card" data-project="portfolio">
+                            <img src="bnwthess1.jpg" alt="Portfolio Project" class="hero-project-image">
+                            <div class="hero-project-overlay">
+                                <h3 class="hero-project-title">Portfolio Design</h3>
+                                <p class="hero-project-category">UI/UX Design</p>
+                                <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
+                            </div>
+                        </div>
+                        <div class="hero-project-card" data-project="creative">
+                            <img src="hc.png" alt="Creative Project" class="hero-project-image">
+                            <div class="hero-project-overlay">
+                                <h3 class="hero-project-title">Creative Solutions</h3>
+                                <p class="hero-project-category">Brand Design</p>
+                                <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             
@@ -9994,7 +10685,245 @@
 
 
 
-        <!-- Logo Section -->
+                   <!-- About Section - Profile and Title -->
+
+
+                   <section id="about" class="about-section">
+
+                    <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
+
+                    <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
+        
+                    <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
+
+                    <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
+        
+                    <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
+
+                    <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
+
+                    <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
+
+                    <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
+
+                    <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
+
+                    <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
+
+                    <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
+
+                    <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
+
+                    <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
+
+                    <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
+
+                    <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
+
+                    <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
+
+                    <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
+            
+                    <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
+
+                    <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
+
+                    <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
+
+                    <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+
+                    <div class="floating-element diamond" style="bottom: 15%; right: 22%; border-color: rgba(255,255,255,0.04);"></div>
+                    <div class="floating-element dot" style="bottom: 25%; left: 4%; background: rgba(255,255,255,0.06);"></div>
+                    <div class="floating-element triangle" style="bottom: 35%; right: 12%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
+                    <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
+                
+                    <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
+
+                    <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
+
+                    <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+
+                    <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
+
+                    <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
+
+                    <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
+
+                    <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
+
+                    <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
+                
+                    <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
+
+                    <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
+                   
+                    <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
+
+                    <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
+
+                    <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
+
+                    <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
+
+                    <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
+
+
+
+                    <div class="about-container">
+
+                        <!-- Section Header with Photo and Title -->
+
+                        <div class="section-header fade-in">
+
+                            <div class="about-header-content">
+
+                                <div class="profile-section fade-in">
+
+                                    <div class="profile-container">
+
+                                        <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
+
+                                    </div>
+
+                        </div>
+
+                                <div class="about-header-text">
+        
+                                    <h2 class="section-title" id="who-am-i-title">Meet the Creator</h2>
+        
+                                    <!-- Introduction Paragraph -->
+                                    <div class="about-paragraph">
+                                        <!-- <h3 class="paragraph-title">Who I am</h3> -->
+                                        <p class="scroll-text" id="scroll-text-1-intro">
+                                            Welcome to my place on the web. My name is Haris Chatzianastasiou, and I am a software developer living in Thessaloniki, Greece. For the last 3 years I have been working in the IT industry and have been involved in large projects in the private and public sector (<a href="#experience-content">see below</a>) . Previously, I obtained a Bachelor’s degree in Computer Science with Biomedical Informatics (graduating in 2022), and a few months ago I started my Master's degree in Artificial Intelligence.
+                                        </p>
+        
+
+                        </div>
+
+                                    <!-- Frontend Development Paragraph -->
+                                    <div class="about-paragraph">
+                                        <h3 class="paragraph-title">Philosophy</h3>
+                                        <p class="scroll-text" id="scroll-text-1-frontend">
+                                            I believe that software, like any service, is there to meet a need and fulfill its purpose. Several factors have to come together to achieve this. Data-driven products must work reliably and securely and be easily scalable to support future growth. The content that users see should be structured in a way that conveys the product's importance, expresses the brand's identity, and engages the user, while navigation flow should be intuitive, as a negative user experience can significantly lead to lost sales and conversions, decreased customer retention, and damage to brand reputation.                                    
+                                            <p class="scroll-text">
+                                                The tasks described span the core concepts of software creation—backend and frontend development, along with UX design. While I appreciate the distinct problem‑solving each area requires, I find it most rewarding to connect these disciplines and deliver seamless end‑to‑end solutions.
+        
+                                            </p>
+        
+                                            <p class="scroll-text">
+                                                Every finished product tells a unique story, and I view my work as a way to explore the world by crafting those stories. Whether I'm working on a large corporate project, bringing a brand's vision to life, or helping a local business build an online presence, at the center of each project are people ready to tell a story to the world.
+                                            </p>
+                                                
+                                            <p class="scroll-text">
+                                                My goal is to collaborate with such people to create meaningful work and achieve success together. Learn more about my services and projects below, and if you have an interesting idea, I’d be happy to help.                                        </p>
+        
+        
+                                    <div class="content-section-experience">
+        
+                                        <div class="expandable-content expanded" id="experience-content">
+        
+                                            <div class="content-title">Employment Experience</div>
+        
+                                            
+        
+                                            <!-- Current Role -->
+        
+                                            <div class="content-text experience-job-1">
+        
+                                                <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
+        
+                                                
+        
+                                                <ul>
+        
+                                                    <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
+        
+                                                    <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
+        
+                                                    <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
+        
+                                                </ul>
+        
+                                            </div>
+        
+                                            
+        
+                                            <!-- Previous Role -->
+        
+                                            <div class="content-text experience-job-2">
+        
+                                                <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
+        
+                                                
+        
+                                                <ul>
+        
+                                                    <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
+        
+                                                    <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
+        
+                                                    <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
+        
+                                                </ul>
+        
+                                            </div>
+        
+                                        </div>
+        
+                                    </div>
+        
+                                    
+        
+                                </div>
+        
+        
+        
+                                <div class="content-section-education">
+        
+                                    <div class="expandable-content expanded" id="education-content">
+        
+                                        <div class="content-title">
+                                            Education
+                                        </div>
+        
+                                        <div class="content-text">
+        
+                                            <strong>Master of Science in Artificial Intelligence</strong><br>
+        
+                                            European University of Cyprus, 2025 – Ongoing<br>
+        
+                                        </div>
+        
+                                        <div class="content-text">
+        
+                                            <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
+        
+                                            University of Thessaly, 2017-2022<br>
+        
+                                        </div>
+        
+                            </div>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+            </section>
 
 
 
@@ -10021,20 +10950,20 @@
 
                 </video> -->
 
-            </div>
+                </div>
 
-            
+
             <div class="services-container">
 
                 <div class="section-header" id="services-header">
 
-                    <h2 class="section-title" style="text-transform: none;">  </h2>
+                    <h2 class="section-title" style="text-transform: none;">Services</h2>
 
                     <p class="section-subtitle" id="services-subtitle">
 
                         Covering everything from brand expression down to technical execution.</p>
 
-                </div>
+                    </div>
 
                 
 
@@ -10050,95 +10979,95 @@
 
                         <div class="ball" id="ball"></div>
 
-                    </div>
+                        </div>
 
                 </div>
 
-                
+
 
                 <div class="services-grid" id="services-grid">
 
-                   
 
-                    <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
+
+                    <!-- <div class="service-card" data-card="0" tabindex="0" role="button" aria-label="Brand Expression Service">
 
                         <div class="fill-animation"></div>
 
                         <div class="service-icon">
-
+    
                             <span class="icon-letter">𓂃</span>
-
+    
                         </div>
-
+    
                         <h3 class="service-title">BRAND EXPRESSION</h3>
-
+    
                         <p class="service-description">
-
+    
                             Translating voice to content structure, narrative to information architecture, personality to interactions.
-
+    
                         </p>
-
-                    </div>
-
+    
+                    </div> -->
+    
                     <div class="service-card" data-card="3" tabindex="0" role="button" aria-label="Frontend Development Service">
-
+    
                         <div class="fill-animation"></div>
-
+    
                         <div class="service-icon">
-
-                            <span class="icon-letter">╯</span>
-
+    
+                            <span class="icon-letter">I</span>
+    
                         </div>
-
+    
                         <h3 class="service-title">FRONTEND DEVELOPMENT</h3>
-
+    
                         <p class="service-description">
-
+    
                             Creating responsive, interactive websites with modern frameworks and optimized performance.
-
+    
                         </p>
-
+    
                     </div>
-
+    
                     <div class="service-card" data-card="4" tabindex="0" role="button" aria-label="Backend Development Service">
-
+    
                         <div class="fill-animation"></div>
-
+    
                         <div class="service-icon">
-
-                            <span class="icon-letter">﹏</span>
-
+    
+                            <span class="icon-letter">X</span>
+    
                         </div>
-
+    
                         <h3 class="service-title">BACKEND DEVELOPMENT</h3>
-
+    
                         <p class="service-description">
-
+    
                             Developing robust server-side solutions that are secure, fast, and ready for growth.
-
+    
                         </p>
-
+    
                     </div>
-
-                    <div class="service-card" data-card="5" tabindex="0" role="button" aria-label="Deployment Service">
-
+    
+                    <!-- <div class="service-card" data-card="5" tabindex="0" role="button" aria-label="Deployment Service">
+    
                         <div class="fill-animation"></div>
-
+    
                         <div class="service-icon">
-
+    
                             <span class="icon-letter">︵</span>
-
+    
                         </div>
-
+    
                         <h3 class="service-title">DEPLOYMENT</h3>
-
+    
                         <p class="service-description">
-
+    
                             Deploying through server setup, hosting configuration, domain management, SSL certificates, backup systems, and monitoring tools.
 
                         </p>
 
-                    </div>
+                    </div> -->
 
                     <div class="service-card" data-card="7" tabindex="0" role="button" aria-label="Maintenance & Support Service">
 
@@ -10146,7 +11075,7 @@
 
                         <div class="service-icon">
 
-                            <span class="icon-letter">𓎟</span>
+                            <span class="icon-letter">L</span>
 
                         </div>
 
@@ -10157,383 +11086,99 @@
                             Ensuring everything runs smoothly with comprehensive maintenance and technical support.
 
                         </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+    
+                                </div>
+    
+                            </div>
+    
+                                </div>
+    
         </section>
+
+ 
+
+
+
 
         
 
-        <!-- Projects Section -->
 
-        <section id="projects" class="projects-section">
 
-            
+        <!-- Contact Section -->
 
-            <!-- Floating decorative elements - positioned to avoid content overlap -->
+        <section id="contact" class="contact-section">
 
-            <div class="floating-element geometric" style="top: 8%; left: 8%;"></div>
-
-            <div class="floating-element circle" style="top: 12%; right: 12%;"></div>
-
-            <div class="floating-element line" style="top: 25%; left: 85%; transform: rotate(45deg);"></div>
-
-            <div class="floating-element geometric" style="top: 35%; left: 5%; transform: rotate(90deg);"></div>
-
-            <div class="floating-element circle" style="top: 45%; right: 8%;"></div>
-
-            <div class="floating-element line" style="top: 55%; left: 90%; transform: rotate(-30deg);"></div>
-
-            <div class="floating-element geometric" style="top: 65%; left: 3%; transform: rotate(135deg);"></div>
-
-            <div class="floating-element circle" style="top: 75%; right: 5%;"></div>
-
-            <div class="floating-element line" style="top: 85%; left: 88%; transform: rotate(60deg);"></div>
-
-            <div class="floating-element geometric" style="bottom: 15%; right: 3%; transform: rotate(180deg);"></div>
-
-            <div class="floating-element circle" style="bottom: 25%; left: 7%;"></div>
-
-            <div class="floating-element line" style="bottom: 35%; right: 15%; transform: rotate(-45deg);"></div>
-
-            <div class="floating-element geometric" style="bottom: 45%; left: 92%; transform: rotate(75deg);"></div>
-
-            <div class="floating-element circle" style="bottom: 55%; right: 2%;"></div>
-
-            <div class="floating-element line" style="bottom: 65%; left: 95%; transform: rotate(15deg);"></div>
-
-            <div class="floating-element triangle" style="top: 22%; left: 92%;"></div>
-
-            <div class="floating-element diamond" style="top: 32%; right: 18%;"></div>
-
-            <div class="floating-element dot" style="top: 42%; left: 6%;"></div>
-
-            <div class="floating-element triangle" style="top: 52%; right: 25%; transform: rotate(180deg);"></div>
-
-            <div class="floating-element diamond" style="top: 62%; left: 88%;"></div>
-
-            <div class="floating-element dot" style="top: 72%; right: 8%;"></div>
-
-            <div class="floating-element triangle" style="bottom: 8%; left: 88%; transform: rotate(90deg);"></div>
-
-            <div class="floating-element diamond" style="bottom: 18%; right: 22%;"></div>
-
-            <div class="floating-element dot" style="bottom: 28%; left: 4%;"></div>
-
-            <div class="floating-element triangle" style="bottom: 38%; right: 12%; transform: rotate(270deg);"></div>
-
-            <div class="floating-element diamond" style="bottom: 48%; left: 96%;"></div>
-
-            <div class="floating-element dot" style="bottom: 58%; right: 6%;"></div>
-
-            
-
-            
-
-            <div class="projects-container">
+            <div class="contact-container">
 
                 <div class="section-header fade-in">
 
+                    <h2 class="section-title" id="contact-title">Contact</h2>
 
-                    <h2 class="service-title">PROJECTS</h2>
-                    
+                    <p class="section-subtitle">
 
-                      
+                        Ready to start your next project? Let's discuss your vision and bring it to life.
 
-                    
-
-                </div>
-
-                <div class="projects-grid">
-
-                    <div class="project-card" data-project="skg-chess">
-
-                        <img src="retrochess2.jpg" alt="SKG Chess Project" class="project-image">
-
-                        <div class="project-overlay">
-
-                            <h3 class="project-title">SKG CHESS</h3>
-
-                        </div>
-
-                    </div>
-
-                    <!-- <div class="project-card" data-project="falcon">
-
-                        <img src="bnwthess.jpg" alt="Falcon Project" class="project-image">
-
-                        <div class="project-overlay">
-
-                            <h3 class="project-title">FALCON</h3>
-
-                        </div>
-
-                    </div>
-
-                    <div class="project-card" data-project="lilith">
-
-                        <img src="retrochess3.jpg" alt="Lilith Project" class="project-image">
-
-                        <div class="project-overlay">
-
-                            <h3 class="project-title">LILITH</h3>
-
-                        </div>
-
-                    </div> -->
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-            <!-- About Section - Profile and Title -->
-
-
-            <section id="about" class="about-section">
-
-                <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
-    
-                <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
-    
-                <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
-    
-                <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
-    
-                <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
-    
-                <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
-    
-                <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
-    
-                <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
-    
-                <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
-    
-                <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
-    
-                <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
-    
-                <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
-    
-                <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
-    
-                <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
-    
-                <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
-    
-                <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
-    
-                <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-    
-                <div class="floating-element diamond" style="bottom: 15%; right: 22%; border-color: rgba(255,255,255,0.04);"></div>
-                <div class="floating-element dot" style="bottom: 25%; left: 4%; background: rgba(255,255,255,0.06);"></div>
-                <div class="floating-element triangle" style="bottom: 35%; right: 12%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
-                <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
-    
-                <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
-    
-                <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
-    
-                <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
-    
-                <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
-    
-                <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
-    
-                <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
-    
-                <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
-    
-                <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
-    
-                <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
-    
-                <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
-    
-                <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
-    
-                <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-    
-                <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
-    
-                <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
-    
-                
-    
-                <div class="about-container">
-    
-                    <!-- Section Header with Photo and Title -->
-    
-                    <div class="section-header fade-in">
-    
-                        <div class="about-header-content">
-    
-                            <div class="profile-section fade-in">
-    
-                                <div class="profile-container">
-    
-                                    <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
-    
-                                </div>
-    
-                            </div>
-    
-                            <div class="about-header-text">
-    
-                                <h2 class="section-title" id="who-am-i-title">Meet the Creator</h2>
-    
-                                <!-- Introduction Paragraph -->
-                                <div class="about-paragraph">
-                                    <!-- <h3 class="paragraph-title">Who I am</h3> -->
-                                    <p class="scroll-text" id="scroll-text-1-intro">
-                                        Welcome to my place on the web. My name is Haris Chatzianastasiou, and I am a software developer living in Thessaloniki, Greece. For the last 3 years I have been working in the IT industry and have been involved in large projects in the private and public sector (<a href="#experience-content">see below</a>) . Previously, I obtained a Bachelor’s degree in Computer Science with Biomedical Informatics (graduating in 2022), and a few months ago I started my Master's degree in Artificial Intelligence.
-                                    </p>
-    
-    
-                                </div>
-    
-                                <!-- Frontend Development Paragraph -->
-                                <div class="about-paragraph">
-                                    <h3 class="paragraph-title">Philosophy</h3>
-                                    <p class="scroll-text" id="scroll-text-1-frontend">
-                                        I believe that software, like any service, is there to meet a need and fulfill its purpose. Several factors have to come together to achieve this. Data-driven products must work reliably and securely and be easily scalable to support future growth. The content that users see should be structured in a way that conveys the product's importance, expresses the brand's identity, and engages the user, while navigation flow should be intuitive, as a negative user experience can significantly lead to lost sales and conversions, decreased customer retention, and damage to brand reputation.                                    
-                                        <p class="scroll-text">
-                                            The tasks described span the core concepts of software creation—backend and frontend development, along with UX design. While I appreciate the distinct problem‑solving each area requires, I find it most rewarding to connect these disciplines and deliver seamless end‑to‑end solutions.
-    
-                                        </p>
-    
-                                        <p class="scroll-text">
-                                            Every finished product tells a unique story, and I view my work as a way to explore the world by crafting those stories. Whether I'm working on a large corporate project, bringing a brand's vision to life, or helping a local business build an online presence, at the center of each project are people ready to tell a story to the world.
-                                        </p>
-                                            
-                                        <p class="scroll-text">
-                                            My goal is to collaborate with such people to create meaningful work and achieve success together. Learn more about my services and projects below, and if you have an interesting idea, I’d be happy to help.                                        </p>
-    
-    
-                                <div class="content-section-experience">
-    
-                                    <div class="expandable-content expanded" id="experience-content">
-    
-                                        <div class="content-title">Employment Experience</div>
-    
-                                        
-    
-                                        <!-- Current Role -->
-    
-                                        <div class="content-text experience-job-1">
-    
-                                            <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
-    
-                                            
-    
-                                            <ul>
-    
-                                                <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
-    
-                                                <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
-    
-                                                <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
-    
-                                            </ul>
+                    </p>
     
                                         </div>
     
-                                        
-    
-                                        <!-- Previous Role -->
-    
-                                        <div class="content-text experience-job-2">
-    
-                                            <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
-    
-                                            
-    
-                                            <ul>
-    
-                                                <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
-    
-                                                <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
-    
-                                                <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
-    
-                                            </ul>
+                <div class="contact-info">
+
+                    <a href="mailto:harischatzi@tutanota.com" class="contact-item scale-in">
+
+                        <div class="contact-icon">
+
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+
+                                <polyline points="22,6 12,13 2,6"/>
+
+                            </svg>
     
                                         </div>
     
-                                    </div>
+                        <div class="contact-label">Email</div>
     
-                                </div>
+                        <div class="contact-value">
     
-                                
+                            harischatzi@tutanota.com
     
                             </div>
     
+                    </a>
     
+                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item scale-in">
     
-                            <div class="content-section-education">
+                        <div class="contact-icon">
     
-                                <div class="expandable-content expanded" id="education-content">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     
-                                    <div class="content-title">
-                                        Education
-                                    </div>
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
     
-                                    <div class="content-text">
+                                <rect x="2" y="9" width="4" height="12"/>
     
-                                        <strong>Master of Science in Artificial Intelligence</strong><br>
+                                <circle cx="4" cy="4" r="2"/>
     
-                                        European University of Cyprus, 2025 – Ongoing<br>
-    
-                                    </div>
-    
-                                    <div class="content-text">
-    
-                                        <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
-    
-                                        University of Thessaly, 2017-2022<br>
+                            </svg>
     
                                     </div>
     
-                        </div>
+                        <div class="contact-label">LinkedIn</div>
     
-                    </div>
+                        <div class="contact-value">
+    
+                                Haris Chatzianastasiou
+    
+                                    </div>
+    
+                            </a>
     
                 </div>
     
             </div>
     
         </section>
-
 
         <!-- Articles Section -->
 
@@ -10645,84 +11290,6 @@
 
         </section>
 
-
-
-        <!-- Contact Section -->
-
-        <section id="contact" class="contact-section">
-
-            <div class="contact-container">
-
-                <div class="section-header fade-in">
-
-                    <h2 class="section-title" id="contact-title">Contact</h2>
-
-                    <p class="section-subtitle">
-
-                        Ready to start your next project? Let's discuss your vision and bring it to life.
-
-                    </p>
-
-                </div>
-
-                <div class="contact-info">
-
-                    <a href="mailto:harischatzi@tutanota.com" class="contact-item scale-in">
-
-                        <div class="contact-icon">
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-
-                                <polyline points="22,6 12,13 2,6"/>
-
-                            </svg>
-
-                        </div>
-
-                        <div class="contact-label">Email</div>
-
-                        <div class="contact-value">
-
-                            harischatzi@tutanota.com
-
-                        </div>
-
-                    </a>
-
-                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item scale-in">
-
-                        <div class="contact-icon">
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-
-                                <rect x="2" y="9" width="4" height="12"/>
-
-                                <circle cx="4" cy="4" r="2"/>
-
-                            </svg>
-
-                        </div>
-
-                        <div class="contact-label">LinkedIn</div>
-
-                        <div class="contact-value">
-
-                                Haris Chatzianastasiou
-
-                        </div>
-
-                            </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
     </main>
 
 
@@ -10797,7 +11364,7 @@
 
         gsap.set('.hero-subtitle', { opacity: 0 });
 
-        gsap.set('.hero-title', { opacity: 0, y: 40, scale: 0.95 });
+        // gsap.set('.hero-title', { opacity: 0, y: 40, scale: 0.95 }); // Moved to agency section
 
         gsap.set('.hero-logo', { opacity: 0, y: -50, scale: 0.8 }); /* Set initial state for logo */
 
@@ -10855,21 +11422,21 @@
 
             heroTimeline
 
-                .to('.hero-title', {
+                // .to('.hero-title', { // Moved to agency section
 
-                    opacity: 1,
+                //     opacity: 1,
 
-                    y: 0,
+                //     y: 0,
 
-                    scale: 1,
+                //     scale: 1,
 
-                    alpha: 1,
+                //     alpha: 1,
 
-                    duration: 0.5, // Faster duration
+                //     duration: 0.5, // Faster duration
 
-                    ease: "power2.out"
+                //     ease: "power2.out"
 
-                })
+                // })
 
                 .to('.hero-subtitle', {
 
@@ -12557,6 +13124,130 @@
 
         setupProjectCardAnimations();
 
+        // Hero project card click animations
+        function setupHeroProjectCardAnimations() {
+            console.log('Setting up hero project card animations...'); // Debug log
+            
+            const heroProjectCards = document.querySelectorAll('.hero-project-card'); // Get all hero project cards
+            console.log('Found hero project cards:', heroProjectCards.length); // Debug log
+
+            heroProjectCards.forEach(card => {
+                let touchStartTime = 0; // Track touch start time
+                let touchStartY = 0; // Track touch start Y position
+                let isScrolling = false; // Track if user is scrolling
+
+                // Function to handle hero project card interaction
+                function handleHeroProjectInteraction(e) {
+                    // Prevent accidental clicks during scrolling
+                    if (isScrolling) {
+                        e.preventDefault(); // Prevent default behavior
+                        return; // Exit function
+                    }
+
+                    e.preventDefault(); // Prevent default behavior
+                    
+                    const projectName = card.querySelector('.hero-project-title').textContent; // Get project name
+                    console.log('Hero project clicked:', projectName); // Debug log
+
+                    // Check if this is SKG CHESS project
+                    if (card.getAttribute('data-project') === 'skg-chess') {
+                        console.log('SKG CHESS detected, starting hero animation...'); // Debug log
+                        
+                        // Add clicking animation class
+                        card.classList.add('clicking'); // Add clicking class for animation
+                        
+                        // Wait for animation to complete then redirect
+                        setTimeout(() => {
+                            console.log('Hero animation complete, redirecting to skgchess.html...'); // Debug log
+                            window.location.href = 'skgchess.html'; // Redirect to SKG Chess page
+                        }, 800); // Wait for animation duration
+                    } else {
+                        console.log('Other hero project detected, showing coming soon...'); // Debug log
+                        
+                        // Add clicking animation class
+                        card.classList.add('clicking'); // Add clicking class for animation
+                        
+                        // Show coming soon message and reset position
+                        setTimeout(() => {
+                            alert('Coming Soon! This project is currently in development.'); // Show coming soon message
+                            card.classList.remove('clicking'); // Remove animation class
+                        }, 800); // Wait for animation duration
+                    }
+                }
+
+                // Touch start event to track touch timing and position
+                card.addEventListener('touchstart', function(e) {
+                    touchStartTime = Date.now(); // Record touch start time
+                    touchStartY = e.touches[0].clientY; // Record touch start Y position
+                    isScrolling = false; // Reset scrolling flag
+                });
+
+                // Touch move event to detect scrolling
+                card.addEventListener('touchmove', function(e) {
+                    const touchY = e.touches[0].clientY; // Get current touch Y position
+                    const touchDistance = Math.abs(touchY - touchStartY); // Calculate touch distance
+                    
+                    // If touch moved more than 10px, consider it scrolling
+                    if (touchDistance > 10) {
+                        isScrolling = true; // Set scrolling flag
+                    }
+                });
+
+                // Touch end event to reset scrolling flag
+                card.addEventListener('touchend', function(e) {
+                    const touchDuration = Date.now() - touchStartTime; // Calculate touch duration
+                    
+                    // Only trigger click if it was a short touch (less than 300ms) and not scrolling
+                    if (touchDuration < 300 && !isScrolling) {
+                        handleHeroProjectInteraction.call(this, e); // Call interaction handler
+                    }
+                    
+                    // Reset flags after a delay
+                    setTimeout(() => {
+                        isScrolling = false; // Reset scrolling flag
+                    }, 100); // Short delay
+                });
+
+                // Add click event for desktop
+                card.addEventListener('click', handleHeroProjectInteraction); // Add click event listener
+            });
+        }
+
+        // Initialize hero project card animations
+        setupHeroProjectCardAnimations();
+
+        // Handle hero project button clicks
+        function handleHeroProjectClick(button) {
+            const projectCard = button.closest('.hero-project-card'); // Get the parent project card
+            const projectName = projectCard.querySelector('.hero-project-title').textContent; // Get project name
+            console.log('Hero project button clicked:', projectName); // Debug log
+
+            // Check if this is SKG CHESS project
+            if (projectCard.getAttribute('data-project') === 'skg-chess') {
+                console.log('SKG CHESS button detected, starting hero animation...'); // Debug log
+                
+                // Add clicking animation class
+                projectCard.classList.add('clicking'); // Add clicking class for animation
+                
+                // Wait for animation to complete then redirect
+                setTimeout(() => {
+                    console.log('Hero button animation complete, redirecting to skgchess.html...'); // Debug log
+                    window.location.href = 'skgchess.html'; // Redirect to SKG Chess page
+                }, 800); // Wait for animation duration
+            } else {
+                console.log('Other hero project button detected, showing coming soon...'); // Debug log
+                
+                // Add clicking animation class
+                projectCard.classList.add('clicking'); // Add clicking class for animation
+                
+                // Show coming soon message and reset position
+                setTimeout(() => {
+                    alert('Coming Soon! This project is currently in development.'); // Show coming soon message
+                    projectCard.classList.remove('clicking'); // Remove animation class
+                }, 800); // Wait for animation duration
+            }
+        }
+
         // Custom Cursor Functionality
         function initCustomCursor() {
             const cursor = document.querySelector('.custom-cursor');
@@ -12584,7 +13275,7 @@
             animateCursor();
 
             // Hover effects
-            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button');
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button, .hero-project-card, .hero-explore-button');
             
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -12655,29 +13346,29 @@
 
         // Dynamic Text Animations
         function initTextAnimations() {
-            // Typewriter effect for hero title
-            const heroTitle = document.querySelector('.hero-title');
-            if (heroTitle) {
-                const text = heroTitle.textContent;
-                heroTitle.textContent = '';
-                heroTitle.style.borderRight = '2px solid #ffffff';
+            // Typewriter effect for agency promo text
+            const agencyLine1 = document.querySelector('.agency-line-1');
+            if (agencyLine1) {
+                const text = agencyLine1.textContent;
+                agencyLine1.textContent = '';
+                agencyLine1.style.borderRight = '2px solid #000000';
                 
                 let i = 0;
                 const typeWriter = () => {
                     if (i < text.length) {
-                        heroTitle.textContent += text.charAt(i);
+                        agencyLine1.textContent += text.charAt(i);
                         i++;
                         setTimeout(typeWriter, 100);
                     } else {
                         // Remove cursor after typing is complete
                         setTimeout(() => {
-                            heroTitle.style.borderRight = 'none';
+                            agencyLine1.style.borderRight = 'none';
                         }, 1000);
                     }
                 };
                 
                 // Start typewriter effect after page load
-                setTimeout(typeWriter, 1500);
+                setTimeout(typeWriter, 500);
             }
 
             // Add gradient text animation to section titles
@@ -15895,7 +16586,81 @@
             });
         });
 
+        // Mobile Scroll Indicator Functionality
+        function scrollToNextSection() {
+            // Get all main sections on the page
+            const sections = document.querySelectorAll('section[id]'); // Get all sections with IDs
+            const mobileIndicator = document.querySelector('.mobile-scroll-indicator'); // Get mobile indicator element
+            
+            // Get current scroll position
+            const currentScrollY = window.scrollY; // Current vertical scroll position
+            
+            // Find the next section to scroll to
+            let nextSection = null; // Initialize next section variable
+            
+            // Loop through all sections to find the next one
+            for (let i = 0; i < sections.length; i++) {
+                const section = sections[i]; // Get current section
+                const sectionTop = section.offsetTop; // Get section's top position
+                
+                // Check if this section is below current scroll position
+                if (sectionTop > currentScrollY + 100) { // 100px buffer for better UX
+                    nextSection = section; // Set as next section
+                    break; // Exit loop once found
+                }
+            }
+            
+            // If no next section found, scroll to top
+            if (!nextSection) {
+                window.scrollTo({
+                    top: 0, // Scroll to top of page
+                    behavior: 'smooth' // Smooth scrolling animation
+                });
+                // Hide indicator after scrolling to top
+                setTimeout(function() {
+                    if (mobileIndicator) {
+                        mobileIndicator.style.display = 'none'; // Hide indicator after scroll
+                    }
+                }, 1000); // Wait for scroll animation to complete
+                return; // Exit function
+            }
+            
+            // Scroll to the next section smoothly
+            nextSection.scrollIntoView({
+                behavior: 'smooth', // Smooth scrolling animation
+                block: 'start' // Align section to top of viewport
+            });
+            
+            // Hide indicator after scroll animation completes
+            setTimeout(function() {
+                if (mobileIndicator) {
+                    mobileIndicator.style.display = 'none'; // Hide indicator after scroll
+                }
+            }, 1000); // Wait for scroll animation to complete
+        }
+
+        // Hide mobile scroll indicator only after user has scrolled significantly
+        let hasScrolledSignificantly = false; // Track if user has scrolled significantly
+        let initialScrollY = window.scrollY; // Store initial scroll position
+        
+        window.addEventListener('scroll', function() {
+            const mobileIndicator = document.querySelector('.mobile-scroll-indicator'); // Get mobile indicator element
+            const currentScrollY = window.scrollY; // Get current scroll position
+            const scrollDistance = Math.abs(currentScrollY - initialScrollY); // Calculate scroll distance
+            
+            // Only hide if user has scrolled more than 100px
+            if (mobileIndicator && !hasScrolledSignificantly && scrollDistance > 100) {
+                hasScrolledSignificantly = true; // Mark that user has scrolled significantly
+                mobileIndicator.style.display = 'none'; // Hide indicator permanently
+            }
+        });
+
     </script>
+
+    <!-- Mobile Scroll Indicator - Only visible on mobile devices -->
+    <div class="mobile-scroll-indicator" onclick="scrollToNextSection()">
+        <div class="mobile-scroll-arrow"></div>
+    </div>
 
 </body>
 
