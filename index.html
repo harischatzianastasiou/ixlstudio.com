@@ -62,7 +62,7 @@
 
             -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 
-            scroll-padding-top: 150px !important; /* Account for fixed header + topbar */
+            scroll-padding-top: 80px !important; /* Account for fixed header only */
             /* Performance optimizations for animations */
 
             will-change: scroll-position;
@@ -568,9 +568,9 @@
             transform: translateY(0); /* Normal position */
         }
 
-        /* Main content padding adjustment for fixed header and topbar */
+        /* Main content padding adjustment for fixed header only */
         .main-content {
-            padding-top: 125px !important; /* 65px header + 60px topbar */
+            padding-top: 65px !important; /* 65px header only */
         }
 
         /* Mobile responsive adjustments */
@@ -591,7 +591,7 @@
             }
 
             .main-content {
-                padding-top: 115px !important; /* 65px header + 50px topbar */
+                padding-top: 65px !important; /* 65px header only */
             }
         }
 
@@ -4865,17 +4865,17 @@
 
         .service-description {
 
-            font-size: clamp(0.9rem, 2vw, 1.3rem); /* Smaller font size on desktop */
+            font-size: clamp(0.9rem, 2vw, 1.3rem); /* Match scroll-text font size */
 
-            line-height: 1.4;
+            line-height: 1.7; /* Match scroll-text line height */
 
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro Display font */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Match scroll-text font family */
 
-            color: #cccccc; /* Updated color */
+            color: #e0e0e0; /* Match scroll-text color */
 
-            font-weight: 300; /* Lighter weight for modern look */
+            font-weight: 300; /* Match scroll-text font weight */
 
-            opacity: 0.9; /* Added transparency for depth */
+            opacity: 1; /* Remove transparency to match scroll-text */
 
         }
 
@@ -9454,8 +9454,9 @@
                 margin-right: auto;
             }
 
-            .logo{
-                margin-left : -20px !important;
+            .logo-container{
+                margin-left : -10px;
+                margin-top : 10px;
             }
         }
 
@@ -9861,7 +9862,7 @@
         <div class="logo-container">
 
             <a href="index.html" class="logo">
-                <img src="hc.png" alt="IXL Studio Logo" style="height: 100px; width: auto; margin-top:15px;">
+                <img src="hc.png" alt="IXL Studio Logo" style="height: 100px; width: auto; margin-top:15px; margin-left:-20px;">
             </a>
 
         </div>
@@ -9905,14 +9906,6 @@
 
 
     <!-- Topbar - Fixed position outside main content -->
-         <section class="topbar">
-
-            <div class="topbar-content">
-
-            <div class="topbar-text" id="topbarText"></div>
-            </div>
-
-         </section>
 
 
 
