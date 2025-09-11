@@ -102,7 +102,7 @@
 
 
 
-            background: linear-gradient(135deg, #008d53 0%, #008d53 50%, #008d53 100%); /* Consistent about section color */
+            background: linear-gradient(135deg, #202020 0%, #202020 50%, #202020 100%); /* Consistent about section color */
 
 
             color: #ffffff;
@@ -5172,21 +5172,23 @@
         /* Agency Promo Section - Simple Bold Text Style */
 
         .agency-promo-section {
-
-            background: url('22.jpg') center center / cover no-repeat; /* Use i.jpg as background image */
-            padding: 4rem 2rem; /* Reduced top padding to move text higher */
-
-            display: flex; /* Flexbox for centering */
-
-            align-items: flex-start; /* Align to top instead of center */
-
-            justify-content: flex-start; /* Start from left edge */
-
+            /* Background with dark overlay for text readability */
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('22.jpg');
+            background-size: cover; /* Ensure image covers entire section */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent image repetition */
+            
+            /* Layout properties */
+            display: flex; /* Use flexbox for content alignment */
+            align-items: flex-start; /* Align content to top of section */
+            justify-content: flex-start; /* Align content to left edge */
+            
+            /* Dimensions and spacing */
             height: 100vh; /* Full viewport height */
-
-            padding-top: 6rem; /* Specific top padding to position text below header */
-
-            position: relative; /* Position relative for overlay if needed */
+            padding: 6rem 2rem 4rem 2rem; /* Top: 6rem (below header), Right: 2rem, Bottom: 4rem, Left: 2rem */
+            
+            /* Positioning */
+            position: relative; /* Enable relative positioning for child elements */
         }
 
 
@@ -5866,7 +5868,7 @@
 
 
 
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff  50%, #e5e1d5 100%) !important; /* Brighter about section background */
+            background: linear-gradient(135deg, #ababab 0%, #ababab  50%, #e5e1d5 100%) !important; /* Brighter about section background */
 
 
             position: relative;
@@ -5964,6 +5966,32 @@
         .about-section .content-section-education {
             margin-left: 0 !important; /* Align both sections to the left consistently */
             margin-right: 0 !important; /* Remove any right margin */
+        }
+
+        /* Ensure all about section text is visible with black color */
+        .about-section .section-title,
+        .about-section .section-subtitle,
+        .about-section .content-title,
+        .about-section .scroll-text,
+        .about-section .paragraph-title,
+        .about-section .about-header-text .section-title,
+        .about-section .about-header-text .scroll-text {
+            color: #000000 !important; /* Force black color for about section text */
+        }
+
+        /* Make services and articles subtitles much bigger on both mobile and desktop */
+        /* Services subtitle - "Brand expression to technical execution" */
+        .services-subtitle,
+        #services-subtitle {
+            font-size: clamp(1.2rem, 5vw, 2.5rem) !important; /* Much bigger on all devices */
+            line-height: 1.4 !important; /* Better line height for readability */
+        }
+
+        /* Articles subtitle - "Here you can find my articles" */
+        .articles-section .section-subtitle {
+            font-size: clamp(1.8rem, 5vw, 2.5rem) !important; /* Much bigger on all devices */
+            line-height: 1.4 !important; /* Better line height for readability */
+            font-weight: 400 !important; /* Slightly bolder for better presence */
         }
 
         /* Target education and experience content within about section */
@@ -9466,7 +9494,7 @@
 
 
 
-            background: linear-gradient(135deg, #008d53 0%, #03633b 50%, #08452b 100%); /* Consistent about section color */
+            background: linear-gradient(135deg, #092b1d 0%, #062619 50%, #092b1d 100%); /* Consistent about section color */
 
 
         }
@@ -11543,7 +11571,7 @@
 
 
 
-            background: linear-gradient(135deg, #363636 0%, #363636 50%, #363636 100%); /* Consistent about section color */
+            background: linear-gradient(135deg, #092b1d 0%, #062619 50%, #092b1d 100%); /* Consistent about section color */
 
 
             position: relative;
@@ -13714,7 +13742,7 @@
 
 
 
-            background: linear-gradient(135deg, #008d53 0%, #03633b 50%, #08452b 100%);; /* Restored original brown color */
+            background: linear-gradient(135deg, #092b1d 0%, #062619 50%, #092b1d 100%); /* Consistent about section color */
 
 
             position: relative;
@@ -21243,7 +21271,7 @@
 
             <div class="agency-text">
 
-                <h1 class="agency-line-1">I AM<span class="bold"> HARIS<br class="mobile-break"></span>.</h1>
+                <h1 class="agency-line-1"><span class="bold"> HARIS <br class="mobile-break">  CHATZIANASTASIOU</span></h1>
                 <br>
 
                 <h1 class="agency-line-2"><span class="bold">FULLSTACK </span> DEVELOPER</h1>
@@ -21462,7 +21490,7 @@
 
         
 
-                        <h1 class="hero-title">I Craft Digital Stories<span class="hero-dot">.</span></h1>
+                        <h1 class="hero-title">Digital Stories<span class="hero-dot">.</span></h1>
 
         
 
@@ -22149,7 +22177,7 @@
 
 
 
-                    <p class="section-subtitle">  Here you can find my blog and software articles.
+                    <p class="section-subtitle">  Blog and software articles.
 
 
 
