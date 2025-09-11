@@ -143,23 +143,14 @@
 
 
 
-            cursor: default !important; /* Prevent text cursor from appearing on text elements */
-
-
-
         }
 
+        *{
+            user-select : none !important;
+        }
 
 
         /* Global cursor fix for all elements */
-
-        * {
-
-            cursor: default !important;
-
-            user-select: none !important; /* Prevent text selection which can cause text cursor */
-
-        }
 
 
 
@@ -179,7 +170,7 @@
 
             pointer-events: none;
 
-            z-index: 9999;
+            z-index: 9999999999 !important; /* Highest z-index to appear above everything */
 
             mix-blend-mode: difference;
 
@@ -206,6 +197,39 @@
             background: rgba(255, 255, 255, 1);
 
         }
+
+        /* Show default cursor in about section - override global cursor none */
+
+        .about-section,
+
+        .about-section *,
+
+        .about-section a,
+
+        .about-section button,
+
+        .about-section div,
+
+        .about-section span,
+
+        .about-section p,
+
+        .about-section h1,
+
+        .about-section h2,
+
+        .about-section h3,
+
+        .about-section h4,
+
+        .about-section h5,
+
+        .about-section h6 {
+
+            cursor: default !important;
+
+        }
+
 
 
 
@@ -316,24 +340,21 @@
         }
 
 
-        /* Hide default cursor on interactive elements */
+        /* Hide default cursor on ALL elements to show custom cursor */
 
-        a, button, .project-card, .service-card, .article-card {
-
-            cursor: none !important;
-
-        }
-
-
-
-        /* Restore pointer cursor for clickable elements */
-
-        button, a, [role="button"], [tabindex], .clickable, .service-card, .project-card, .article-card, .nav-menu, .logo, .logo-container{
+        * {
 
             cursor: none !important;
 
         }
 
+        /* Specific elements that should have custom cursor hover effects */
+
+        a, button, .project-card, .service-card, .article-card, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow, .nav-menu, .logo, .logo-container, .craft-button, .hero-project-card, .hero-explore-button {
+
+            cursor: none !important;
+
+        }
 
 
         /* Specific cursor fixes for header elements */
@@ -5868,7 +5889,7 @@
 
 
 
-            background: linear-gradient(135deg, #ababab 0%, #ababab  50%, #e5e1d5 100%) !important; /* Brighter about section background */
+            background: linear-gradient(135deg, #cecece 0%, #d0cece  50%, #e5e1d5 100%) !important; /* Brighter about section background */
 
 
             position: relative;
@@ -5966,6 +5987,21 @@
         .about-section .content-section-education {
             margin-left: 0 !important; /* Align both sections to the left consistently */
             margin-right: 0 !important; /* Remove any right margin */
+        }
+
+        /* Remove gaps around WHAT IS IXLSTUDIO section */
+        .about-section .about-paragraph {
+            margin-bottom: 1rem !important; /* Minimal gap after WHAT IS IXLSTUDIO */
+        }
+
+        /* Remove gaps between WHAT IS IXLSTUDIO and experience section */
+        .about-section .content-section-experience {
+            margin-top: 0 !important; /* No gap above experience section */
+        }
+
+        /* Remove gaps between experience and education sections */
+        .about-section .content-section-education {
+            margin-top: 0 !important; /* No gap above education section */
         }
 
         /* Ensure all about section text is visible with black color */
@@ -6448,11 +6484,11 @@
 
 
 
-            width: 200px;
+            width: 280px; /* Increased from 200px to 280px */
 
 
 
-            height: 200px;
+            height: 280px; /* Increased from 200px to 280px */
 
 
 
@@ -6576,11 +6612,11 @@
 
 
 
-                width: 150px;
+                width: 200px; /* Increased from 150px to 200px */
 
 
 
-                height: 150px;
+                height: 200px; /* Increased from 150px to 200px */
 
 
 
@@ -9334,11 +9370,11 @@
 
 
 
-            width: 120px;
+            width: 180px; /* Increased from 120px to 180px */
 
 
 
-            height: 120px;
+            height: 180px; /* Increased from 120px to 180px */
 
 
 
@@ -9560,6 +9596,60 @@
             z-index: 1;
 
 
+
+        }
+
+        /* Floating decorative elements for services section */
+
+        .services-section::before {
+
+            content: '';
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border: 3px solid rgba(255, 255, 255, 0.05); /* White with low opacity for dark background */
+
+            border-radius: 50%;
+
+            top: 5%;
+
+            right: 10%;
+
+            pointer-events: none;
+
+            z-index: 1; /* Above video background */
+
+            animation: float3 12s ease-in-out infinite;
+
+        }
+
+        .services-section::after {
+
+            content: '';
+
+            position: absolute;
+
+            width: 150px;
+
+            height: 150px;
+
+            border: 2px solid rgba(255, 255, 255, 0.03); /* White with low opacity for dark background */
+
+            border-radius: 50%;
+
+            bottom: 20%;
+
+            left: 5%;
+
+            pointer-events: none;
+
+            z-index: 1; /* Above video background */
+
+            animation: float4 8s ease-in-out infinite reverse;
 
         }
 
@@ -21282,7 +21372,7 @@
 
                 <br><br><br>
 
-                <h1 class="agency-line-4"><span class="bold"> EXPLORE</span> MY WORK </span>.</h1>
+                <h1 class="agency-line-4"><span class="bold"> EXPLORE</span> MY WORK.</span></h1>
 
 
 
@@ -21901,6 +21991,7 @@
                                             <h3 class="paragraph-title">WHAT IS IXLSTUDIO</h3>
 
                                             <p class="scroll-text">
+                                                IXLSTUDIO is my professional corner, a space dedicated to sharing work and connecting with passionate people.
 
                                                 
         
@@ -21917,11 +22008,9 @@
 
         
 
-                                    <div class="content-section-experience">
+                                <div class="content-section-experience">
 
-        
-
-                                        <div class="expandable-content expanded" id="experience-content">
+                                    <div class="expandable-content expanded" id="experience-content">
 
         
 
@@ -22038,8 +22127,6 @@
         
 
                                 <div class="content-section-education">
-
-        
 
                                     <div class="expandable-content expanded" id="education-content">
 
@@ -26526,6 +26613,30 @@
 
                 cursor.style.top = cursorY + 'px';
 
+                // Check if mouse is over about section and hide cursor
+
+                const aboutSection = document.querySelector('.about-section');
+
+                if (aboutSection) {
+
+                    const rect = aboutSection.getBoundingClientRect();
+
+                    const isInAboutSection = mouseX >= rect.left && mouseX <= rect.right && 
+
+                                           mouseY >= rect.top && mouseY <= rect.bottom;
+
+                    if (isInAboutSection) {
+
+                        cursor.style.display = 'none';
+
+                    } else {
+
+                        cursor.style.display = 'block';
+
+                    }
+
+                }
+
                 
 
                 requestAnimationFrame(animateCursor);
@@ -26538,7 +26649,7 @@
 
             // Hover effects
 
-            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button, .hero-project-card, .hero-explore-button');
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button, .hero-project-card, .hero-explore-button, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow');
 
             
 
