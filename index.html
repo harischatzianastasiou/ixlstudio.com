@@ -198,6 +198,18 @@
 
         }
 
+        /* Hide custom cursor on mobile devices */
+
+        @media (max-width: 768px), (hover: none) {
+
+            .custom-cursor {
+
+                display: none !important;
+
+            }
+
+        }
+
         /* Show default cursor in about section - override global cursor none */
 
         .about-section,
@@ -22273,6 +22285,7 @@
 
 
 
+
                     <p class="section-subtitle">  Blog and software articles.
 
 
@@ -23621,7 +23634,11 @@
 
                 const skillWords = document.querySelectorAll('.skill-word'); // Get all skill words
 
-
+                // Check if skill words exist before proceeding
+                if (skillWords.length === 0) {
+                    console.warn('No skill words found, skipping skills animation');
+                    return;
+                }
 
                 let currentWordIndex = 0; // Track which word is currently active
 
@@ -23665,7 +23682,11 @@
 
                     const currentWord = skillWords[currentWordIndex];
 
-
+                    // Safety check to ensure currentWord exists
+                    if (!currentWord) {
+                        console.warn('Current skill word not found at index:', currentWordIndex);
+                        return;
+                    }
 
                     currentWord.classList.add('active'); // Make current word active
 
@@ -25245,7 +25266,11 @@
 
             const servicesGrid = document.querySelector('.services-grid');
 
-
+            // Check if servicesGrid exists before proceeding
+            if (!servicesGrid) {
+                console.warn('Services grid element not found, skipping animations');
+                return;
+            }
 
             const serviceCards = document.querySelectorAll('.service-card');
 
@@ -26578,6 +26603,24 @@
             const cursor = document.querySelector('.custom-cursor');
 
             if (!cursor) return;
+
+            // Check if device is mobile - disable custom cursor on mobile devices
+
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+
+                            window.innerWidth <= 768 || 
+
+                            ('ontouchstart' in window);
+
+            if (isMobile) {
+
+                // Hide cursor element on mobile devices
+
+                cursor.style.display = 'none';
+
+                return; // Exit function early on mobile devices
+
+            }
 
 
 
