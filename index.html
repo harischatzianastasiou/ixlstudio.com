@@ -5219,7 +5219,6 @@
             background-size: cover; /* Ensure image covers entire section */
             background-position: center; /* Center the background image */
             background-repeat: no-repeat; /* Prevent image repetition */
-            background-attachment: fixed; /* Prevent zoom on mobile scroll */
             
             /* Layout properties */
             display: flex; /* Use flexbox for content alignment */
@@ -5720,11 +5719,6 @@
                 height: 100vh; /* Full viewport height on mobile too */
 
                 justify-content: flex-start; /* Keep left alignment on mobile */
-                
-                /* Fix mobile background zoom issue */
-                background-attachment: scroll !important; /* Prevent zoom on mobile */
-                background-size: cover !important; /* Ensure consistent sizing */
-                background-position: center center !important; /* Keep centered */
 
                 align-items: flex-start; /* Align to top on mobile too */
 
@@ -6815,10 +6809,6 @@
 
 
                 text-align: center !important; /* Center align on mobile */
-                
-                margin-bottom: 2rem !important; /* Add bottom margin to prevent overlap */
-                
-                padding-bottom: 1rem !important; /* Add padding for better spacing */
 
 
 
@@ -19709,11 +19699,11 @@
 
 
 
-            /* Optimize scrolling performance for mobile */
+            /* Optimize scrolling performance */
 
 
 
-            html, body {
+            body {
 
 
 
@@ -19722,82 +19712,6 @@
 
 
                 scroll-behavior: smooth;
-
-
-
-                /* Prevent scroll bounce and improve performance */
-
-
-
-                overscroll-behavior: none;
-
-
-
-                /* Optimize touch scrolling */
-
-
-
-                touch-action: pan-y;
-
-
-
-            }
-
-
-
-            
-
-            /* Disable problematic animations on mobile for smoother scrolling */
-
-
-
-            * {
-
-
-
-                /* Reduce motion for better performance */
-
-
-
-                animation-duration: 0.01ms !important;
-
-
-
-                animation-iteration-count: 1 !important;
-
-
-
-                transition-duration: 0.01ms !important;
-
-
-
-            }
-
-
-
-            
-
-            /* Keep only essential animations */
-
-
-
-            .page-loader,
-
-
-
-            .loader-logo,
-
-
-
-            .hero-shape-animation .shape {
-
-
-
-                animation-duration: unset !important;
-
-
-
-                animation-iteration-count: unset !important;
 
 
 
@@ -20325,7 +20239,7 @@
 
                 margin-bottom: 0.8rem;
 
-                margin-top: 0 !important; /* Remove negative margin on mobile to prevent overlap */
+                margin-top : -21rem !important;
 
 
 
@@ -22783,57 +22697,11 @@
 
 
 
-            syncInterval: 16, // Sync to 60fps
-
-
-
-            // Mobile-specific optimizations
-
-
-
-            ignoreMobileResize: true, // Ignore mobile resize events
-
-
-
-            autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" // Limit refresh events
+            syncInterval: 16 // Sync to 60fps
 
 
 
         });
-
-
-
-        
-
-        // Mobile-specific ScrollTrigger optimizations
-
-
-
-        if (window.innerWidth <= 768) {
-
-
-
-            // Disable ScrollTrigger on mobile for smoother scrolling
-
-
-
-            ScrollTrigger.config({
-
-
-
-                limitCallbacks: false, // Disable callbacks on mobile
-
-
-
-                syncInterval: 32 // Reduce to 30fps on mobile
-
-
-
-            });
-
-
-
-        }
 
 
 
@@ -26906,60 +26774,6 @@
         // Initialize page loader
 
         initPageLoader();
-
-        
-
-        // Mobile scroll optimization function
-
-        function optimizeMobileScrolling() {
-
-            if (window.innerWidth <= 768) {
-
-                // Disable all ScrollTrigger animations on mobile
-
-                ScrollTrigger.getAll().forEach(trigger => {
-
-                    trigger.disable();
-
-                });
-
-                
-
-                // Set all animated elements to their final state immediately
-
-                gsap.set('.fade-in, .slide-in-left, .slide-in-right, .scale-in', { 
-
-                    opacity: 1, 
-
-                    x: 0, 
-
-                    y: 0, 
-
-                    scale: 1 
-
-                });
-
-                
-
-                // Disable floating animations on mobile
-
-                gsap.set('.floating-element', { 
-
-                    animation: 'none' 
-
-                });
-
-            }
-
-        }
-
-        
-
-        // Run mobile optimization on load and resize
-
-        optimizeMobileScrolling();
-
-        window.addEventListener('resize', optimizeMobileScrolling);
 
 
 
