@@ -6035,11 +6035,18 @@
             line-height: 1.4 !important; /* Better line height for readability */
         }
 
-        /* Articles subtitle - "Here you can find my articles" */
+        /* Articles section - completely static, no animations */
+        .articles-section .section-header {
+            opacity: 1 !important; /* Instant visibility */
+            transform: translateY(0) !important; /* No transform */
+        }
+        
         .articles-section .section-subtitle {
             font-size: clamp(1.8rem, 5vw, 2.5rem) !important; /* Much bigger on all devices */
             line-height: 1.4 !important; /* Better line height for readability */
             font-weight: 400 !important; /* Slightly bolder for better presence */
+            opacity: 1 !important; /* Instant visibility - no animation lag */
+            transform: translateY(0) !important; /* No transform lag */
         }
 
         /* Target education and experience content within about section */
@@ -21225,6 +21232,22 @@
 
 
 
+        /* FINAL OVERRIDE: Articles section completely static - no animations whatsoever */
+        #articles .section-header,
+        #articles .section-subtitle,
+        #articles .section-title {
+            opacity: 1 !important;
+            transform: none !important;
+            animation: none !important;
+            transition: none !important;
+        }
+        
+        /* Override any GSAP transforms */
+        #articles .section-header * {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
     </style>
 
 
@@ -22260,7 +22283,7 @@
 
 
 
-                <div class="section-header fade-in">
+                <div class="section-header">
 
 
 
@@ -24210,7 +24233,7 @@
 
 
 
-        createSectionIntroAnimation('#articles', 'fade');
+        // createSectionIntroAnimation('#articles', 'fade'); // Removed - causing conflicts
 
 
 
@@ -24239,6 +24262,7 @@
 
 
             if (!section) return;
+
 
 
 
@@ -24434,7 +24458,7 @@
 
 
 
-                        duration: 0.8, // Reduced duration
+                        duration: 0.2, // Slower duration for more gradual effect
 
 
 
@@ -24442,7 +24466,7 @@
 
 
 
-                        delay: 0.4 // Reduced delay
+                        delay: 0.8 // Longer delay for slower appearance
 
 
 
@@ -24474,7 +24498,7 @@
 
 
 
-        createTitleAnimation('#articles');
+        // createTitleAnimation('#articles'); // Removed to eliminate lag - using CSS instead
 
 
 
