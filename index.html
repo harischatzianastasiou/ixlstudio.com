@@ -371,7 +371,7 @@
 
         /* Specific elements that should have custom cursor hover effects */
 
-        a, button, .project-card, .service-card, .article-card, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow, .nav-menu, .logo, .logo-container, .craft-button, .hero-project-card, .hero-explore-button {
+        a, button, .project-card, .service-card, .article-card, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow, .nav-menu, .logo, .logo-container, .craft-button, .hero-project-card, .hero-explore-button, .about-me-button {
 
             cursor: none !important;
 
@@ -1635,6 +1635,92 @@
         }
 
 
+
+        /* About Me Button styling - Big button under project windows */
+        .about-me-button-container {
+            display: flex; /* Flexbox for centering */
+            justify-content: center; /* Center the button horizontally */
+            align-items: center; /* Center the button vertically */
+            margin: 4rem 0; /* Add vertical spacing around the button */
+            padding: 0 2rem; /* Add horizontal padding for mobile */
+            position: relative; /* For positioning */
+            z-index: 10; /* Above other elements */
+        }
+
+        .about-me-button {
+            display: flex; /* Flexbox for button content layout */
+            align-items: center; /* Center content vertically */
+            gap: 1rem; /* Space between text and arrow */
+            padding: 1.5rem 3rem; /* Large padding for big button feel */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 1.0) 100%); /* White gradient background matching tunnel */
+            border: none; /* Remove default border */
+            border-radius: 50px; /* Rounded button shape */
+            color: #000000; /* Black text color for white background */
+            font-size: 1.2rem; /* Large font size */
+            font-weight: 600; /* Semi-bold font weight */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px; /* Spaced letters for modern look */
+            text-decoration: none; /* Remove underline from link */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: all 0.3s ease; /* Smooth transitions */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Subtle black shadow for depth */
+            position: relative; /* For hover effects */
+            overflow: hidden; /* Hide overflow for animations */
+        }
+
+        .about-me-button:hover {
+            transform: translateY(-3px); /* Lift button on hover */
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.9) 100%); /* Brighter white gradient on hover */
+            color: #000000; /* Keep black text on hover */
+            text-decoration: none; /* Remove underline on hover */
+        }
+
+        .about-me-button:active {
+            transform: translateY(-1px); /* Slight lift when pressed */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Reduced shadow when pressed */
+        }
+
+        .about-me-button .button-text {
+            position: relative; /* For text animations */
+            z-index: 2; /* Above background effects */
+        }
+
+        .about-me-button .button-arrow {
+            font-size: 1.4rem; /* Larger arrow */
+            transition: transform 0.3s ease; /* Smooth arrow animation */
+        }
+
+        .about-me-button:hover .button-arrow {
+            transform: translateX(5px); /* Move arrow right on hover */
+        }
+
+        /* Mobile responsive styles for About Me button */
+        @media (max-width: 768px) {
+            .about-me-button-container {
+                margin: 3rem 0; /* Reduced margin on mobile */
+                padding: 0 1rem; /* Less padding on mobile */
+            }
+
+            .about-me-button {
+                padding: 1.2rem 2.5rem; /* Smaller padding on mobile */
+                font-size: 1rem; /* Smaller font on mobile */
+                gap: 0.8rem; /* Smaller gap on mobile */
+            }
+
+            .about-me-button .button-arrow {
+                font-size: 1.2rem; /* Smaller arrow on mobile */
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .about-me-button {
+                padding: 1rem 2rem; /* Even smaller padding */
+                font-size: 0.9rem; /* Even smaller font */
+                gap: 0.6rem; /* Even smaller gap */
+            }
+        }
 
         /* Craft button styling */
 
@@ -10285,23 +10371,23 @@
 
 
 
-                rgba(100, 181, 246, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 0%,
 
 
 
-                rgba(255, 235, 59, 0.2) 30%,
+                rgba(255, 255, 255, 0.4) 30%,
 
 
 
-                rgba(156, 39, 176, 0.3) 60%,
+                rgba(255, 255, 255, 0.5) 60%,
 
 
 
-                rgba(244, 67, 54, 0.2) 90%,
+                rgba(255, 255, 255, 0.4) 90%,
 
 
 
-                rgba(255, 255, 255, 0.1) 100%);
+                rgba(255, 255, 255, 0.3) 100%);
 
 
 
@@ -21323,7 +21409,7 @@
 
                 <li><a href="#services" onclick="scrollToSection('about')">Projects</a></li>
 
-                <li><a href="#about" onclick="scrollToSection('home')">Profile</a></li>
+                <li><a href="about.html">About Me</a></li>
 
                 <li><a href="#articles" onclick="scrollToSection('articles')">Articles</a></li>
 
@@ -21498,7 +21584,7 @@
 
                         <!-- Tunnel Animation Elements -->
 
-        
+
 
                         <div class="tunnel-animation-container" id="tunnel-container">
 
@@ -21522,10 +21608,11 @@
 
                                 </div>
 
-        
+                                
 
                         </div>
 
+                        
          
 
                         <!-- Hero Section -->
@@ -21632,7 +21719,6 @@
 
                                         <p class="hero-project-category">Fullstack Dev</p>
 
-                                        <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
 
                                     </div>
 
@@ -21648,7 +21734,6 @@
 
                                         <p class="hero-project-category">Fullstack Dev</p>
 
-                                        <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
 
                                     </div>
 
@@ -21664,7 +21749,6 @@
 
                                         <p class="hero-project-category">Fullstack Dev</p>
 
-                                        <button class="hero-explore-button" onclick="event.stopPropagation(); handleHeroProjectClick(this);">EXPLORE</button>
 
                                     </div>
 
@@ -21676,6 +21760,8 @@
 
                     </div>
 
+                    <!-- About Me Button - Big button under project windows -->
+ 
         
 
                     
@@ -21734,487 +21820,17 @@
 
         
 
-            
+
+                <div class="about-me-button-container">
+                    <a href="about.html" class="about-me-button">
+                        <span class="button-text">About Me</span>
+                    </a>
+                </div>
 
                 </section>
 
 
 
-                   <!-- About Section - Profile and Title -->
-
-
-
-
-
-                   <section id="about" class="about-section">
-
-
-
-                    <!-- Floating decorative elements for about section - positioned to avoid content overlap -->
-
-
-
-                    <div class="floating-element geometric" style="top: 5%; left: 8%; transform: rotate(30deg); border-color: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element circle" style="top: 10%; right: 10%; border-color: rgba(255,255,255,0.05);"></div>
-
-        
-
-                    <div class="floating-element line" style="top: 18%; left: 88%; transform: rotate(-30deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
-
-
-
-                    <div class="floating-element geometric" style="top: 28%; left: 3%; transform: rotate(60deg); border-color: rgba(255,255,255,0.06);"></div>
-
-        
-
-                    <div class="floating-element circle" style="top: 38%; right: 5%; border-color: rgba(255,255,255,0.04);"></div>
-
-
-
-                    <div class="floating-element line" style="top: 48%; left: 92%; transform: rotate(45deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);"></div>
-
-
-
-                    <div class="floating-element geometric" style="top: 58%; left: 2%; transform: rotate(120deg); border-color: rgba(255,255,255,0.07);"></div>
-
-
-
-                    <div class="floating-element circle" style="top: 68%; right: 8%; border-color: rgba(255,255,255,0.03);"></div>
-
-
-
-                    <div class="floating-element line" style="top: 78%; left: 85%; transform: rotate(-60deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);"></div>
-
-
-
-                    <div class="floating-element geometric" style="top: 88%; left: 12%; transform: rotate(90deg); border-color: rgba(255,255,255,0.05);"></div>
-
-
-
-                    <div class="floating-element circle" style="bottom: 8%; right: 12%; border-color: rgba(255,255,255,0.04);"></div>
-
-
-
-                    <div class="floating-element line" style="bottom: 18%; left: 95%; transform: rotate(75deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);"></div>
-
-
-
-                    <div class="floating-element geometric" style="bottom: 28%; left: 5%; transform: rotate(150deg); border-color: rgba(255,255,255,0.06);"></div>
-
-
-
-                    <div class="floating-element circle" style="bottom: 38%; right: 3%; border-color: rgba(255,255,255,0.03);"></div>
-
-
-
-                    <div class="floating-element line" style="bottom: 48%; left: 90%; transform: rotate(-15deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
-
-
-
-                    <div class="floating-element triangle" style="top: 15%; left: 95%; border-bottom-color: rgba(255,255,255,0.06);"></div>
-
-
-
-                    <div class="floating-element diamond" style="top: 25%; right: 18%; border-color: rgba(255,255,255,0.05);"></div>
-
-            
-
-                    <div class="floating-element dot" style="top: 35%; left: 4%; background: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element triangle" style="top: 55%; right: 22%; transform: rotate(180deg); border-bottom-color: rgba(255,255,255,0.04);"></div>
-
-
-
-                    <div class="floating-element diamond" style="top: 65%; left: 90%; border-color: rgba(255,255,255,0.06);"></div>
-
-
-
-                    <div class="floating-element dot" style="top: 75%; right: 6%; background: rgba(255,255,255,0.05);"></div>
-
-
-
-                    <div class="floating-element triangle" style="bottom: 5%; left: 90%; transform: rotate(90deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-
-
-
-                    <div class="floating-element diamond" style="bottom: 15%; right: 22%; border-color: rgba(255,255,255,0.04);"></div>
-
-                    <div class="floating-element dot" style="bottom: 25%; left: 4%; background: rgba(255,255,255,0.06);"></div>
-
-                    <div class="floating-element triangle" style="bottom: 35%; right: 12%; transform: rotate(270deg); border-bottom-color: rgba(255,255,255,0.05);"></div>
-
-                    <div class="floating-element diamond" style="bottom: 45%; left: 94%; border-color: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element dot" style="bottom: 55%; right: 4%; background: rgba(255,255,255,0.04);"></div>
-
-                
-
-                    <div class="floating-element geometric" style="top: 8%; left: 15%; transform: rotate(15deg); border-color: rgba(255,255,255,0.09);"></div>
-
-
-
-                    <div class="floating-element circle" style="top: 20%; right: 25%; border-color: rgba(255,255,255,0.07);"></div>
-
-
-
-                    <div class="floating-element line" style="top: 30%; left: 78%; transform: rotate(20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
-
-
-
-                    <div class="floating-element triangle" style="top: 40%; left: 96%; border-bottom-color: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element diamond" style="top: 50%; right: 30%; border-color: rgba(255,255,255,0.06);"></div>
-
-
-
-                    <div class="floating-element dot" style="top: 60%; left: 10%; background: rgba(255,255,255,0.10);"></div>
-
-
-
-                    <div class="floating-element geometric" style="top: 70%; left: 82%; transform: rotate(105deg); border-color: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element circle" style="top: 80%; right: 35%; border-color: rgba(255,255,255,0.05);"></div>
-
-
-
-                    <div class="floating-element line" style="top: 90%; left: 70%; transform: rotate(-40deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.11), transparent);"></div>
-
-
-
-                    <div class="floating-element triangle" style="bottom: 10%; left: 20%; transform: rotate(120deg); border-bottom-color: rgba(255,255,255,0.09);"></div>
-
-                
-
-                    <div class="floating-element diamond" style="bottom: 20%; right: 40%; border-color: rgba(255,255,255,0.07);"></div>
-
-
-
-                    <div class="floating-element dot" style="bottom: 30%; left: 30%; background: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element geometric" style="bottom: 40%; left: 75%; transform: rotate(165deg); border-color: rgba(255,255,255,0.06);"></div>
-
-                   
-
-                    <div class="floating-element circle" style="bottom: 50%; right: 45%; border-color: rgba(255,255,255,0.09);"></div>
-
-
-
-                    <div class="floating-element line" style="bottom: 60%; left: 60%; transform: rotate(80deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);"></div>
-
-
-
-                    <div class="floating-element triangle" style="bottom: 70%; left: 40%; transform: rotate(300deg); border-bottom-color: rgba(255,255,255,0.07);"></div>
-
-
-
-                    <div class="floating-element diamond" style="bottom: 80%; right: 50%; border-color: rgba(255,255,255,0.08);"></div>
-
-
-
-                    <div class="floating-element dot" style="bottom: 90%; left: 50%; background: rgba(255,255,255,0.06);"></div>
-
-
-
-
-
-
-
-                    <div class="about-container">
-
-
-
-                        <!-- Section Header with Photo and Title -->
-
-
-
-                        <div class="section-header fade-in">
-
-
-
-                            <div class="about-header-content">
-
-
-
-                                <div class="profile-section fade-in">
-
-
-
-                                    <div class="profile-container">
-
-
-
-                                        <img src="1.jpg" alt="Haris Chatzianastasiou" class="profile-image">
-
-
-
-                                    </div>
-
-
-
-                        </div>
-
-
-
-                                <div class="about-header-text">
-
-        
-
-                                    <h2 class="section-title" id="who-am-i-title">GET TO KNOW ME</h2>
-
-        
-
-                                    <!-- Introduction Paragraph -->
-
-                                    <div class="about-paragraph">
-
-                                        <!-- <h3 class="paragraph-title">Who I am</h3> -->
-
-                                        <p class="scroll-text" id="scroll-text-1-intro">
-
-                                            My name is Haris Chatzianastasiou, and I am a software developer living in Thessaloniki, Greece. For the last 3 years I have been working in the IT industry and have been involved in large projects in the private and public sector. I am a holder of a Bachelor’s degree in Computer Science with Biomedical Informatics, and recently I began my Master’s degree in Artificial Intelligence.
-
-                                        </p>
-
-        
-
-
-
-                        </div>
-
-
-
-                                    <!-- Frontend Development Paragraph --> 
-
-                                    <div class="about-paragraph">
-
-                                        <h3 class="paragraph-title">EVERY PROJECT IS A UNIQUE STORY</h3>
-
-                                        <p class="scroll-text" id="scroll-text-1-frontend">
-
-                                            I believe that software, similar to any service, exists to address specific needs and achieve its intended purpose. For this, several factors must be considered. Data-driven products must work reliably, securely and be easily scalable to support future growth. The content that users see should be structured in a way that conveys the product's importance, expresses the brand's identity, and engages the user. Navigation flow should be intuitive, as a negative user experience can significantly lead to lost conversions and damage to brand reputation.
-                                            <p class="scroll-text">
-
-                                                The tasks described span the core concepts of software creation—backend and frontend development, along with UX design. As a fullstack developer, I view my work as a way to craft unique stories by connecting these disciplines.
-                                                Every finished product tells a story. Whether working on a large corporate project, bringing a brand's vision to life, or helping a local business build an online presence, at the center of each project are people ready to tell a story to the world, and I am more than happy to help them.
-        
-        
-
-                                            </p>
-
-                                            <h3 class="paragraph-title">WHAT IS IXLSTUDIO</h3>
-
-                                            <p class="scroll-text">
-                                                IXLSTUDIO is my professional corner, a space dedicated to sharing work and connecting with passionate people.
-
-                                                
-        
-
-                                            </p>
-
-        
-
-                                         
-
-                                                
-
-                                            
-
-        
-
-                                <div class="content-section-experience">
-
-                                    <div class="expandable-content expanded" id="experience-content">
-
-        
-
-                                            <div class="content-title">EMPLOYMENT EXPERIENCE</div>
-
-        
-
-                                            
-
-        
-
-                                            <!-- Current Role -->
-
-        
-
-                                            <div class="content-text experience-job-1">
-
-        
-
-                                                <p class="job-meta">Netcompany-Intrasoft | April 2024 – Current | Thessaloniki, Greece</p>
-
-        
-
-                                                
-
-        
-
-                                                <ul>
-
-        
-
-                                                    <li>Maintained Greece's <strong>National Justice</strong> Information System (OSDDY-PP), implementing the historic 2024 judicial reform.</li>
-
-        
-
-                                                    <li>Participated in the migration of Greek courts into OSDDY-PP, providing <strong>technical leadership</strong>.</li>
-
-        
-
-                                                    <li>Developed an electronic legal document filing system, designing services for judicial documents.</li>
-
-        
-
-                                                </ul>
-
-        
-
-                                            </div>
-
-        
-
-                                            
-
-        
-
-                                            <!-- Previous Role -->
-
-        
-
-                                            <div class="content-text experience-job-2">
-
-        
-
-                                                <p class="job-meta">Ernst & Young (EY) | August 2022 – April 2024 | Thessaloniki, Greece</p>
-
-        
-
-                                                
-
-        
-
-                                                <ul>
-
-        
-
-                                                    <li>Designed end-to-end claims payment system for a <strong>major</strong> UK <strong>financial</strong> institution's income protection product.</li>
-
-        
-
-                                                    <li>Managed core non-life insurance system for a <strong>global</strong> reinsurer.</li>
-
-        
-
-                                                    <li>Collaborated within a team distributed across <strong>five countries</strong> (UK, Greece, Scotland, Serbia, India), ensuring robust delivery through effective stakeholder communication.</li>
-
-        
-
-                                                </ul>
-
-        
-
-                                            </div>
-
-        
-
-                                        </div>
-
-        
-
-                                    </div>
-
-        
-
-                                    
-
-        
-
-                                </div>
-
-        
-
-        
-
-        
-
-                                <div class="content-section-education">
-
-                                    <div class="expandable-content expanded" id="education-content">
-
-        
-
-                                        <div class="content-title">
-
-                                            EDUCATION
-
-                                        </div>
-
-        
-
-                                        <div class="content-text">
-
-        
-
-                                            <strong>Master of Science in Artificial Intelligence</strong><br>
-
-        
-
-                                            European University of Cyprus, 2025 – Ongoing<br>
-
-        
-
-                                        </div>
-
-        
-
-                                        <div class="content-text">
-
-        
-
-                                            <strong>Bachelor of Science in Computer Science and Biomedical Informatics</strong><br>
-
-        
-
-                                            University of Thessaly, 2017-2022<br>
-
-        
-
-                                        </div>
-
-        
-
-                            </div>
-
-        
-
-                        </div>
-
-        
-
-                    </div>
-
-        
-
-                </div>
-
-        
-
-            </section>
 
 
 
@@ -26707,7 +26323,7 @@
 
             // Hover effects
 
-            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button, .hero-project-card, .hero-explore-button, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow');
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .service-card, .article-card, .craft-button, .hero-project-card, .hero-explore-button, .about-me-button, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow');
 
             
 
@@ -28533,7 +28149,7 @@
 
                 // Store the original text with <em> tags
 
-                const originalText = "From brand expression to technical execution.";
+                const originalText = "";
 
                 
 
