@@ -32,6 +32,8 @@
     <link rel="preload" as="image" href="hc.png">
     <link rel="preload" as="image" href="i.jpg">
     <link rel="preload" as="image" href="bnwthess1.jpg">
+    <link rel="preload" as="image" href="blockman.png">
+    <link rel="preload" as="image" href="lilith.png">
     <link rel="preload" as="image" href="3.jpg">
     <link rel="preload" as="image" href="1.jpg">
     <link rel="preload" as="image" href="22.jpg">
@@ -5619,6 +5621,8 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            /* Unify colors across agency images: slight desaturation + warm tint */
+            filter: saturate(0.82) sepia(0.1) contrast(1.03);
         }
         .agency-collage-base {
             width: 100%;
@@ -21806,9 +21810,9 @@
 
                 <li><a href="#agency" onclick="scrollToSection('agency')">Home</a></li>
 
-                <li><a href="#services" onclick="scrollToSection('about')">Projects</a></li>
+                <li><a href="#services" onclick="scrollToSection('about')">Stories</a></li>
 
-                <li><a href="#articles" onclick="scrollToSection('articles')">Articles</a></li>
+                <li><a href="#articles" onclick="scrollToSection('articles')">Blog</a></li>
 
                 <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
 
@@ -21883,11 +21887,11 @@
 
                 <p class="agency-tagline">IXL Studio</p>
 
-                <h1 class="agency-headline">Indie game dev</h1>
+                <h1 class="agency-headline">Create</h1>
 
-                <h1 class="agency-headline">& software engineer.</h1>
+                <h2 class="agency-headline">an atmospheric game</h1>
 
-                <p class="agency-description">Documenting everything along the way.</p>
+                <p class="agency-description">from scratch</p>
 
             </div>
 
@@ -21897,13 +21901,13 @@
 
                 <div class="agency-collage-side agency-collage-left">
 
-                    <div class="agency-collage-card agency-collage-base"><img src="22.jpg" alt=""></div>
+                    <div class="agency-collage-card agency-collage-base"><img src="blockman.png" alt=""></div>
 
                 </div>
 
                 <div class="agency-collage-side agency-collage-right">
 
-                    <div class="agency-collage-card agency-collage-base"><img src="bnwthess1.jpg" alt=""></div>
+                    <div class="agency-collage-card agency-collage-base"><img src="lilith.png" alt=""></div>
 
                 </div>
 
@@ -21917,11 +21921,11 @@
                 <!-- <h2 class="about-this-place-title">About IXL Studio</h2>
                 <p class="about-this-place-intro">Welcome to IXL Studio, a space dedicated to my journey as a solo game developer and professional software engineer.</p> -->
 
-                <h3 class="about-this-place-heading">A few words</h3>
+                <h3 class="about-this-place-heading">Follow my game dev journey</h3>
                 <div class="about-this-place-text">
-                    <p>My name is Haris. I’m a computer science graduate with four years of professional experience in the IT industry. Over the past few months, I’ve been exploring the possibility of creating my own game, diving into every aspect of the process, from art and music to game mechanics and narrative.</p>
-                    <p>Having recently begun taking my first steps in the Godot engine, I decided to create this place to share my creative journey with others. Here, you can expect to find discussions on game design, while also exploring software projects and insights on various topics of interest.</p>
-                    <p>Additionally, you cand visit my YouTube channel where I’ll be posting game development vlogs, sharing my thoughts and experiences along the way. My goal is to document every facet of the development process as I embark on this journey from scratch.</p>
+                    <p>Hello! I'm Haris, a software engineer and aspiring game creator. I’ve been playing games since childhood, and I've always liked the idea of creating a game that evokes emotions much like memorable films or music do.</p>
+                    <p>I decided to launch this space to document my journey as I attempt to start from scratch. I will share the entire process online, covering everything from game design choices to creating the art and programming the game. The goal is to provide educational value as I navigate the challenges I face along the way, so we can all learn together.</p>
+                    <p>If you’re interested, check out my YouTube channel below, or scroll down to read my blog.</p>
                 </div>
 
     
