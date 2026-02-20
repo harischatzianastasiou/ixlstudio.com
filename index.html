@@ -22,7 +22,11 @@
 
 
 
-    <link rel="icon" type="image/png" href="ixl.png">
+    <!-- Favicon: use square cropped version so logo reads clearly at small sizes -->
+    <link rel="icon" type="image/png" sizes="32x32" href="hcfavicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="hcfavicon.png">
+    <!-- Apple touch icon: used when saving to home screen -->
+    <link rel="apple-touch-icon" href="hcfavicon.png">
     
     <!-- Preload critical images for faster loading -->
     <link rel="preload" as="image" href="hc.png">
@@ -14966,6 +14970,7 @@
 
 
         .footer-logo {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Same as section titles */
             font-size: 1.5rem;
             font-weight: 800;
             color: #e4dcd2; /* Match site title color */
@@ -21909,8 +21914,8 @@
         <!-- About this place – personal intro + YouTube -->
         <section id="about-this-place" class="about-this-place-section">
             <div class="about-this-place-container">
-                <h2 class="about-this-place-title">About IXL Studio</h2>
-                <p class="about-this-place-intro">Welcome to IXL Studio, a space dedicated to my journey as a solo game developer and professional software engineer.</p>
+                <!-- <h2 class="about-this-place-title">About IXL Studio</h2>
+                <p class="about-this-place-intro">Welcome to IXL Studio, a space dedicated to my journey as a solo game developer and professional software engineer.</p> -->
 
                 <h3 class="about-this-place-heading">A few words</h3>
                 <div class="about-this-place-text">
