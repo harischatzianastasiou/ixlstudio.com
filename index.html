@@ -6196,7 +6196,7 @@
         /* Currently creating section – after agency */
         .currently-creating-section {
             position: relative;
-            padding: 5rem 2rem 6rem;
+            padding: 3rem 2rem 2rem;
             background: transparent;
             z-index: 2;
         }
@@ -10057,7 +10057,7 @@
 
 
 
-            padding: 4rem 4rem; /* Reduced top padding to decrease gap from about section */
+            padding: 2rem 4rem 4rem; /* Reduced top gap from currently creating section */
 
 
 
@@ -10250,7 +10250,7 @@
 
 
 
-            margin-bottom: 8rem; /* Increased spacing */
+            margin-bottom: 2rem; /* Reduced gap between title and content */
 
 
 
@@ -10269,7 +10269,7 @@
 
 
 
-            margin-bottom: 2rem; /* Increased spacing */
+            margin-bottom: 1rem; /* Reduced gap between title and content */
 
 
 
@@ -11916,7 +11916,7 @@
 
                 flex: 0 0 auto;
 
-                margin-bottom: 2rem; /* Add space between title and quote */
+                margin-bottom: 1rem; /* Reduced gap between title and quote */
 
             }
 
@@ -12214,7 +12214,7 @@
 
 
 
-            padding: 8rem 4rem;
+            padding: 2rem 4rem 6rem;
 
 
 
@@ -14463,7 +14463,7 @@
 
 
 
-            padding: 8rem 4rem;
+            padding: 3rem 4rem 4rem;
 
 
 
@@ -14772,7 +14772,7 @@
 
 
 
-            margin-top: 4rem;
+            margin-top: 1rem;
 
 
 
@@ -15052,7 +15052,7 @@
 
         .footer-logo {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Same as section titles */
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 800;
             color: #e4dcd2; /* Match site title color */
             margin-bottom: 1rem;
@@ -17199,7 +17199,7 @@
 
 
 
-                padding: 6rem 1.5rem; /* Adjusted padding for mobile */
+                padding: 1rem 1.5rem 4rem; /* Reduced top gap from project cards on mobile */
 
 
 
@@ -17679,51 +17679,72 @@
 
 
 
-            /* Article cards mobile optimization */
+            /* Article cards mobile optimization – more compact */
 
 
 
+            .articles-grid {
+                gap: 1rem;
+                max-width: 92%;
+                margin-left: auto;
+                margin-right: auto;
+            }
             .article-card {
 
 
 
-                min-height: 200px; /* Reduced height for mobile */
+                min-height: unset;
 
 
 
-                padding: 1.5rem;
+                padding: 0.75rem;
 
 
 
             }
-
-
-
-
-
-
-
+            .article-image {
+                height: 55px;
+                object-fit: cover;
+            }
+            .article-content {
+                padding: 0.6rem 0.75rem;
+            }
+            .article-tags {
+                margin-bottom: 0.4rem;
+                gap: 0.25rem;
+            }
+            .article-tags .article-category {
+                padding: 0.25rem 0.6rem;
+                font-size: 0.65rem;
+            }
+            .article-category-secondary {
+                margin-top: 0.2rem;
+            }
             .article-card h3 {
-
-
-
-                font-size: clamp(1.1rem, 3.5vw, 1.3rem);
-
-
-
+                font-size: clamp(0.95rem, 3vw, 1.15rem);
+                margin-bottom: 0.35rem;
             }
-
-
-
-
-
-
-
+            .article-card .article-excerpt {
+                margin-bottom: 0.4rem;
+                line-height: 1.35;
+            }
+            .article-card .article-meta {
+                margin-top: 0.25rem;
+                font-size: 0.75rem;
+            }
+            .article-card .article-read-time {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.7rem;
+            }
             .article-card p {
 
 
 
-                font-size: clamp(0.9rem, 3vw, 1rem);
+                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+
+
+
+                line-height: 1.4;
 
 
 
@@ -17811,6 +17832,10 @@
 
 
 
+            /* Hide Digital Stories title and Click to explore on mobile */
+            .hero-title { display: none !important; }
+            .hero-project-category { display: none !important; }
+
             /* Contact section mobile optimization */
 
 
@@ -17831,6 +17856,18 @@
 
 
 
+                max-width: 320px;
+
+
+
+                margin-left: auto;
+
+
+
+                margin-right: auto;
+
+
+
             }
 
 
@@ -17838,6 +17875,11 @@
 
 
 
+
+            .contact-icon {
+                width: 36px;
+                height: 36px;
+            }
 
             .contact-item {
 
@@ -17855,30 +17897,11 @@
 
 
 
-            .contact-item h3 {
-
-
-
-                font-size: clamp(1.1rem, 3.5vw, 1.3rem);
-
-
-
+            .contact-item .contact-label {
+                font-size: clamp(0.95rem, 3vw, 1.15rem);
             }
-
-
-
-
-
-
-
-            .contact-item p {
-
-
-
-                font-size: clamp(0.9rem, 3vw, 1rem);
-
-
-
+            .contact-item .contact-value {
+                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             }
 
 
@@ -17983,10 +18006,6 @@
 
 
 
-            .articles-section,
-
-
-
             .about-section {
 
 
@@ -17995,6 +18014,9 @@
 
 
 
+            }
+            .articles-section {
+                padding: 1rem 1rem 4rem; /* Minimal top gap from project cards on mobile */
             }
 
 
