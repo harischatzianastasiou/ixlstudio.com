@@ -149,6 +149,7 @@
         html {
             scroll-padding-top: var(--header-height);
             overflow-anchor: auto; /* Prevents layout jump when content loads during scroll */
+            overscroll-behavior-y: none; /* Prevents overscroll bounce at top/bottom on mobile */
         }
 
 
@@ -179,7 +180,7 @@
 
 
             -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-            overscroll-behavior-y: contain; /* Prevents rubber-band from shifting layout on mobile */
+            overscroll-behavior-y: none; /* Prevents overscroll bounce/zoom at top and bottom on mobile */
 
 
 
@@ -26831,14 +26832,12 @@
 
 
 
-        // Chrome/Brave fix: vertical wheel over main content always scrolls the page
+        // Chrome/Brave fix: vertical wheel over main content scrolls the page (grids capture wheel otherwise)
         (function() {
             document.addEventListener('wheel', function(e) {
                 var main = document.querySelector('.main-content');
                 if (!main || !main.contains(e.target)) return;
-                // Skip textarea/input/select so user can scroll inside form fields
                 if (e.target.closest && e.target.closest('textarea, [contenteditable="true"]')) return;
-                // Vertical scroll intent: ensure page scrolls (Chrome/Brave capture wheel on overflow-x elements)
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                     window.scrollBy(0, e.deltaY);
                     e.preventDefault();
