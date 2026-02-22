@@ -575,6 +575,24 @@
 
 
 
+        /* Mobile: fixed body + scroll wrapper keeps address bar visible (no zoom on scroll) */
+        @media (max-width: 768px) {
+            body {
+                position: fixed !important;
+                height: 100vh !important;
+                overflow: hidden !important;
+                width: 100%;
+            }
+            .page-scroll-wrapper {
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-y: none;
+            }
+        }
+
+
+
         
 
 
@@ -1636,11 +1654,11 @@
 
 
 
-                height: 100vh; /* Fallback */
+                height: 100vh; /* Full viewport height on mobile */
 
-                height: 100svh; /* Stable - no jump when address bar shows/hides */
+                min-height: 100svh !important; /* Small viewport height for mobile browsers */
 
-                min-height: 100svh !important;
+                min-height: 100dvh !important; /* Dynamic viewport height for latest browsers */
 
 
 
@@ -5467,7 +5485,6 @@
 
         .agency-promo-section {
             height: 100vh;
-            height: 100svh; /* Stable height - no jump when mobile browser bar shows/hides */
             min-height: 400px;
             position: relative;
             overflow: hidden;
@@ -6289,7 +6306,7 @@
         @media (max-width: 768px) {
             .agency-promo-section {
                 height: 100vh;
-                height: 100svh; /* Stable - no jump when address bar shows/hides */
+                min-height: 100dvh;
                 min-height: 500px;
             }
             .agency-get-in-touch {
@@ -16927,9 +16944,7 @@
 
 
 
-                min-height: 100vh; /* Fallback */
-
-                min-height: 100svh; /* Stable when address bar shows/hides */
+                min-height: 100vh; /* Standard hero height */
 
 
 
@@ -19511,8 +19526,6 @@
 
             min-height: 100vh;
 
-            min-height: 100svh; /* Stable when address bar shows/hides */
-
 
 
             display: flex;
@@ -20508,9 +20521,7 @@
 
             .hero {
 
-                min-height: 100vh; /* Fallback */
-
-                min-height: 100svh; /* Stable when address bar shows/hides */
+                min-height: 100vh; /* Standard hero height */
 
             }
 
@@ -20680,8 +20691,6 @@
 
 
             min-height: 100vh;
-
-            min-height: 100svh; /* Stable when address bar shows/hides */
 
 
 
@@ -21826,8 +21835,9 @@
 
 
 
+    <!-- Scroll container: keeps address bar visible on mobile (fixed body + overflow-y scroll) -->
+    <div class="page-scroll-wrapper">
     <!-- Main Content -->
-
     <main class="main-content">
 
         <!-- Hero / Create & Expression Section (Hazelight-style) -->
@@ -22527,8 +22537,7 @@
 
 
     </footer>
-
-
+    </div><!-- /page-scroll-wrapper -->
 
 
 
@@ -22544,11 +22553,28 @@
 
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-
-
-
-
-
+        // Mobile: body fixed + scroll wrapper keeps address bar visible; use wrapper as scroll root
+        function getScrollRoot() {
+            var w = document.querySelector('.page-scroll-wrapper');
+            if (w && getComputedStyle(document.body).position === 'fixed') return w;
+            return null;
+        }
+        function getScrollY() {
+            var r = getScrollRoot();
+            return r ? r.scrollTop : window.scrollY;
+        }
+        function scrollPageTo(y, opts) {
+            var r = getScrollRoot();
+            if (r) r.scrollTo({ top: y, ...(opts || {}) });
+            else window.scrollTo({ top: y, ...(opts || {}) });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var r = getScrollRoot();
+            if (r) {
+                ScrollTrigger.config({ scroller: r });
+                r.addEventListener('scroll', function() { window.dispatchEvent(new Event('scroll')); }, { passive: true });
+            }
+        });
 
         // Performance optimization: Set GSAP defaults for better performance
 
@@ -22662,7 +22688,7 @@
             function fixScrollVisibilityOnLoad() {
                 const sections = ['home', 'services', 'projects', 'articles', 'about', 'contact'];
                 const windowHeight = window.innerHeight;
-                const scrollY = window.scrollY;
+                const scrollY = getScrollY();
                 
                 // First, make sure hero section elements are visible if we're at the top
                 if (scrollY < windowHeight) {
@@ -26848,7 +26874,8 @@
                 if (!main || !main.contains(e.target)) return;
                 if (e.target.closest && e.target.closest('textarea, [contenteditable="true"]')) return;
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                    window.scrollBy(0, e.deltaY);
+                    var r = getScrollRoot();
+                    if (r) r.scrollTop += e.deltaY; else window.scrollBy(0, e.deltaY);
                     e.preventDefault();
                 }
             }, { capture: true, passive: false });
@@ -27479,7 +27506,7 @@
                 const isIndex = path === '' || path === '/' || path.endsWith('index.html');
                 if (isIndex) {
                     e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    scrollPageTo(0, { behavior: 'smooth' });
                 }
             });
         })();
@@ -27500,7 +27527,7 @@
 
             window.addEventListener('scroll', () => {
 
-                const scrolled = window.pageYOffset;
+                const scrolled = getScrollY();
 
                 const rate = scrolled * -0.5;
 
@@ -29910,7 +29937,7 @@
 
 
 
-            const absoluteTop = section.getBoundingClientRect().top + window.pageYOffset; // absolute Y
+            const absoluteTop = section.getBoundingClientRect().top + getScrollY(); // absolute Y
 
 
 
@@ -29918,7 +29945,7 @@
 
 
 
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' }); // smooth scroll
+            scrollPageTo(targetPosition, { behavior: 'smooth' }); // smooth scroll
 
 
 
@@ -30886,7 +30913,7 @@
 
 
 
-                let lastScrollY = window.scrollY;
+                let lastScrollY = getScrollY();
 
 
 
@@ -31046,7 +31073,7 @@
 
 
 
-                    const scrollY = window.scrollY;
+                    const scrollY = getScrollY();
 
 
 
@@ -32274,7 +32301,7 @@
 
 
 
-            let lastScrollY = window.scrollY;
+            let lastScrollY = getScrollY();
 
 
 
@@ -32314,7 +32341,7 @@
 
 
 
-                const currentScrollY = window.scrollY;
+                const currentScrollY = getScrollY();
 
 
 
@@ -33366,7 +33393,7 @@
 
                 // Get the current scroll position and viewport dimensions
 
-                const scrollPosition = window.scrollY; // Current scroll position
+                const scrollPosition = getScrollY(); // Current scroll position
 
                 const viewportHeight = window.innerHeight; // Viewport height
 
@@ -33602,7 +33629,7 @@
 
             // Get current scroll position
 
-            const currentScrollY = window.scrollY; // Current vertical scroll position
+            const currentScrollY = getScrollY(); // Current vertical scroll position
 
             
 
@@ -33640,13 +33667,7 @@
 
             if (!nextSection) {
 
-                window.scrollTo({
-
-                    top: 0, // Scroll to top of page
-
-                    behavior: 'smooth' // Smooth scrolling animation
-
-                });
+                scrollPageTo(0, { behavior: 'smooth' });
 
                 // Hide indicator after scrolling to top
 
@@ -33698,7 +33719,7 @@
 
         let hasScrolledSignificantly = false; // Track if user has scrolled significantly
 
-        let initialScrollY = window.scrollY; // Store initial scroll position
+        let initialScrollY = getScrollY(); // Store initial scroll position
 
         
 
@@ -33706,7 +33727,7 @@
 
             const mobileIndicator = document.querySelector('.mobile-scroll-indicator'); // Get mobile indicator element
 
-            const currentScrollY = window.scrollY; // Get current scroll position
+            const currentScrollY = getScrollY(); // Get current scroll position
 
             const scrollDistance = Math.abs(currentScrollY - initialScrollY); // Calculate scroll distance
 
