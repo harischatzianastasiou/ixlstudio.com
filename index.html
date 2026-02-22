@@ -39,7 +39,7 @@
     <link rel="preload" as="image" href="22.jpg">
     <link rel="preload" as="image" href="22.jpg">
     <link rel="preload" as="image" href="black1.jpg">
-    <link rel="preload" as="image" href="black2.jpg">
+    <link rel="preload" as="image" href="inbetween.jpg">
     <link rel="preload" as="image" href="black3.jpg">
 
 
@@ -83,6 +83,9 @@
     <style>
 
 
+
+        /* Prevent browser dark mode from overriding our colors (burger, nav, etc.) */
+        html { color-scheme: light; }
 
         /* Reset and base styles */
 
@@ -371,15 +374,8 @@
 
 
 
-        /* Digital Stories area: use same custom cursor as rest of page (no pointer), no drag */
+        /* Digital Stories area: default cursor (custom cursor removed) */
 
-        .hero-content,
-
-        .hero-content * {
-
-            cursor: none !important;
-
-        }
 
 
 
@@ -515,17 +511,11 @@
         }
 
 
-        /* Hide default cursor on ALL elements to show custom cursor */
+        /* Only hide system cursor when drag cursor is active (over projects) */
 
-        * {
+        html.drag-cursor-active,
 
-            cursor: none !important;
-
-        }
-
-        /* Specific elements that should have custom cursor hover effects */
-
-        a, button, .project-card, .service-card, .article-card, .expandable-header, .content-title, .about-paragraph, .services-container, .about-container, .section-header, .section-title, .section-subtitle, .paragraph-title, .scroll-text, .scroll-arrow, .mobile-scroll-indicator, .mobile-scroll-arrow, .nav-menu, .logo, .logo-container, .craft-button, .hero-project-card, .hero-explore-button, .about-me-button {
+        html.drag-cursor-active * {
 
             cursor: none !important;
 
@@ -988,7 +978,7 @@
 
 
 
-            color: #ffffff;
+            color: #ffffff !important;
 
 
 
@@ -1165,9 +1155,6 @@
 
 
         .mobile-menu-btn span {
-
-
-
             width: 100%;
 
 
@@ -1176,7 +1163,7 @@
 
 
 
-            background: #ffffff;
+            background: #ffffff !important;
 
 
 
@@ -2822,9 +2809,9 @@
 
         }
 
-        /* 22.jpg on first card: make it much darker */
+        /* Skgchess card: lighter filter so image shows through more */
         .hero-project-card[data-project="skg-chess"] .hero-project-image {
-            filter: brightness(0.25) contrast(1.15);
+            filter: brightness(0.65) contrast(1.1);
         }
 
         .hero-project-card:hover .hero-project-image {
@@ -5574,6 +5561,20 @@
             margin-left: auto;
             margin-right: auto;
         }
+        /* CTA link to YouTube – placed after agency-description */
+        .agency-cta {
+            display: inline-block;
+            margin-top: 1.25rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            font-weight: 500;
+            color: #8a53f7;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .agency-cta:hover {
+            color: #b794f6;
+        }
 
         /* Image stacks: left and right columns, each with base card + overlapping peek card */
         .agency-collage {
@@ -6190,6 +6191,62 @@
         }
         .about-this-place-channel-link:hover {
             color: #b794f6;
+        }
+
+        /* Currently creating section – after agency */
+        .currently-creating-section {
+            position: relative;
+            padding: 5rem 2rem 6rem;
+            background: transparent;
+            z-index: 2;
+        }
+        .currently-creating-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .currently-creating-tagline {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #B0B0B0;
+            margin-bottom: 0.6rem;
+        }
+        .currently-creating-title {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: #e4dcd2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .currently-creating-desc {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: clamp(1rem, 1.3vw, 1.2rem);
+            line-height: 1.7;
+            color: #D0D0D0;
+            margin-bottom: 2rem;
+        }
+        .currently-creating-cta {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            font-weight: 500;
+            color: #8a53f7;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.2s ease;
+        }
+        .currently-creating-cta:hover {
+            color: #b794f6;
+        }
+        .currently-creating-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
         @media (max-width: 768px) {
             .about-this-place-section {
@@ -12867,6 +12924,26 @@
 
 
 
+        .article-tags {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-tags .article-category {
+            margin-bottom: 0;
+        }
+        .article-category-secondary {
+            display: inline-block;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.7rem;
+        }
+        .article-category-secondary:empty {
+            display: none;
+        }
         .article-category::before {
 
 
@@ -21709,6 +21786,10 @@
         }
 
         /* Digital Stories, Blog, Articles: titles use #e4dcd2 (override gradient-text) */
+        .hero-title,
+        .hero-content {
+            opacity: 1 !important; /* Full opacity for Digital Stories */
+        }
         .hero-title {
             color: #e4dcd2 !important;
         }
@@ -21810,7 +21891,7 @@
 
                 <li><a href="#agency" onclick="scrollToSection('agency')">Home</a></li>
 
-                <li><a href="#services" onclick="scrollToSection('about')">Stories</a></li>
+                <li><a href="#services" onclick="scrollToSection('services')">Stories</a></li>
 
                 <li><a href="#articles" onclick="scrollToSection('articles')">Blog</a></li>
 
@@ -21885,13 +21966,13 @@
 
             <div class="agency-center">
 
-                <p class="agency-tagline">IXL Studio</p>
+                <p class="agency-tagline">Indie Game Developer and software engineer</p>
 
-                <h1 class="agency-headline">Create</h1>
-
-                <h2 class="agency-headline">an atmospheric game</h1>
-
-                <p class="agency-description">from scratch</p>
+                <h1 class="agency-headline">A personal attempt</h1>
+                <!-- 
+                                <h2 class="agency-headline"></h1>
+                
+                                <p class="agency-description"></p> -->
 
             </div>
 
@@ -21915,32 +21996,15 @@
 
         </section>
 
-        <!-- About this place – personal intro + YouTube -->
-        <section id="about-this-place" class="about-this-place-section">
-            <div class="about-this-place-container">
-                <!-- <h2 class="about-this-place-title">About IXL Studio</h2>
-                <p class="about-this-place-intro">Welcome to IXL Studio, a space dedicated to my journey as a solo game developer and professional software engineer.</p> -->
-
-                <h3 class="about-this-place-heading">Follow my game dev journey</h3>
-                <div class="about-this-place-text">
-                    <p>Hello everyone! My name is Haris, and I'm an aspiring game creator. I’ve been playing games since childhood, and I've always liked the idea of creating a game that evokes emotions much like memorable films or music do.</p>
-                    <p>I decided to launch this space to document my journey as I attempt to start from scratch. I will share the entire process online, covering everything from game design choices to creating the art and programming the game. The goal is to provide educational value as I navigate the challenges I face along the way, so we can all learn together.</p>
-                    <p>If you’re interested, check out my YouTube channel below, or scroll down to read my blog.</p>
-                </div>
-
-    
-                <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="about-this-place-cta">Check it out</a>
-
-                <div class="about-this-place-youtube">
-                    <iframe
-                        id="about-place-youtube-embed"
-                        src="https://www.youtube-nocookie.com/embed/ko_cE3W5LCI?rel=0"
-                        title="YouTube video from my channel"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="about-this-place-channel-link">More on my channel →</a>
+        <!-- Currently creating section -->
+        <section id="currently-creating" class="currently-creating-section">
+            <div class="currently-creating-container">
+                <p class="currently-creating-tagline">Currently creating</p>
+                <h2 class="currently-creating-title">Project In Between</h2>
+                <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p>
+                <div class="currently-creating-links">
+                    <a href="inbetween.html" class="currently-creating-cta">Read more</a>
+                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="currently-creating-cta">Follow On YouTube</a>
                 </div>
             </div>
         </section>
@@ -22128,13 +22192,13 @@
 
                             <div class="hero-projects-grid">
 
-                                <div class="hero-project-card" data-project="skg-chess">
+                                <div class="hero-project-card" data-project="in-between">
 
-                                    <img src="22.jpg" alt="SKG Chess Project" class="hero-project-image">
+                                    <img src="inbetween.jpg" alt="In Between Project" class="hero-project-image">
 
                                     <div class="hero-project-overlay">
 
-                                        <h3 class="hero-project-title">Skgchess</h3>
+                                        <h3 class="hero-project-title">In Between</h3>
 
                                         <p class="hero-project-category">Click to explore</p>
 
@@ -22143,13 +22207,13 @@
 
                                 </div>
 
-                                <div class="hero-project-card" data-project="portfolio">
+                                <div class="hero-project-card" data-project="skg-chess">
 
-                                    <img src="black2.jpg" alt="Portfolio Project" class="hero-project-image">
+                                    <img src="22.jpg" alt="SKG Chess Project" class="hero-project-image">
 
                                     <div class="hero-project-overlay">
 
-                                        <h3 class="hero-project-title">Lilith</h3>
+                                        <h3 class="hero-project-title">Skgchess</h3>
 
                                         <p class="hero-project-category">Click to explore</p>
 
@@ -22338,22 +22402,6 @@
 
 
 
-                    <div class="pagination-info">
-
-
-
-                        <span class="current-page">01</span>
-
-
-
-                        <span class="total-pages">/ 05</span>
-
-
-
-                    </div>
-
-
-
                     <div class="pagination-controls">
 
 
@@ -22379,22 +22427,6 @@
 
 
                             <button class="page-number active" data-page="1">01</button>
-
-
-
-                            <button class="page-number" data-page="2">02</button>
-
-
-
-                            <button class="page-number" data-page="3">03</button>
-
-
-
-                            <button class="page-number" data-page="4">04</button>
-
-
-
-                            <button class="page-number" data-page="5">05</button>
 
 
 
@@ -22618,7 +22650,7 @@
 
 
 
-                Crafting digital stories that unite aesthetics and functionality. 
+                Crafting digital stories. 
 
 
 
@@ -27506,6 +27538,18 @@
 
                         }, 800); // Wait for animation duration
 
+                    } else if (card.getAttribute('data-project') === 'in-between') {
+
+                        console.log('In Between detected, redirecting to inbetween.html...'); // Debug log
+
+                        card.classList.add('clicking');
+
+                        setTimeout(() => {
+
+                            window.location.href = 'inbetween.html'; // Redirect to In Between page
+
+                        }, 800);
+
                     } else {
 
                         console.log('Other hero project detected, showing coming soon...'); // Debug log
@@ -27652,6 +27696,18 @@
 
                 }, 800); // Wait for animation duration
 
+            } else if (projectCard.getAttribute('data-project') === 'in-between') {
+
+                console.log('In Between button detected, redirecting to inbetween.html...'); // Debug log
+
+                projectCard.classList.add('clicking');
+
+                setTimeout(() => {
+
+                    window.location.href = 'inbetween.html';
+
+                }, 800);
+
             } else {
 
                 console.log('Other hero project button detected, showing coming soon...'); // Debug log
@@ -27726,13 +27782,13 @@
 
 
 
-            // Smooth cursor following animation
+            // Instant cursor following - no delay
 
             function animateCursor() {
 
-                cursorX += (mouseX - cursorX) * 0.15; // Faster following for better responsiveness
+                cursorX = mouseX; // Set directly for instant response (no cinematic lag)
 
-                cursorY += (mouseY - cursorY) * 0.15; // Faster following for better responsiveness
+                cursorY = mouseY; // Set directly for instant response (no cinematic lag)
 
                 
 
@@ -27792,79 +27848,39 @@
 
                 
 
-                // Hide custom cursor over Digital Stories so default cursor shows
+                // Only show drag cursor when over projects; hide everywhere else
 
-                const heroContentEl = document.querySelector('.hero-content');
+                const aboutSection = document.querySelector('.about-section');
 
-                const isOverDigitalStories = heroContentEl && (() => {
+                const isInAboutSection = aboutSection && (() => {
 
-                    const r = heroContentEl.getBoundingClientRect();
+                    const rect = aboutSection.getBoundingClientRect();
 
-                    return mouseX >= r.left && mouseX <= r.right && mouseY >= r.top && mouseY <= r.bottom;
+                    return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
 
                 })();
 
-                if (isOverDigitalStories) {
+                if (isOverProjects && !isInAboutSection) {
 
-                    cursor.classList.remove('drag'); // No drag cursor here
-
-                    cursor.textContent = ''; // No "Drag" text – show normal custom cursor
-
-                }
-
-                
-
-                // Show drag cursor when over projects (and not over Digital Stories)
-
-                if (isOverProjects) {
+                    document.documentElement.classList.add('drag-cursor-active'); // Hide system cursor
 
                     cursor.classList.add('drag'); // Add drag class
 
                     cursor.textContent = 'Drag'; // Set text content
 
-                    cursor.style.mixBlendMode = 'normal'; // Normal blend mode for drag cursor
+                    cursor.style.display = 'flex'; // Show drag cursor
 
-                    cursor.style.opacity = '1'; // Make cursor fully visible
+                    cursor.style.opacity = '1'; // Fully visible
 
                 } else {
+
+                    document.documentElement.classList.remove('drag-cursor-active'); // Restore system cursor
 
                     cursor.classList.remove('drag'); // Remove drag class
 
-                    cursor.textContent = ''; // Clear text content
+                    cursor.textContent = ''; // Clear text
 
-                    cursor.style.mixBlendMode = 'normal'; // Same look as drag – black + yellow only
-
-                    cursor.style.opacity = '0.8'; // Slightly transparent for normal cursor
-
-                }
-
-                
-
-                // Check if mouse is over about section and hide cursor
-
-                const aboutSection = document.querySelector('.about-section');
-
-                if (aboutSection) {
-
-                    const rect = aboutSection.getBoundingClientRect();
-
-                    const isInAboutSection = mouseX >= rect.left && mouseX <= rect.right && 
-
-                                           mouseY >= rect.top && mouseY <= rect.bottom;
-
-                    if (isInAboutSection) {
-
-                        cursor.style.display = 'none';
-
-                    } else {
-
-                        cursor.style.display = 'flex'; // Show custom cursor (including over Digital Stories)
-
-                    }
-
-                } else {
-
-                    cursor.style.display = 'flex';
+                    cursor.style.display = 'none'; // Hide – use system cursor everywhere else
 
                 }
 
@@ -29993,10 +30009,6 @@
 
 
 
-            // Page 1
-
-
-
             [
 
 
@@ -30005,111 +30017,31 @@
 
 
 
-                    image: "22.jpg",
+                    image: "retrochess2.jpg",
 
 
 
-                    alt: "Solo game development",
+                    alt: "Skgchess chess platform",
 
 
 
-                    category: "Game Dev",
+                    category: "Skgchess",
 
 
 
-                    title: "Why I Chose Godot for My First Game",
+                    secondaryTag: "Java",
 
 
 
-                    excerpt: "After comparing Unity, Unreal, and Godot, I decided to build my first project in Godot. Here's how the engine fits solo development and indie storytelling.",
+                    title: "Chess rules written in Java",
 
 
 
-                    date: "March 15, 2025",
+                    excerpt: "How can the beautiful and comlex game of chess be translated in code?",
 
 
 
-                    readTime: "5 min read"
-
-
-
-                },
-
-
-
-                {
-
-
-
-                    image: "bnwthess1.jpg",
-
-
-
-                    alt: "Game design concepts",
-
-
-
-                    category: "Game Design",
-
-
-
-                    title: "Core Loops and Why They Matter",
-
-
-
-                    excerpt: "A look at how core loops keep players engaged, with examples from games that do it well and how to design one for your own project.",
-
-
-
-                    date: "March 10, 2025",
-
-
-
-                    readTime: "7 min read"
-
-
-
-                }
-
-
-
-            ],
-
-
-
-            // Page 2
-
-
-
-            [
-
-
-
-                {
-
-
-
-                    image: "bnwthess1.jpg",
-
-
-
-                    alt: "Godot GDScript",
-
-
-
-                    category: "Godot",
-
-
-
-                    title: "GDScript vs C# in Godot 4: A Solo Dev's Take",
-
-
-
-                    excerpt: "Thoughts on choosing GDScript or C# for a Godot 4 project when you're building everything yourself—scripting, art, and design.",
-
-
-
-                    date: "March 5, 2025",
+                    date: "March 8, 2025",
 
 
 
@@ -30125,7 +30057,7 @@
 
 
 
-                    image: "22.jpg",
+                    image: "bnwthess1.jpg",
 
 
 
@@ -30133,7 +30065,11 @@
 
 
 
-                    category: "Game Dev",
+                    category: "Project In Between",
+
+
+
+                    secondaryTag: "3D Art",
 
 
 
@@ -30150,258 +30086,6 @@
 
 
                     readTime: "8 min read"
-
-
-
-                }
-
-
-
-            ],
-
-
-
-            // Page 3
-
-
-
-            [
-
-
-
-                {
-
-
-
-                    image: "22.jpg",
-
-
-
-                    alt: "Narrative in games",
-
-
-
-                    category: "Game Design",
-
-
-
-                    title: "Writing for Games: Story and Mechanics Together",
-
-
-
-                    excerpt: "How to weave narrative and mechanics so story and gameplay support each other, with practical tips for solo devs.",
-
-
-
-                    date: "February 25, 2025",
-
-
-
-                    readTime: "6 min read"
-
-
-
-                },
-
-
-
-                {
-
-
-
-                    image: "bnwthess1.jpg",
-
-
-
-                    alt: "Godot signals and architecture",
-
-
-
-                    category: "Godot",
-
-
-
-                    title: "Godot Signals and Scene Structure for Clean Code",
-
-
-
-                    excerpt: "How to use signals and scene composition in Godot to keep your project organized and maintainable as a solo developer.",
-
-
-
-                    date: "February 20, 2025",
-
-
-
-                    readTime: "9 min read"
-
-
-
-                }
-
-
-
-            ],
-
-
-
-            // Page 4
-
-
-
-            [
-
-
-
-                {
-
-
-
-                    image: "22.jpg",
-
-
-
-                    alt: "Godot 4 2D and 3D",
-
-
-
-                    category: "Godot",
-
-
-
-                    title: "Godot 4: 2D vs 3D and Picking a Project Scope",
-
-
-
-                    excerpt: "Thoughts on choosing 2D or 3D for your first Godot game and how to keep scope manageable as a solo dev.",
-
-
-
-                    date: "February 15, 2025",
-
-
-
-                    readTime: "7 min read"
-
-
-
-                },
-
-
-
-                {
-
-
-
-                    image: "bnwthess1.jpg",
-
-
-
-                    alt: "Color and mood in games",
-
-
-
-                    category: "Art",
-
-
-
-                    title: "Color Theory and Mood in Game Art",
-
-
-
-                    excerpt: "Using color and lighting to set mood and guide the player's eye in your game's environments and UI.",
-
-
-
-                    date: "February 10, 2025",
-
-
-
-                    readTime: "5 min read"
-
-
-
-                }
-
-
-
-            ],
-
-
-
-            // Page 5
-
-
-
-            [
-
-
-
-                {
-
-
-
-                    image: "bnwthess1.jpg",
-
-
-
-                    alt: "Solo dev workflow",
-
-
-
-                    category: "Game Dev",
-
-
-
-                    title: "Solo Game Dev Workflow: Planning, Sprints, and Avoiding Burnout",
-
-
-
-                    excerpt: "How I structure my time and tasks when building a game alone—planning, small milestones, and keeping momentum.",
-
-
-
-                    date: "February 5, 2025",
-
-
-
-                    readTime: "10 min read"
-
-
-
-                },
-
-
-
-                {
-
-
-
-                    image: "22.jpg",
-
-
-
-                    alt: "Game engines comparison",
-
-
-
-                    category: "Game Dev",
-
-
-
-                    title: "Godot vs Unity vs Unreal: Picking an Engine as a Solo Dev",
-
-
-
-                    excerpt: "A practical comparison of Godot, Unity, and Unreal for indie and solo developers—learning curve, workflow, and when each fits.",
-
-
-
-                    date: "February 1, 2025",
-
-
-
-                    readTime: "12 min read"
 
 
 
@@ -30589,7 +30273,7 @@
 
 
 
-                        <span class="article-category">${article.category}</span>
+                        <div class="article-tags"><span class="article-category">${article.category}</span><span class="article-category article-category-secondary">${article.secondaryTag || ''}</span></div>
 
 
 
@@ -30685,7 +30369,7 @@
 
 
 
-                this.currentPageSpan.textContent = String(this.currentPage).padStart(2, '0');
+                if (this.currentPageSpan) this.currentPageSpan.textContent = String(this.currentPage).padStart(2, '0');
 
 
 

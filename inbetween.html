@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IXLSTUDIO Projects - Skgchess</title>
+    <title>IXLSTUDIO Projects - In Between</title>
     <link rel="icon" type="image/png" href="ixl.png">
     <!-- Google Fonts: DM Sans for headline (matches index agency section) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     
     <!-- Preload critical images and video -->
-    <link rel="preload" as="image" href="22.jpg">
+    <link rel="preload" as="image" href="inbetween.jpg">
     <style>
         /* Prevent browser dark mode from overriding nav/colors */
         html { color-scheme: light; }
@@ -31,7 +31,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Header: black background, white text (matches index) */
+        /* Header: black background, white text (matches user request) */
         .header {
             position: fixed;
             top: 0;
@@ -174,15 +174,6 @@
         .project-description p {
             margin-bottom: 1.5rem;
         }
-        .project-description ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            color: #e4dcd2;
-        }
-        .project-description li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
 
         .project-info {
             background: rgba(255, 255, 255, 0.08);
@@ -224,7 +215,18 @@
             color: #fff;
         }
 
-        /* Visit Website button */
+        /* CTA buttons: side by side (Go to Blog + Watch on YouTube) */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .cta-buttons .visit-website-btn {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        /* Visit landing page / CTA buttons - visible on dark/video background */
         .visit-website-btn {
             display: inline-block;
             background: rgba(255, 255, 255, 0.15);
@@ -238,6 +240,8 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             margin-top: 1rem;
+            margin-left: auto;
+            margin-right: auto;
             border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
@@ -247,6 +251,17 @@
             border-color: rgba(255, 255, 255, 0.8);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        /* YouTube button: same colors as main button (matches skgchess visit-website-btn) */
+        .cta-youtube {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #e4dcd2;
+        }
+        .cta-youtube:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.8);
         }
 
         /* Full-page video background (matches index.html) */
@@ -460,11 +475,11 @@
 
     <!-- Hero section -->
     <section class="hero">
-        <img src="22.jpg" alt="SKG CHESS" class="hero-image">
+        <img src="inbetween.jpg" alt="In Between Project" class="hero-image">
         <div class="hero-overlay"></div>
         <div class="hero-content hero-agency-format">
-            <p class="hero-tagline">Skgchess</p>
-            <h1 class="hero-headline">A chess platform with retro aesthetics</h1>
+            <p class="hero-tagline">Project</p>
+            <h1 class="hero-headline">In Between</h1>
         </div>
         <a href="index.html#services" class="back-button">← Back to Projects</a>
     </section>
@@ -473,29 +488,25 @@
     <section class="project-details">
         <div class="details-grid">
             <div class="project-description">
-                <p>SKG Chess is a multiplayer-only chess platform featuring:</p>
-                <ul>
-                    <li>Historic photos of the city of Thessaloniki</li>
-                    <li>Custom chess engine</li>
-                    <li>Full game history tracking</li>
-                    <li>All popular time controls (Rapid, Blitz, Classical)</li>
-                    <li>Real-time invitation system</li>
-                    <li>Integrated in-game chat</li>
-                    <li>Classical music in the background</li>
-                    <li>Inspirational chess quotes</li>
-                    <li>Three selectable board themes</li>
-                </ul>
-                <p>It is available in both Greek and English.</p>
-                <p><strong>Background Story</strong></p>
-                <p>In November 2024, I started creating a chess game in Java by following the video tutorials of <a href="https://www.youtube.com/@amir650" target="_blank" rel="noopener noreferrer">Software Architecture & Design</a> on YouTube, as a way to expand my knowledge in my work as a software engineer.</p>
-                <p>Along the way, the project evolved into something much bigger and more personal, driven by my love for chess and my need for creative expression.</p>
-                <p>In October 2025, I completed SKG Chess and released it publicly.</p>
-                <a href="https://skgchess.com" class="visit-website-btn" target="_blank">Visit Project</a>
+                <p>Project In Between is my personal attempt to create a game that evokes emotion. It exists for a few reasons.</p>
+                <p>First, it's a way to explore meaning, express myself, and translate feelings into something playable.</p>
+                <p>Second, it’s about trying to make a genuinely good game. Learning the disciplines of game design, sound, art, storytelling, and world-building within the limits of what a single person can create.</p>
+                <p>Finally, it's about sharing the process publicly, starting from where I am now — at the very beginning.</p>
+                <p>My goal is to document my progress so there will be a transparent record of how someone starts from the early formation of an idea and moves, step by step, toward producing something that fulfills its intent.</p>
+                <p>Stay tuned here to follow the project, or subscribe to my YouTube channel where I will upload weekly devlogs.</p>
+                <div class="cta-buttons">
+                    <a href="index.html#articles" class="visit-website-btn">Go to Blog</a>
+                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="visit-website-btn cta-youtube">Watch on YouTube</a>
+                </div>
             </div>
             <div class="project-info">
                 <div class="info-item">
                     <div class="info-label">Status</div>
-                    <div class="info-value">Live on the web</div>
+                    <div class="info-value">In Development</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Follow Along</div>
+                    <div class="info-value">IXL Blog, IXL YouTube</div>
                 </div>
             </div>
         </div>
@@ -505,20 +516,12 @@
     <section class="large-photos">
         <div class="photo-container">
             <div class="photo-item">
-                <img src="retrochess2.jpg" alt="SKG CHESS Interface">
-                <div class="photo-caption">Main game interface with retro chess pieces</div>
+                <img src="blockman.png" alt="In Between Concept">
+                <div class="photo-caption">Early concept and exploration</div>
             </div>
             <div class="photo-item">
-                <img src="22.jpg" alt="SKG CHESS Mobile">
-                <div class="photo-caption">Mobile-responsive design for on-the-go play</div>
-            </div>
-            <div class="photo-item">
-                <img src="i.jpg" alt="SKG CHESS Analysis">
-                <div class="photo-caption">Advanced game analysis and move suggestions</div>
-            </div>
-            <div class="photo-item">
-                <img src="retrochess2.jpg" alt="SKG CHESS Tournament">
-                <div class="photo-caption">Tournament mode with leaderboards</div>
+                <img src="lilith.png" alt="In Between Development">
+                <div class="photo-caption">Project in progress</div>
             </div>
         </div>
     </section>
