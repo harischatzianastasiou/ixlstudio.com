@@ -17669,7 +17669,9 @@
 
 
 
-            /* Digital Stories removed; project windows keep project name and Click to explore */
+            /* Hide Digital Stories title and Click to explore on mobile */
+            .hero-title { display: none !important; }
+            .hero-project-category { display: none !important; }
 
             /* Contact section mobile optimization */
 
@@ -22031,6 +22033,22 @@
         
 
                     
+
+        
+
+                    <div class="hero-content">
+
+        
+
+                        <!-- IXL Logo - positioned above the title for visual hierarchy -->
+
+        
+
+                        <h1 class="hero-title">Digital Stories<span class="hero-dot">.</span></h1>
+
+        
+
+                    </div>
 
         
 
@@ -26828,23 +26846,6 @@
         // Initialize hero projects drag functionality
 
         initHeroProjectsDrag();
-
-
-
-        // Chrome/Brave fix: vertical wheel over main content always scrolls the page
-        (function() {
-            document.addEventListener('wheel', function(e) {
-                var main = document.querySelector('.main-content');
-                if (!main || !main.contains(e.target)) return;
-                // Skip textarea/input/select so user can scroll inside form fields
-                if (e.target.closest && e.target.closest('textarea, [contenteditable="true"]')) return;
-                // Vertical scroll intent: ensure page scrolls (Chrome/Brave capture wheel on overflow-x elements)
-                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                    window.scrollBy(0, e.deltaY);
-                    e.preventDefault();
-                }
-            }, { capture: true, passive: false });
-        })();
 
 
 
