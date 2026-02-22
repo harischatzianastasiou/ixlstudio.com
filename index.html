@@ -5499,7 +5499,7 @@
             z-index: 1;
         }
 
-        /* Vertical "Get in touch" on the left – ref style */
+        /* Vertical "Follow on YouTube" on the left – ref style */
         .agency-get-in-touch {
             position: absolute;
             left: 1.5rem;
@@ -6249,6 +6249,9 @@
             margin-top: 1rem;
         }
         @media (max-width: 768px) {
+            .currently-creating-section {
+                padding-bottom: 1rem;
+            }
             .about-this-place-section {
                 padding: 3rem 1.25rem 4rem;
             }
@@ -6298,12 +6301,12 @@
                 top: 48%;
             }
             .agency-tagline {
-                font-size: 0.85rem;
-                margin-bottom: 0.35rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
             }
             .agency-headline {
-                font-size: clamp(1.75rem, 7vw, 2.75rem);
-                line-height: 1.15;
+                font-size: clamp(2rem, 8vw, 3rem);
+                line-height: 1.12;
                 margin-bottom: 1rem;
             }
             .agency-description {
@@ -6441,8 +6444,11 @@
                 max-width: 96%;
                 top: 46%;
             }
+            .agency-tagline {
+                font-size: 0.85rem;
+            }
             .agency-headline {
-                font-size: clamp(1.5rem, 6.5vw, 2.25rem);
+                font-size: clamp(1.9rem, 7.5vw, 2.5rem);
             }
             .agency-description {
                 font-size: 0.8125rem;
@@ -17231,10 +17237,10 @@
 
 
 
-                padding: 2rem 1.5rem; /* Reduced top padding to decrease gap from about section on mobile */
-
-
-
+                padding: 0.5rem 1.5rem 2rem; /* Minimal top gap from currently creating on mobile */
+            }
+            .services-section .section-header {
+                margin-bottom: 0.75rem;
             }
 
 
@@ -21980,9 +21986,9 @@
 
         <section id="agency" class="agency-promo-section">
 
-            <!-- Vertical "Get in touch" on the left -->
+            <!-- Vertical "Follow on YouTube" on the left -->
 
-            <a href="#contact" class="agency-get-in-touch">Get in touch</a>
+            <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="agency-get-in-touch">Follow on YouTube</a>
 
             <!-- Central content: tagline, headline, description -->
 
