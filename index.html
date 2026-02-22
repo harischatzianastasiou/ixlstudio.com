@@ -3017,13 +3017,19 @@
 
                 display: flex; /* Show projects window on tablets */
 
+                padding: 0 2rem; /* Nice gaps on left and right */
+
+                box-sizing: border-box;
+
             }
 
 
 
             .hero-projects-container {
 
-                width: 85%; /* Slightly less width on tablets */
+                width: 100%; /* Fill within padded area */
+
+                max-width: 900px; /* Constrain for visible gaps */
 
                 height: 70%; /* More height on tablets */
 
@@ -3059,17 +3065,21 @@
 
                 display: flex; /* Show projects window on large screens */
 
+                padding: 0 4rem; /* Nice gaps on left and right for all screen sizes */
+
+                box-sizing: border-box; /* Include padding in width calculation */
+
             }
 
 
 
             .hero-projects-container {
 
-                width: 85%; /* Reduced from 90% - slightly smaller width on desktop */
+                width: 100%; /* Fill available space within padded window */
+
+                max-width: 1000px; /* Smaller max-width for better visibility and gaps */
 
                 height: 75%; /* Reduced from 80% - slightly smaller height on desktop */
-
-                max-width: 1150px; /* Reduced max-width proportionally */
 
             }
 
@@ -10179,7 +10189,7 @@
 
 
 
-            max-width: 1400px; /* Increased max-width for better layout */
+            max-width: 1200px; /* Match articles-container so All Projects & Blog align on the left */
 
 
 
@@ -10192,6 +10202,72 @@
 
 
             z-index: 1;
+
+
+
+        }
+
+
+
+        /* Left-align "All Projects" title and header in services section */
+
+
+
+        .services-section .section-header {
+
+
+
+            display: flex; /* Flexbox so align-items works */
+
+
+
+            flex-direction: column; /* Stack title and subtitle vertically */
+
+
+
+            align-items: flex-start; /* Align children to the left */
+
+
+
+            text-align: left; /* Left-align text content */
+
+
+
+        }
+
+
+
+        .services-section .section-title {
+
+
+
+            text-align: left; /* Align "All Projects" title to the left */
+
+
+
+        }
+
+
+
+        /* All Projects & Blog: same size as hero project titles (In Between, Skgchess) */
+
+
+
+        .services-section .section-title,
+
+        .articles-section .section-title {
+
+
+
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Match hero-project-title size */
+
+
+
+            font-weight: 900; /* Bold like agency headlines */
+
+
+
+            color: #e4dcd2; /* Warm off-white (not pure white) – same as other titles */
 
 
 
@@ -12336,7 +12412,7 @@
 
 
 
-            align-items: center; /* Center by default for mobile */
+            align-items: flex-start; /* Left-align header (Blog title) on all screens */
 
 
 
@@ -12365,7 +12441,7 @@
 
 
 
-            text-align: center; /* Center by default for mobile */
+            text-align: left; /* Left-align Blog title on all screens */
 
 
 
@@ -12393,7 +12469,7 @@
 
 
 
-            text-align: center; /* Center by default for mobile */
+            text-align: left; /* Left-align for consistency with Blog title */
 
 
 
@@ -12405,7 +12481,7 @@
 
 
 
-        /* Left align the articles section header on desktop */
+        /* Left-align articles section header on all screens */
 
 
 
@@ -12413,7 +12489,19 @@
 
 
 
-            text-align: center; /* Center by default for mobile */
+            display: flex; /* Flexbox for alignment control */
+
+
+
+            flex-direction: column; /* Stack title vertically */
+
+
+
+            align-items: flex-start; /* Left-align Blog title */
+
+
+
+            text-align: left; /* Left-align text */
 
 
 
@@ -12554,6 +12642,10 @@
 
 
             margin-top: 3rem;
+
+
+
+            width: 100%; /* Full width within articles-container (parent has align-items: flex-start) */
 
 
 
@@ -18857,7 +18949,7 @@
 
 
 
-            max-width: 1400px; /* Same as services-container */
+            max-width: 1400px; /* Wide container for about section scroll text */
 
 
 
@@ -21662,9 +21754,11 @@
             color: #e4dcd2 !important;
             display: none !important; /* Hidden on desktop and mobile */
         }
+        /* All Projects, Blog, Articles: use warm off-white #e4dcd2 (not white) */
         #articles .section-title,
         .articles-section .section-title,
-        .projects-section .section-title {
+        .projects-section .section-title,
+        .services-section .section-title {
             background: none !important;
             -webkit-background-clip: unset !important;
             -webkit-text-fill-color: unset !important;
@@ -21888,7 +21982,7 @@
             <div class="currently-creating-container">
                 <p class="currently-creating-tagline"></p>
                 <h2 class="currently-creating-title">Project In Between</h2>
-                <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p>
+                <!-- <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p> -->
                 <div class="currently-creating-links">
                     <a href="inbetween.html" class="currently-creating-cta">Read more</a>
                     <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="currently-creating-cta">Follow On YouTube</a>
@@ -21938,7 +22032,7 @@
 
         
 
-                            <h2 class="section-title" style="text-transform: none;"></h2>
+                            <h2 class="section-title" style="text-transform: none;"> All Projects</h2>
 
         
 
@@ -22232,16 +22326,8 @@
 
 
 
+                    <h2 class="section-title">Blog</h2>
 
-
-                    <p class="section-subtitle">  Blog
-
-
-
-
-
-
-                    </p>
 
 
 
