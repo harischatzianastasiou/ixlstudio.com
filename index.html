@@ -147,9 +147,8 @@
 
         /* Reserve top space when scrolling to anchors so content is not hidden under fixed header */
         html {
-
             scroll-padding-top: var(--header-height);
-
+            overflow-anchor: auto; /* Prevents layout jump when content loads during scroll */
         }
 
 
@@ -180,6 +179,7 @@
 
 
             -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            overscroll-behavior-y: contain; /* Prevents rubber-band from shifting layout on mobile */
 
 
 
@@ -6667,7 +6667,10 @@
             line-height: 1.4 !important; /* Better line height for readability */
         }
 
-        /* Articles section - completely static, no animations */
+        /* Articles section - completely static, no animations, stable on mobile scroll */
+        .articles-section {
+            touch-action: manipulation; /* Prevents accidental zoom during scroll */
+        }
         .articles-section .section-header {
             opacity: 1 !important; /* Instant visibility */
             transform: translateY(0) !important; /* No transform */
@@ -12621,45 +12624,13 @@
 
 
         .article-card {
-
-
-
             background: linear-gradient(135deg, #0a1a0f 0%, #0a1a0f 50%, #0a1a0f 100%);
-
-
-
-            /* Dark background */
-
-
-
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for dark background */
-
-            border-radius: 0; /* No rounded corners */
-
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
             overflow: hidden;
-
-
-
             position: relative;
-
-
-
             cursor: pointer;
-
-
-
-            backdrop-filter: blur(10px);
-
-
-
-            transform-style: preserve-3d; /* Enable 3D transforms */
-
-
-
-            perspective: 1000px; /* Add perspective for 3D effects */
-
-
-
+            /* No backdrop-filter/3d - causes lag */
         }
 
 
@@ -12669,25 +12640,17 @@
 
 
         .article-card:hover {
-
-
-
-            transform: translateY(-6px) rotateX(2deg) scale(1.01); /* Smoother 3D hover effect */
-
-
-
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 
-
-
-
-                        0 0 30px rgba(255, 255, 255, 0.1); /* Dark shadow for dark background */
-
-
-
-            border-color: rgba(255, 255, 255, 0.3); /* White border on hover */
-
-
-
+            transform: translateY(-4px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        /* No movement on focus - only visual outline for accessibility */
+        .article-card:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        .article-card:focus:not(:hover) {
+            transform: none;
         }
 
 
@@ -12756,10 +12719,7 @@
 
 
 
-            animation: gradientShift 3s ease-in-out infinite;
-
-
-
+            /* No animation - causes lag */
         }
 
 
@@ -12784,23 +12744,7 @@
 
 
 
-        /* Gradient animation for article cards */
-
-
-
-        @keyframes gradientShift {
-
-
-
-            0%, 100% { background-position: 0% 50%; }
-
-
-
-            50% { background-position: 100% 50%; }
-
-
-
-        }
+        /* gradientShift removed - was causing lag */
 
 
 
@@ -12808,26 +12752,17 @@
 
 
 
-        .article-image {
-
-
-
+        /* Wrap reserves space before image loads - prevents layout shift */
+        .article-image-wrap {
             width: 100%;
-
-
-
-            height: 150px;
-
-
-
+            aspect-ratio: 2/1; /* Shorter than 16/9 - less height */
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .article-image {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-
-
-
-            filter: brightness(0.9) contrast(1.1); /* Initial filter effect */
-
-
-
         }
 
 
@@ -15530,15 +15465,6 @@
 
 
 
-            .article-card {
-
-
-
-                margin-bottom: 1rem;
-
-
-
-            }
 
 
 
@@ -15546,15 +15472,6 @@
 
 
 
-            .article-content {
-
-
-
-                padding: 1rem;
-
-
-
-            }
 
 
 
@@ -15562,15 +15479,6 @@
 
 
 
-            .article-title {
-
-
-
-                font-size: 1.2rem;
-
-
-
-            }
 
 
 
@@ -15578,15 +15486,6 @@
 
 
 
-            .article-excerpt {
-
-
-
-                font-size: 0.9rem;
-
-
-
-            }
 
 
 
@@ -17689,71 +17588,16 @@
 
 
 
+            /* Use auto min-height - prevents viewport-based layout shift when address bar hides */
+            .articles-container {
+                min-height: auto;
+            }
+            .articles-section {
+                min-height: auto;
+            }
             .articles-grid {
-                gap: 1rem;
-                max-width: 92%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .article-card {
-
-
-
-                min-height: unset;
-
-
-
-                padding: 0.75rem;
-
-
-
-            }
-            .article-image {
-                height: 55px;
-                object-fit: cover;
-            }
-            .article-content {
-                padding: 0.6rem 0.75rem;
-            }
-            .article-tags {
-                margin-bottom: 0.4rem;
-                gap: 0.25rem;
-            }
-            .article-tags .article-category {
-                padding: 0.25rem 0.6rem;
-                font-size: 0.65rem;
-            }
-            .article-category-secondary {
-                margin-top: 0.2rem;
-            }
-            .article-card h3 {
-                font-size: clamp(0.95rem, 3vw, 1.15rem);
-                margin-bottom: 0.35rem;
-            }
-            .article-card .article-excerpt {
-                margin-bottom: 0.4rem;
-                line-height: 1.35;
-            }
-            .article-card .article-meta {
-                margin-top: 0.25rem;
-                font-size: 0.75rem;
-            }
-            .article-card .article-read-time {
-                padding: 0.2rem 0.5rem;
-                font-size: 0.7rem;
-            }
-            .article-card p {
-
-
-
-                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-
-
-
-                line-height: 1.4;
-
-
-
+                gap: 2rem;
+                max-width: 100%;
             }
 
 
@@ -18318,11 +18162,7 @@
 
 
 
-            .project-card,
-
-
-
-            .article-card {
+            .project-card {
 
 
 
@@ -20332,11 +20172,7 @@
 
 
 
-            .project-card:active,
-
-
-
-            .article-card:active {
+            .project-card:active {
 
 
 
@@ -20348,6 +20184,15 @@
 
 
 
+            }
+
+
+
+            /* No active/focus movement on article cards */
+            .article-card:active,
+            .article-card:focus,
+            .article-card:focus-visible {
+                transform: none !important;
             }
 
 
@@ -21461,24 +21306,14 @@
 
 
 
-        /* Article card hover effects */
-
+        /* Article card - no transform transition (removes ugly focus movement animation) */
         .article-card {
-
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
             position: relative;
-
         }
-
-
-
         .article-card:hover {
-
-            transform: translateY(-8px) rotate(1deg);
-
+            transform: translateY(-4px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-
         }
 
 
@@ -25071,9 +24906,8 @@
 
 
             gsap.utils.toArray('.fade-in').forEach(element => {
-
-
-
+                // Skip elements inside articles section - no GSAP animations there
+                if (element.closest('#articles')) return;
                 gsap.to(element, {
 
 
@@ -25143,9 +24977,8 @@
 
 
             gsap.utils.toArray('.slide-in-left').forEach(element => {
-
-
-
+                // Skip elements inside articles section - no GSAP animations there
+                if (element.closest('#articles')) return;
                 gsap.to(element, {
 
 
@@ -25211,9 +25044,8 @@
 
 
             gsap.utils.toArray('.slide-in-right').forEach(element => {
-
-
-
+                // Skip elements inside articles section - no GSAP animations there
+                if (element.closest('#articles')) return;
                 gsap.to(element, {
 
 
@@ -25279,9 +25111,8 @@
 
 
             gsap.utils.toArray('.scale-in').forEach(element => {
-
-
-
+                // Skip elements inside articles section - no GSAP animations there
+                if (element.closest('#articles')) return;
                 gsap.to(element, {
 
 
@@ -30257,11 +30088,7 @@
 
 
 
-                // Trigger GSAP animations for new articles
-
-
-
-                this.animateArticles();
+                // No GSAP - cards render static to avoid lag
 
 
 
@@ -30281,7 +30108,7 @@
 
 
 
-                card.className = `article-card slide-in-${index % 2 === 0 ? 'left' : 'right'}`;
+                card.className = 'article-card';
 
 
 
@@ -30289,11 +30116,12 @@
 
 
 
+                // Use wrapper with aspect-ratio so image load doesn't cause layout shift
                 card.innerHTML = `
 
 
 
-                    <img src="${article.image}" alt="${article.alt}" class="article-image">
+                    <div class="article-image-wrap"><img src="${article.image}" alt="${article.alt}" class="article-image" loading="lazy" decoding="async"></div>
 
 
 
@@ -30342,42 +30170,6 @@
 
 
                 return card;
-
-
-
-            }
-
-
-
-            
-
-
-
-            animateArticles() {
-
-
-
-                // Set articles to their final position immediately
-
-
-
-                gsap.set('.article-card', { 
-
-
-
-                    opacity: 1,
-
-
-
-                    y: 0, // Final position
-
-
-
-                    scale: 1 // Keep scale at 1 to maintain consistent width
-
-
-
-                });
 
 
 
