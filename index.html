@@ -22628,16 +22628,6 @@
 
 
 
-            // FIX: Vertical mouse wheel over horizontal grids scrolls the page (not captured by grid)
-            document.querySelectorAll('.hero-projects-grid, .projects-grid').forEach(el => {
-                el.addEventListener('wheel', function(e) {
-                    if (Math.abs(e.deltaY) > 0) {
-                        window.scrollBy(0, e.deltaY);
-                        e.preventDefault();
-                    }
-                }, { passive: false });
-            });
-
 
 
             // Force header to stay transparent (at top and when scrolled)
@@ -27399,82 +27389,72 @@
 
             headerLogo.style.opacity = '0'; // Hide header logo during animation
 
+            // Cleanup: hide loader, show agency, reset header (used by timeline and fallback)
+            function finishLoaderReveal() {
+                loaderLogo.style.visibility = 'hidden';
+                if (header) header.style.opacity = '1';
+                gsap.set(headerLogo, { opacity: 1, scaleX: 1, scaleY: 1, transformOrigin: 'center center' });
+                if (agencyCenter) gsap.set(agencyCenter, { opacity: 1, y: 0 });
+                if (agencyGetInTouch) gsap.set(agencyGetInTouch, { opacity: 1, y: 0 });
+                loader.style.display = 'none';
+                loader.style.pointerEvents = 'none';
+                if (header) {
+                    header.style.background = 'transparent';
+                    header.style.backgroundColor = 'transparent';
+                    header.style.backgroundImage = 'none';
+                    header.style.backdropFilter = 'none';
+                    header.style.webkitBackdropFilter = 'none';
+                }
+                document.querySelectorAll('.projects-grid, .hero-projects-grid').forEach(g => g.classList.remove('dragging'));
+            }
 
-
-            // Animate: fade in loader logo → hold → shrink to zero → header logo grows from zero to current size
-            window.addEventListener('load', () => {
-
+            function runLoaderAnimation() {
+                if (loader.style.display === 'none') return; // Fallback already revealed
                 const tl = gsap.timeline();
-                gsap.set(loaderLogo, { opacity: 0 }); // Force start at 0 so fade-in is visible
-
-                // 1. Logo from less to more opacity (slow breath in) until final animation
-                tl.to(loaderLogo, {
-                    duration: 2.8,
-                    opacity: 1,
-                    ease: "sine.inOut",
-                    overwrite: true,
-                })
-                // 2. Move loader logo to header position (no hold – starts as soon as full opacity)
+                gsap.set(loaderLogo, { opacity: 0 });
+                tl.to(loaderLogo, { duration: 2.8, opacity: 1, ease: "sine.inOut", overwrite: true })
                 .to(loaderLogo, {
                     duration: 0.85,
-                    x: deltaX,
-                    y: deltaY,
-                    scaleX: scaleX,
-                    scaleY: scaleY,
+                    x: deltaX, y: deltaY,
+                    scaleX: scaleX, scaleY: scaleY,
                     opacity: 0,
                     ease: "power3.inOut",
                     transformOrigin: "center center",
                 })
-                // 5. At header position: hide loader logo, show header and set header logo scale 0
                 .call(() => {
                     loaderLogo.style.visibility = 'hidden';
                     header.style.opacity = '1';
                     gsap.set(headerLogo, { opacity: 1, scaleX: 0, scaleY: 0, transformOrigin: 'center center' });
                 })
-                // 6. Header logo grows from zero to current size (smooth landing)
-                .to(headerLogo, {
-                    duration: 0.7,
-                    scaleX: 1,
-                    scaleY: 1,
-                    ease: "back.out(1.15)",
-                    overwrite: true,
-                }, "-=0.08")
-                // 7. Fade out loader overlay (overlap with content reveal for one flow)
-                .to(loader, {
-                    duration: 0.55,
-                    opacity: 0,
-                    ease: "power2.out",
-                }, "-=0.45")
-                // 8. Reveal agency content (text, then images) as part of same transition
-                .to(agencyCenter, {
-                    duration: 0.7,
-                    opacity: 1,
-                    y: 0,
-                    ease: "power3.out",
-                }, "-=0.5")
-                .to(agencyGetInTouch, {
-                    duration: 0.5,
-                    opacity: 1,
-                    y: 0,
-                    ease: "power2.out",
-                }, "-=0.35")
-                // 9. Hide loader and clean up
-                .call(() => {
-                    loader.style.display = 'none';
-                    loader.style.pointerEvents = 'none';
-                    if (header) {
-                        header.style.background = 'transparent';
-                        header.style.backgroundColor = 'transparent';
-                        header.style.backgroundImage = 'none';
-                        header.style.backdropFilter = 'none';
-                        header.style.webkitBackdropFilter = 'none';
-                    }
-                    document.querySelectorAll('.projects-grid, .hero-projects-grid').forEach(grid => {
-                        grid.classList.remove('dragging');
-                    });
-                });
-            });
+                .to(headerLogo, { duration: 0.7, scaleX: 1, scaleY: 1, ease: "back.out(1.15)", overwrite: true }, "-=0.08")
+                .to(loader, { duration: 0.55, opacity: 0, ease: "power2.out" }, "-=0.45")
+                .to(agencyCenter, { duration: 0.7, opacity: 1, y: 0, ease: "power3.out" }, "-=0.5")
+                .to(agencyGetInTouch, { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "-=0.35")
+                .call(finishLoaderReveal);
+            }
 
+            // Fallback: if load hasn't fired within 4s (common on mobile reload), show page anyway
+            const FALLBACK_MS = 4000;
+            let fallbackTimer = setTimeout(() => {
+                if (loader.style.display !== 'none') {
+                    finishLoaderReveal();
+                }
+            }, FALLBACK_MS);
+            function clearFallback() { clearTimeout(fallbackTimer); fallbackTimer = null; }
+
+            // Run when load fires (or immediately if already loaded)
+            function tryRunLoader() {
+                if (document.readyState === 'complete') {
+                    clearFallback();
+                    runLoaderAnimation();
+                } else {
+                    window.addEventListener('load', () => {
+                        clearFallback();
+                        runLoaderAnimation();
+                    }, { once: true });
+                }
+            }
+            tryRunLoader();
         }
 
 
