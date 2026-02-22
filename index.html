@@ -1636,11 +1636,11 @@
 
 
 
-                height: 100vh; /* Full viewport height on mobile */
+                height: 100vh; /* Fallback */
 
-                min-height: 100svh !important; /* Small viewport height for mobile browsers */
+                height: 100svh; /* Stable - no jump when address bar shows/hides */
 
-                min-height: 100dvh !important; /* Dynamic viewport height for latest browsers */
+                min-height: 100svh !important;
 
 
 
@@ -5467,6 +5467,7 @@
 
         .agency-promo-section {
             height: 100vh;
+            height: 100svh; /* Stable height - no jump when mobile browser bar shows/hides */
             min-height: 400px;
             position: relative;
             overflow: hidden;
@@ -6288,7 +6289,7 @@
         @media (max-width: 768px) {
             .agency-promo-section {
                 height: 100vh;
-                min-height: 100dvh;
+                height: 100svh; /* Stable - no jump when address bar shows/hides */
                 min-height: 500px;
             }
             .agency-get-in-touch {
@@ -16926,7 +16927,9 @@
 
 
 
-                min-height: 100vh; /* Standard hero height */
+                min-height: 100vh; /* Fallback */
+
+                min-height: 100svh; /* Stable when address bar shows/hides */
 
 
 
@@ -19508,6 +19511,8 @@
 
             min-height: 100vh;
 
+            min-height: 100svh; /* Stable when address bar shows/hides */
+
 
 
             display: flex;
@@ -20503,7 +20508,9 @@
 
             .hero {
 
-                min-height: 100vh; /* Standard hero height */
+                min-height: 100vh; /* Fallback */
+
+                min-height: 100svh; /* Stable when address bar shows/hides */
 
             }
 
@@ -20673,6 +20680,8 @@
 
 
             min-height: 100vh;
+
+            min-height: 100svh; /* Stable when address bar shows/hides */
 
 
 
