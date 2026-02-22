@@ -6357,13 +6357,9 @@
             /* Adjust the special name styling for mobile */
 
             .agency-line-1 .bold {
-
-                transform: scale(1.3); /* Much bigger scale on mobile */
-
-                letter-spacing: 2px; /* More letter spacing on mobile */
-
-                font-size: clamp(3.5rem, 9vw, 4.5rem); /* Much bigger responsive font size for mobile */
-
+                transform: none; /* No scale - prevents zoom when scrolling */
+                letter-spacing: 2px;
+                font-size: 2.5rem; /* Fixed - no vw to prevent scroll zoom */
             }
 
 
@@ -6371,27 +6367,18 @@
             /* Make all agency lines much bigger on mobile */
 
             .agency-line-1,
-
             .agency-line-2,
-
             .agency-line-3,
-
             .agency-line-4 {
-
-                font-size: clamp(2.8rem, 8vw, 3.8rem); /* Much bigger font size for mobile */
-
-                line-height: 0.95; /* Tighter line height for impact */
-
+                font-size: 2.5rem; /* Fixed - no vw to prevent scroll zoom */
+                line-height: 0.95;
             }
 
 
 
-            /* Reduce animation intensity on mobile for better performance */
-
+            /* No scroll-linked animation on agency text - smooth on mobile */
             .agency-line-1 .bold {
-
-                animation: gradientShift 4s ease-in-out infinite, nameGlow 3s ease-in-out infinite alternate;
-
+                animation: none;
             }
 
 
@@ -21655,6 +21642,7 @@
         }
         .hero-title {
             color: #e4dcd2 !important;
+            display: none !important; /* Hidden on desktop and mobile */
         }
         #articles .section-title,
         .articles-section .section-title,
@@ -21672,6 +21660,23 @@
         
         /* Override any GSAP transforms */
         #articles .section-header * {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        /* Article images/cards: already visible, no load animation on scroll */
+        #articles .article-card,
+        #articles .article-image-wrap,
+        #articles .article-image,
+        #articles .article-content {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+        }
+        /* Contact section: no scroll animation */
+        #contact .section-header,
+        #contact .contact-item,
+        #contact .contact-info {
             opacity: 1 !important;
             transform: none !important;
         }
@@ -21831,7 +21836,7 @@
 
                 <p class="agency-tagline">Indie Game Developer and software engineer</p>
 
-                <h1 class="agency-headline">A personal attempt</h1>
+                <h1 class="agency-headline">Currently Creating</h1>
                 <!-- 
                                 <h2 class="agency-headline"></h1>
                 
@@ -21862,7 +21867,7 @@
         <!-- Currently creating section -->
         <section id="currently-creating" class="currently-creating-section">
             <div class="currently-creating-container">
-                <p class="currently-creating-tagline">Currently creating</p>
+                <p class="currently-creating-tagline"></p>
                 <h2 class="currently-creating-title">Project In Between</h2>
                 <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p>
                 <div class="currently-creating-links">
@@ -22335,7 +22340,7 @@
 
 
 
-                <div class="section-header fade-in">
+                <div class="section-header">
 
 
 <!-- 
@@ -22363,7 +22368,7 @@
 
 
 
-                    <a href="mailto:harischatzi@tutanota.com" class="contact-item scale-in">
+                    <a href="mailto:harischatzi@tutanota.com" class="contact-item">
 
 
 
@@ -22411,7 +22416,7 @@
 
     
 
-                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item scale-in">
+                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item">
 
     
 
@@ -22601,43 +22606,9 @@
 
 
 
-        // Set initial states immediately to prevent flash
-
-
-
-        gsap.set('.fade-in', { opacity: 0, y: 30 });
-
-
-
-        gsap.set('.slide-in-left', { opacity: 0, x: -50 });
-
-
-
-        gsap.set('.slide-in-right', { opacity: 0, x: 50 });
-
-
-
-        gsap.set('.scale-in', { opacity: 0, scale: 0.8 });
-
-
-
-        gsap.set('.hero-description', { opacity: 0, y: 50 });
-
-
-
-        gsap.set('.hero-cta', { opacity: 0, y: -100, scale: 0.5 });
-
-
-
-        gsap.set('.hero-subtitle', { opacity: 0 });
-
-
-
-        // gsap.set('.hero-title', { opacity: 0, y: 40, scale: 0.95 }); // Moved to agency section
-
-
-
-        gsap.set('.hero-logo', { opacity: 0, y: -50, scale: 0.8 }); /* Set initial state for logo */
+        // All content visible by default - no GSAP scroll animations (clean, smooth on both devices)
+        gsap.set('.fade-in, .slide-in-left, .slide-in-right, .scale-in', { opacity: 1, y: 0, x: 0, scale: 1 });
+        gsap.set('.hero-description, .hero-cta, .hero-subtitle, .hero-logo', { opacity: 1, y: 0, scale: 1 });
 
 
 
@@ -22654,6 +22625,18 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
+
+
+
+            // FIX: Vertical mouse wheel over horizontal grids scrolls the page (not captured by grid)
+            document.querySelectorAll('.hero-projects-grid, .projects-grid').forEach(el => {
+                el.addEventListener('wheel', function(e) {
+                    if (Math.abs(e.deltaY) > 0) {
+                        window.scrollBy(0, e.deltaY);
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+            });
 
 
 
@@ -24140,23 +24123,7 @@
 
 
 
-        createSectionIntroAnimation('#services', 'slide');
-
-
-
-        createSectionIntroAnimation('#projects', 'zoom');
-
-
-
-        // createSectionIntroAnimation('#articles', 'fade'); // Removed - causing conflicts
-
-
-
-        createSectionIntroAnimation('#about', 'reveal');
-
-
-
-        createSectionIntroAnimation('#contact', 'fade'); // Changed to fade animation for different effect
+        // createSectionIntroAnimation - DISABLED for clean smooth scroll on both devices
 
 
 
@@ -24405,19 +24372,7 @@
 
 
 
-        createTitleAnimation('#services');
-
-
-
-        createTitleAnimation('#projects');
-
-
-
-        // createTitleAnimation('#articles'); // Removed to eliminate lag - using CSS instead
-
-
-
-        createTitleAnimation('#contact'); // Added back contact title animation
+        // createTitleAnimation - DISABLED for clean smooth scroll on both devices
 
 
 
@@ -24797,379 +24752,36 @@
 
 
 
-        // Enhanced contact section animations
+        // Contact section - no scroll animations
 
 
 
-        gsap.utils.toArray('.contact-item').forEach((item, index) => {
 
 
 
-            gsap.set(item, { 
 
+            // GSAP scroll animations DISABLED - content visible, smooth on both devices
 
 
-                opacity: 0, 
 
 
 
-                y: 60, // Increased distance for more dramatic effect
 
 
 
-                scale: 0.9 // Add scale effect
 
 
 
-            });
 
 
 
-            
 
 
 
-            gsap.to(item, {
 
 
 
-                scrollTrigger: {
 
-
-
-                    trigger: '#contact',
-
-
-
-                    start: "top 75%",
-
-
-
-                    end: "top 60%",
-
-
-
-                    toggleActions: "play none none reverse",
-
-
-
-                    fastScrollEnd: true,
-
-
-
-                    preventOverlaps: true
-
-
-
-                },
-
-
-
-                opacity: 1,
-
-
-
-                y: 0,
-
-
-
-                scale: 1,
-
-
-
-                duration: 1.0,
-
-
-
-                delay: index * 0.2, // Stagger the animations
-
-
-
-                ease: "back.out(1.7)" // Dynamic easing
-
-
-
-            });
-
-
-
-        });
-
-
-
-
-
-
-
-            // Enhanced element animations - optimized
-
-
-
-            gsap.utils.toArray('.fade-in').forEach(element => {
-                // Skip elements inside articles section - no GSAP animations there
-                if (element.closest('#articles')) return;
-                gsap.to(element, {
-
-
-
-                    scrollTrigger: {
-
-
-
-                        trigger: element,
-
-
-
-                        start: "top 80%",
-
-
-
-                        end: "bottom 20%",
-
-
-
-                        toggleActions: "play none none reverse",
-
-
-
-                        fastScrollEnd: true,
-
-
-
-                        preventOverlaps: true
-
-
-
-                    },
-
-
-
-                    duration: 0.6, // Reduced duration
-
-
-
-                    y: 0,
-
-
-
-                    opacity: 1,
-
-
-
-                scale: 1,
-
-
-
-                    ease: "power2.out"
-
-
-
-                });
-
-
-
-            });
-
-
-
-
-
-
-
-            gsap.utils.toArray('.slide-in-left').forEach(element => {
-                // Skip elements inside articles section - no GSAP animations there
-                if (element.closest('#articles')) return;
-                gsap.to(element, {
-
-
-
-                    scrollTrigger: {
-
-
-
-                        trigger: element,
-
-
-
-                        start: "top 80%",
-
-
-
-                        end: "bottom 20%",
-
-
-
-                        toggleActions: "play none none reverse",
-
-
-
-                        fastScrollEnd: true,
-
-
-
-                        preventOverlaps: true
-
-
-
-                    },
-
-
-
-                    duration: 0.5, // Reduced duration
-
-
-
-                    x: 0,
-
-
-
-                    opacity: 1,
-
-
-
-                    ease: "power2.out"
-
-
-
-                });
-
-
-
-            });
-
-
-
-
-
-
-
-            gsap.utils.toArray('.slide-in-right').forEach(element => {
-                // Skip elements inside articles section - no GSAP animations there
-                if (element.closest('#articles')) return;
-                gsap.to(element, {
-
-
-
-                    scrollTrigger: {
-
-
-
-                        trigger: element,
-
-
-
-                        start: "top 80%",
-
-
-
-                        end: "bottom 20%",
-
-
-
-                        toggleActions: "play none none reverse",
-
-
-
-                        fastScrollEnd: true,
-
-
-
-                        preventOverlaps: true
-
-
-
-                    },
-
-
-
-                    duration: 0.5, // Reduced duration
-
-
-
-                    x: 0,
-
-
-
-                    opacity: 1,
-
-
-
-                    ease: "power2.out"
-
-
-
-                });
-
-
-
-            });
-
-
-
-
-
-
-
-            gsap.utils.toArray('.scale-in').forEach(element => {
-                // Skip elements inside articles section - no GSAP animations there
-                if (element.closest('#articles')) return;
-                gsap.to(element, {
-
-
-
-                    scrollTrigger: {
-
-
-
-                        trigger: element,
-
-
-
-                        start: "top 80%",
-
-
-
-                        end: "bottom 20%",
-
-
-
-                        toggleActions: "play none none reverse",
-
-
-
-                        fastScrollEnd: true,
-
-
-
-                        preventOverlaps: true
-
-
-
-                    },
-
-
-
-                    duration: 0.8, // Reduced duration
-
-
-
-                    scale: 1,
-
-
-
-                    opacity: 1,
-
-
-
-                    ease: "power2.out" // Simplified easing
-
-
-
-                });
-
-
-
-            });
 
 
 
@@ -25417,83 +25029,7 @@
 
 
 
-            // Stagger animations for contact items - optimized
-
-
-
-            gsap.set('.contact-item', {
-
-
-
-                opacity: 0,
-
-
-
-                y: 40 // Reduced distance
-
-
-
-            });
-
-
-
-            gsap.to('.contact-item', {
-
-
-
-                scrollTrigger: {
-
-
-
-                    trigger: '.contact-info',
-
-
-
-                    start: "top 80%",
-
-
-
-                    end: "bottom 20%",
-
-
-
-                    toggleActions: "play none none reverse",
-
-
-
-                    fastScrollEnd: true,
-
-
-
-                    preventOverlaps: true
-
-
-
-                },
-
-
-
-                duration: 0.8, // Reduced duration
-
-
-
-                y: 0,
-
-
-
-                opacity: 1,
-
-
-
-                stagger: 0.15, // Reduced stagger
-
-
-
-                ease: "power2.out" // Simplified easing
-
-
-
-            });
+            // Contact items - visible by default, no scroll animation
 
 
 
@@ -27807,9 +27343,7 @@
             [agencyCenter, agencyGetInTouch].forEach(el => {
                 if (el) gsap.set(el, { opacity: 0, y: 28 }); // Start hidden and slightly down for smooth reveal
             });
-            // Collage images: start off-screen (left/right) so they slide in with the transition
-            if (agencyCollageLeft) gsap.set(agencyCollageLeft, { opacity: 0, x: -32 });
-            if (agencyCollageRight) gsap.set(agencyCollageRight, { opacity: 0, x: 32 });
+            // Collage images: already visible - no animation
 
 
 
@@ -27918,13 +27452,6 @@
                     y: 0,
                     ease: "power3.out",
                 }, "-=0.5")
-                .to([agencyCollageLeft, agencyCollageRight].filter(Boolean), {
-                    duration: 0.65,
-                    opacity: 1,
-                    x: 0,
-                    ease: "power3.out",
-                    stagger: 0.08,
-                }, "-=0.4")
                 .to(agencyGetInTouch, {
                     duration: 0.5,
                     opacity: 1,
@@ -30116,12 +29643,7 @@
 
 
 
-                // Use wrapper with aspect-ratio so image load doesn't cause layout shift
                 card.innerHTML = `
-
-
-
-                    <div class="article-image-wrap"><img src="${article.image}" alt="${article.alt}" class="article-image" loading="lazy" decoding="async"></div>
 
 
 
