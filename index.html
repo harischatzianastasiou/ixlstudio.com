@@ -10072,7 +10072,7 @@
 
 
 
-            padding: 2rem 4rem 4rem; /* Reduced top gap from currently creating section */
+            padding: 2rem 4rem 1.5rem; /* Tighter bottom – projects window closer to blog */
 
 
 
@@ -12229,7 +12229,7 @@
 
 
 
-            padding: 2rem 4rem 6rem;
+            padding: 1rem 4rem 6rem; /* Less top – closer to projects window */
 
 
 
@@ -12344,7 +12344,7 @@
 
 
 
-            min-height: 100vh;
+            min-height: auto; /* No forced viewport height – removes gap above Blog title */
 
 
 
@@ -14767,7 +14767,7 @@
 
 
 
-            padding: 2rem 1.5rem; /* Reduced padding like service cards */
+            padding: 1rem 1.25rem; /* Compact – less gap inside card */
 
 
 
@@ -14842,7 +14842,7 @@
         .contact-icon {
             width: 60px; /* Fixed width for consistent sizing like service icons */
             height: 60px; /* Fixed height for consistent sizing like service icons */
-            margin: 0 auto 1rem auto; /* Center and add bottom margin */
+            margin: 0 auto 0.5rem auto; /* Tighter gap below icon */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -14908,7 +14908,7 @@
             font-size: 1rem;
             font-weight: 600;
             color: #ffffff; /* White text for black background */
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem; /* Tighter gap to value */
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9; /* Slightly faded before hover */
@@ -17110,7 +17110,7 @@
 
 
 
-                padding: 1rem 1.5rem 4rem; /* Reduced top gap from project cards on mobile */
+                padding: 0.75rem 1.5rem 4rem; /* Closer to projects window */
 
 
 
@@ -17142,7 +17142,7 @@
 
 
 
-                padding: 0.5rem 1.5rem 2rem; /* Minimal top gap from currently creating on mobile */
+                padding: 0.5rem 1.5rem 1rem; /* Tighter bottom – projects closer to blog */
             }
             .services-section .section-header {
                 margin-bottom: 0.75rem;
@@ -17733,27 +17733,28 @@
             .contact-icon {
                 width: 36px;
                 height: 36px;
+                margin-bottom: 0.5rem; /* Same compact gap below icon as desktop */
             }
 
             .contact-item {
 
 
 
-                padding: 1.5rem;
+                padding: 1rem 1.25rem; /* Same compact spacing as desktop */
 
 
 
             }
-
-
-
-
-
-
 
             .contact-item .contact-label {
+                margin-bottom: 0.25rem; /* Same tight gap to value as desktop */
                 font-size: clamp(0.95rem, 3vw, 1.15rem);
             }
+
+
+
+
+
             .contact-item .contact-value {
                 font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             }
@@ -17870,7 +17871,7 @@
 
             }
             .articles-section {
-                padding: 1rem 1rem 4rem; /* Minimal top gap from project cards on mobile */
+                padding: 0.75rem 1rem 4rem; /* Closer to projects window */
             }
 
 
