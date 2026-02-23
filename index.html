@@ -143,7 +143,13 @@
 
         }
 
-
+        /* Large screens (24", 27" and up): scale up content so it doesn’t look small */
+        @media (min-width: 1920px) {
+            html { font-size: 118%; } /* Slightly larger base so rem-based text and spacing scale up */
+        }
+        @media (min-width: 2560px) {
+            html { font-size: 125%; } /* Even larger on very wide (e.g. 27") so content stays readable */
+        }
 
         /* Reserve top space when scrolling to anchors so content is not hidden under fixed header */
         html {
@@ -2770,13 +2776,14 @@
 
             position: relative; /* Relative positioning for overlay */
 
-            width: 100%; /* Full width of grid cell */
-
-            height: 100%; /* Full height of grid cell */
-
-            min-width: 300px; /* Minimum width for horizontal scrolling */
+            /* Wider than tall: aspect-ratio 1.9 so project windows are less square */
+            width: auto; /* Width comes from aspect-ratio and height */
+            height: 75%; /* Card height is 75% of container so cards don’t dominate vertically */
+            aspect-ratio: 1.9; /* Wide rectangle (width = 1.9 × height) */
+            min-width: 320px; /* Minimum width for horizontal scrolling */
 
             flex-shrink: 0; /* Prevent cards from shrinking */
+            flex: 0 0 auto; /* Don’t grow; size from height + aspect-ratio */
 
             border-radius: 0; /* No rounded corners */
 
@@ -3084,7 +3091,7 @@
             }
         }
 
-        /* Big screens: width fits appropriately */
+        /* Big screens: width fits appropriately; larger container on 24"/27" so cards have room */
         @media (min-width: 1440px) {
             .hero-projects-window {
                 display: flex;
@@ -3095,6 +3102,11 @@
                 width: 90%;
                 max-width: 1200px;
                 height: 78%;
+            }
+        }
+        @media (min-width: 1920px) {
+            .hero-projects-container {
+                max-width: 1600px; /* Wider on 24"/27" so hero project cards use more width */
             }
         }
 
@@ -13801,7 +13813,7 @@
 
 
 
-            aspect-ratio: 1.4; /* Maintain aspect ratio */
+            aspect-ratio: 1.85; /* Wider than tall so project windows are less square */
 
 
 
