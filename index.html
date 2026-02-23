@@ -653,6 +653,8 @@
 
             background-color: transparent !important; /* Force no background color */
 
+            color-scheme: light !important; /* Prevent Brave/dark-theme from making burger/header dark */
+
             background-image: none !important; /* No background image */
 
             backdrop-filter: none !important; /* No blur effect */
@@ -21692,7 +21694,17 @@
 
         }
 
-        /* Force burger icon (header far right) always white on mobile – override any dark mode or later CSS */
+        /* Force burger icon (header far right) always white – override Brave dark theme / system dark mode */
+        .header .mobile-menu-btn {
+            color-scheme: light !important; /* So Brave dark theme doesn't darken the icon */
+        }
+        .header .mobile-menu-btn span,
+        .header .mobile-menu-btn.active span {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            opacity: 1 !important;
+            filter: none !important;
+        }
         @media (max-width: 768px) {
             .header .mobile-menu-btn span,
             .header .mobile-menu-btn.active span {
