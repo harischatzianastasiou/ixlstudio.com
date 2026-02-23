@@ -2915,6 +2915,15 @@
 
         }
 
+        /* Reduce baggy/blurry look when scrolling with mouse – GPU layer + font smoothing (font unchanged) */
+        .agency-headline,
+        .agency-tagline,
+        .hero-project-title {
+            transform: translateZ(0); /* Promote to GPU layer so text is composited, not repainted every frame */
+            backface-visibility: hidden; /* Stable layer during scroll */
+            -webkit-font-smoothing: antialiased; /* Consistent rendering during scroll, less subpixel shift */
+        }
+
 
 
         .hero-project-category {
