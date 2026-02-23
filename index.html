@@ -3070,32 +3070,32 @@
 
 
 
-        /* Show hero projects window on all screens */
-
-        @media (min-width: 1024px) {
-
+        /* Laptop: smaller project window */
+        @media (min-width: 1024px) and (max-width: 1439px) {
             .hero-projects-window {
-
-                display: flex; /* Show projects window on large screens */
-
-                padding: 0 4rem; /* Nice gaps on left and right for all screen sizes */
-
-                box-sizing: border-box; /* Include padding in width calculation */
-
+                display: flex;
+                padding: 0 4rem;
+                box-sizing: border-box;
             }
-
-
-
             .hero-projects-container {
-
-                width: 100%; /* Fill available space within padded window */
-
-                max-width: 1000px; /* Smaller max-width for better visibility and gaps */
-
-                height: 75%; /* Reduced from 80% - slightly smaller height on desktop */
-
+                width: 85%;
+                max-width: 820px;
+                height: 72%;
             }
+        }
 
+        /* Big screens: width fits appropriately */
+        @media (min-width: 1440px) {
+            .hero-projects-window {
+                display: flex;
+                padding: 0 4rem;
+                box-sizing: border-box;
+            }
+            .hero-projects-container {
+                width: 90%;
+                max-width: 1200px;
+                height: 78%;
+            }
         }
 
 
