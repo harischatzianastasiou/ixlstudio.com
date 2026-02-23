@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 
@@ -3091,7 +3091,7 @@
             }
         }
 
-        /* Big screens: width fits appropriately; larger container on 24"/27" so cards have room */
+        /* Big screens: wider project window so cards use more horizontal space */
         @media (min-width: 1440px) {
             .hero-projects-window {
                 display: flex;
@@ -3099,14 +3099,15 @@
                 box-sizing: border-box;
             }
             .hero-projects-container {
-                width: 90%;
-                max-width: 1200px;
+                width: 92%; /* Slightly more of viewport than default 90% */
+                max-width: 1400px; /* Wider than default 1200px so project windows feel larger */
                 height: 78%;
             }
         }
+        /* Very large screens (e.g. 24"/27"): maximum width so project cards have plenty of room */
         @media (min-width: 1920px) {
             .hero-projects-container {
-                max-width: 1600px; /* Wider on 24"/27" so hero project cards use more width */
+                max-width: 1900px; /* Much wider so hero project cards use more width */
             }
         }
 
@@ -6239,6 +6240,7 @@
             width: 100%;
             height: 100%;
             border-radius: 0; /* No rounded corners */
+            pointer-events: none; /* So page can scroll when pointer is over the embed */
         }
         .about-this-place-channel-link {
             display: inline-block;
@@ -6318,12 +6320,36 @@
             height: 0;
             overflow: hidden;
         }
+        /* Let scroll pass through the iframe so the page can scroll when pointer is over the video */
         .currently-creating-video iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none; /* Scroll/wheel events go to the page instead of the iframe */
+        }
+        /* Overlay on top: captures clicks so first click "enables" the iframe; then user can play video */
+        .currently-creating-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: auto; /* Overlay receives clicks so they don't hit the iframe yet */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+            transition: opacity 0.2s ease;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        /* After user clicks "enable", overlay stops blocking so iframe gets focus and can be used */
+        .currently-creating-video-overlay.is-enabled {
+            pointer-events: none;
+            opacity: 0;
         }
         @media (max-width: 768px) {
             .currently-creating-section {
@@ -22124,6 +22150,8 @@
                 </div>
                 <div class="currently-creating-video">
                     <iframe src="https://www.youtube.com/embed/-NivE5bhbUI" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <!-- Overlay allows page to scroll when pointer is over video; one click enables the player -->
+                    <div class="currently-creating-video-overlay" id="youtube-video-overlay" title="Click to enable video">Click to enable video</div>
                 </div>
             </div>
         </section>
@@ -22742,6 +22770,13 @@
             if (r) {
                 ScrollTrigger.config({ scroller: r });
                 r.addEventListener('scroll', function() { window.dispatchEvent(new Event('scroll')); }, { passive: true });
+            }
+            // YouTube overlay: one click enables the iframe so user can play; until then page scroll works over the video
+            var overlay = document.getElementById('youtube-video-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    overlay.classList.add('is-enabled'); /* Stops blocking iframe; overlay fades out */
+                });
             }
         });
 
@@ -26321,6 +26356,15 @@
 
                 projectsGrid.scrollLeft -= dx * accel; // Scroll with acceleration
 
+                const maxScroll = projectsGrid.scrollWidth - projectsGrid.clientWidth; // Rightmost valid scroll position
+                projectsGrid.scrollLeft = Math.max(0, Math.min(maxScroll, projectsGrid.scrollLeft)); // Clamp so we never overscroll
+
+                if (projectsGrid.scrollLeft <= 0 || projectsGrid.scrollLeft >= maxScroll) { // User reached left or right end
+                    isDown = false; // Stop grab immediately
+                    projectsGrid.classList.remove('dragging'); // Remove dragging state
+                    try { projectsGrid.releasePointerCapture(e.pointerId); } catch (_) {} // Release pointer so drag is truly done
+                }
+
                 lastX = e.pageX; // Update last X
 
                 lastT = now; // Update last time
@@ -26402,6 +26446,14 @@
                 const accel = clamp(1.0 + speed * 4, 1.0, 3.0); // Medium drag speed - responsive without being too aggressive
 
                 projectsGrid.scrollLeft -= dx * accel; // Scroll with acceleration
+
+                const maxScroll = projectsGrid.scrollWidth - projectsGrid.clientWidth; // Rightmost valid scroll position
+                projectsGrid.scrollLeft = Math.max(0, Math.min(maxScroll, projectsGrid.scrollLeft)); // Clamp so we never overscroll
+
+                if (projectsGrid.scrollLeft <= 0 || projectsGrid.scrollLeft >= maxScroll) { // User reached left or right end
+                    isTouchDragging = false; // Stop grab immediately
+                    projectsGrid.classList.remove('dragging'); // Remove dragging state
+                }
 
                 lastX = pageX; // Update last X
 
