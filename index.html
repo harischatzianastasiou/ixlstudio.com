@@ -4971,6 +4971,11 @@
 
             }
 
+            .article-category,
+            .article-category-secondary {
+                font-size: 0.9rem; /* Match Click to explore on mobile */
+            }
+
 
 
             /* Hero explore button mobile styling */
@@ -12927,19 +12932,15 @@
 
 
 
-            font-size: 0.75rem;
+            font-size: 1rem; /* Match hero-project-category (Click to explore) */
 
 
 
-            font-weight: 700; /* Bolder font */
+            font-weight: 400; /* Slightly more weight than Click to explore (300) */
 
 
 
-            text-transform: uppercase;
-
-
-
-            letter-spacing: 1.2px; /* Increased letter spacing */
+            opacity: 0.8; /* Same as Click to explore */
 
 
 
@@ -12969,8 +12970,9 @@
 
         .article-tags {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction: row; /* Tags on same line */
+            align-items: center;
+            flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
@@ -12979,10 +12981,10 @@
         }
         .article-category-secondary {
             display: inline-block;
-            margin-top: 0.5rem;
-            opacity: 0.9;
+            margin-top: 0; /* Same line as primary tag */
+            opacity: 0.8; /* Match hero-project-category */
             padding: 0.35rem 0.85rem;
-            font-size: 0.7rem;
+            font-size: 1rem; /* Match Click to explore */
         }
         .article-category-secondary:empty {
             display: none;
@@ -13051,7 +13053,7 @@
 
 
 
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Match hero project titles (In Between, Skgchess) */
 
 
 
@@ -16224,7 +16226,7 @@
 
 
 
-                font-size: 1.1rem;
+                font-size: 1.2rem; /* Match hero-project-title on mobile */
 
 
 
@@ -20725,6 +20727,11 @@
 
                 font-size: 0.8rem; /* Smaller category text on very small screens */
 
+            }
+
+            .article-category,
+            .article-category-secondary {
+                font-size: 0.8rem; /* Match Click to explore on very small screens */
             }
 
 
