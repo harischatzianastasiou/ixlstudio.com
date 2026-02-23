@@ -21692,6 +21692,17 @@
 
         }
 
+        /* Force burger icon (header far right) always white on mobile – override any dark mode or later CSS */
+        @media (max-width: 768px) {
+            .header .mobile-menu-btn span,
+            .header .mobile-menu-btn.active span {
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+        }
+
 
 
         /* Typewriter Effect */
