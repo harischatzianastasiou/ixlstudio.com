@@ -6346,10 +6346,14 @@
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.9);
         }
-        /* After user clicks "enable", overlay stops blocking so iframe gets focus and can be used */
+        /* After user clicks "enable", overlay stops blocking and iframe can receive clicks (play, etc.) */
         .currently-creating-video-overlay.is-enabled {
             pointer-events: none;
             opacity: 0;
+        }
+        /* When video is enabled, turn iframe pointer-events back on so play/controls work */
+        .currently-creating-video.video-enabled iframe {
+            pointer-events: auto;
         }
         @media (max-width: 768px) {
             .currently-creating-section {
@@ -22775,7 +22779,9 @@
             var overlay = document.getElementById('youtube-video-overlay');
             if (overlay) {
                 overlay.addEventListener('click', function() {
-                    overlay.classList.add('is-enabled'); /* Stops blocking iframe; overlay fades out */
+                    overlay.classList.add('is-enabled'); /* Stops blocking; overlay fades out */
+                    var container = overlay.closest('.currently-creating-video');
+                    if (container) container.classList.add('video-enabled'); /* Allow iframe to receive clicks so play works */
                 });
             }
         });
