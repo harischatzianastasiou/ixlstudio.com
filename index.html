@@ -13117,11 +13117,15 @@
 
 
 
-            justify-content: space-between;
+            flex-wrap: wrap;
 
 
 
             align-items: center;
+
+
+
+            gap: 0.5rem 1rem; /* Row gap, then column gap so date + tags sit together, read-time can wrap below */
 
 
 
@@ -13132,6 +13136,18 @@
             color: #666666; /* Medium gray text for white background */
 
 
+
+        }
+
+        .article-meta .article-read-time {
+
+            margin-left: auto; /* Keep read-time on the right when there is space */
+
+        }
+
+        .article-meta .article-tags {
+
+            margin-bottom: 0; /* Already in meta row */
 
         }
 
@@ -29842,10 +29858,6 @@
 
 
 
-                        <div class="article-tags"><span class="article-category">${article.category}</span><span class="article-category article-category-secondary">${article.secondaryTag || ''}</span></div>
-
-
-
                         <h3 class="article-title">${article.title}</h3>
 
 
@@ -29859,6 +29871,10 @@
 
 
                             <span class="article-date">${article.date}</span>
+
+
+
+                            <div class="article-tags"><span class="article-category">${article.category}</span><span class="article-category article-category-secondary">${article.secondaryTag || ''}</span></div>
 
 
 
