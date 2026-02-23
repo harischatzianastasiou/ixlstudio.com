@@ -6295,6 +6295,24 @@
             gap: 1.5rem;
             margin-top: 1rem;
         }
+        .currently-creating-video {
+            margin-top: 2rem;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .currently-creating-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
         @media (max-width: 768px) {
             .currently-creating-section {
                 padding-bottom: 1rem;
@@ -14971,8 +14989,9 @@
 
 
         .contact-icon {
-            width: 60px; /* Fixed width for consistent sizing like service icons */
-            height: 60px; /* Fixed height for consistent sizing like service icons */
+            display: none; /* Icons removed from contact window */
+            width: 60px;
+            height: 60px;
             margin: 0 auto 0.5rem auto; /* Tighter gap below icon */
             display: flex;
             align-items: center;
@@ -22091,6 +22110,9 @@
                     <a href="inbetween.html" class="currently-creating-cta">Read blog</a>
                     <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="currently-creating-cta">Follow On YouTube</a>
                 </div>
+                <div class="currently-creating-video">
+                    <iframe src="https://www.youtube.com/embed/-NivE5bhbUI" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </div>
         </section>
 
@@ -22563,32 +22585,6 @@
 
                     <a href="mailto:harischatzi@tutanota.com" class="contact-item">
 
-
-
-                        <div class="contact-icon">
-
-
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-
-
-
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-
-
-
-                                <polyline points="22,6 12,13 2,6"/>
-
-
-
-                            </svg>
-
-    
-
-                                        </div>
-
-    
-
                         <div class="contact-label">Email</div>
 
     
@@ -22610,36 +22606,6 @@
     
 
                     <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item">
-
-    
-
-                        <div class="contact-icon">
-
-    
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-
-    
-
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-
-    
-
-                                <rect x="2" y="9" width="4" height="12"/>
-
-    
-
-                                <circle cx="4" cy="4" r="2"/>
-
-    
-
-                            </svg>
-
-    
-
-                                    </div>
-
-    
 
                         <div class="contact-label">LinkedIn</div>
 
