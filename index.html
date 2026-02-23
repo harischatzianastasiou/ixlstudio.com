@@ -591,6 +591,32 @@
             }
         }
 
+        /* Custom scrollbar for desktop (mouse users) – dark track, purple thumb */
+        @media (min-width: 769px) {
+            /* Firefox */
+            html {
+                scrollbar-width: thin;
+                scrollbar-color: #8a53f7 rgba(0, 0, 0, 0.25);
+            }
+            /* Chrome, Safari, Edge – track */
+            html::-webkit-scrollbar {
+                width: 10px;
+            }
+            html::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.25);
+                border-radius: 5px;
+            }
+            /* Chrome, Safari, Edge – thumb */
+            html::-webkit-scrollbar-thumb {
+                background: #8a53f7;
+                border-radius: 5px;
+                border: 2px solid rgba(0, 0, 0, 0.25);
+            }
+            html::-webkit-scrollbar-thumb:hover {
+                background: #9d6cf9;
+            }
+        }
+
 
 
         
