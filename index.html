@@ -591,38 +591,6 @@
             }
         }
 
-        /* Custom scrollbar for desktop (mouse users) – dark track, purple thumb */
-        @media (min-width: 769px) {
-            /* Firefox */
-            html {
-                scrollbar-width: thin;
-                scrollbar-color: #8a53f7 rgba(0, 0, 0, 0.25);
-            }
-            /* Chrome, Safari, Edge – track */
-            html::-webkit-scrollbar {
-                width: 10px;
-            }
-            html::-webkit-scrollbar-track {
-                background: rgba(0, 0, 0, 0.25);
-                border-radius: 5px;
-            }
-            /* Chrome, Safari, Edge – thumb */
-            html::-webkit-scrollbar-thumb {
-                background: #8a53f7;
-                border-radius: 5px;
-                border: 2px solid rgba(0, 0, 0, 0.25);
-            }
-            html::-webkit-scrollbar-thumb:hover {
-                background: #9d6cf9;
-            }
-        }
-
-
-
-        
-
-
-
         /* Ensure all sections don't overflow */
 
 
@@ -2899,6 +2867,14 @@
 
             transform: translateY(0); /* Show overlay on hover */
 
+        }
+
+        /* Desktop: overlay is clickable – normal cursor and click opens project (drag still works on rest of card) */
+        @media (min-width: 769px) {
+            .hero-project-overlay {
+                pointer-events: auto;
+                cursor: pointer;
+            }
         }
 
 
@@ -22108,7 +22084,7 @@
                 <h2 class="currently-creating-title">Project "In Between"</h2>
                 <!-- <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p> -->
                 <div class="currently-creating-links">
-                    <a href="inbetween.html" class="currently-creating-cta">Read more</a>
+                    <a href="inbetween.html" class="currently-creating-cta">Read blog</a>
                     <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="currently-creating-cta">Follow On YouTube</a>
                 </div>
             </div>
@@ -22289,7 +22265,7 @@
 
                                         <h3 class="hero-project-title">In Between</h3>
 
-                                        <p class="hero-project-category">Click to explore</p>
+                                        <p class="hero-project-category">Click here 🪎 to explore</p>
 
 
                                     </div>
@@ -22304,7 +22280,7 @@
 
                                         <h3 class="hero-project-title">Skgchess</h3>
 
-                                        <p class="hero-project-category">Click to explore</p>
+                                        <p class="hero-project-category">Click here 🪎 to explore</p>
 
 
                                     </div>
@@ -26159,53 +26135,49 @@
 
 
 
-            // Mouse down event - start dragging
+            // Pointer down – capture pointer so drag never gets stuck when cursor moves over new card
 
-            projectsGrid.addEventListener('mousedown', (e) => {
+            projectsGrid.addEventListener('pointerdown', (e) => {
 
-                isDown = true; // Set dragging flag to true
+                e.preventDefault(); // Prevent focus on card so drag stays reliable
 
-                projectsGrid.classList.add('dragging'); // Add dragging class for cursor change
+                dragStartTime = Date.now(); dragStartX = e.pageX; // For click-vs-drag detection
 
-                startX = e.pageX - projectsGrid.offsetLeft; // Calculate initial X position relative to grid
+                isDown = true;
 
-                scrollLeft = projectsGrid.scrollLeft; // Store current scroll position
+                projectsGrid.classList.add('dragging');
 
-                lastX = e.pageX; // Initialize last X
+                startX = e.pageX - projectsGrid.offsetLeft;
 
-                lastT = performance.now(); // Initialize last time
+                scrollLeft = projectsGrid.scrollLeft;
 
-                dragDirectionStartX = e.pageX; // Store initial drag X for direction detection
+                lastX = e.pageX; lastT = performance.now();
 
-                e.preventDefault(); // Prevent default behavior (text selection)
+                dragDirectionStartX = e.pageX;
 
-            });
-
-
-
-            // Mouse leave event - stop dragging when mouse leaves grid
-
-            projectsGrid.addEventListener('mouseleave', () => {
-
-                isDown = false; // Reset dragging flag
-
-                projectsGrid.classList.remove('dragging'); // Remove dragging class
+                if (e.pointerType === 'mouse') projectsGrid.setPointerCapture(e.pointerId);
 
             });
 
+            // Pointer leave – only reset when we don't have capture
 
+            projectsGrid.addEventListener('pointerleave', (e) => {
 
-            // Global mouseup handler to reset drag state if it gets stuck (e.g., if loader interferes)
+                try { if (!projectsGrid.hasPointerCapture(e.pointerId)) { isDown = false; projectsGrid.classList.remove('dragging'); } } catch (_) { isDown = false; projectsGrid.classList.remove('dragging'); }
 
-            document.addEventListener('mouseup', () => {
+            });
 
-                if (isDown) {
+            // Global pointerup so drag always ends even if release is over another element
 
-                    isDown = false; // Reset dragging flag
+            document.addEventListener('pointerup', (e) => {
 
-                    projectsGrid.classList.remove('dragging'); // Remove dragging class
+                if (!isDown) return;
 
-                }
+                try { projectsGrid.releasePointerCapture(e.pointerId); } catch (_) {}
+
+                isDown = false;
+
+                projectsGrid.classList.remove('dragging');
 
             });
 
@@ -26325,35 +26297,33 @@
 
 
 
-            // Mouse up event - stop dragging and snap based on direction
+            // Pointer up – snap if dragged, release capture, reset (fires even when release over new card)
 
-            projectsGrid.addEventListener('mouseup', () => {
+            projectsGrid.addEventListener('pointerup', (e) => {
 
                 if (isDown) {
 
-                    // Determine drag direction based on start and end positions
+                    const dragDistance = dragDirectionEndX - dragDirectionStartX;
 
-                    const dragDistance = dragDirectionEndX - dragDirectionStartX; // Calculate total drag distance
+                    const dragDirection = dragDistance > 0 ? 'right' : 'left';
 
-                    const dragDirection = dragDistance > 0 ? 'right' : 'left'; // Right if positive, left if negative
-
-                    snapToDirectionalCard(dragDirection); // Snap to next/previous card based on direction
+                    snapToDirectionalCard(dragDirection);
 
                 }
 
-                isDown = false; // Reset dragging flag
+                try { projectsGrid.releasePointerCapture(e.pointerId); } catch (_) {}
 
-                projectsGrid.classList.remove('dragging'); // Remove dragging class
+                isDown = false;
+
+                projectsGrid.classList.remove('dragging');
 
             });
 
+            // Pointer move – with capture this runs even when cursor is over new card
 
+            projectsGrid.addEventListener('pointermove', (e) => {
 
-            // Mouse move event - handle dragging with acceleration
-
-            projectsGrid.addEventListener('mousemove', (e) => {
-
-                if (!isDown) return; // Exit if not dragging
+                if (!isDown) return;
 
                 e.preventDefault(); // Prevent default behavior
 
@@ -26500,16 +26470,6 @@
             let dragStartTime = 0; // Track when drag started
 
             let dragStartX = 0; // Track initial X position for drag detection
-
-
-
-            projectsGrid.addEventListener('mousedown', (e) => {
-
-                dragStartTime = Date.now(); // Record drag start time
-
-                dragStartX = e.pageX; // Record initial X position
-
-            });
 
 
 
@@ -26686,63 +26646,61 @@
 
 
 
-            // Mouse down event - start dragging (not when over Digital Stories title)
+            // Pointer down – start drag and capture pointer so drag never gets stuck when cursor moves over new card
 
-            heroProjectsGrid.addEventListener('mousedown', (e) => {
+            heroProjectsGrid.addEventListener('pointerdown', (e) => {
 
                 if (e.target.closest('.hero-content')) return; // Don't drag when over Digital Stories
 
-                isDown = true; // Set dragging flag to true
+                if (e.target.closest('.hero-project-overlay')) return; // Over "Click to explore" – allow click to open project, no drag
+
+                e.preventDefault(); // Prevent focus moving to card/link so drag stays reliable
+
+                dragStartTime = Date.now(); dragStartX = e.pageX; // For click-vs-drag detection
+
+                isDown = true; // Set dragging flag
 
                 heroHasDragged = false; // Assume click until pointer moves past threshold
 
-                heroProjectsGrid.classList.add('dragging'); // Add dragging class for cursor change
+                heroProjectsGrid.classList.add('dragging'); // Cursor change
 
-                startX = e.pageX - heroProjectsGrid.offsetLeft; // Calculate initial X position relative to grid
+                startX = e.pageX - heroProjectsGrid.offsetLeft; // Initial X relative to grid
 
-                scrollLeft = heroProjectsGrid.scrollLeft; // Store current scroll position
+                scrollLeft = heroProjectsGrid.scrollLeft; // Store scroll position
 
-                lastX = e.pageX; // Initialize last X
+                lastX = e.pageX; lastT = performance.now(); // For acceleration
 
-                lastT = performance.now(); // Initialize last time
+                dragDirectionStartX = e.pageX; // For snap direction
 
-                dragDirectionStartX = e.pageX; // Store initial drag X for direction detection
-
-                e.preventDefault(); // Prevent default behavior (text selection)
+                if (e.pointerType === 'mouse') heroProjectsGrid.setPointerCapture(e.pointerId); // All pointer events go to grid until release – prevents stick when cursor hits new project
 
             });
 
-
-
-            // Mouse leave event - stop dragging only when leaving to outside; over Digital Stories keep dragging
+            // Pointer leave – reset only when we don't have capture (e.g. touch); with capture we keep drag
 
             const heroContentEl = document.querySelector('.hero-content');
 
-            heroProjectsGrid.addEventListener('mouseleave', (e) => {
+            heroProjectsGrid.addEventListener('pointerleave', (e) => {
 
-                const related = e.relatedTarget; // Element the pointer moved to
+                const related = e.relatedTarget;
 
-                if (related && heroContentEl && heroContentEl.contains(related)) return; // Over Digital Stories – keep drag
+                if (related && heroContentEl && heroContentEl.contains(related)) return;
 
-                isDown = false; // Reset dragging flag
-
-                heroProjectsGrid.classList.remove('dragging'); // Remove dragging class
+                try { if (!heroProjectsGrid.hasPointerCapture(e.pointerId)) { isDown = false; heroProjectsGrid.classList.remove('dragging'); } } catch (_) { isDown = false; heroProjectsGrid.classList.remove('dragging'); }
 
             });
 
+            // Global pointerup so drag always ends even if release is over another element
 
+            document.addEventListener('pointerup', (e) => {
 
-            // Global mouseup handler to reset drag state if it gets stuck (e.g., if loader interferes)
+                if (!isDown) return;
 
-            document.addEventListener('mouseup', () => {
+                try { heroProjectsGrid.releasePointerCapture(e.pointerId); } catch (_) {}
 
-                if (isDown) {
+                isDown = false;
 
-                    isDown = false; // Reset dragging flag
-
-                    heroProjectsGrid.classList.remove('dragging'); // Remove dragging class
-
-                }
+                heroProjectsGrid.classList.remove('dragging');
 
             });
 
@@ -26862,33 +26820,35 @@
 
 
 
-            // Mouse up event - stop dragging; only snap if user actually dragged
+            // Pointer up on grid – snap if user dragged, then release capture and reset (with capture this fires even when releasing over new card)
 
-            heroProjectsGrid.addEventListener('mouseup', () => {
+            heroProjectsGrid.addEventListener('pointerup', (e) => {
 
                 if (isDown && heroHasDragged) {
 
-                    // Determine drag direction based on start and end positions
+                    const dragDistance = dragDirectionEndX - dragDirectionStartX;
 
-                    const dragDistance = dragDirectionEndX - dragDirectionStartX; // Calculate total drag distance
+                    const dragDirection = dragDistance > 0 ? 'right' : 'left';
 
-                    const dragDirection = dragDistance > 0 ? 'right' : 'left'; // Right if positive, left if negative
-
-                    snapToDirectionalHeroCard(dragDirection); // Snap to next/previous card based on direction
+                    snapToDirectionalHeroCard(dragDirection);
 
                 }
 
-                isDown = false; // Reset dragging flag
+                try { heroProjectsGrid.releasePointerCapture(e.pointerId); } catch (_) {}
 
-                heroProjectsGrid.classList.remove('dragging'); // Remove dragging class
+                isDown = false;
+
+                heroProjectsGrid.classList.remove('dragging');
 
             });
 
 
 
-            // Prevent card click from opening project when user dragged (quick click = open)
+            // Prevent card click when user dragged. Clicks on overlay ("Click to explore" / title) always open project.
 
             heroProjectsGrid.addEventListener('click', (e) => {
+
+                if (e.target.closest('.hero-project-overlay')) return; // Overlay click – allow, open project
 
                 if (heroHasDragged) {
 
@@ -26899,64 +26859,6 @@
                 }
 
             }, true); // Capture phase so we run before the card's click
-
-            // Mouse move event - handle dragging with acceleration (only after move past threshold)
-
-            heroProjectsGrid.addEventListener('mousemove', (e) => {
-
-                if (!isDown) return; // Exit if not dragging
-
-                if (!heroHasDragged && Math.abs(e.pageX - dragDirectionStartX) > 5) heroHasDragged = true; // Count as drag only after 5px move
-
-                if (!heroHasDragged) return; // Quick click: don't move the grid
-
-                e.preventDefault(); // Prevent default behavior
-
-                const now = performance.now(); // Current timestamp
-
-                const dx = e.pageX - lastX; // Delta X since last move
-
-                const dt = Math.max(1, now - lastT); // Delta time (ms)
-
-                const speed = Math.abs(dx / dt); // px/ms
-
-                const accel = clamp(1.0 + speed * 4, 1.0, 3.0); // Medium drag speed - responsive without being too aggressive
-
-                heroProjectsGrid.scrollLeft -= dx * accel; // Scroll with acceleration
-
-                lastX = e.pageX; // Update last X
-
-                lastT = now; // Update last time
-
-                dragDirectionEndX = e.pageX; // Update final drag X for direction detection
-
-            });
-
-            // Document mousemove so drag continues when pointer is over Digital Stories (element on top)
-
-            document.addEventListener('mousemove', (e) => {
-
-                if (!isDown || !heroHasDragged) return; // Only when already dragging
-
-                const now = performance.now();
-
-                const dx = e.pageX - lastX;
-
-                const dt = Math.max(1, now - lastT);
-
-                const speed = Math.abs(dx / dt);
-
-                const accel = clamp(1.0 + speed * 4, 1.0, 3.0);
-
-                heroProjectsGrid.scrollLeft -= dx * accel;
-
-                lastX = e.pageX;
-
-                lastT = now;
-
-                dragDirectionEndX = e.pageX;
-
-            });
 
             // Touch start event - start dragging on touch devices
 
@@ -26993,6 +26895,34 @@
             });
 
 
+
+            // Pointer move – with setPointerCapture this runs even when cursor is over new card (desktop)
+
+            heroProjectsGrid.addEventListener('pointermove', (e) => {
+
+                if (!isDown) return;
+
+                if (!heroHasDragged && Math.abs(e.pageX - dragDirectionStartX) > 5) heroHasDragged = true;
+
+                if (!heroHasDragged) return;
+
+                e.preventDefault();
+
+                const now = performance.now();
+
+                const dx = e.pageX - lastX;
+
+                const dt = Math.max(1, now - lastT);
+
+                const speed = Math.abs(dx / dt);
+
+                const accel = clamp(1.0 + speed * 4, 1.0, 3.0);
+
+                heroProjectsGrid.scrollLeft -= dx * accel;
+
+                lastX = e.pageX; lastT = now; dragDirectionEndX = e.pageX;
+
+            });
 
             // Touch move event - only capture horizontal swipes; let vertical scroll through to page
 
@@ -27079,16 +27009,6 @@
             let dragStartTime = 0; // Track when drag started
 
             let dragStartX = 0; // Track initial X position for drag detection
-
-
-
-            heroProjectsGrid.addEventListener('mousedown', (e) => {
-
-                dragStartTime = Date.now(); // Record drag start time
-
-                dragStartX = e.pageX; // Record initial X position
-
-            });
 
 
 
@@ -27332,7 +27252,28 @@
 
         setupHeroProjectCardAnimations();
 
-
+        // Overlay click: "Click to explore" / title – open project directly (capture phase so nothing else blocks it)
+        (function() {
+            const heroGrid = document.querySelector('.hero-projects-grid');
+            if (!heroGrid) return;
+            heroGrid.addEventListener('click', function(e) {
+                if (!e.target.closest('.hero-project-overlay')) return;
+                const card = e.target.closest('.hero-project-card');
+                if (!card) return;
+                e.preventDefault();
+                e.stopPropagation();
+                if (card.getAttribute('data-project') === 'skg-chess') {
+                    card.classList.add('clicking');
+                    setTimeout(function() { window.location.href = 'skgchess.html'; }, 800);
+                } else if (card.getAttribute('data-project') === 'in-between') {
+                    card.classList.add('clicking');
+                    setTimeout(function() { window.location.href = 'inbetween.html'; }, 800);
+                } else {
+                    card.classList.add('clicking');
+                    setTimeout(function() { alert('Coming Soon!'); card.classList.remove('clicking'); }, 800);
+                }
+            }, true);
+        })();
 
         // Handle hero project button clicks
 
@@ -27494,7 +27435,7 @@
 
                 
 
-                // Check hero projects grid (only if not over Digital Stories title area)
+                // Check hero projects grid (only if not over Digital Stories title area, and not over "Click to explore" overlay)
 
                 if (!isOverProjects && heroProjectsGrid) {
 
@@ -27512,9 +27453,25 @@
 
                         const rect = heroProjectsGrid.getBoundingClientRect(); // Get grid position
 
-                        isOverProjects = mouseX >= rect.left && mouseX <= rect.right && 
+                        const inHeroGrid = mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
 
-                                        mouseY >= rect.top && mouseY <= rect.bottom; // Check if mouse is over grid
+                        if (inHeroGrid) {
+
+                            const overlays = heroProjectsGrid.querySelectorAll('.hero-project-overlay');
+
+                            let overOverlay = false; // Over project title / "Click to explore" – show normal cursor, allow click
+
+                            overlays.forEach((ov) => {
+
+                                const r = ov.getBoundingClientRect();
+
+                                if (mouseX >= r.left && mouseX <= r.right && mouseY >= r.top && mouseY <= r.bottom) overOverlay = true;
+
+                            });
+
+                            isOverProjects = !overOverlay; // Only show drag cursor when NOT over overlay
+
+                        }
 
                     }
 
