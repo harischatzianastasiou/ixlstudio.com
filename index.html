@@ -26302,13 +26302,15 @@
 
             let isTouchDragging = false; // Track touch dragging state
 
+            let touchStartPageX = 0; let touchStartPageY = 0; // Page coords at touch start for intent detection
+
+            let touchDragIntent = null; // 'horizontal' = swipe cards, 'vertical' = let page scroll (set on first move)
+
 
 
             projectsGrid.addEventListener('touchstart', (e) => {
 
-                isTouchDragging = true; // Set touch dragging flag
-
-                projectsGrid.classList.add('dragging'); // Add dragging class
+                isTouchDragging = true; // Touch is active
 
                 touchStartX = e.touches[0].pageX - projectsGrid.offsetLeft; // Calculate initial touch X position
 
@@ -26320,23 +26322,41 @@
 
                 dragDirectionStartX = e.touches[0].pageX; // Store initial drag X for direction detection
 
+                touchStartPageX = e.touches[0].pageX; touchStartPageY = e.touches[0].pageY; // For vertical vs horizontal intent
+
+                touchDragIntent = null; // Decide on first move so user can scroll page or swipe cards
+
             });
 
 
 
-            // Touch move event - handle dragging on touch devices with acceleration
+            // Touch move event - only capture horizontal swipes; let vertical scroll through to page
 
             projectsGrid.addEventListener('touchmove', (e) => {
 
                 if (!isTouchDragging) return; // Exit if not dragging
 
-                e.preventDefault(); // Prevent default scrolling
+                const pageX = e.touches[0].pageX; const pageY = e.touches[0].pageY; // Current touch position
+
+                const totalDeltaX = pageX - touchStartPageX; const totalDeltaY = pageY - touchStartPageY; // Movement since start
+
+                const moveThreshold = 10; // px – decide intent after this much movement
+
+                if (touchDragIntent === null && (Math.abs(totalDeltaX) > moveThreshold || Math.abs(totalDeltaY) > moveThreshold)) {
+
+                    touchDragIntent = Math.abs(totalDeltaX) > Math.abs(totalDeltaY) ? 'horizontal' : 'vertical'; // One-time intent
+
+                    if (touchDragIntent === 'horizontal') projectsGrid.classList.add('dragging'); // Show drag only when swiping cards
+
+                }
+
+                if (touchDragIntent === 'vertical') return; // Do not preventDefault – allow page to scroll
+
+                e.preventDefault(); // Only prevent when horizontal so grid scrolls, not page
 
                 const now = performance.now(); // Current timestamp
 
-                const x = e.touches[0].pageX; // Current touch X
-
-                const dx = x - lastX; // Delta X since last move
+                const dx = pageX - lastX; // Delta X since last move
 
                 const dt = Math.max(1, now - lastT); // Delta time (ms)
 
@@ -26346,21 +26366,21 @@
 
                 projectsGrid.scrollLeft -= dx * accel; // Scroll with acceleration
 
-                lastX = x; // Update last X
+                lastX = pageX; // Update last X
 
                 lastT = now; // Update last time
 
-                dragDirectionEndX = x; // Update final drag X for direction detection
+                dragDirectionEndX = pageX; // Update final drag X for direction detection
 
             });
 
 
 
-            // Touch end event - stop dragging and snap based on direction
+            // Touch end event - stop dragging and snap only if user was swiping cards (horizontal)
 
             projectsGrid.addEventListener('touchend', () => {
 
-                if (isTouchDragging) {
+                if (isTouchDragging && touchDragIntent === 'horizontal') {
 
                     // Determine drag direction based on start and end positions
 
@@ -26373,6 +26393,8 @@
                 }
 
                 isTouchDragging = false; // Reset touch dragging flag
+
+                touchDragIntent = null; // Reset so next touch can choose vertical or horizontal again
 
                 projectsGrid.classList.remove('dragging'); // Remove dragging class
 
@@ -26859,13 +26881,15 @@
 
             let isTouchDragging = false; // Track touch dragging state
 
+            let touchStartPageX = 0; let touchStartPageY = 0; // Page coords at touch start for intent detection
+
+            let touchDragIntent = null; // 'horizontal' = swipe cards, 'vertical' = let page scroll (set on first move)
+
 
 
             heroProjectsGrid.addEventListener('touchstart', (e) => {
 
-                isTouchDragging = true; // Set touch dragging flag
-
-                heroProjectsGrid.classList.add('dragging'); // Add dragging class
+                isTouchDragging = true; // Touch is active
 
                 touchStartX = e.touches[0].pageX - heroProjectsGrid.offsetLeft; // Calculate initial touch X position
 
@@ -26877,23 +26901,41 @@
 
                 dragDirectionStartX = e.touches[0].pageX; // Store initial drag X for direction detection
 
+                touchStartPageX = e.touches[0].pageX; touchStartPageY = e.touches[0].pageY; // For vertical vs horizontal intent
+
+                touchDragIntent = null; // Decide on first move so user can scroll page or swipe cards
+
             });
 
 
 
-            // Touch move event - handle dragging on touch devices with acceleration
+            // Touch move event - only capture horizontal swipes; let vertical scroll through to page
 
             heroProjectsGrid.addEventListener('touchmove', (e) => {
 
                 if (!isTouchDragging) return; // Exit if not dragging
 
-                e.preventDefault(); // Prevent default scrolling
+                const pageX = e.touches[0].pageX; const pageY = e.touches[0].pageY; // Current touch position
+
+                const totalDeltaX = pageX - touchStartPageX; const totalDeltaY = pageY - touchStartPageY; // Movement since start
+
+                const moveThreshold = 10; // px – decide intent after this much movement
+
+                if (touchDragIntent === null && (Math.abs(totalDeltaX) > moveThreshold || Math.abs(totalDeltaY) > moveThreshold)) {
+
+                    touchDragIntent = Math.abs(totalDeltaX) > Math.abs(totalDeltaY) ? 'horizontal' : 'vertical'; // One-time intent
+
+                    if (touchDragIntent === 'horizontal') heroProjectsGrid.classList.add('dragging'); // Show drag only when swiping cards
+
+                }
+
+                if (touchDragIntent === 'vertical') return; // Do not preventDefault – allow page to scroll
+
+                e.preventDefault(); // Only prevent when horizontal so grid scrolls, not page
 
                 const now = performance.now(); // Current timestamp
 
-                const x = e.touches[0].pageX; // Current touch X
-
-                const dx = x - lastX; // Delta X since last move
+                const dx = pageX - lastX; // Delta X since last move
 
                 const dt = Math.max(1, now - lastT); // Delta time (ms)
 
@@ -26903,21 +26945,21 @@
 
                 heroProjectsGrid.scrollLeft -= dx * accel; // Scroll with acceleration
 
-                lastX = x; // Update last X
+                lastX = pageX; // Update last X
 
                 lastT = now; // Update last time
 
-                dragDirectionEndX = x; // Update final drag X for direction detection
+                dragDirectionEndX = pageX; // Update final drag X for direction detection
 
             });
 
 
 
-            // Touch end event - stop dragging and snap based on direction
+            // Touch end event - stop dragging and snap only if user was swiping cards (horizontal)
 
             heroProjectsGrid.addEventListener('touchend', () => {
 
-                if (isTouchDragging) {
+                if (isTouchDragging && touchDragIntent === 'horizontal') {
 
                     // Determine drag direction based on start and end positions
 
@@ -26930,6 +26972,8 @@
                 }
 
                 isTouchDragging = false; // Reset touch dragging flag
+
+                touchDragIntent = null; // Reset so next touch can choose vertical or horizontal again
 
                 heroProjectsGrid.classList.remove('dragging'); // Remove dragging class
 
