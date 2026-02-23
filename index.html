@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 
@@ -3128,9 +3128,21 @@
                 height: 78%;
             }
         }
+        /* 24" and larger (1920px+): increase project window so it uses more screen */
         @media (min-width: 1920px) {
             .hero-projects-container {
-                max-width: 1600px; /* Wider on 24"/27" so hero project cards use more width */
+                width: 92%; /* Slightly more of viewport width */
+                max-width: 2000px; /* Much wider than 1600px so cards have more room on big screens */
+                height: 82%; /* Taller so window fills more vertical space */
+            }
+        }
+
+        /* 27" and above / QHD+ (2560px+): even larger project window for very big screens */
+        @media (min-width: 2560px) {
+            .hero-projects-container {
+                width: 94%; /* Use most of viewport on 4K/ultrawide */
+                max-width: 2800px; /* Very wide so project cards scale up on 27"+ monitors */
+                height: 85%; /* Near full height for immersive project area */
             }
         }
 
