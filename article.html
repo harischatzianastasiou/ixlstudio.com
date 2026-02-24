@@ -10,13 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { color-scheme: light; min-height: 100%; }
+        html { color-scheme: light; height: 100%; }
+        /* Body does not scroll – keeps mobile address bar visible (Chrome/Safari) */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #1a1a1a;
             color: #e4dcd2;
             line-height: 1.7;
-            min-height: 100vh;
+            height: 100%;
+            overflow: hidden;
+        }
+        /* Wrapper scrolls instead of viewport so toolbar stays visible on mobile */
+        .scroll-wrapper {
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
         /* Header: same as skgchess.html */
         .header {
@@ -138,12 +148,14 @@
             </ul>
         </nav>
     </header>
-    <main class="article-wrap">
-        <a href="index.html#articles" class="back-link">← Back to Articles</a>
-        <div id="article-root">
-            <p class="error-msg">Loading…</p>
-        </div>
-    </main>
+    <div class="scroll-wrapper">
+        <main class="article-wrap">
+            <a href="index.html#articles" class="back-link">← Back to Articles</a>
+            <div id="article-root">
+                <p class="error-msg">Loading…</p>
+            </div>
+        </main>
+    </div>
     <script>
         // Read article id from URL (?id=slug or #slug)
         function getArticleId() {
