@@ -5605,7 +5605,7 @@
         }
         .agency-headline {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2.75rem, 6vw, 4.5rem);
+            font-size: clamp(2.5rem, 5.25vw, 3.85rem);
             font-weight: 700;
             line-height: 1.08;
             letter-spacing: -0.03em;
@@ -6174,6 +6174,7 @@
             color: #e4dcd2;
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
+            text-align: center;
         }
         .about-this-place-intro {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -6225,6 +6226,10 @@
         }
         .about-this-place-cta:hover {
             color: #b794f6;
+        }
+        /* Keep phrase on one line so "my article below" doesn't break awkwardly */
+        .no-break {
+            white-space: nowrap;
         }
         .about-this-place-youtube {
             position: relative;
@@ -6414,7 +6419,7 @@
                 margin-bottom: 0.4rem;
             }
             .agency-headline {
-                font-size: clamp(2rem, 8vw, 3rem);
+                font-size: clamp(1.85rem, 7vw, 2.75rem);
                 line-height: 1.12;
                 margin-bottom: 1rem;
             }
@@ -6544,7 +6549,7 @@
                 font-size: 0.85rem;
             }
             .agency-headline {
-                font-size: clamp(1.9rem, 7.5vw, 2.5rem);
+                font-size: clamp(1.7rem, 6.5vw, 2.25rem);
             }
             .agency-description {
                 font-size: 0.8125rem;
@@ -22163,9 +22168,9 @@
 
             <div class="agency-center">
 
-                <p class="agency-tagline">Personal Archive of My Work.</p>
+                <p class="agency-tagline">Haris Chatzianastasiou - Collection of Thoughts, Ideas, and Creations</p>
 
-                <h1 class="agency-headline">A Collection Of Thoughts, Ideas, and Creations.</h1>
+                <h1 class="agency-headline">A Public Experiment in Creation and Self-Observation.</h1>
                 <!-- 
                                 <h2 class="agency-headline"></h1>
                 
@@ -22193,11 +22198,20 @@
 
         </section>
 
+        <!-- Welcome / about this place – intro to personal work (same style as previous “Project In Between” block) -->
+        <section class="about-this-place-section">
+            <div class="about-this-place-container">
+                <h2 class="about-this-place-title">Welcome</h2>
+                <p class="about-this-place-intro">Welcome to my personal work, where I create things and document my thinking, self-reflection, and viewpoints.</p>
+                <p class="about-this-place-intro">To get to know me better and see if this page can be of use to you, I highly recommend reading <span class="no-break">my article below,</span> <a href="article.html?id=on-how-things-got-here" class="about-this-place-cta">On How Things Got Here</a>.</p>
+            </div>
+        </section>
+
         <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
         <section id="articles" class="articles-section">
             <div class="articles-container">
                 <div class="section-header">
-                    <h2 class="section-title"> </h2>
+                    <h2 class="section-title">Recent Thoughts</h2>
                 </div>
                 <div class="articles-list-grid" id="articlesListRoot">
                     <!-- Filled by JS from articles.json -->
@@ -22247,7 +22261,7 @@
 
         
 
-                            <h2 class="section-title" style="text-transform: none;">Creations</h2>
+                            <h2 class="section-title" style="text-transform: none;">All Creations</h2>
 
         
 
