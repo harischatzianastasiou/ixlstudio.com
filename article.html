@@ -156,6 +156,28 @@
         .article-body h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
         .article-body ul, .article-body ol { margin: 1rem 0 1rem 1.5rem; }
         .article-body li { margin-bottom: 0.4rem; }
+        .article-body hr { margin: 2rem 0; border: none; border-top: 1px solid rgba(0,0,0,0.15); }
+        body.dark-mode .article-body hr { border-top-color: rgba(255,255,255,0.2); }
+        /* Prev/next letter navigation for multi-part story */
+        .letter-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.12);
+        }
+        body.dark-mode .letter-nav { border-top-color: rgba(255,255,255,0.15); }
+        .letter-nav a {
+            color: rgba(0,0,0,0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .letter-nav a:hover { color: #1a1a1a; text-decoration: underline; }
+        body.dark-mode .letter-nav a { color: rgba(255,255,255,0.75); }
+        body.dark-mode .letter-nav a:hover { color: #e4dcd2; }
+        .letter-nav .letter-next { margin-left: auto; }
         .error-msg { color: #c66; margin-top: 2rem; }
     </style>
 </head>
@@ -216,10 +238,35 @@
                         return;
                     }
                     document.title = article.title + ' — IXLSTUDIO';
+                    // Build prev/next letter links if this is part of the "letter from the creator" series (id = letter-from-the-creator-N)
+                    var letterNav = '';
+                    var match = article.id.match(/^letter-from-the-creator-(\d+)$/);
+                    if (match) {
+                        var num = parseInt(match[1], 10);
+                        var prevId = num > 0 ? 'letter-from-the-creator-' + (num - 1) : null;
+                        var nextId = 'letter-from-the-creator-' + (num + 1);
+                        var prevArticle = prevId ? articles.find(function(a) { return a.id === prevId; }) : null;
+                        var nextArticle = articles.find(function(a) { return a.id === nextId; });
+                        if (prevArticle || nextArticle) {
+                            letterNav = '<nav class="letter-nav" aria-label="Letter navigation">';
+                            if (prevArticle) {
+                                letterNav += '<a href="article.html?id=' + encodeURIComponent(prevArticle.id) + '" class="letter-prev">← Previous letter</a>';
+                            } else {
+                                letterNav += '<span></span>';
+                            }
+                            if (nextArticle) {
+                                letterNav += '<a href="article.html?id=' + encodeURIComponent(nextArticle.id) + '" class="letter-next">Next letter →</a>';
+                            } else {
+                                letterNav += '<span></span>';
+                            }
+                            letterNav += '</nav>';
+                        }
+                    }
                     root.innerHTML =
                         '<h1 class="article-title">' + escapeHtml(article.title) + '</h1>' +
                         (article.date ? '<p class="article-meta">' + escapeHtml(article.date) + '</p>' : '') +
-                        '<div class="article-body">' + article.content + '</div>';
+                        '<div class="article-body">' + article.content + '</div>' +
+                        letterNav;
                 })
                 .catch(function() {
                     root.innerHTML = '<p class="error-msg">Could not load articles. Check that articles.json exists.</p>';
