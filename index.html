@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 
@@ -37,7 +37,7 @@
     <link rel="preload" as="image" href="3.jpg">
     <link rel="preload" as="image" href="1.jpg">
     <link rel="preload" as="image" href="22.jpg">
-    <link rel="preload" as="image" href="22.jpg">
+    <link rel="preload" as="image" href="skgchess.png">
     <link rel="preload" as="image" href="black1.jpg">
     <link rel="preload" as="image" href="priest.png">
     <link rel="preload" as="image" href="black3.jpg">
@@ -2848,37 +2848,39 @@
 
             position: absolute; /* Absolute positioning over image */
 
-            bottom: 0; /* Position at bottom of card */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
 
-            left: 0; /* Position at left edge */
-
-            right: 0; /* Position at right edge */
-
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); /* Gradient overlay */
+            background: rgba(0, 0, 0, 0.35); /* Subtle dark overlay so title stays readable */
 
             padding: 2rem; /* Padding for text */
 
             color: white; /* White text color */
 
-            transform: translateY(100%); /* Hide overlay by default */
+            display: flex; /* Column: center block for title, category at bottom */
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: flex-start; /* Center block grows (flex:1), category stays at bottom */
+            text-align: center;
 
-            transition: transform 0.3s ease; /* Smooth overlay transitions */
-
-            pointer-events: none; /* Let drag pass through – grid keeps receiving mousemove over title */
-
-        }
-
-
-
-        .hero-project-card:hover .hero-project-overlay {
-
-            transform: translateY(0); /* Show overlay on hover */
+            pointer-events: none; /* Overlay does not capture clicks – only "Learn more" will */
 
         }
 
-        /* Desktop: overlay is clickable – normal cursor and click opens project (drag still works on rest of card) */
+        /* Wrapper takes remaining space and centers the title in the middle of the card */
+        .hero-project-overlay-center {
+            flex: 1; /* Take all space above "Learn more" */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0; /* Allow flex child to shrink */
+        }
+
+        /* Desktop: only "Learn more" is clickable – cursor and click open project when hovering over it */
         @media (min-width: 769px) {
-            .hero-project-overlay {
+            .hero-project-category {
                 pointer-events: auto;
                 cursor: pointer;
             }
@@ -2888,13 +2890,15 @@
 
         .hero-project-title {
 
-            font-size: 1.5rem; /* Large title font size */
+            font-size: clamp(1.75rem, 3.5vw, 2.25rem); /* Big clear letters, scales with viewport, not too big */
 
-            font-weight: 600; /* Semi-bold font weight */
+            font-weight: 700; /* Bold for clarity */
 
             margin-bottom: 0.5rem; /* Space below title */
 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+
+            letter-spacing: 0.02em; /* Slight spacing for readability */
 
         }
 
@@ -2918,6 +2922,8 @@
             opacity: 0.8; /* Slightly transparent */
 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+
+            padding-bottom: 0.5rem; /* Slight space from card bottom */
 
         }
 
@@ -12514,6 +12520,34 @@
 
 
 
+        /* Articles list (standalone articles section – links to article.html) */
+        .articles-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .articles-list-item {
+            display: block;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            color: #e4dcd2;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .articles-list-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .articles-list-item .item-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.35rem; }
+        .articles-list-item .item-excerpt { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+        .articles-list-item .item-date { font-size: 0.8rem; opacity: 0.7; margin-top: 0.5rem; }
+        #articles .articles-list-grid:empty::after { content: 'No articles yet.'; opacity: 0.7; }
+
         /* Override text colors for Articles section with white background */
 
 
@@ -13238,18 +13272,6 @@
 
 
 
-
-
-
-        .article-date {
-
-
-
-            font-weight: 500;
-
-
-
-        }
 
 
 
@@ -21897,9 +21919,9 @@
 
 
         /* FINAL OVERRIDE: Articles section completely static - no animations whatsoever */
-        #articles .section-header,
-        #articles .section-subtitle,
-        #articles .section-title {
+        #devlog .section-header,
+        #devlog .section-subtitle,
+        #devlog .section-title {
             opacity: 1 !important;
             transform: none !important;
             animation: none !important;
@@ -21916,7 +21938,7 @@
             display: none !important; /* Hidden on desktop and mobile */
         }
         /* All Projects, Blog, Articles: use warm off-white #e4dcd2 (not white) */
-        #articles .section-title,
+        #devlog .section-title,
         .articles-section .section-title,
         .projects-section .section-title,
         .services-section .section-title {
@@ -21926,21 +21948,21 @@
             background-clip: unset !important;
             color: #e4dcd2 !important;
         }
-        #articles .section-subtitle,
+        #devlog .section-subtitle,
         .articles-section .section-subtitle {
             color: #e4dcd2 !important;
         }
         
         /* Override any GSAP transforms */
-        #articles .section-header * {
+        #devlog .section-header * {
             opacity: 1 !important;
             transform: none !important;
         }
         /* Article images/cards: already visible, no load animation on scroll */
-        #articles .article-card,
-        #articles .article-image-wrap,
-        #articles .article-image,
-        #articles .article-content {
+        #devlog .article-card,
+        #devlog .article-image-wrap,
+        #devlog .article-image,
+        #devlog .article-content {
             opacity: 1 !important;
             transform: none !important;
             transition: none !important;
@@ -22034,7 +22056,9 @@
 
                 <li><a href="#services" onclick="scrollToSection('services')">Stories</a></li>
 
-                <li><a href="#articles" onclick="scrollToSection('articles')">Blog</a></li>
+                <li><a href="#devlog" onclick="scrollToSection('devlog')">Blog</a></li>
+
+                <li><a href="#articles" onclick="scrollToSection('articles')">Articles</a></li>
 
                 <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
 
@@ -22153,12 +22177,8 @@
                 <br>
                 <br>
                 <br>
-                <h2 class="currently-creating-title">Project "In Between"</h2>
+                <h2 class="currently-creating-title">Project Changing Ways</h2>
                 <!-- <p class="currently-creating-desc">Follow the process of creating a game from scratch and learn together.</p> -->
-                <div class="currently-creating-links">
-                    <a href="inbetween.html" class="currently-creating-cta">Read blog</a>
-                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="currently-creating-cta">Follow On YouTube</a>
-                </div>
                 <div class="currently-creating-video">
                     <iframe src="https://www.youtube.com/embed/-NivE5bhbUI" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <!-- Overlay allows page to scroll when pointer is over video; one click enables the player -->
@@ -22340,7 +22360,11 @@
 
                                     <div class="hero-project-overlay">
 
-                                        <h3 class="hero-project-title">In Between</h3>
+                                        <div class="hero-project-overlay-center">
+
+                                            <h3 class="hero-project-title">Changing Ways</h3>
+
+                                        </div>
 
                                         <p class="hero-project-category">Learn more ⏷</p>
 
@@ -22351,11 +22375,15 @@
 
                                 <div class="hero-project-card" data-project="skg-chess">
 
-                                    <img src="22.jpg" alt="SKG Chess Project" class="hero-project-image">
+                                    <img src="skgchess.png" alt="SKG Chess Project" class="hero-project-image">
 
                                     <div class="hero-project-overlay">
 
-                                        <h3 class="hero-project-title">Skgchess</h3>
+                                        <div class="hero-project-overlay-center">
+
+                                            <h3 class="hero-project-title">Skgchess</h3>
+
+                                        </div>
 
                                         <p class="hero-project-category">Learn more ⏷</p>
 
@@ -22425,7 +22453,7 @@
 
         <!-- Contact Section -->
 
-        <section id="articles" class="articles-section">
+        <section id="devlog" class="articles-section">
 
 
 
@@ -22503,7 +22531,7 @@
 
 
 
-                    <h2 class="section-title">Devlog</h2>
+                    <h2 class="section-title">Devlog of projects</h2>
 
 
 
@@ -22596,6 +22624,18 @@
 
 
 
+        </section>
+
+        <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
+        <section id="articles" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Articles</h2>
+                </div>
+                <div class="articles-list-grid" id="articlesListRoot">
+                    <!-- Filled by JS from articles.json -->
+                </div>
+            </div>
         </section>
 
         <section id="contact" class="contact-section">
@@ -22903,7 +22943,7 @@
             // Fix for scroll visibility issue - ensure content is visible when page loads at any scroll position
             // This function checks if sections are already in view and makes them visible immediately
             function fixScrollVisibilityOnLoad() {
-                const sections = ['home', 'services', 'projects', 'articles', 'about', 'contact'];
+                const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'about', 'contact'];
                 const windowHeight = window.innerHeight;
                 const scrollY = getScrollY();
                 
@@ -25398,7 +25438,7 @@
             (function() {
                 var logo = document.querySelector('.header .logo-image');
                 if (!logo) return;
-                var otherSections = ['services', 'home', 'articles', 'contact'].map(function(id) { return document.getElementById(id); }).filter(Boolean);
+                var otherSections = ['services', 'home', 'devlog', 'articles', 'contact'].map(function(id) { return document.getElementById(id); }).filter(Boolean);
                 if (otherSections.length === 0) return;
                 var bigH = '180px', bigW = '800px', smallH = '130px', smallW = '520px';
                 logo.style.setProperty('transition', 'height 0.4s ease-out, max-width 0.4s ease-out', 'important');
@@ -27504,19 +27544,19 @@
 
                         if (inHeroGrid) {
 
-                            const overlays = heroProjectsGrid.querySelectorAll('.hero-project-overlay');
+                            const learnMoreEls = heroProjectsGrid.querySelectorAll('.hero-project-category');
 
-                            let overOverlay = false; // Over project title / "Click to explore" – show normal cursor, allow click
+                            let overLearnMore = false; // Over "Learn more" only – show pointer cursor, allow click
 
-                            overlays.forEach((ov) => {
+                            learnMoreEls.forEach((el) => {
 
-                                const r = ov.getBoundingClientRect();
+                                const r = el.getBoundingClientRect();
 
-                                if (mouseX >= r.left && mouseX <= r.right && mouseY >= r.top && mouseY <= r.bottom) overOverlay = true;
+                                if (mouseX >= r.left && mouseX <= r.right && mouseY >= r.top && mouseY <= r.bottom) overLearnMore = true;
 
                             });
 
-                            isOverProjects = !overOverlay; // Only show drag cursor when NOT over overlay
+                            isOverProjects = !overLearnMore; // Show drag cursor unless over "Learn more"
 
                         }
 
@@ -29688,7 +29728,7 @@
 
 
 
-                    secondaryTag: "Godot, 2D Art, Music, Game Design",
+                    secondaryTag: "Godot, 2D Art, Game Design",
 
 
 
@@ -29696,7 +29736,7 @@
 
 
 
-                    excerpt: "Creating an atmospheric game from scratch and learning together.",
+                    excerpt: "I am learning how to make my game and documenting the creation process here and on YouTube.",
 
 
 
@@ -29736,7 +29776,7 @@
 
 
 
-                    excerpt: "A retro chess multiplayer platform written in Java and Spring Boot.",
+                    excerpt: "A retro chess multiplayer platform.",
 
 
 
@@ -29934,14 +29974,6 @@
 
 
                         <div class="article-meta">
-
-
-
-                            <span class="article-date">${article.date}</span>
-
-
-
-                            <div class="article-tags"><span class="article-category">${article.category}</span><span class="article-category article-category-secondary">${article.secondaryTag || ''}</span></div>
 
 
 
@@ -30167,7 +30199,27 @@
 
         });
 
-
+        // Load standalone articles list from articles.json (click opens article.html?id=slug)
+        document.addEventListener('DOMContentLoaded', function() {
+            var root = document.getElementById('articlesListRoot');
+            if (!root) return;
+            fetch('articles.json')
+                .then(function(res) { return res.ok ? res.json() : Promise.reject(); })
+                .then(function(articles) {
+                    if (!Array.isArray(articles) || articles.length === 0) return;
+                    root.innerHTML = articles.map(function(a) {
+                        var title = (a.title || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        var excerpt = (a.excerpt || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        var date = (a.date || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        return '<a href="article.html?id=' + encodeURIComponent(a.id) + '" class="articles-list-item">' +
+                            '<span class="item-title">' + title + '</span>' +
+                            (excerpt ? '<span class="item-excerpt">' + excerpt + '</span>' : '') +
+                            (date ? '<span class="item-date">' + date + '</span>' : '') +
+                            '</a>';
+                    }).join('');
+                })
+                .catch(function() {});
+        });
 
 
 
@@ -30461,7 +30513,7 @@
 
 
 
-            const sections = ['home', 'services', 'projects', 'articles', 'about', 'contact'];
+            const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'about', 'contact'];
 
 
 
@@ -33625,7 +33677,7 @@
 
                 const topbar = document.querySelector('.topbar'); // Get the topbar element
 
-                const sections = ['home', 'services', 'projects', 'about', 'articles', 'contact']; // Array of section IDs
+                const sections = ['home', 'services', 'projects', 'about', 'devlog', 'articles', 'contact']; // Array of section IDs
 
                 const sectionTexts = {
 
@@ -33637,6 +33689,7 @@
 
                     'about': 'CREATOR', // Text for about section
 
+                    'devlog': 'BLOG', // Text for devlog section
                     'articles': 'ARTICLES', // Text for articles section
 
                     'contact': 'CONTACT' // Text for contact section
@@ -33647,7 +33700,7 @@
 
                 // Sections where topbar should be hidden
 
-                const hideTopbarSections = ['services','projects','about', 'articles', 'contact'];
+                const hideTopbarSections = ['services','projects','about', 'devlog', 'articles', 'contact'];
 
 
 

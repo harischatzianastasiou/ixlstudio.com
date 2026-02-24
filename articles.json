@@ -1,0 +1,9 @@
+[
+  {
+    "id": "creation-process",
+    "title": "On the creation process",
+    "excerpt": "How I approach building something from scratch: ideas, discipline, and sharing the journey.",
+    "date": "February 2026",
+    "content": "<p>I wanted to write a short note on how I think about the creation process — especially when it comes to games or any long-term project.</p><p>It usually starts with an idea that won’t leave. Then comes the hard part: turning that into a habit. I try to work in small steps, document as I go, and keep the scope tight so I can actually finish.</p><p>Sharing the process (here and on YouTube) keeps me accountable and helps me see the path from “early idea” to “something playable.” This article is a placeholder — you can edit <code>articles.json</code> and change this content to whatever you like. Add more objects to the array to get more articles on the site.</p>"
+  }
+]
