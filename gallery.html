@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IXLSTUDIO — Gallery</title>
+    <link rel="icon" type="image/png" href="ixl.png">
+    <!-- Preload gallery images -->
+    <link rel="preload" as="image" href="blockman.png">
+    <link rel="preload" as="image" href="lilith.png">
+    <link rel="preload" as="image" href="retrochess2.jpg">
+    <link rel="preload" as="image" href="22.jpg">
+    <link rel="preload" as="image" href="i.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { color-scheme: light; height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #1a1a1a;
+            color: #e4dcd2;
+            line-height: 1.6;
+            height: 100%;
+            overflow: hidden;
+        }
+        .scroll-wrapper {
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            height: 90px;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .logo {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .logo:hover { color: rgba(255,255,255,0.8); }
+        .logo-subtitle {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1;
+            margin-top: 0.2rem;
+        }
+        .gallery-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+        .gallery-main h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-bottom: 2rem;
+        }
+        .gallery-section {
+            margin-bottom: 3rem;
+        }
+        .gallery-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            break-inside: avoid;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .gallery-item .caption {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .header { padding: 1rem 2rem; height: 70px; }
+            .logo { font-size: 1rem; }
+            .logo-subtitle { font-size: 0.7rem; margin-top: 0.1rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .header { padding: 0.8rem 1rem; height: 60px; }
+            .logo { font-size: 0.9rem; }
+            .logo-subtitle { font-size: 0.6rem; margin-top: 0.05rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <span class="logo-subtitle">PROJECTS</span>
+        </div>
+    </header>
+    <div class="scroll-wrapper">
+        <main class="gallery-main">
+            <h1>Gallery</h1>
+
+            <section class="gallery-section">
+                <h2>Changing Ways</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="blockman.png" alt="Changing Ways concept">
+                        <p class="caption">Early concept and exploration</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="lilith.png" alt="Changing Ways in progress">
+                        <p class="caption">Project in progress</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="gallery-section">
+                <h2>SKG Chess</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="retrochess2.jpg" alt="SKG Chess interface">
+                        <p class="caption">Main game interface with retro chess pieces</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="22.jpg" alt="SKG Chess mobile">
+                        <p class="caption">Mobile-responsive design for on-the-go play</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="i.jpg" alt="SKG Chess analysis">
+                        <p class="caption">Advanced game analysis and move suggestions</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

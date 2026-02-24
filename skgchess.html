@@ -10,8 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     
-    <!-- Preload critical images and video -->
+    <!-- Preload landing image and background video -->
     <link rel="preload" as="image" href="22.jpg">
+    <link rel="preload" as="video" href="hero-bg.mp4">
     <style>
         /* Prevent browser dark mode from overriding nav/colors */
         html { color-scheme: light; height: 100%; }
@@ -159,80 +160,46 @@
             color: #e4dcd2;
         }
 
-        /* Project details section - transparent so video shows, white text */
-        .project-details {
-            padding: 6rem 4rem;
-            background: transparent;
-            max-width: 1400px;
+        /* Devlog document: single-column, chapters (keep landing above) */
+        .devlog-doc {
+            max-width: 720px;
             margin: 0 auto;
+            padding: 4rem 2rem 5rem;
         }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
+        .doc-chapter {
+            margin-bottom: 2.5rem;
         }
-
-        .project-description {
-            font-size: 1.1rem;
+        .doc-chapter h2 {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .devlog-doc p {
+            font-size: 1.05rem;
             line-height: 1.8;
             color: #e4dcd2;
-            text-align: left;
+            margin-bottom: 1.25rem;
         }
-
-        .project-description p {
-            margin-bottom: 1.5rem;
-        }
-        .project-description ul {
-            margin-bottom: 1.5rem;
+        .devlog-doc ul {
+            margin-bottom: 1.25rem;
             padding-left: 1.5rem;
             color: #e4dcd2;
         }
-        .project-description li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-
-        .project-info {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2rem;
-            border-radius: 8px;
-        }
-
-        .info-item {
-            margin-bottom: 1.5rem;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .info-value {
-            font-size: 1.1rem;
-            color: #e4dcd2;
-        }
-
-        .tech-list {
-            list-style: none;
-        }
-
-        .tech-list li {
-            padding: 0.3rem 0;
-            color: #e4dcd2;
-        }
-        .project-info a {
+        .devlog-doc li { margin-bottom: 0.5rem; line-height: 1.6; }
+        .devlog-doc a {
             color: #e4dcd2;
             text-decoration: underline;
         }
-        .project-info a:hover {
-            color: #fff;
+        .devlog-doc a:hover { color: #fff; }
+        .doc-meta {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
         }
+        .doc-meta span { margin-right: 1rem; }
 
         /* Visit Website button */
         .visit-website-btn {
@@ -388,13 +355,8 @@
                 font-size: 0.9rem;
             }
 
-            .project-details {
-                padding: 4rem 2rem;
-            }
-
-            .details-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .devlog-doc {
+                padding: 3rem 1.5rem 4rem;
             }
 
             .photo-container {
@@ -437,8 +399,8 @@
                 font-size: 0.8rem;
             }
 
-            .project-details {
-                padding: 3rem 1rem;
+            .devlog-doc {
+                padding: 2.5rem 1rem 3rem;
             }
 
             .hero-content {
@@ -464,9 +426,9 @@
         </div>
     </header>
 
-    <!-- Hero section -->
+    <!-- Hero section: landing image -->
     <section class="hero">
-        <img src="22.jpg" alt="SKG CHESS" class="hero-image">
+        <img src="22.jpg" alt="SKG CHESS" class="hero-image" loading="eager">
         <div class="hero-overlay"></div>
         <div class="hero-content hero-agency-format">
             <p class="hero-tagline">Project</p>
@@ -474,59 +436,39 @@
         </div>
     </section>
 
-    <!-- Project details -->
-    <section class="project-details">
-        <div class="details-grid">
-            <div class="project-description">
-                <p>SKG Chess is a multiplayer-only chess platform featuring:</p>
-                <ul>
-                    <li>Historic photos of the city of Thessaloniki</li>
-                    <li>Custom chess engine</li>
-                    <li>Full game history tracking</li>
-                    <li>All popular time controls (Rapid, Blitz, Classical)</li>
-                    <li>Real-time invitation system</li>
-                    <li>Integrated in-game chat</li>
-                    <li>Classical music in the background</li>
-                    <li>Inspirational chess quotes</li>
-                    <li>Three selectable board themes</li>
-                </ul>
-                <p>It is available in both Greek and English.</p>
-                <p><strong>Background Story</strong></p>
-                <p>In November 2024, I started creating a chess game in Java by following the video tutorials of <a href="https://www.youtube.com/@amir650" target="_blank" rel="noopener noreferrer">Software Architecture & Design</a> on YouTube, as a way to expand my knowledge in my work as a software engineer.</p>
-                <p>Along the way, the project evolved into something much bigger and more personal, driven by my love for chess and my need for creative expression.</p>
-                <p>In October 2025, I completed SKG Chess and released it publicly.</p>
-                <a href="https://skgchess.com" class="visit-website-btn" target="_blank">Visit Project</a>
-            </div>
-            <div class="project-info">
-                <div class="info-item">
-                    <div class="info-label">Status</div>
-                    <div class="info-value">Live on the web</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Devlog document -->
+    <article class="devlog-doc">
+        <p class="doc-meta"><span>Status: Live on the web</span></p>
 
-    <!-- Large photos section -->
-    <section class="large-photos">
-        <div class="photo-container">
-            <div class="photo-item">
-                <img src="retrochess2.jpg" alt="SKG CHESS Interface">
-                <div class="photo-caption">Main game interface with retro chess pieces</div>
-            </div>
-            <div class="photo-item">
-                <img src="22.jpg" alt="SKG CHESS Mobile">
-                <div class="photo-caption">Mobile-responsive design for on-the-go play</div>
-            </div>
-            <div class="photo-item">
-                <img src="i.jpg" alt="SKG CHESS Analysis">
-                <div class="photo-caption">Advanced game analysis and move suggestions</div>
-            </div>
-            <div class="photo-item">
-                <img src="retrochess2.jpg" alt="SKG CHESS Tournament">
-                <div class="photo-caption">Tournament mode with leaderboards</div>
-            </div>
-        </div>
-    </section>
+        <section class="doc-chapter">
+            <h2>1. Overview</h2>
+            <p>SKG Chess is a multiplayer-only chess platform featuring:</p>
+            <ul>
+                <li>Historic photos of the city of Thessaloniki</li>
+                <li>Custom chess engine</li>
+                <li>Full game history tracking</li>
+                <li>All popular time controls (Rapid, Blitz, Classical)</li>
+                <li>Real-time invitation system</li>
+                <li>Integrated in-game chat</li>
+                <li>Classical music in the background</li>
+                <li>Inspirational chess quotes</li>
+                <li>Three selectable board themes</li>
+            </ul>
+            <p>It is available in both Greek and English.</p>
+        </section>
+
+        <section class="doc-chapter">
+            <h2>2. Background</h2>
+            <p>In November 2024, I started creating a chess game in Java by following the video tutorials of <a href="https://www.youtube.com/@amir650" target="_blank" rel="noopener noreferrer">Software Architecture & Design</a> on YouTube, as a way to expand my knowledge in my work as a software engineer.</p>
+            <p>Along the way, the project evolved into something much bigger and more personal, driven by my love for chess and my need for creative expression.</p>
+        </section>
+
+        <section class="doc-chapter">
+            <h2>3. Release</h2>
+            <p>In October 2025, I completed SKG Chess and released it publicly.</p>
+            <a href="https://skgchess.com" class="visit-website-btn" target="_blank">Visit Project</a>
+        </section>
+    </article>
 
     </div><!-- .main-wrapper -->
 

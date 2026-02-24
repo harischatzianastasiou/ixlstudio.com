@@ -28,19 +28,15 @@
     <!-- Apple touch icon: used when saving to home screen -->
     <link rel="apple-touch-icon" href="hcfavicon.png">
     
-    <!-- Preload critical images for faster loading -->
+    <!-- Preload critical assets: loader/logo, hero video, agency collage, hero project cards, first devlog card -->
     <link rel="preload" as="image" href="hc.png">
-    <link rel="preload" as="image" href="i.jpg">
-    <link rel="preload" as="image" href="bnwthess1.jpg">
+    <link rel="preload" as="video" href="hero-bg.mp4">
     <link rel="preload" as="image" href="blockman.png">
     <link rel="preload" as="image" href="lilith.png">
-    <link rel="preload" as="image" href="3.jpg">
-    <link rel="preload" as="image" href="1.jpg">
-    <link rel="preload" as="image" href="22.jpg">
-    <link rel="preload" as="image" href="skgchess.png">
-    <link rel="preload" as="image" href="black1.jpg">
     <link rel="preload" as="image" href="priest.png">
-    <link rel="preload" as="image" href="black3.jpg">
+    <link rel="preload" as="image" href="skgchess.png">
+    <link rel="preload" as="image" href="retrochess2.jpg">
+    <link rel="preload" as="image" href="bnwthess1.jpg">
 
 
 
@@ -22218,7 +22214,7 @@
 
         
 
-                            <h2 class="section-title" style="text-transform: none;"> All Projects</h2>
+                            <h2 class="section-title" style="text-transform: none;"> Creations</h2>
 
         
 
@@ -22355,7 +22351,7 @@
 
                                         </div>
 
-                                        <p class="hero-project-category">Learn more </p>
+                                        <!-- <p class="hero-project-category">Learn more </p> -->
 
 
                                     </div>
@@ -22374,7 +22370,7 @@
 
                                         </div>
 
-                                        <p class="hero-project-category">Learn more </p>
+                                        <!-- <p class="hero-project-category">Learn more </p> -->
 
 
                                     </div>
@@ -22520,7 +22516,7 @@
 
 
 
-                    <h2 class="section-title">Devlog of projects</h2>
+                    <h2 class="section-title">Stories</h2>
 
 
 
@@ -22613,6 +22609,18 @@
 
 
 
+        </section>
+
+        <!-- Gallery section: link to gallery.html -->
+        <section id="gallery" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Gallery</h2>
+                </div>
+                <p style="margin-top: 1rem; margin-bottom: 1rem;">
+                    <a href="gallery.html" class="visit-website-btn" style="display: inline-block;">Open Gallery</a>
+                </p>
+            </div>
         </section>
 
         <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
@@ -26728,9 +26736,7 @@
 
                 if (e.target.closest('.hero-content')) return; // Don't drag when over Digital Stories
 
-                if (e.target.closest('.hero-project-overlay')) return; // Over "Click to explore" – allow click to open project, no drag
-
-                e.preventDefault(); // Prevent focus moving to card/link so drag stays reliable
+                e.preventDefault(); // Whole card is grab-only; no click-to-open // Prevent focus moving to card/link so drag stays reliable
 
                 dragStartTime = Date.now(); dragStartX = e.pageX; // For click-vs-drag detection
 
@@ -27162,87 +27168,9 @@
 
                 function handleHeroProjectInteraction(e) {
 
-                    // Prevent accidental clicks during scrolling
+                    e.preventDefault(); // Cards are grab-only; do not open project on click
 
-                    if (isScrolling) {
-
-                        e.preventDefault(); // Prevent default behavior
-
-                        return; // Exit function
-
-                    }
-
-
-
-                    e.preventDefault(); // Prevent default behavior
-
-                    
-
-                    const projectName = card.querySelector('.hero-project-title').textContent; // Get project name
-
-                    console.log('Hero project clicked:', projectName); // Debug log
-
-
-
-                    // Check if this is SKG CHESS project
-
-                    if (card.getAttribute('data-project') === 'skg-chess') {
-
-                        console.log('SKG CHESS detected, starting hero animation...'); // Debug log
-
-                        
-
-                        // Add clicking animation class
-
-                        card.classList.add('clicking'); // Add clicking class for animation
-
-                        
-
-                        // Wait for animation to complete then redirect
-
-                        setTimeout(() => {
-
-                            console.log('Hero animation complete, redirecting to skgchess.html...'); // Debug log
-
-                            window.location.href = 'skgchess.html'; // Redirect to SKG Chess page
-
-                        }, 800); // Wait for animation duration
-
-                    } else if (card.getAttribute('data-project') === 'in-between') {
-
-                        console.log('In Between detected, redirecting to inbetween.html...'); // Debug log
-
-                        card.classList.add('clicking');
-
-                        setTimeout(() => {
-
-                            window.location.href = 'inbetween.html'; // Redirect to In Between page
-
-                        }, 800);
-
-                    } else {
-
-                        console.log('Other hero project detected, showing coming soon...'); // Debug log
-
-                        
-
-                        // Add clicking animation class
-
-                        card.classList.add('clicking'); // Add clicking class for animation
-
-                        
-
-                        // Show coming soon message and reset position
-
-                        setTimeout(() => {
-
-                            alert('Coming Soon! This project is currently in development.'); // Show coming soon message
-
-                            card.classList.remove('clicking'); // Remove animation class
-
-                        }, 800); // Wait for animation duration
-
-                    }
+                    return;
 
                 }
 
@@ -27328,28 +27256,8 @@
 
         setupHeroProjectCardAnimations();
 
-        // Overlay click: "Click to explore" / title – open project directly (capture phase so nothing else blocks it)
-        (function() {
-            const heroGrid = document.querySelector('.hero-projects-grid');
-            if (!heroGrid) return;
-            heroGrid.addEventListener('click', function(e) {
-                if (!e.target.closest('.hero-project-overlay')) return;
-                const card = e.target.closest('.hero-project-card');
-                if (!card) return;
-                e.preventDefault();
-                e.stopPropagation();
-                if (card.getAttribute('data-project') === 'skg-chess') {
-                    card.classList.add('clicking');
-                    setTimeout(function() { window.location.href = 'skgchess.html'; }, 800);
-                } else if (card.getAttribute('data-project') === 'in-between') {
-                    card.classList.add('clicking');
-                    setTimeout(function() { window.location.href = 'inbetween.html'; }, 800);
-                } else {
-                    card.classList.add('clicking');
-                    setTimeout(function() { alert('Coming Soon!'); card.classList.remove('clicking'); }, 800);
-                }
-            }, true);
-        })();
+        // Hero project cards: grab/drag only; no click-to-open (overlay click disabled)
+        // (function() { ... })();
 
         // Handle hero project button clicks
 
@@ -29725,7 +29633,7 @@
 
 
 
-                    excerpt: "I am learning how to make my game and documenting the creation process here and on YouTube.",
+                    excerpt: "Read the story of my first attempt at making a game. Currently ongoing.",
 
 
 
@@ -29733,9 +29641,9 @@
 
 
 
-                    readTime: "Click to read"
+                    readTime: "Click to read",
 
-
+                    projectLink: "inbetween.html"
 
                 },
 
@@ -29765,7 +29673,7 @@
 
 
 
-                    excerpt: "A retro chess multiplayer platform.",
+                    excerpt: "Read the story of skgchess.",
 
 
 
@@ -29773,9 +29681,9 @@
 
 
 
-                    readTime: "Click to read"
+                    readTime: "Click to read",
 
-
+                    projectLink: "skgchess.html"
 
                 }
 
@@ -29938,6 +29846,7 @@
 
 
                 card.className = 'article-card';
+                if (article.projectLink) { card.dataset.projectLink = article.projectLink; card.style.cursor = 'pointer'; }
 
 
 
@@ -30183,6 +30092,15 @@
 
 
             new ArticlesPagination();
+            var devlogGrid = document.getElementById('articlesGrid');
+            if (devlogGrid) {
+                devlogGrid.addEventListener('click', function(e) {
+                    var card = e.target.closest('.article-card');
+                    if (!card || !card.dataset.projectLink) return;
+                    e.preventDefault();
+                    window.location.href = card.dataset.projectLink;
+                });
+            }
 
 
 
