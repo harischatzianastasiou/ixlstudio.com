@@ -443,7 +443,7 @@
     <!-- Header -->
     <header class="header">
         <div class="logo-container">
-            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <a href="index.html" class="logo" id="logo-link">IXLSTUDIO</a>
             <span class="logo-subtitle">SKGCHESS</span>
         </div>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
@@ -530,6 +530,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const photoItems = document.querySelectorAll('.photo-item');
             photoItems.forEach(item => observer.observe(item));
+        });
+        // Use history.back() when clicking logo so index intro doesn't replay
+        document.getElementById('logo-link').addEventListener('click', function(e) {
+            if (window.history.length > 1) { e.preventDefault(); window.history.back(); }
         });
     </script>
     </div><!-- .scroll-wrapper -->

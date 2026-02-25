@@ -184,20 +184,31 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <a href="index.html" class="logo" id="logo-link">IXLSTUDIO</a>
             <span class="logo-subtitle">THOUGHTS</span>
         </div>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
     </header>
     <div class="scroll-wrapper">
         <main class="article-wrap">
-            <a href="index.html#articles" class="back-link">← Back to Articles</a>
+            <a href="index.html#articles" class="back-link" id="back-to-articles">← Back to Articles</a>
             <div id="article-root">
                 <p class="error-msg">Loading…</p>
             </div>
         </main>
     </div>
     <script>
+        // Back link and logo: use history.back() when possible so index intro doesn't replay
+        (function() {
+            function goBackIfPossible(e) {
+                if (window.history.length > 1) {
+                    e.preventDefault();
+                    window.history.back();
+                }
+            }
+            document.getElementById('back-to-articles').addEventListener('click', goBackIfPossible);
+            document.getElementById('logo-link').addEventListener('click', goBackIfPossible);
+        })();
         // Theme toggle: same key as inbetween (devlog-theme) so preference is shared
         (function() {
             var stored = localStorage.getItem('devlog-theme');

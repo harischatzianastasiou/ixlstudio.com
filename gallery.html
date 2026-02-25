@@ -124,7 +124,7 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="index.html" class="logo">IXLSTUDIO</a>
+            <a href="index.html" class="logo" id="logo-link">IXLSTUDIO</a>
             <span class="logo-subtitle">GALLERY</span>
         </div>
     </header>
@@ -165,5 +165,11 @@
             </section>
         </main>
     </div>
+    <script>
+        // Use history.back() when clicking logo so index intro doesn't replay
+        document.getElementById('logo-link').addEventListener('click', function(e) {
+            if (window.history.length > 1) { e.preventDefault(); window.history.back(); }
+        });
+    </script>
 </body>
 </html>
