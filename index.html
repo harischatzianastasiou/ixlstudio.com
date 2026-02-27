@@ -2886,15 +2886,17 @@
 
         .hero-project-title {
 
-            font-size: clamp(1.75rem, 3.5vw, 2.25rem); /* Big clear letters, scales with viewport, not too big */
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
 
-            font-weight: 700; /* Bold for clarity */
+            font-weight: 800;
 
-            margin-bottom: 0.5rem; /* Space below title */
+            margin-bottom: 0.5rem;
 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-            letter-spacing: 0.02em; /* Slight spacing for readability */
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
 
         }
 
@@ -22158,7 +22160,7 @@
 
         /* YouTube Section */
         .youtube-section {
-            padding: 4rem 2rem;
+            padding: 6rem 2rem 8rem;
             background: #0a0a0a;
             display: flex;
             justify-content: center;
@@ -22185,13 +22187,13 @@
             border: none;
         }
         .youtube-project-title {
-            margin-top: 2rem;
+            margin-top: 4rem;
             text-align: center;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: #e4dcd2;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
         .youtube-project-description {
             text-align: center;
@@ -22202,6 +22204,7 @@
             max-width: 650px;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 4rem;
         }
         
         /* Books Section */
@@ -22259,6 +22262,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+        .book-card:hover .book-cover img {
+            filter: grayscale(0%);
         }
         .book-info {
             display: flex;
@@ -22552,23 +22560,6 @@
 
         </section>
 
-        <!-- YouTube Section -->
-        <section id="youtube-section" class="youtube-section">
-            <div class="youtube-section-content">
-                <div class="youtube-embed">
-                    <iframe 
-                        src="https://www.youtube.com/embed/R02y76zWmf4?list=RDR02y76zWmf4" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <h3 class="youtube-project-title">Current Project</h3>
-                <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a living record of how ideas become reality. Find more below on Changing Ways.</p>
-            </div>
-        </section>
-
         <!-- Welcome / about this place – intro to personal work (same style as previous “Project In Between” block) -->
         <!-- <section class="about-this-place-section">
             <div class="about-this-place-container">
@@ -22842,6 +22833,23 @@
 
                 </section>
 
+        <!-- YouTube Section -->
+        <section id="youtube-section" class="youtube-section">
+            <div class="youtube-section-content">
+                <div class="youtube-embed">
+                    <iframe 
+                        src="https://www.youtube.com/embed/R02y76zWmf4?list=RDR02y76zWmf4" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <h3 class="youtube-project-title">Current Project</h3>
+                <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a living record of how ideas become reality. Find more below on Behind The Scenes : Changing Ways.</p>
+            </div>
+        </section>
+
         <!-- Contact Section -->
 
         <section id="devlog" class="articles-section">
@@ -23050,35 +23058,43 @@
             <div class="music-section-content">
                 <!-- Book Recommendations -->
                 <div class="books-section">
-                    <h3 class="books-title">Recommended Books</h3>
+                    <h3 class="books-title">Books</h3>
                     <div class="books-grid">
-                        <a href="https://www.amazon.com/Theory-Fun-Game-Design/dp/1449363210" target="_blank" class="book-card">
+                        <div class="book-card">
                             <div class="book-cover">
                                 <img src="book-theory-of-fun.jpg" alt="A Theory of Fun for Game Design">
                             </div>
-                            <div class="book-info">
-                                <span class="book-title">A Theory of Fun</span>
-                                <span class="book-author">Raph Koster</span>
-                            </div>
-                        </a>
-                        <a href="#" target="_blank" class="book-card">
+                        </div>
+                        <div class="book-card">
                             <div class="book-cover">
-                                <img src="book-placeholder.jpg" alt="Book">
+                                <img src="storyofart.png" alt="The Story of Art">
                             </div>
-                            <div class="book-info">
-                                <span class="book-title">Add Your Book</span>
-                                <span class="book-author">Author Name</span>
-                            </div>
-                        </a>
-                        <a href="#" target="_blank" class="book-card">
+                        </div>
+                        <div class="book-card">
                             <div class="book-cover">
-                                <img src="book-placeholder.jpg" alt="Book">
+                                <img src="videogameart.png" alt="The Art of Video Games">
                             </div>
-                            <div class="book-info">
-                                <span class="book-title">Add Your Book</span>
-                                <span class="book-author">Author Name</span>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="marcusaurelius.png" alt="Meditations">
                             </div>
-                        </a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="artofgamedesign.png" alt="The Art of Game Design">
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="lessonsaboutthebrain.png" alt="Brain Rules">
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="historyofphilosophy.png" alt="History of Philosophy">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26135,6 +26151,39 @@
 
 
 
+
+            // YouTube Current Project section - scroll reveal animation
+            const youtubeTitle = document.querySelector('.youtube-project-title');
+            const youtubeDescription = document.querySelector('.youtube-project-description');
+            
+            if (youtubeTitle) {
+                gsap.from(youtubeTitle, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: youtubeTitle,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            }
+            
+            if (youtubeDescription) {
+                gsap.from(youtubeDescription, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    delay: 0.3,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: youtubeDescription,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            }
 
             // Service cards are visible from start - only hover effects
 
@@ -30618,7 +30667,7 @@
 
 
 
-                    title: "CHANGING WAYS",
+                    title: "PROJECT ECHO",
 
 
 
