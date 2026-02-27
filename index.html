@@ -23333,7 +23333,7 @@
                 console.log('Box max:', box.max.x, box.max.y, box.max.z);
                 
                 const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = 1.0 / maxDim;
+                const scale = 0.75 / maxDim;
                 model.scale.setScalar(scale);
                 
                 const scaledBox = new THREE.Box3().setFromObject(model);
