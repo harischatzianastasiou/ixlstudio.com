@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 
@@ -22015,6 +22015,224 @@
             transform: none !important;
         }
 
+        /* ========== Music Section ========== */
+        .music-section {
+            padding: 4rem 2rem 6rem;
+            background: #0d0d0d;
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .music-section .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .music-section .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #e4dcd2;
+            margin-bottom: 0.5rem;
+        }
+        .music-section-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        /* 3D Model Container */
+        .model-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            flex-shrink: 0;
+            background: rgba(228, 220, 210, 0.03);
+            border-radius: 12px;
+        }
+        #humanoidCanvas {
+            width: 350px !important;
+            height: 450px !important;
+            display: block;
+        }
+        
+        /* Music Player in section (not floating) */
+        .music-player {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(228, 220, 210, 0.15);
+            border-radius: 16px;
+            padding: 20px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            max-width: 400px;
+        }
+        .music-player:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .music-player.collapsed {
+            padding: 8px;
+            gap: 0;
+        }
+        .music-player.collapsed .player-info,
+        .music-player.collapsed .player-controls,
+        .music-player.collapsed .player-progress {
+            display: none;
+        }
+        .music-player.collapsed .album-art {
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+        }
+        .album-art {
+            width: 56px;
+            height: 56px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .player-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 160px;
+        }
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .player-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e4dcd2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+        .player-artist {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.7rem;
+            color: rgba(228, 220, 210, 0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .player-btn {
+            background: none;
+            border: none;
+            color: #e4dcd2;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease, transform 0.15s ease;
+        }
+        .player-btn:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+        .player-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .player-btn.play-pause svg {
+            width: 22px;
+            height: 22px;
+        }
+        .player-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(228, 220, 210, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .player-progress-bar {
+            height: 100%;
+            background: #e4dcd2;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .player-toggle {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(228, 220, 210, 0.2);
+            border-radius: 50%;
+            color: #e4dcd2;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .player-toggle:hover {
+            background: rgba(50, 50, 50, 0.95);
+        }
+        @media (max-width: 768px) {
+            .music-section-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .model-container {
+                width: 280px;
+                height: 360px;
+            }
+            #humanoidCanvas {
+                width: 280px !important;
+                height: 360px !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .music-player {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+            .album-art {
+                width: 48px;
+                height: 48px;
+            }
+            .player-content {
+                min-width: 130px;
+            }
+            .player-title {
+                font-size: 0.8rem;
+                max-width: 120px;
+            }
+            .player-artist {
+                font-size: 0.65rem;
+                max-width: 120px;
+            }
+            .music-section {
+                padding: 3rem 1rem 4rem;
+            }
+        }
+
     </style>
 
 
@@ -22671,6 +22889,256 @@
                 </div>
             </div>
         </section>
+
+        <!-- Music Section with Da Vinci Figure -->
+        <section id="music" class="music-section">
+            <div class="section-header">
+                <h2 class="section-title">Music</h2>
+            </div>
+            <div class="music-section-content">
+                <!-- 3D Humanoid Model -->
+                <div class="model-container" id="modelContainer">
+                    <canvas id="humanoidCanvas"></canvas>
+                </div>
+
+                <!-- Music Player -->
+                <div class="music-player" id="musicPlayer">
+                    <img src="album-cover.jpg" alt="Album art" class="album-art" id="albumArt">
+                    <div class="player-content">
+                        <div class="player-info">
+                            <span class="player-title" id="trackTitle">Track Title</span>
+                            <span class="player-artist" id="trackArtist">Artist Name</span>
+                        </div>
+                        <div class="player-controls">
+                            <button class="player-btn" id="playerPrevBtn" aria-label="Previous track">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                            </button>
+                            <button class="player-btn play-pause" id="playPauseBtn" aria-label="Play/Pause">
+                                <svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor" id="pauseIcon" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </button>
+                            <button class="player-btn" id="playerNextBtn" aria-label="Next track">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                            </button>
+                        </div>
+                        <div class="player-progress" id="progressContainer">
+                            <div class="player-progress-bar" id="progressBar"></div>
+                        </div>
+                    </div>
+                    <audio id="audioPlayer"></audio>
+                </div>
+            </div>
+        </section>
+
+        <!-- Three.js for 3D model -->
+        <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+        
+        function init3DModel() {
+            const container = document.getElementById('modelContainer');
+            const canvas = document.getElementById('humanoidCanvas');
+            
+            if (!container || !canvas) {
+                console.error('Container or canvas not found');
+                return;
+            }
+            
+            const width = container.clientWidth || 350;
+            const height = container.clientHeight || 450;
+            
+            const scene = new THREE.Scene();
+            
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 1, 3);
+            camera.lookAt(0, 1, 0);
+            
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: canvas, 
+                alpha: true,
+                antialias: true 
+            });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            directionalLight.position.set(2, 3, 2);
+            scene.add(directionalLight);
+            
+            const backLight = new THREE.DirectionalLight(0xe4dcd2, 0.4);
+            backLight.position.set(-2, 1, -2);
+            scene.add(backLight);
+            
+            let model = null;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+            let currentRotationX = 0;
+            let currentRotationY = 0;
+            
+            const loader = new GLTFLoader();
+            loader.load('HUMANOID_02_Linux.glb', function(gltf) {
+                model = gltf.scene;
+                
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                model.position.x = -center.x;
+                model.position.y = -box.min.y;
+                model.position.z = -center.z;
+                
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 2.2 / maxDim;
+                model.scale.setScalar(scale);
+                
+                scene.add(model);
+                console.log('Model loaded successfully');
+            }, function(progress) {
+                console.log('Loading: ' + (progress.loaded / progress.total * 100) + '%');
+            }, function(error) {
+                console.error('Error loading model:', error);
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                const rect = container.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const deltaX = (e.clientX - centerX) / window.innerWidth;
+                const deltaY = (e.clientY - centerY) / window.innerHeight;
+                
+                targetRotationY = deltaX * 0.5;
+                targetRotationX = -deltaY * 0.3;
+            });
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+                
+                if (model) {
+                    model.rotation.x = currentRotationX;
+                    model.rotation.y = currentRotationY;
+                }
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            window.addEventListener('resize', function() {
+                const w = container.clientWidth || 350;
+                const h = container.clientHeight || 450;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+            });
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init3DModel);
+        } else {
+            init3DModel();
+        }
+        </script>
+
+        <script>
+        (function() {
+            // ========== MUSIC PLAYER ==========
+            const playlist = [
+                {
+                    src: 'Dilated Peoples  Evolution.mp3',
+                    title: 'Evolution',
+                    artist: 'Dilated Peoples',
+                    cover: 'dilated-evolution.jpg'
+                },
+                {
+                    src: 'Wonderful World (feat. Rakaa).mp3',
+                    title: 'Wonderful World',
+                    artist: 'Evidence (feat. Rakaa)',
+                    cover: 'dilated-wonderful-world.jpg'
+                }
+            ];
+
+            let currentTrack = 0;
+            let isPlaying = false;
+
+            const player = document.getElementById('musicPlayer');
+            const audio = document.getElementById('audioPlayer');
+            const albumArt = document.getElementById('albumArt');
+            const trackTitle = document.getElementById('trackTitle');
+            const trackArtist = document.getElementById('trackArtist');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            const prevBtn = document.getElementById('playerPrevBtn');
+            const nextBtn = document.getElementById('playerNextBtn');
+            const progressBar = document.getElementById('progressBar');
+            const progressContainer = document.getElementById('progressContainer');
+
+            function loadTrack(index) {
+                const track = playlist[index];
+                audio.src = track.src;
+                trackTitle.textContent = track.title;
+                trackArtist.textContent = track.artist;
+                albumArt.src = track.cover;
+                progressBar.style.width = '0%';
+            }
+
+            function togglePlay() {
+                if (isPlaying) {
+                    audio.pause();
+                } else {
+                    audio.play();
+                }
+            }
+
+            function updatePlayState() {
+                isPlaying = !audio.paused;
+                playIcon.style.display = isPlaying ? 'none' : 'block';
+                pauseIcon.style.display = isPlaying ? 'block' : 'none';
+            }
+
+            function nextTrack() {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                loadTrack(currentTrack);
+                if (isPlaying) audio.play();
+            }
+
+            function prevTrack() {
+                currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+                loadTrack(currentTrack);
+                if (isPlaying) audio.play();
+            }
+
+            playPauseBtn.addEventListener('click', togglePlay);
+            audio.addEventListener('play', updatePlayState);
+            audio.addEventListener('pause', updatePlayState);
+            audio.addEventListener('ended', nextTrack);
+            prevBtn.addEventListener('click', prevTrack);
+            nextBtn.addEventListener('click', nextTrack);
+
+            audio.addEventListener('timeupdate', function() {
+                if (audio.duration) {
+                    progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+                }
+            });
+
+            progressContainer.addEventListener('click', function(e) {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                audio.currentTime = percent * audio.duration;
+            });
+
+            if (playlist.length > 0) {
+                loadTrack(0);
+            }
+        })();
+        </script>
 
         <section id="contact" class="contact-section">
 
