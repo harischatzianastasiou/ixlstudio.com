@@ -22058,6 +22058,10 @@
             width: 350px !important;
             height: 450px !important;
             display: block;
+            cursor: grab;
+        }
+        #humanoidCanvas:active {
+            cursor: grabbing;
         }
         
         /* Music Player in section (not floating) */
@@ -22983,10 +22987,17 @@
             scene.add(backLight);
             
             let model = null;
+            const baseRotationY = 0.4;
             let targetRotationX = 0;
-            let targetRotationY = 0;
+            let targetRotationY = baseRotationY;
             let currentRotationX = 0;
-            let currentRotationY = 0;
+            let currentRotationY = baseRotationY;
+            
+            let isDragging = false;
+            let previousMouseX = 0;
+            let previousMouseY = 0;
+            let dragRotationX = 0;
+            let dragRotationY = 0;
             
             const loader = new GLTFLoader();
             loader.load('HUMANOID_02_Linux.glb', function(gltf) {
@@ -23004,6 +23015,8 @@
                 const scale = 2.2 / maxDim;
                 model.scale.setScalar(scale);
                 
+                model.rotation.y = baseRotationY;
+                
                 scene.add(model);
                 console.log('Model loaded successfully');
             }, function(progress) {
@@ -23012,23 +23025,68 @@
                 console.error('Error loading model:', error);
             });
             
-            document.addEventListener('mousemove', function(e) {
-                const rect = container.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                const deltaX = (e.clientX - centerX) / window.innerWidth;
-                const deltaY = (e.clientY - centerY) / window.innerHeight;
-                
-                targetRotationY = deltaX * 0.5;
-                targetRotationX = -deltaY * 0.3;
+            canvas.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                previousMouseX = e.clientX;
+                previousMouseY = e.clientY;
+                canvas.style.cursor = 'grabbing';
             });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                canvas.style.cursor = 'grab';
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    const deltaX = e.clientX - previousMouseX;
+                    const deltaY = e.clientY - previousMouseY;
+                    
+                    dragRotationY += deltaX * 0.01;
+                    dragRotationX += deltaY * 0.01;
+                    
+                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
+                    
+                    previousMouseX = e.clientX;
+                    previousMouseY = e.clientY;
+                }
+            });
+            
+            canvas.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    previousMouseX = e.touches[0].clientX;
+                    previousMouseY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (isDragging && e.touches.length === 1) {
+                    const deltaX = e.touches[0].clientX - previousMouseX;
+                    const deltaY = e.touches[0].clientY - previousMouseY;
+                    
+                    dragRotationY += deltaX * 0.01;
+                    dragRotationX += deltaY * 0.01;
+                    
+                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
+                    
+                    previousMouseX = e.touches[0].clientX;
+                    previousMouseY = e.touches[0].clientY;
+                }
+            }, { passive: true });
             
             function animate() {
                 requestAnimationFrame(animate);
                 
-                currentRotationX += (targetRotationX - currentRotationX) * 0.05;
-                currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+                targetRotationY = baseRotationY + dragRotationY;
+                targetRotationX = dragRotationX;
+                
+                currentRotationX += (targetRotationX - currentRotationX) * 0.08;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.08;
                 
                 if (model) {
                     model.rotation.x = currentRotationX;
