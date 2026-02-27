@@ -22143,7 +22143,18 @@
         #agencyHumanoidCanvas:active {
             cursor: grabbing;
         }
-        
+
+        /* Agency Priest 3D Model Canvas */
+        #agencyPriestCanvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            cursor: grab;
+        }
+        #agencyPriestCanvas:active {
+            cursor: grabbing;
+        }
+
         /* YouTube Section */
         .youtube-section {
             padding: 4rem 2rem;
@@ -22511,7 +22522,9 @@
 
                 <div class="agency-collage-side agency-collage-right">
 
-                    <div class="agency-collage-card agency-collage-base"><img src="priest.png" alt=""></div>
+                    <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
+                        <canvas id="agencyPriestCanvas"></canvas>
+                    </div>
 
                 </div>
 
@@ -23231,6 +23244,204 @@
             document.addEventListener('DOMContentLoaded', init3DModel);
         } else {
             init3DModel();
+        }
+        
+        // Priest 3D Model (right side of agency section)
+        function initPriest3DModel() {
+            const container = document.getElementById('agencyPriestModelContainer'); // container element for sizing
+            const canvas = document.getElementById('agencyPriestCanvas'); // canvas element for rendering
+            
+            if (!container || !canvas) {
+                console.error('Priest model container or canvas not found');
+                return;
+            }
+            
+            const width = container.clientWidth || 300; // fallback width if container not sized yet
+            const height = container.clientHeight || 400; // fallback height if container not sized yet
+            
+            const scene = new THREE.Scene(); // create empty 3D scene
+            
+            const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000); // perspective camera with 40 degree FOV
+            camera.position.set(0, 1.5, 4.5); // position camera up and back to see full model
+            camera.lookAt(0, 1.1, 0); // camera looks at model center
+            
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: canvas, // render to our canvas element
+                alpha: true, // transparent background
+                antialias: true // smooth edges
+            });
+            renderer.setSize(width, height); // set render resolution
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // limit pixel ratio for performance
+            renderer.outputColorSpace = THREE.SRGBColorSpace; // correct color output
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // soft overall lighting
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0); // main light from front-right
+            directionalLight.position.set(2, 3, 2);
+            scene.add(directionalLight);
+            
+            const backLight = new THREE.DirectionalLight(0xe4dcd2, 0.4); // subtle warm backlight
+            backLight.position.set(-2, 1, -2);
+            scene.add(backLight);
+            
+            let model = null; // will hold loaded model reference
+            let mixer = null; // animation mixer for walk animation
+            let autoRotationY = 0; // auto-rotation angle when not interacting
+            let currentRotationX = 0.2; // current X rotation (smoothed)
+            let currentRotationY = 0; // current Y rotation (smoothed)
+            
+            let isDragging = false; // tracks if user is dragging
+            let previousMouseX = 0; // last mouse X position
+            let previousMouseY = 0; // last mouse Y position
+            let dragRotationX = 0.2; // target X rotation from drag
+            let dragRotationY = 0; // target Y rotation from drag
+            let hasInteracted = false; // tracks if user has interacted (stops auto-rotation)
+            
+            const clock = new THREE.Clock(); // clock for animation timing
+            
+            const loader = new GLTFLoader(); // loader for GLB/GLTF files
+            loader.load('Untitled2_walk.glb', function(gltf) {
+                model = gltf.scene; // get the 3D scene from loaded file
+                
+                const box = new THREE.Box3().setFromObject(model); // calculate bounding box
+                const center = box.getCenter(new THREE.Vector3()); // get center point
+                const size = box.getSize(new THREE.Vector3()); // get dimensions
+                
+                model.position.x = -center.x; // center model horizontally
+                model.position.y = -box.min.y; // place model on ground
+                model.position.z = -center.z; // center model depth-wise
+                
+                const maxDim = Math.max(size.x, size.y, size.z); // find largest dimension
+                const scale = 2.2 / maxDim; // scale to fit nicely in view
+                model.scale.setScalar(scale); // apply uniform scale
+                
+                model.rotation.x = 0.2; // slight tilt forward
+                model.rotation.y = 0; // facing forward initially
+                
+                scene.add(model); // add model to scene
+                
+                // Set up animation if the model has animations
+                if (gltf.animations && gltf.animations.length > 0) {
+                    mixer = new THREE.AnimationMixer(model); // create animation mixer
+                    const action = mixer.clipAction(gltf.animations[0]); // get first animation clip
+                    action.play(); // start playing the walk animation
+                }
+                
+                console.log('Priest model loaded successfully');
+            }, function(progress) {
+                console.log('Loading priest: ' + (progress.loaded / progress.total * 100) + '%');
+            }, function(error) {
+                console.error('Error loading priest model:', error);
+            });
+            
+            // Mouse drag start handler
+            canvas.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                hasInteracted = true; // stop auto-rotation
+                previousMouseX = e.clientX;
+                previousMouseY = e.clientY;
+                canvas.style.cursor = 'grabbing';
+            });
+            
+            // Mouse drag end handler
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                canvas.style.cursor = 'grab';
+            });
+            
+            // Mouse move handler for rotation
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    const deltaX = e.clientX - previousMouseX; // horizontal movement
+                    const deltaY = e.clientY - previousMouseY; // vertical movement
+                    
+                    dragRotationY += deltaX * 0.01; // rotate Y based on horizontal drag
+                    dragRotationX += deltaY * 0.01; // rotate X based on vertical drag
+                    
+                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX)); // clamp X rotation
+                    
+                    previousMouseX = e.clientX;
+                    previousMouseY = e.clientY;
+                }
+            });
+            
+            // Touch start handler for mobile
+            canvas.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    hasInteracted = true;
+                    previousMouseX = e.touches[0].clientX;
+                    previousMouseY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            
+            // Touch end handler
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+            
+            // Touch move handler for rotation
+            document.addEventListener('touchmove', function(e) {
+                if (isDragging && e.touches.length === 1) {
+                    const deltaX = e.touches[0].clientX - previousMouseX;
+                    const deltaY = e.touches[0].clientY - previousMouseY;
+                    
+                    dragRotationY += deltaX * 0.01;
+                    dragRotationX += deltaY * 0.01;
+                    
+                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
+                    
+                    previousMouseX = e.touches[0].clientX;
+                    previousMouseY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate); // schedule next frame
+                
+                const delta = clock.getDelta(); // time since last frame
+                
+                // Update animation mixer if it exists
+                if (mixer) {
+                    mixer.update(delta); // advance animation
+                }
+                
+                if (!hasInteracted) {
+                    autoRotationY += 0.003; // slow auto-rotation when not interacting
+                }
+                
+                let targetRotationX = dragRotationX; // target X from drag or default
+                let targetRotationY = hasInteracted ? dragRotationY : autoRotationY; // use drag or auto rotation
+                
+                currentRotationX += (targetRotationX - currentRotationX) * 0.06; // smooth X rotation
+                currentRotationY += (targetRotationY - currentRotationY) * 0.06; // smooth Y rotation
+                
+                if (model) {
+                    model.rotation.x = currentRotationX; // apply X rotation to model
+                    model.rotation.y = currentRotationY; // apply Y rotation to model
+                }
+                
+                renderer.render(scene, camera); // render the scene
+            }
+            animate(); // start animation loop
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const w = container.clientWidth || 350;
+                const h = container.clientHeight || 450;
+                camera.aspect = w / h; // update camera aspect ratio
+                camera.updateProjectionMatrix(); // apply camera changes
+                renderer.setSize(w, h); // resize renderer
+            });
+        }
+        
+        // Initialize priest model when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPriest3DModel);
+        } else {
+            initPriest3DModel();
         }
         
         // Agency Music Player
