@@ -23300,8 +23300,7 @@
             let currentState = 'idle';
             let isActive = false;
             
-            let currentRotationY = Math.PI + 0.3;
-            let modelBaseRotationY = Math.PI + 0.3;
+            const fixedRotationY = Math.PI + 0.3;
             
             const loader = new GLTFLoader();
             
@@ -23442,7 +23441,7 @@
                 updateControlHints();
             });
             
-            const keys = { w: false, shift: false, space: false, a: false, d: false };
+            const keys = { w: false, shift: false, space: false };
             
             canvas.addEventListener('keydown', function(e) {
                 if (!isActive) return;
@@ -23480,13 +23479,6 @@
                         });
                     }
                 }
-                if (e.key.toLowerCase() === 'a') {
-                    keys.a = true;
-                }
-                if (e.key.toLowerCase() === 'd') {
-                    keys.d = true;
-                }
-                
                 e.preventDefault();
             });
             
@@ -23505,12 +23497,6 @@
                         switchAnimation('walk');
                     }
                 }
-                if (e.key.toLowerCase() === 'a') {
-                    keys.a = false;
-                }
-                if (e.key.toLowerCase() === 'd') {
-                    keys.d = false;
-                }
                 
                 e.preventDefault();
             });
@@ -23524,19 +23510,8 @@
                     mixer.update(delta);
                 }
                 
-                if (isActive) {
-                    if (keys.a) {
-                        modelBaseRotationY -= 2.0 * delta;
-                    }
-                    if (keys.d) {
-                        modelBaseRotationY += 2.0 * delta;
-                    }
-                }
-                
-                currentRotationY += (modelBaseRotationY - currentRotationY) * 0.1;
-                
                 if (model) {
-                    model.rotation.y = currentRotationY;
+                    model.rotation.y = fixedRotationY;
                 }
                 
                 renderer.render(scene, camera);
