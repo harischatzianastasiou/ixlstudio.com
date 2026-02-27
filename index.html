@@ -6513,11 +6513,13 @@
                 transform: translateX(-50%) !important; /* only center horizontally */
             }
             .agency-center {
-                padding: 0 1.25rem;
-                max-width: 92%;
+                padding: 0 1rem;
+                max-width: 100%;
+                width: 100%;
                 top: 48%;
-                display: flex; /* use flexbox to reorder elements on mobile */
-                flex-direction: column; /* stack vertically */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             .agency-music-player {
                 order: 10; /* move music player to the end (after description) */
@@ -6550,9 +6552,9 @@
 
             .agency-text {
 
-                text-align: left;
+                text-align: center;
 
-                padding: 0 0.5rem;
+                padding: 0;
 
                 max-width: 100%;
 
