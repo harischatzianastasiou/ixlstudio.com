@@ -23309,7 +23309,7 @@
             let loadedCount = 0;
             const totalAnimations = Object.keys(animationFiles).length;
             
-            loader.load('Untitled2_idle.glb', function(gltf) {
+            loader.load('Untitled2_model.glb', function(gltf) {
                 model = gltf.scene;
                 
                 const box = new THREE.Box3().setFromObject(model);
@@ -23328,21 +23328,15 @@
                 
                 mixer = new THREE.AnimationMixer(model);
                 
-                if (gltf.animations && gltf.animations.length > 0) {
-                    animations.idle = mixer.clipAction(gltf.animations[0]);
-                    animations.idle.play();
-                    currentAction = animations.idle;
-                }
-                
+                console.log('Lilith model loaded, loading animations...');
                 loadAnimations();
                 
-                console.log('Lilith model loaded successfully');
             }, undefined, function(error) {
                 console.error('Error loading Lilith model:', error);
             });
             
             function loadAnimations() {
-                ['walk', 'run', 'jump'].forEach(function(name) {
+                Object.keys(animationFiles).forEach(function(name) {
                     loader.load(animationFiles[name], function(gltf) {
                         if (gltf.animations && gltf.animations.length > 0) {
                             animations[name] = mixer.clipAction(gltf.animations[0]);
@@ -23350,9 +23344,14 @@
                                 animations[name].setLoop(THREE.LoopOnce);
                                 animations[name].clampWhenFinished = true;
                             }
+                            if (name === 'idle') {
+                                animations.idle.play();
+                                currentAction = animations.idle;
+                            }
+                            console.log('Loaded animation:', name);
                         }
                         loadedCount++;
-                        if (loadedCount === totalAnimations - 1) {
+                        if (loadedCount === totalAnimations) {
                             console.log('All animations loaded');
                         }
                     });
