@@ -28,15 +28,12 @@
     <!-- Apple touch icon: used when saving to home screen -->
     <link rel="apple-touch-icon" href="hcfavicon.png">
     
-    <!-- Preload critical assets: loader/logo, hero video, agency collage, hero project cards, first devlog card -->
+    <!-- Preload critical assets: loader/logo, hero video, agency collage, hero project cards -->
     <link rel="preload" as="image" href="hc.png">
     <link rel="preload" as="video" href="hero-bg.mp4">
     <link rel="preload" as="image" href="priest.png">
     <link rel="preload" as="image" href="book-theory-of-fun.jpg">
-    <link rel="preload" as="image" href="priest.png">
     <link rel="preload" as="image" href="skgchess.png">
-    <link rel="preload" as="image" href="retrochess2.jpg">
-    <link rel="preload" as="image" href="bnwthess1.jpg">
 
 
 
@@ -23447,7 +23444,7 @@
                 
                 const stateText = {
                     idle: 'W to walk',
-                    walk: 'SHIFT for run | release W to stop',
+                    walk: 'SHIFT for run | SPACE for jump',
                     run: 'release SHIFT to walk',
                     jump: 'jumping...'
                 };
@@ -30893,7 +30890,7 @@
 
 
                 const videoBlock = article.video
-                    ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" poster="${article.image || ''}" muted loop playsinline autoplay aria-label="${article.alt || ''}"></video></div>`
+                    ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" muted loop playsinline autoplay aria-label="${article.alt || ''}"></video></div>`
                     : '';
                 card.innerHTML = `
                     ${videoBlock}
