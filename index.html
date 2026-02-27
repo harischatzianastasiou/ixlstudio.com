@@ -79,6 +79,19 @@
 
         /* Prevent browser dark mode from overriding our colors (burger, nav, etc.) */
         html { color-scheme: light; }
+        
+        /* Preload cursor states to prevent lag on first cursor change */
+        body::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            z-index: -1;
+            cursor: pointer;
+            cursor: grab;
+            cursor: grabbing;
+        }
 
         /* Reset and base styles */
 
@@ -22158,20 +22171,20 @@
         /* YouTube Section */
         .youtube-section {
             padding: 6rem 2rem 8rem;
-            background: #0a0a0a;
+            background: transparent;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .youtube-section-content {
-            max-width: 900px;
+            max-width: 600px;
             width: 100%;
         }
-        
+
         /* YouTube Embed */
         .youtube-embed {
             width: 100%;
-            max-width: 800px;
+            max-width: 500px;
             aspect-ratio: 16/9;
             border-radius: 12px;
             overflow: hidden;
@@ -22310,7 +22323,7 @@
             }
             .youtube-embed {
                 width: 100%;
-                max-width: 350px;
+                max-width: 280px;
             }
             .books-grid {
                 justify-content: center;
@@ -22325,7 +22338,7 @@
         }
         @media (max-width: 480px) {
             .youtube-embed {
-                max-width: 300px;
+                max-width: 240px;
             }
             .music-section {
                 padding: 3rem 1rem 4rem;
@@ -22842,7 +22855,7 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <h3 class="youtube-project-title">Current Project</h3>
+                <h3 class="youtube-project-title">CURRENT PROJECT</h3>
                 <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a living record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
             </div>
         </section>
