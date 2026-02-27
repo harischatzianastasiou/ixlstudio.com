@@ -31,8 +31,8 @@
     <!-- Preload critical assets: loader/logo, hero video, agency collage, hero project cards, first devlog card -->
     <link rel="preload" as="image" href="hc.png">
     <link rel="preload" as="video" href="hero-bg.mp4">
-    <link rel="preload" as="image" href="blockman.png">
-    <link rel="preload" as="image" href="lilith.png">
+    <link rel="preload" as="image" href="priest.png">
+    <link rel="preload" as="image" href="book-theory-of-fun.jpg">
     <link rel="preload" as="image" href="priest.png">
     <link rel="preload" as="image" href="skgchess.png">
     <link rel="preload" as="image" href="retrochess2.jpg">
@@ -22045,22 +22045,14 @@
             width: 100%;
         }
         
-        /* 3D Model Container */
-        .model-container {
-            position: relative;
-            width: 420px;
-            height: 520px;
-            flex-shrink: 0;
-            background: rgba(228, 220, 210, 0.03);
-            border-radius: 12px;
-        }
-        #humanoidCanvas {
-            width: 420px !important;
-            height: 520px !important;
+        /* Agency 3D Model Canvas */
+        #agencyHumanoidCanvas {
+            width: 100% !important;
+            height: 100% !important;
             display: block;
             cursor: grab;
         }
-        #humanoidCanvas:active {
+        #agencyHumanoidCanvas:active {
             cursor: grabbing;
         }
         
@@ -22151,13 +22143,24 @@
             color: rgba(228, 220, 210, 0.6);
         }
         
-        /* Agency Model Container */
+        /* Agency Model Container - taller and transparent */
         .agency-model-container {
             background: transparent !important;
+            box-shadow: none !important;
+            aspect-ratio: 3/5 !important;
         }
         .agency-model-container canvas {
             width: 100% !important;
             height: 100% !important;
+        }
+        
+        /* Agency collage cards - transparent background */
+        .agency-collage-card.agency-collage-base {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        .agency-collage-card.agency-collage-base img {
+            filter: none;
         }
         
         @media (max-width: 768px) {
@@ -22165,36 +22168,40 @@
                 flex-direction: column;
                 gap: 2rem;
             }
-            .model-container {
-                width: 280px;
-                height: 360px;
-            }
-            #humanoidCanvas {
-                width: 280px !important;
-                height: 360px !important;
-            }
             .youtube-embed {
                 width: 100%;
                 max-width: 350px;
+            }
+            .books-grid {
+                justify-content: center;
+            }
+            .book-cover {
+                width: 120px;
+                height: 170px;
+            }
+            .book-info {
+                max-width: 120px;
             }
         }
         @media (max-width: 480px) {
             .youtube-embed {
                 max-width: 300px;
             }
-            .player-content {
-                min-width: 130px;
-            }
-            .player-title {
-                font-size: 0.8rem;
-                max-width: 120px;
-            }
-            .player-artist {
-                font-size: 0.65rem;
-                max-width: 120px;
-            }
             .music-section {
                 padding: 3rem 1rem 4rem;
+            }
+            .book-cover {
+                width: 100px;
+                height: 145px;
+            }
+            .book-info {
+                max-width: 100px;
+            }
+            .book-title {
+                font-size: 0.75rem;
+            }
+            .book-author {
+                font-size: 0.65rem;
             }
         }
 
@@ -22963,19 +22970,14 @@
             scene.add(backLight);
             
             let model = null;
-            const startRotationX = 0.5;
-            const startRotationY = 0;
-            const endRotationX = 0.3;
-            const endRotationY = 1.3;
-            
-            let scrollProgress = 0;
-            let currentRotationX = startRotationX;
-            let currentRotationY = startRotationY;
+            let autoRotationY = 0;
+            let currentRotationX = 0.2;
+            let currentRotationY = 0;
             
             let isDragging = false;
             let previousMouseX = 0;
             let previousMouseY = 0;
-            let dragRotationX = 0;
+            let dragRotationX = 0.2;
             let dragRotationY = 0;
             let hasInteracted = false;
             
@@ -22995,8 +22997,8 @@
                 const scale = 2.2 / maxDim;
                 model.scale.setScalar(scale);
                 
-                model.rotation.x = startRotationX;
-                model.rotation.y = startRotationY;
+                model.rotation.x = 0.2;
+                model.rotation.y = 0;
                 
                 scene.add(model);
                 console.log('Model loaded successfully');
@@ -23062,43 +23064,15 @@
                 }
             }, { passive: true });
             
-            const musicSection = document.getElementById('music');
-            
-            function updateScrollProgress() {
-                if (!musicSection) return;
-                
-                const rect = musicSection.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                
-                const sectionTop = rect.top;
-                const sectionHeight = rect.height;
-                
-                if (sectionTop > windowHeight) {
-                    scrollProgress = 0;
-                } else if (sectionTop + sectionHeight < 0) {
-                    scrollProgress = 1;
-                } else {
-                    const visibleStart = windowHeight;
-                    const visibleEnd = -sectionHeight * 0.3;
-                    scrollProgress = Math.max(0, Math.min(1, (visibleStart - sectionTop) / (visibleStart - visibleEnd)));
-                }
-            }
-            
-            window.addEventListener('scroll', updateScrollProgress, { passive: true });
-            updateScrollProgress();
-            
             function animate() {
                 requestAnimationFrame(animate);
                 
-                let targetRotationX, targetRotationY;
-                
-                if (hasInteracted) {
-                    targetRotationX = dragRotationX;
-                    targetRotationY = dragRotationY;
-                } else {
-                    targetRotationX = startRotationX + (endRotationX - startRotationX) * scrollProgress;
-                    targetRotationY = startRotationY + (endRotationY - startRotationY) * scrollProgress;
+                if (!hasInteracted) {
+                    autoRotationY += 0.003;
                 }
+                
+                let targetRotationX = dragRotationX;
+                let targetRotationY = hasInteracted ? dragRotationY : autoRotationY;
                 
                 currentRotationX += (targetRotationX - currentRotationX) * 0.06;
                 currentRotationY += (targetRotationY - currentRotationY) * 0.06;
