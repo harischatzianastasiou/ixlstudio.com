@@ -5744,6 +5744,7 @@
         }
         .agency-collage-right {
             right: 4%;
+            width: clamp(160px, 18vw, 260px);
         }
         /* Physical card look: layered, shadow underneath like ref */
         .agency-collage-card {
@@ -23300,7 +23301,7 @@
             let currentState = 'idle';
             let isActive = false;
             
-            const fixedRotationY = Math.PI + 0.3;
+            const fixedRotationY = 0.3;
             
             const loader = new GLTFLoader();
             
@@ -23331,7 +23332,7 @@
                 console.log('Box max:', box.max.x, box.max.y, box.max.z);
                 
                 const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = 0.75 / maxDim;
+                const scale = 0.55 / maxDim;
                 model.scale.setScalar(scale);
                 
                 const scaledBox = new THREE.Box3().setFromObject(model);
