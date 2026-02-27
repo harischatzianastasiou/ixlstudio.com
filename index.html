@@ -6502,6 +6502,12 @@
                 padding: 0 1.25rem;
                 max-width: 92%;
                 top: 48%;
+                display: flex; /* use flexbox to reorder elements on mobile */
+                flex-direction: column; /* stack vertically */
+            }
+            .agency-music-player {
+                order: 10; /* move music player to the end (after description) */
+                margin-top: 1.5rem; /* add spacing above */
             }
             .agency-tagline {
                 font-size: 0.9rem;
