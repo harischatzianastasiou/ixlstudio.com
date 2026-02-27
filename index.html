@@ -22963,7 +22963,7 @@
             const scene = new THREE.Scene();
             
             const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-            camera.position.set(0, 1.8, 3);
+            camera.position.set(0, 1.4, 1.8);
             camera.lookAt(0, 1, 0);
             
             const renderer = new THREE.WebGLRenderer({ 
@@ -23040,12 +23040,8 @@
             document.addEventListener('mousemove', function(e) {
                 if (isDragging) {
                     const deltaX = e.clientX - previousMouseX;
-                    const deltaY = e.clientY - previousMouseY;
                     
                     dragRotationY += deltaX * 0.01;
-                    dragRotationX += deltaY * 0.01;
-                    
-                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
                     
                     previousMouseX = e.clientX;
                     previousMouseY = e.clientY;
@@ -23067,12 +23063,8 @@
             document.addEventListener('touchmove', function(e) {
                 if (isDragging && e.touches.length === 1) {
                     const deltaX = e.touches[0].clientX - previousMouseX;
-                    const deltaY = e.touches[0].clientY - previousMouseY;
                     
                     dragRotationY += deltaX * 0.01;
-                    dragRotationX += deltaY * 0.01;
-                    
-                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
                     
                     previousMouseX = e.touches[0].clientX;
                     previousMouseY = e.touches[0].clientY;
@@ -23083,13 +23075,10 @@
                 requestAnimationFrame(animate);
                 
                 targetRotationY = baseRotationY + dragRotationY;
-                targetRotationX = dragRotationX;
                 
-                currentRotationX += (targetRotationX - currentRotationX) * 0.08;
                 currentRotationY += (targetRotationY - currentRotationY) * 0.08;
                 
                 if (model) {
-                    model.rotation.x = currentRotationX;
                     model.rotation.y = currentRotationY;
                 }
                 
