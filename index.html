@@ -22120,32 +22120,24 @@
 
         /* ========== Music Section ========== */
         .music-section {
-            padding: 4rem 2rem 6rem;
+            padding: 0.5rem 4rem 6rem;
             background: transparent;
             position: relative;
             overflow: hidden;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .music-section .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
+            text-align: left;
+            margin-bottom: 2rem;
         }
         .music-section .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 900;
             color: #e4dcd2;
             margin-bottom: 0.5rem;
         }
         .music-section-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
         }
         
         /* Agency 3D Model Canvas */
@@ -22224,12 +22216,14 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            align-items: flex-start;
         }
         .books-title {
             font-size: 1.2rem;
             color: #e4dcd2;
             font-weight: 500;
             margin: 0;
+            text-align: left;
         }
         .books-list {
             list-style: none;
@@ -22238,6 +22232,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            align-items: flex-start;
         }
         .book-list-item {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -22274,29 +22269,20 @@
         }
         
         @media (max-width: 768px) {
-            .music-section-content {
-                flex-direction: column;
-                gap: 2rem;
-                align-items: center;
-            }
-            .youtube-embed {
-                width: 100%;
-                max-width: 280px;
+            .music-section {
+                padding: 0.5rem 1.5rem 4rem;
             }
             .books-section {
-                align-items: center;
-                text-align: center;
+                align-items: flex-start;
+                text-align: left;
             }
             .books-list {
-                align-items: center;
+                align-items: flex-start;
             }
         }
         @media (max-width: 480px) {
-            .youtube-embed {
-                max-width: 240px;
-            }
             .music-section {
-                padding: 3rem 1rem 4rem;
+                padding: 0.5rem 1rem 4rem;
             }
             .book-list-item {
                 font-size: 0.85rem;
@@ -22483,11 +22469,11 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h4 class="agency-description">Personal Space of Haris Chatzianastasiou</h1>
+                <h4 class="agency-description">An open-source creative practive &</h1>
                 <br>
-                                <h2 class="agency-headline"> A Public Experiment On Creation And Self Observation </h1>
+                                <h2 class="agency-headline"> A Public Experiment On Creation And Self-Observation </h1>
                 
-                                <p class="agency-description">Creation/GameDevelopment/SoftwareDevelopment</p>
+                                <p class="agency-description">Haris Chatzianastasiou</p>
 
             </div>
 
@@ -22523,6 +22509,18 @@
                <!-- <p class="about-this-place-intro">Read Letter 0 ⟶<span class="no-break"></span> <a href="article.html?id=letter-from-the-creator-0" class="about-this-place-cta">From the creator</a>.</p>
             </div>
         </section> -->
+
+        <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
+        <section id="articles" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Articles</h2>
+                </div>
+                <div class="articles-list-grid" id="articlesListRoot">
+                    <!-- Filled by JS from articles.json -->
+                </div>
+            </div>
+        </section>
 
                 <!-- Services Section -->
 
@@ -22792,7 +22790,7 @@
         <section id="youtube-section" class="youtube-section">
             <div class="youtube-section-content">
                 <h3 class="youtube-project-title">CURRENT PROJECT</h3>
-                <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a living record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
+                <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
             </div>
         </section>
 
@@ -22980,41 +22978,6 @@
                 <div class="gallery-cta">
                     <p class="gallery-subtitle"></p>
                     <a href="gallery.html" class="gallery-cta-link">Open Gallery <span class="arrow" aria-hidden="true">→</span></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
-        <section id="articles" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title">Letters</h2>
-                </div>
-                <div class="articles-list-grid" id="articlesListRoot">
-                    <!-- Filled by JS from articles.json -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Game Design Analysis Section -->
-        <section id="game-design-analysis" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title">Game Design Analysis</h2>
-                </div>
-                <div class="articles-list-grid" id="gameDesignGrid">
-                    <!-- Hardcoded game design analysis entries -->
-                    <article class="article-list-card" data-article="gda-placeholder">
-                        <div class="article-list-content">
-                            <span class="article-list-category">Analysis</span>
-                            <h3 class="article-list-title">Coming Soon</h3>
-                            <p class="article-list-excerpt">Deep dives into game design principles, mechanics breakdowns, and what makes games work. Exploring the craft behind interactive experiences.</p>
-                            <div class="article-list-meta">
-                                <span class="article-list-date">Coming Soon</span>
-                                <span class="article-list-readtime">N/A</span>
-                            </div>
-                        </div>
-                    </article>
                 </div>
             </div>
         </section>
@@ -23527,7 +23490,9 @@
             
             const playlist = [
                 // { title: 'Play Radio', artist: 'Ambient Fabric - The Path', src: 'Ambient Fabric - The Path.mp3' },
+                { title: 'Play Radio', artist :'Rebellion of the Weak - vom deich gechillt', src : 'rebellion of the weak.mp3'},
                 { title: 'Play Radio', artist: 'Ambient Fabric - Pillars of Creation', src: 'Ambient Fabric - Pillars of Creation.mp3' }
+
             ];
             
             let currentTrack = 0;
@@ -28532,6 +28497,28 @@
 
             if (!loader || !loaderLogo || !headerLogo) return; // Exit if elements don't exist
 
+            // Skip intro animation if user has already seen it this session (returning via back button)
+            const hasSeenIntro = sessionStorage.getItem('ixl-intro-seen');
+            if (hasSeenIntro) {
+                loader.style.display = 'none';
+                loader.style.pointerEvents = 'none';
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.style.opacity = '1';
+                    header.style.background = 'transparent';
+                    header.style.backgroundColor = 'transparent';
+                    header.style.backgroundImage = 'none';
+                    header.style.backdropFilter = 'none';
+                    header.style.webkitBackdropFilter = 'none';
+                }
+                gsap.set(headerLogo, { opacity: 1, scaleX: 1, scaleY: 1, transformOrigin: 'center center' });
+                const agencyCenter = document.querySelector('.agency-center');
+                const agencyGetInTouch = document.querySelector('.agency-get-in-touch');
+                if (agencyCenter) gsap.set(agencyCenter, { opacity: 1, y: 0 });
+                if (agencyGetInTouch) gsap.set(agencyGetInTouch, { opacity: 1, y: 0 });
+                return; // Skip the rest of the animation setup
+            }
+
             loaderLogo.style.opacity = '0'; // Force invisible so fade-in is visible when timeline runs
 
             // Agency section content – hide until timeline reveals it (part of same transition)
@@ -28615,6 +28602,8 @@
                     header.style.webkitBackdropFilter = 'none';
                 }
                 document.querySelectorAll('.projects-grid, .hero-projects-grid').forEach(g => g.classList.remove('dragging'));
+                // Mark that user has seen the intro animation this session
+                sessionStorage.setItem('ixl-intro-seen', 'true');
             }
 
             function runLoaderAnimation() {
@@ -34948,11 +34937,17 @@
 
     </script>
 
-    <!-- Reload when user returns to this page via back button (from project pages) -->
+    <!-- Skip intro animation when returning via back button -->
     <script>
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) {
-                location.reload();
+                // Page was restored from bfcache (back/forward navigation)
+                // Skip the intro animation - just show the page as-is
+                const loader = document.querySelector('.page-loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                    loader.style.pointerEvents = 'none';
+                }
             }
         });
     </script>
