@@ -23300,9 +23300,8 @@
             let currentState = 'idle';
             let isActive = false;
             
-            let autoRotationY = 0;
-            let currentRotationY = 0;
-            let modelBaseRotationY = 0;
+            let currentRotationY = Math.PI + 0.3;
+            let modelBaseRotationY = Math.PI + 0.3;
             
             const loader = new GLTFLoader();
             
@@ -23532,12 +23531,9 @@
                     if (keys.d) {
                         modelBaseRotationY += 2.0 * delta;
                     }
-                } else {
-                    autoRotationY += 0.003;
                 }
                 
-                const targetY = isActive ? modelBaseRotationY : autoRotationY;
-                currentRotationY += (targetY - currentRotationY) * 0.1;
+                currentRotationY += (modelBaseRotationY - currentRotationY) * 0.1;
                 
                 if (model) {
                     model.rotation.y = currentRotationY;
