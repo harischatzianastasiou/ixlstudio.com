@@ -6488,9 +6488,14 @@
                 min-height: 500px;
             }
             .agency-get-in-touch {
-                left: 0.75rem;
-                font-size: 0.75rem;
-                letter-spacing: 1px;
+                display: none !important; /* hide "Follow on YouTube" on mobile */
+            }
+            .agency-collage-right {
+                display: none !important; /* hide priest.png on mobile */
+            }
+            .agency-collage-left {
+                left: 50% !important; /* center the 3D model container */
+                transform: translateX(-50%) translateY(-50%) !important; /* center horizontally */
             }
             .agency-center {
                 padding: 0 1.25rem;
@@ -6512,14 +6517,8 @@
                 max-width: 100%;
             }
             .agency-collage-side {
-                width: clamp(100px, 26vw, 160px);
+                width: clamp(140px, 40vw, 200px); /* wider for centered model */
                 top: 72%;
-            }
-            .agency-collage-left {
-                left: 3%;
-            }
-            .agency-collage-right {
-                right: 3%;
             }
             .agency-collage-peek {
                 width: 50%;
@@ -22483,7 +22482,7 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h1 class="agency-description"> Project Echo </h1>
+                <h1 class="agency-description"> </h1>
                 <br>
                                 <h2 class="agency-headline"> A Public Experiment On Creation</h1>
                 
