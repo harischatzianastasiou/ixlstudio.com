@@ -23309,12 +23309,19 @@
             let loadedCount = 0;
             const totalAnimations = Object.keys(animationFiles).length;
             
-            loader.load('Untitled2_model.glb', function(gltf) {
+            loader.load('Untitled2_idle.glb', function(gltf) {
+                console.log('GLTF loaded:', gltf);
+                console.log('Scene children:', gltf.scene.children);
+                console.log('Animations:', gltf.animations);
+                
                 model = gltf.scene;
                 
                 const box = new THREE.Box3().setFromObject(model);
                 const center = box.getCenter(new THREE.Vector3());
                 const size = box.getSize(new THREE.Vector3());
+                
+                console.log('Model size:', size);
+                console.log('Model center:', center);
                 
                 model.position.x = -center.x;
                 model.position.y = -box.min.y;
@@ -23324,9 +23331,18 @@
                 const scale = 2.2 / maxDim;
                 model.scale.setScalar(scale);
                 
+                console.log('Scale applied:', scale);
+                
                 scene.add(model);
                 
                 mixer = new THREE.AnimationMixer(model);
+                
+                if (gltf.animations && gltf.animations.length > 0) {
+                    animations.idle = mixer.clipAction(gltf.animations[0]);
+                    animations.idle.play();
+                    currentAction = animations.idle;
+                    console.log('Idle animation started from main file');
+                }
                 
                 console.log('Lilith model loaded, loading animations...');
                 loadAnimations();
