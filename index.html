@@ -6495,13 +6495,14 @@
             }
             .agency-collage-left {
                 left: 50% !important; /* center the 3D model container */
-                top: 80px !important; /* position just under the header */
-                transform: translateX(-50%) !important; /* only center horizontally, no vertical shift */
+                top: auto !important; /* remove top positioning */
+                bottom: 5% !important; /* position below the agency description */
+                transform: translateX(-50%) !important; /* only center horizontally */
             }
             .agency-center {
                 padding: 0 1.25rem;
                 max-width: 92%;
-                top: 68%; /* moved further down */
+                top: 48%;
                 display: flex; /* use flexbox to reorder elements on mobile */
                 flex-direction: column; /* stack vertically */
             }
@@ -6524,7 +6525,7 @@
                 max-width: 100%;
             }
             .agency-collage-side {
-                width: clamp(180px, 55vw, 280px); /* bigger model on mobile */
+                width: clamp(140px, 40vw, 200px); /* wider for centered model */
             }
             .agency-collage-peek {
                 width: 50%;
@@ -22488,11 +22489,11 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h1 class="agency-description"> Personal Space of Haris Chatzianastasiou</h1>
+                <h1 class="agency-description">.</h1>
                 <br>
-                                <h2 class="agency-headline">  A Public Experiment On Creation and Self Observation</h1>
+                                <h2 class="agency-headline"> A Public Experiment On Creation</h1>
                 
-                                <p class="agency-description"> </p>
+                                <p class="agency-description">Haris Chatzianastasiou</p>
 
             </div>
 
@@ -23246,8 +23247,7 @@
             if (!audio || !playBtn) return;
             
             const playlist = [
-                { title: 'Play Radio', artist: 'Ambient Fabric Pillars of Creation', src: 'Ambient Fabric - Pillars of Creation.mp3' },
-                { title: 'Play Radio', artist: 'Ambient Fabric The Path', src: 'Ambient Fabric - The Path.mp3' },
+                { title: 'Rebellion of the weak', artist: 'vom deich gechillt', src: 'rebellion of the weak.mp3' },
             ];
             
             let currentTrack = 0;
