@@ -22988,10 +22988,9 @@
             
             let model = null;
             const baseRotationY = 0.4;
-            const baseRotationX = -0.3;
-            let targetRotationX = baseRotationX;
+            let targetRotationX = 0;
             let targetRotationY = baseRotationY;
-            let currentRotationX = baseRotationX;
+            let currentRotationX = 0;
             let currentRotationY = baseRotationY;
             
             let isDragging = false;
@@ -23084,7 +23083,7 @@
                 requestAnimationFrame(animate);
                 
                 targetRotationY = baseRotationY + dragRotationY;
-                targetRotationX = baseRotationX + dragRotationX;
+                targetRotationX = dragRotationX;
                 
                 currentRotationX += (targetRotationX - currentRotationX) * 0.08;
                 currentRotationY += (targetRotationY - currentRotationY) * 0.08;
