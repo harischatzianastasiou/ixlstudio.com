@@ -12587,7 +12587,7 @@
 
 
 
-            max-width: 1200px;
+            max-width: 900px;
 
 
 
@@ -22119,7 +22119,7 @@
         /* ========== Music Section ========== */
         .music-section {
             padding: 4rem 2rem 6rem;
-            background: #0d0d0d;
+            background: transparent;
             position: relative;
             overflow: hidden;
             min-height: 80vh;
@@ -22168,7 +22168,16 @@
             cursor: grabbing;
         }
 
-        /* YouTube Section */
+        /* YouTube Player Section (above projects) */
+        .youtube-player-section {
+            padding: 4rem 2rem;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* YouTube Text Section (after projects) */
         .youtube-section {
             padding: 6rem 2rem 8rem;
             background: transparent;
@@ -22579,6 +22588,19 @@
             </div>
         </section> -->
 
+        <!-- YouTube Player -->
+        <section class="youtube-player-section">
+            <div class="youtube-embed">
+                <iframe 
+                    src="https://www.youtube.com/embed/R02y76zWmf4?list=RDR02y76zWmf4" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
                 <!-- Services Section -->
 
 
@@ -22843,18 +22865,9 @@
 
                 </section>
 
-        <!-- YouTube Section -->
+        <!-- YouTube Text Section -->
         <section id="youtube-section" class="youtube-section">
             <div class="youtube-section-content">
-                <div class="youtube-embed">
-                    <iframe 
-                        src="https://www.youtube.com/embed/R02y76zWmf4?list=RDR02y76zWmf4" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
                 <h3 class="youtube-project-title">CURRENT PROJECT</h3>
                 <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a living record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
             </div>
@@ -23060,10 +23073,33 @@
             </div>
         </section>
 
+        <!-- Game Design Analysis Section -->
+        <section id="game-design-analysis" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Game Design Analysis</h2>
+                </div>
+                <div class="articles-list-grid" id="gameDesignGrid">
+                    <!-- Hardcoded game design analysis entries -->
+                    <article class="article-list-card" data-article="gda-placeholder">
+                        <div class="article-list-content">
+                            <span class="article-list-category">Analysis</span>
+                            <h3 class="article-list-title">Coming Soon</h3>
+                            <p class="article-list-excerpt">Deep dives into game design principles, mechanics breakdowns, and what makes games work. Exploring the craft behind interactive experiences.</p>
+                            <div class="article-list-meta">
+                                <span class="article-list-date">Coming Soon</span>
+                                <span class="article-list-readtime">N/A</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Inspiration Section -->
         <section id="inspiration" class="music-section">
             <div class="section-header">
-                <h2 class="section-title">Inspiration</h2>
+                <h2 class="section-title"></h2>
             </div>
             <div class="music-section-content">
                 <!-- Book Recommendations -->
