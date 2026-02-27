@@ -6495,7 +6495,8 @@
             }
             .agency-collage-left {
                 left: 50% !important; /* center the 3D model container */
-                transform: translateX(-50%) translateY(-50%) !important; /* center horizontally */
+                top: 80px !important; /* position just under the header */
+                transform: translateX(-50%) !important; /* only center horizontally, no vertical shift */
             }
             .agency-center {
                 padding: 0 1.25rem;
@@ -6518,7 +6519,6 @@
             }
             .agency-collage-side {
                 width: clamp(140px, 40vw, 200px); /* wider for centered model */
-                top: 72%;
             }
             .agency-collage-peek {
                 width: 50%;
@@ -22482,7 +22482,7 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h1 class="agency-description"> </h1>
+                <h1 class="agency-description">.</h1>
                 <br>
                                 <h2 class="agency-headline"> A Public Experiment On Creation</h1>
                 
