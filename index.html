@@ -22987,17 +22987,21 @@
             scene.add(backLight);
             
             let model = null;
-            const baseRotationY = 0.4;
-            let targetRotationX = 0;
-            let targetRotationY = baseRotationY;
-            let currentRotationX = 0;
-            let currentRotationY = baseRotationY;
+            const startRotationX = 0;
+            const startRotationY = 0;
+            const endRotationX = 0.3;
+            const endRotationY = 1.3;
+            
+            let scrollProgress = 0;
+            let currentRotationX = startRotationX;
+            let currentRotationY = startRotationY;
             
             let isDragging = false;
             let previousMouseX = 0;
             let previousMouseY = 0;
             let dragRotationX = 0;
             let dragRotationY = 0;
+            let hasInteracted = false;
             
             const loader = new GLTFLoader();
             loader.load('HUMANOID_02_Linux.glb', function(gltf) {
@@ -23015,7 +23019,8 @@
                 const scale = 2.2 / maxDim;
                 model.scale.setScalar(scale);
                 
-                model.rotation.y = baseRotationY;
+                model.rotation.x = startRotationX;
+                model.rotation.y = startRotationY;
                 
                 scene.add(model);
                 console.log('Model loaded successfully');
@@ -23027,6 +23032,7 @@
             
             canvas.addEventListener('mousedown', function(e) {
                 isDragging = true;
+                hasInteracted = true;
                 previousMouseX = e.clientX;
                 previousMouseY = e.clientY;
                 canvas.style.cursor = 'grabbing';
@@ -23055,6 +23061,7 @@
             canvas.addEventListener('touchstart', function(e) {
                 if (e.touches.length === 1) {
                     isDragging = true;
+                    hasInteracted = true;
                     previousMouseX = e.touches[0].clientX;
                     previousMouseY = e.touches[0].clientY;
                 }
@@ -23079,14 +23086,46 @@
                 }
             }, { passive: true });
             
+            const musicSection = document.getElementById('music');
+            
+            function updateScrollProgress() {
+                if (!musicSection) return;
+                
+                const rect = musicSection.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                const sectionTop = rect.top;
+                const sectionHeight = rect.height;
+                
+                if (sectionTop > windowHeight) {
+                    scrollProgress = 0;
+                } else if (sectionTop + sectionHeight < 0) {
+                    scrollProgress = 1;
+                } else {
+                    const visibleStart = windowHeight;
+                    const visibleEnd = -sectionHeight * 0.3;
+                    scrollProgress = Math.max(0, Math.min(1, (visibleStart - sectionTop) / (visibleStart - visibleEnd)));
+                }
+            }
+            
+            window.addEventListener('scroll', updateScrollProgress, { passive: true });
+            updateScrollProgress();
+            
             function animate() {
                 requestAnimationFrame(animate);
                 
-                targetRotationY = baseRotationY + dragRotationY;
-                targetRotationX = dragRotationX;
+                let targetRotationX, targetRotationY;
                 
-                currentRotationX += (targetRotationX - currentRotationX) * 0.08;
-                currentRotationY += (targetRotationY - currentRotationY) * 0.08;
+                if (hasInteracted) {
+                    targetRotationX = dragRotationX;
+                    targetRotationY = dragRotationY;
+                } else {
+                    targetRotationX = startRotationX + (endRotationX - startRotationX) * scrollProgress;
+                    targetRotationY = startRotationY + (endRotationY - startRotationY) * scrollProgress;
+                }
+                
+                currentRotationX += (targetRotationX - currentRotationX) * 0.06;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.06;
                 
                 if (model) {
                     model.rotation.x = currentRotationX;
