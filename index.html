@@ -23246,12 +23246,12 @@
             init3DModel();
         }
         
-        function initPriest3DModel() {
+        function initLilithController() {
             const container = document.getElementById('agencyPriestModelContainer');
             const canvas = document.getElementById('agencyPriestCanvas');
             
             if (!container || !canvas) {
-                console.error('Priest model container or canvas not found');
+                console.error('Lilith model container or canvas not found');
                 return;
             }
             
@@ -23286,21 +23286,30 @@
             
             let model = null;
             let mixer = null;
-            let autoRotationY = 0;
-            let currentRotationX = 0.2;
-            let currentRotationY = 0;
-            
-            let isDragging = false;
-            let previousMouseX = 0;
-            let previousMouseY = 0;
-            let dragRotationX = 0.2;
-            let dragRotationY = 0;
-            let hasInteracted = false;
-            
             const clock = new THREE.Clock();
             
+            const animations = {};
+            let currentAction = null;
+            let currentState = 'idle';
+            let isActive = false;
+            
+            let autoRotationY = 0;
+            let currentRotationY = 0;
+            let modelBaseRotationY = 0;
+            
             const loader = new GLTFLoader();
-            loader.load('Untitled2_walk.glb', function(gltf) {
+            
+            const animationFiles = {
+                idle: 'Untitled2_idle.glb',
+                walk: 'Untitled2_walk.glb',
+                run: 'Untitled2_run.glb',
+                jump: 'Untitled2_jump.glb'
+            };
+            
+            let loadedCount = 0;
+            const totalAnimations = Object.keys(animationFiles).length;
+            
+            loader.load('Untitled2_idle.glb', function(gltf) {
                 model = gltf.scene;
                 
                 const box = new THREE.Box3().setFromObject(model);
@@ -23315,79 +23324,169 @@
                 const scale = 2.2 / maxDim;
                 model.scale.setScalar(scale);
                 
-                model.rotation.x = 0.2;
-                model.rotation.y = 0;
-                
                 scene.add(model);
                 
+                mixer = new THREE.AnimationMixer(model);
+                
                 if (gltf.animations && gltf.animations.length > 0) {
-                    mixer = new THREE.AnimationMixer(model);
-                    const action = mixer.clipAction(gltf.animations[0]);
-                    action.play();
+                    animations.idle = mixer.clipAction(gltf.animations[0]);
+                    animations.idle.play();
+                    currentAction = animations.idle;
                 }
                 
-                console.log('Priest model loaded successfully');
-            }, function(progress) {
-                console.log('Loading priest: ' + (progress.loaded / progress.total * 100) + '%');
-            }, function(error) {
-                console.error('Error loading priest model:', error);
+                loadAnimations();
+                
+                console.log('Lilith model loaded successfully');
+            }, undefined, function(error) {
+                console.error('Error loading Lilith model:', error);
             });
             
-            canvas.addEventListener('mousedown', function(e) {
-                isDragging = true;
-                hasInteracted = true;
-                previousMouseX = e.clientX;
-                previousMouseY = e.clientY;
-                canvas.style.cursor = 'grabbing';
-            });
+            function loadAnimations() {
+                ['walk', 'run', 'jump'].forEach(function(name) {
+                    loader.load(animationFiles[name], function(gltf) {
+                        if (gltf.animations && gltf.animations.length > 0) {
+                            animations[name] = mixer.clipAction(gltf.animations[0]);
+                            if (name === 'jump') {
+                                animations[name].setLoop(THREE.LoopOnce);
+                                animations[name].clampWhenFinished = true;
+                            }
+                        }
+                        loadedCount++;
+                        if (loadedCount === totalAnimations - 1) {
+                            console.log('All animations loaded');
+                        }
+                    });
+                });
+            }
             
-            document.addEventListener('mouseup', function() {
-                isDragging = false;
-                canvas.style.cursor = 'grab';
-            });
-            
-            document.addEventListener('mousemove', function(e) {
-                if (isDragging) {
-                    const deltaX = e.clientX - previousMouseX;
-                    const deltaY = e.clientY - previousMouseY;
-                    
-                    dragRotationY += deltaX * 0.01;
-                    dragRotationX += deltaY * 0.01;
-                    
-                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
-                    
-                    previousMouseX = e.clientX;
-                    previousMouseY = e.clientY;
+            function switchAnimation(newState) {
+                if (currentState === newState || !animations[newState]) return;
+                
+                const prevAction = currentAction;
+                currentAction = animations[newState];
+                
+                if (prevAction) {
+                    prevAction.fadeOut(0.2);
                 }
+                
+                currentAction.reset();
+                currentAction.fadeIn(0.2);
+                currentAction.play();
+                
+                currentState = newState;
+                updateControlHints();
+            }
+            
+            function updateControlHints() {
+                const hints = container.querySelector('.lilith-controls');
+                if (!hints) return;
+                
+                const stateText = {
+                    idle: 'W to walk',
+                    walk: 'SHIFT for run | release W to stop',
+                    run: 'release SHIFT to walk',
+                    jump: 'jumping...'
+                };
+                
+                hints.textContent = isActive ? stateText[currentState] : 'Click to control';
+            }
+            
+            const controlHints = document.createElement('div');
+            controlHints.className = 'lilith-controls';
+            controlHints.textContent = 'Click to control';
+            controlHints.style.cssText = 'position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(228,220,210,0.7);background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:4px;pointer-events:none;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,sans-serif;z-index:10;';
+            container.style.position = 'relative';
+            container.appendChild(controlHints);
+            
+            canvas.addEventListener('click', function() {
+                isActive = true;
+                canvas.focus();
+                updateControlHints();
             });
             
-            canvas.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 1) {
-                    isDragging = true;
-                    hasInteracted = true;
-                    previousMouseX = e.touches[0].clientX;
-                    previousMouseY = e.touches[0].clientY;
-                }
-            }, { passive: true });
+            canvas.setAttribute('tabindex', '0');
+            canvas.style.outline = 'none';
             
-            document.addEventListener('touchend', function() {
-                isDragging = false;
+            canvas.addEventListener('blur', function() {
+                isActive = false;
+                if (currentState !== 'idle' && currentState !== 'jump') {
+                    switchAnimation('idle');
+                }
+                updateControlHints();
             });
             
-            document.addEventListener('touchmove', function(e) {
-                if (isDragging && e.touches.length === 1) {
-                    const deltaX = e.touches[0].clientX - previousMouseX;
-                    const deltaY = e.touches[0].clientY - previousMouseY;
-                    
-                    dragRotationY += deltaX * 0.01;
-                    dragRotationX += deltaY * 0.01;
-                    
-                    dragRotationX = Math.max(-0.5, Math.min(0.5, dragRotationX));
-                    
-                    previousMouseX = e.touches[0].clientX;
-                    previousMouseY = e.touches[0].clientY;
+            const keys = { w: false, shift: false, space: false, a: false, d: false };
+            
+            canvas.addEventListener('keydown', function(e) {
+                if (!isActive) return;
+                
+                if (e.key.toLowerCase() === 'w' && !keys.w) {
+                    keys.w = true;
+                    if (keys.shift) {
+                        switchAnimation('run');
+                    } else {
+                        switchAnimation('walk');
+                    }
                 }
-            }, { passive: true });
+                if (e.key === 'Shift' && !keys.shift) {
+                    keys.shift = true;
+                    if (keys.w) {
+                        switchAnimation('run');
+                    }
+                }
+                if (e.key === ' ' && !keys.space && currentState !== 'jump') {
+                    keys.space = true;
+                    const prevState = currentState;
+                    switchAnimation('jump');
+                    
+                    if (animations.jump) {
+                        mixer.addEventListener('finished', function onFinished(e) {
+                            if (e.action === animations.jump) {
+                                mixer.removeEventListener('finished', onFinished);
+                                keys.space = false;
+                                if (keys.w) {
+                                    switchAnimation(keys.shift ? 'run' : 'walk');
+                                } else {
+                                    switchAnimation('idle');
+                                }
+                            }
+                        });
+                    }
+                }
+                if (e.key.toLowerCase() === 'a') {
+                    keys.a = true;
+                }
+                if (e.key.toLowerCase() === 'd') {
+                    keys.d = true;
+                }
+                
+                e.preventDefault();
+            });
+            
+            canvas.addEventListener('keyup', function(e) {
+                if (!isActive) return;
+                
+                if (e.key.toLowerCase() === 'w') {
+                    keys.w = false;
+                    if (currentState !== 'jump') {
+                        switchAnimation('idle');
+                    }
+                }
+                if (e.key === 'Shift') {
+                    keys.shift = false;
+                    if (keys.w && currentState !== 'jump') {
+                        switchAnimation('walk');
+                    }
+                }
+                if (e.key.toLowerCase() === 'a') {
+                    keys.a = false;
+                }
+                if (e.key.toLowerCase() === 'd') {
+                    keys.d = false;
+                }
+                
+                e.preventDefault();
+            });
             
             function animate() {
                 requestAnimationFrame(animate);
@@ -23398,18 +23497,21 @@
                     mixer.update(delta);
                 }
                 
-                if (!hasInteracted) {
+                if (isActive) {
+                    if (keys.a) {
+                        modelBaseRotationY -= 2.0 * delta;
+                    }
+                    if (keys.d) {
+                        modelBaseRotationY += 2.0 * delta;
+                    }
+                } else {
                     autoRotationY += 0.003;
                 }
                 
-                let targetRotationX = dragRotationX;
-                let targetRotationY = hasInteracted ? dragRotationY : autoRotationY;
-                
-                currentRotationX += (targetRotationX - currentRotationX) * 0.06;
-                currentRotationY += (targetRotationY - currentRotationY) * 0.06;
+                const targetY = isActive ? modelBaseRotationY : autoRotationY;
+                currentRotationY += (targetY - currentRotationY) * 0.1;
                 
                 if (model) {
-                    model.rotation.x = currentRotationX;
                     model.rotation.y = currentRotationY;
                 }
                 
@@ -23427,9 +23529,9 @@
         }
         
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPriest3DModel);
+            document.addEventListener('DOMContentLoaded', initLilithController);
         } else {
-            initPriest3DModel();
+            initLilithController();
         }
         
         // Agency Music Player
