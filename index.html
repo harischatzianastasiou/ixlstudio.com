@@ -2719,7 +2719,7 @@
 
             flex-direction: row; /* Horizontal direction for drag scrolling */
 
-            gap: 2rem; /* Space between project cards */
+            gap: 1rem; /* Reduced space between project cards */
 
             width: 100%; /* Full width of container */
 
@@ -2784,9 +2784,9 @@
 
             /* Wider than tall: aspect-ratio 1.9 so project windows are less square */
             width: auto; /* Width comes from aspect-ratio and height */
-            height: 75%; /* Card height is 75% of container so cards don’t dominate vertically */
-            aspect-ratio: 1.9; /* Wide rectangle (width = 1.9 × height) */
-            min-width: 320px; /* Minimum width for horizontal scrolling */
+            height: 55%; /* Card height is 75% of container so cards don’t dominate vertically */
+            aspect-ratio: 1.6; /* Wide rectangle (width = 1.9 × height) */
+            min-width: 240px; /* Minimum width for horizontal scrolling */
 
             flex-shrink: 0; /* Prevent cards from shrinking */
             flex: 0 0 auto; /* Don’t grow; size from height + aspect-ratio */
@@ -2795,7 +2795,7 @@
 
             overflow: hidden; /* Hide image overflow */
 
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            background: rgba(128, 128, 128, 0.9); /* Grey background for PNG transparency */
 
             backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
 
@@ -2813,7 +2813,7 @@
 
         .hero-project-card:hover {
 
-            transform: translateY(-10px) scale(1.05); /* Lift and scale on hover */
+            transform: none; /* No transform on hover */
 
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
 
@@ -2827,24 +2827,24 @@
 
             height: 100%; /* Full height of card */
 
-            object-fit: cover; /* Cover entire card area */
+            object-fit: contain; /* Fit image within card, preserving aspect ratio */
 
             object-position: center; /* Center the image */
 
-            transition: transform 0.3s ease; /* Smooth image transitions */
+            transition: transform 0.3s ease, filter 0.3s ease; /* Smooth transitions for transform and filter */
 
-            transform : scale(1.1)
+            filter: grayscale(100%); /* Black and white filter */
 
         }
 
-        /* Skgchess card: lighter filter so image shows through more */
+        /* Skgchess card: grayscale with lighter brightness so image shows through more */
         .hero-project-card[data-project="skg-chess"] .hero-project-image {
-            filter: brightness(0.65) contrast(1.1);
+            filter: grayscale(100%) brightness(0.65) contrast(1.1);
         }
 
         .hero-project-card:hover .hero-project-image {
 
-            transform: scale(1.2); /* Scale image on hover */
+            transform: none; /* No zoom on hover */
 
         }
 
@@ -13126,7 +13126,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
+            filter: grayscale(60%) contrast(100%) brightness(75%);       
+         }
 
 
 
@@ -13855,7 +13856,7 @@
 
 
 
-            gap: 2rem; /* Space between project cards */
+            gap: 1rem; /* Reduced space between project cards */
 
 
 
@@ -14092,7 +14093,7 @@
 
 
 
-            transform: scale(1.05);
+            transform: none; /* No zoom on scroll-active */
 
 
 
@@ -14270,7 +14271,7 @@
 
             opacity: 0.7;
 
-
+            filter: grayscale(100%); /* Black and white filter */
 
         }
 
@@ -14284,7 +14285,7 @@
 
 
 
-            transform: scale(1.05);
+            transform: none; /* No zoom on hover */
 
 
 
