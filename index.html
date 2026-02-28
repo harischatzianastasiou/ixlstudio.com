@@ -230,6 +230,8 @@
 
             position: fixed;
 
+            display: none; /* Hidden by default - JS will show when needed */
+
             width: 80px; /* Width for drag cursor */
 
             height: 80px; /* Height for drag cursor */
@@ -22187,10 +22189,12 @@
             margin-top: 4rem;
             text-align: center;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
             color: #e4dcd2;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
         .youtube-project-description {
             text-align: center;
@@ -22867,7 +22871,7 @@
 
 
 
-                    <h2 class="section-title">Making of</h2>
+                    <h2 class="section-title">Creations / Stories</h2>
 
 
 
@@ -22966,11 +22970,11 @@
         <section id="gallery" class="articles-section">
             <div class="articles-container">
                 <div class="section-header">
-                    <h2 class="section-title"> Iterations</h2>
+                    <h2 class="section-title"> Gallery</h2>
                 </div>
                 <div class="gallery-cta">
                     <p class="gallery-subtitle"></p>
-                    <a href="gallery.html" class="gallery-cta-link">Explore Gallery <span class="arrow" aria-hidden="true">→</span></a>
+                    <a href="gallery.html" class="gallery-cta-link">Explore  <span class="arrow" aria-hidden="true">→</span></a>
                 </div>
             </div>
         </section>
@@ -28343,13 +28347,17 @@
 
                 const heroProjectsGrid = document.querySelector('.hero-projects-grid'); // Get hero projects grid
 
+                const servicesSection = document.querySelector('.services-section'); // Get services section
+
+                const isServicesHidden = servicesSection && (servicesSection.style.display === 'none' || getComputedStyle(servicesSection).display === 'none'); // Check if hidden
+
                 let isOverProjects = false; // Track if over projects
 
                 
 
-                // Check projects grid
+                // Check projects grid (only if services section is visible)
 
-                if (projectsGrid) {
+                if (projectsGrid && !isServicesHidden) {
 
                     const rect = projectsGrid.getBoundingClientRect(); // Get grid position
 
