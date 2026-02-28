@@ -5636,9 +5636,17 @@
             margin-right: auto;
         }
         
-        /* Agency Music Player */
+        /* Agency Bandcamp Player */
+        .agency-bandcamp-player {
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* Legacy Agency Music Player (unused) */
         .agency-music-player {
-            display: flex;
+            display: none;
             align-items: center;
             gap: 1rem;
             margin-bottom: 1.5rem;
@@ -22443,31 +22451,10 @@
 
             <div class="agency-center">
 
-                <!-- Music Player -->
-                <div class="agency-music-player" id="agencyMusicPlayer">
-                    <button class="agency-play-btn" id="agencyPlayBtn" aria-label="Play/Pause">
-                        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-                            <rect x="6" y="4" width="4" height="16"/>
-                            <rect x="14" y="4" width="4" height="16"/>
-                        </svg>
-                    </button>
-                    <div class="agency-player-info">
-                        <span class="agency-track-title" id="agencyTrackTitle">Track Title</span>
-                        <span class="agency-track-artist" id="agencyTrackArtist">Artist</span>
-                    </div>
-                    <div class="agency-player-controls">
-                        <button class="agency-nav-btn" id="agencyPrevBtn" aria-label="Previous">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                        </button>
-                        <button class="agency-nav-btn" id="agencyNextBtn" aria-label="Next">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-                        </button>
-                    </div>
+                <!-- Bandcamp Player -->
+                <div class="agency-bandcamp-player">
+                    <iframe style="border: 0; width: 100%; height: 42px;" src="https://bandcamp.com/EmbeddedPlayer/album=2589565015/size=small/bgcol=0d0d0d/linkcol=e4dcd2/transparent=true/" seamless><a href="https://arcologies.bandcamp.com/album/vapor-drive">VAPOR DRIVE by arcologies</a></iframe>
                 </div>
-                <audio id="agencyAudioPlayer"></audio>
 
                 <h4 class="agency-description">An open-source creative practive &</h1>
                 <br>
@@ -23475,74 +23462,7 @@
             initLilithController();
         }
         
-        // Agency Music Player
-        function initAgencyMusicPlayer() {
-            const audio = document.getElementById('agencyAudioPlayer');
-            const playBtn = document.getElementById('agencyPlayBtn');
-            const prevBtn = document.getElementById('agencyPrevBtn');
-            const nextBtn = document.getElementById('agencyNextBtn');
-            const trackTitle = document.getElementById('agencyTrackTitle');
-            const trackArtist = document.getElementById('agencyTrackArtist');
-            const playIcon = playBtn?.querySelector('.play-icon');
-            const pauseIcon = playBtn?.querySelector('.pause-icon');
-            
-            if (!audio || !playBtn) return;
-            
-            const playlist = [
-                // { title: 'Play Radio', artist: 'Ambient Fabric - The Path', src: 'Ambient Fabric - The Path.mp3' },
-                { title: 'Play Radio', artist :'Rebellion of the Weak - vom deich gechillt', src : 'rebellion of the weak.mp3'},
-                { title: 'Play Radio', artist: 'Ambient Fabric - Pillars of Creation', src: 'Ambient Fabric - Pillars of Creation.mp3' }
-
-            ];
-            
-            let currentTrack = 0;
-            let isPlaying = false;
-            
-            function loadTrack(index) {
-                currentTrack = index;
-                audio.src = playlist[index].src;
-                trackTitle.textContent = playlist[index].title;
-                trackArtist.textContent = playlist[index].artist;
-            }
-            
-            function togglePlay() {
-                if (isPlaying) {
-                    audio.pause();
-                    playIcon.style.display = 'block';
-                    pauseIcon.style.display = 'none';
-                } else {
-                    audio.play();
-                    playIcon.style.display = 'none';
-                    pauseIcon.style.display = 'block';
-                }
-                isPlaying = !isPlaying;
-            }
-            
-            function nextTrack() {
-                currentTrack = (currentTrack + 1) % playlist.length;
-                loadTrack(currentTrack);
-                if (isPlaying) audio.play();
-            }
-            
-            function prevTrack() {
-                currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
-                loadTrack(currentTrack);
-                if (isPlaying) audio.play();
-            }
-            
-            playBtn.addEventListener('click', togglePlay);
-            nextBtn?.addEventListener('click', nextTrack);
-            prevBtn?.addEventListener('click', prevTrack);
-            audio.addEventListener('ended', nextTrack);
-            
-            loadTrack(0);
-        }
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initAgencyMusicPlayer);
-        } else {
-            initAgencyMusicPlayer();
-        }
+        // Bandcamp player is now used instead - no custom JS needed
         </script>
 
 
