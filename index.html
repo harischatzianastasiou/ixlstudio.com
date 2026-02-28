@@ -230,8 +230,6 @@
 
             position: fixed;
 
-            display: none; /* Hidden by default - JS will show when needed */
-
             width: 80px; /* Width for drag cursor */
 
             height: 80px; /* Height for drag cursor */
@@ -246,11 +244,11 @@
 
             z-index: 9999999999 !important; /* Highest z-index to appear above everything */
 
-            display: flex; /* Flexbox for centering text */
-
             align-items: center; /* Center vertically */
 
             justify-content: center; /* Center horizontally */
+
+            display: none; /* Hidden by default - JS will show as flex when needed */
 
             color: #8a53f7; /* Purple text color */
 
@@ -22314,9 +22312,9 @@
 
 
 
-    <!-- Custom Cursor -->
+    <!-- Custom Cursor (hidden by default, shown by JS only when services section is visible) -->
 
-    <div class="custom-cursor"></div>
+    <div class="custom-cursor" style="display: none !important;"></div>
 
 
 
@@ -28289,6 +28287,13 @@
 
             if (!cursor) return;
 
+            // Check if services section is hidden - don't initialize cursor at all
+            const servicesSection = document.querySelector('.services-section');
+            const isServicesHidden = servicesSection && (servicesSection.style.display === 'none' || getComputedStyle(servicesSection).display === 'none');
+            if (isServicesHidden) {
+                return; // Exit - no drag cursor needed when projects are hidden
+            }
+
             // Check if device is mobile - disable custom cursor on mobile devices
 
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
@@ -28433,7 +28438,7 @@
 
                     cursor.textContent = 'Drag'; // Set text content
 
-                    cursor.style.display = 'flex'; // Show drag cursor
+                    cursor.style.setProperty('display', 'flex', 'important'); // Show drag cursor
 
                     cursor.style.opacity = '1'; // Fully visible
 
@@ -28445,7 +28450,7 @@
 
                     cursor.textContent = ''; // Clear text
 
-                    cursor.style.display = 'none'; // Hide – use system cursor everywhere else
+                    cursor.style.setProperty('display', 'none', 'important'); // Hide – use system cursor everywhere else
 
                 }
 
