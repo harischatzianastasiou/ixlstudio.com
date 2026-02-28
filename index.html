@@ -10271,7 +10271,7 @@
 
 
 
-            padding: 30vh 4rem 1.5rem 4rem; /* Reduced top padding – articles now closer to projects */
+            padding: 0 4rem 1.5rem 4rem; /* No top gap - sections flow immediately */
 
 
 
@@ -10378,7 +10378,7 @@
 
 
 
-            max-width: 1200px; /* Match articles-container so All Projects & Blog align on the left */
+            max-width: 900px; /* Match articles-container so Productions & Monologues align the same */
 
 
 
@@ -12498,7 +12498,7 @@
 
 
 
-            padding: 15rem 4rem 3rem; /* More top padding for gap after agency, less bottom for closer to projects */
+            padding: 0 4rem 0; /* No gaps - sections flow immediately */
 
 
 
@@ -16027,10 +16027,6 @@
 
 
 
-            .articles-section,
-
-
-
             .contact-section {
 
 
@@ -16047,7 +16043,7 @@
 
 
 
-                padding: 30vh 2rem 4rem 2rem; /* Reduced top – articles closer to projects */
+                padding: 0 2rem 4rem 2rem; /* No top gap - sections flow immediately */
 
 
 
@@ -17212,7 +17208,7 @@
 
 
 
-                padding: 30vh 2rem 8rem 2rem; /* Reduced top – articles closer to projects */
+                padding: 0 2rem 8rem 2rem; /* No top gap - sections flow immediately */
 
 
 
@@ -17221,10 +17217,6 @@
 
 
             .projects-section,
-
-
-
-            .articles-section,
 
 
 
@@ -17494,7 +17486,7 @@
 
 
 
-                padding: 12rem 1.5rem 2rem; /* More top for gap after agency, less bottom for closer to projects */
+                padding: 0 1.5rem 0; /* No gaps - sections flow immediately */
 
 
 
@@ -17526,7 +17518,7 @@
 
 
 
-                padding: 25vh 1.5rem 1rem 1.5rem; /* Reduced top – articles closer to projects */
+                padding: 0 1.5rem 1rem 1.5rem; /* No top gap - sections flow immediately */
             }
             .services-section .section-header {
                 margin-bottom: 0.75rem;
@@ -18241,7 +18233,7 @@
 
 
 
-                padding: 25vh 1rem 5rem 1rem; /* Reduced top – articles closer to projects */
+                padding: 0 1rem 5rem 1rem; /* No top gap - sections flow immediately */
 
 
 
@@ -18263,7 +18255,7 @@
 
             }
             .articles-section {
-                padding: 10rem 1rem 2rem; /* More top for gap after agency, less bottom for closer to projects */
+                padding: 0 1rem 0; /* No gaps - sections flow immediately */
             }
 
 
@@ -22220,9 +22212,9 @@
             align-items: flex-start;
         }
         .books-title {
-            font-size: 1.2rem;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Match section-title size */
             color: #e4dcd2;
-            font-weight: 500;
+            font-weight: 900; /* Match section-title weight */
             margin: 0;
             text-align: left;
         }
@@ -22368,7 +22360,7 @@
 
                 <li><a href="#agency" onclick="scrollToSection('agency')">Home</a></li>
 
-                <li><a href="#services" onclick="scrollToSection('services')">Creations</a></li>
+                <li><a href="#services" onclick="scrollToSection('services')">Productions</a></li>
 
                 <li><a href="#devlog" onclick="scrollToSection('devlog')">On Creation</a></li>
                 
@@ -22515,7 +22507,7 @@
         <section id="articles" class="articles-section">
             <div class="articles-container">
                 <div class="section-header">
-                    <h2 class="section-title">Articles</h2>
+                    <h2 class="section-title">Monologues</h2>
                 </div>
                 <div class="articles-list-grid" id="articlesListRoot">
                     <!-- Filled by JS from articles.json -->
@@ -22523,11 +22515,11 @@
             </div>
         </section>
 
-                <!-- Services Section -->
+                <!-- Services Section (HIDDEN) -->
 
 
 
-                <section id="services" class="services-section">
+                <section id="services" class="services-section" style="display:none !important;">
 
 
 
@@ -22565,7 +22557,7 @@
 
         
 
-                            <h2 class="section-title" style="text-transform: none;"></h2>
+                            <h2 class="section-title" style="text-transform: none;"> Works</h2>
 
         
 
@@ -22698,7 +22690,7 @@
 
                                         <div class="hero-project-overlay-center">
 
-                                            <h3 class="hero-project-title">PROJECT ECHO</h3>
+                                            <h3 class="hero-project-title">ECHOES</h3>
 
                                         </div>
 
@@ -22717,7 +22709,7 @@
 
                                         <div class="hero-project-overlay-center">
 
-                                            <h3 class="hero-project-title">PROJECT SKGCHESS</h3>
+                                            <h3 class="hero-project-title">SKGCHESS</h3>
 
                                         </div>
 
@@ -22790,7 +22782,7 @@
         <!-- YouTube Text Section -->
         <section id="youtube-section" class="youtube-section">
             <div class="youtube-section-content">
-                <h3 class="youtube-project-title">CURRENT PROJECT</h3>
+                <h3 class="youtube-project-title">CURRENTLY WORKING ON</h3>
                 <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
             </div>
         </section>
@@ -22875,7 +22867,7 @@
 
 
 
-                    <h2 class="section-title">Behind The Scenes</h2>
+                    <h2 class="section-title">Creation Journals</h2>
 
 
 
@@ -22908,7 +22900,7 @@
 
 
 
-                    <div class="pagination-controls">
+                    <div class="pagination-controls" style="display: none;">
 
 
 
@@ -22974,7 +22966,7 @@
         <section id="gallery" class="articles-section">
             <div class="articles-container">
                 <div class="section-header">
-                    <h2 class="section-title">Gallery</h2>
+                    <h2 class="section-title"> Creation Gallery</h2>
                 </div>
                 <div class="gallery-cta">
                     <p class="gallery-subtitle"></p>
@@ -22985,13 +22977,13 @@
 
         <!-- Inspiration Section -->
         <section id="inspiration" class="music-section">
-            <div class="section-header">
-                <h2 class="section-title"></h2>
+            <div class="section-header" style="text-align: center;">
+                <h2 class="section-title" style="text-align: center; width: 100%; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900;">Influences</h2>
             </div>
             <div class="music-section-content">
                 <!-- Book Recommendations -->
-                <div class="books-section">
-                    <h3 class="books-title">Books Read</h3>
+                <div class="books-section" style="align-items: center;">
+                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Research</h3>
                     <ul class="books-list">
                         <li class="book-list-item"><span class="book-item-title">A Theory of Fun for Game Design</span> <span class="book-item-author">Raph Koster</span></li>
                         <li class="book-list-item"><span class="book-item-title">The Story of Art</span> <span class="book-item-author">E.H. Gombrich</span></li>
@@ -23001,6 +22993,13 @@
                         <li class="book-list-item"><span class="book-item-title">Brain Rules</span> <span class="book-item-author">John Medina</span></li>
                         <li class="book-list-item"><span class="book-item-title">History of Philosophy</span> <span class="book-item-author">A.C. Grayling</span></li>
                     </ul>
+                </div>
+                <!-- Moodboard Section -->
+                <div class="books-section" style="align-items: center; margin-top: 3rem;">
+                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Moodboard</h3>
+                    <div class="gallery-cta" style="text-align: center;">
+                        <a href="moodboard.html" class="gallery-cta-link">Open Moodboard <span class="arrow" aria-hidden="true">→</span></a>
+                    </div>
                 </div>
             </div>
         </section>

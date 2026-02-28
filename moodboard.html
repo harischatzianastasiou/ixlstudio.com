@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IXLSTUDIO — Moodboard</title>
+    <link rel="icon" type="image/png" href="ixl.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { color-scheme: light; height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #1a1a1a;
+            color: #e4dcd2;
+            line-height: 1.6;
+            height: 100%;
+            overflow: hidden;
+        }
+        .scroll-wrapper {
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            height: 90px;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .logo {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .logo:hover { color: rgba(255,255,255,0.8); }
+        .logo-subtitle {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1;
+            margin-top: 0.2rem;
+        }
+        .moodboard-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+        .moodboard-main h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .moodboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .moodboard-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .moodboard-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+        .moodboard-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+        .moodboard-item:hover img {
+            filter: brightness(1.1);
+        }
+        .moodboard-item.video-item {
+            aspect-ratio: 16 / 9;
+        }
+        .moodboard-item.video-item iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: rgba(255,255,255,0.5);
+        }
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .header { padding: 1rem 2rem; height: 70px; }
+            .logo { font-size: 1rem; }
+            .logo-subtitle { font-size: 0.7rem; margin-top: 0.1rem; }
+            .moodboard-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+        }
+        @media (max-width: 480px) {
+            .header { padding: 0.8rem 1rem; height: 60px; }
+            .logo { font-size: 0.9rem; }
+            .logo-subtitle { font-size: 0.6rem; margin-top: 0.05rem; }
+            .moodboard-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html" class="logo" id="logo-link">IXLSTUDIO</a>
+            <span class="logo-subtitle">MOODBOARD</span>
+        </div>
+    </header>
+    <div class="scroll-wrapper">
+        <main class="moodboard-main">
+            <h1>Moodboard</h1>
+
+            <div class="moodboard-grid" id="moodboard-grid">
+                <div class="moodboard-item video-item">
+                    <iframe src="https://www.youtube.com/embed/HglXDxMdSfM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="moodboard-item video-item">
+                    <iframe src="https://www.youtube.com/embed/8HXMl6mAlFk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="moodboard-item video-item">
+                    <iframe src="https://www.youtube.com/embed/3lfgsLvgTtE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="moodboard-item video-item">
+                    <iframe src="https://www.youtube.com/embed/tqoaDVa9cbM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="moodboard-item video-item">
+                    <iframe src="https://www.youtube.com/embed/H5NZtbbiyKM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Lightbox for full-size image viewing -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Full size image" id="lightbox-img">
+    </div>
+
+    <script>
+        // Use history.back() when clicking logo so index intro doesn't replay
+        document.getElementById('logo-link').addEventListener('click', function(e) {
+            if (window.history.length > 1) { e.preventDefault(); window.history.back(); }
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const moodboardItems = document.querySelectorAll('.moodboard-item img');
+
+        moodboardItems.forEach(img => {
+            img.addEventListener('click', function() {
+                lightboxImg.src = this.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightbox.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+        });
+
+        // Hide empty state if there are images
+        const grid = document.getElementById('moodboard-grid');
+        const emptyState = document.getElementById('empty-state');
+        if (grid.children.length > 0) {
+            emptyState.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
