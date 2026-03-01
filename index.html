@@ -12899,6 +12899,31 @@
             font-size: 1.25em;
             opacity: 0.9;
         }
+        .moodboard-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(228, 220, 210, 0.08);
+            color: #e4dcd2;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid rgba(228, 220, 210, 0.3);
+            border-radius: 4px;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .moodboard-link:hover {
+            background: rgba(228, 220, 210, 0.15);
+            border-color: rgba(228, 220, 210, 0.5);
+        }
+        .moodboard-link .arrow {
+            font-size: 1.1em;
+            transition: transform 0.2s ease;
+        }
+        .moodboard-link:hover .arrow {
+            transform: translateX(3px);
+        }
 
         /* Override text colors for Articles section with white background */
 
@@ -23318,7 +23343,7 @@
                 </div>
                 <div class="gallery-cta">
                     <p class="gallery-subtitle"></p>
-                    <a href="gallery.html" class="gallery-cta-link">Explore  <span class="arrow" aria-hidden="true">→</span></a>
+                    <a href="gallery.html" class="gallery-cta-link">Explore  <span class="arrow" aria-hidden="true"></span></a>
                 </div>
             </div>
         </section>
@@ -23337,7 +23362,7 @@
 
         <!-- Inspiration Section -->
         <section id="inspiration" class="music-section">
-            <div class="section-header" style="text-align: center;">
+            <div class="section-header" style="text-align: center; margin-top: 3rem;">
                 <h2 class="section-title" style="text-align: center; width: 100%; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900;">Influences</h2>
             </div>
             <div class="music-section-content">
@@ -23357,8 +23382,8 @@
                 <!-- Moodboard Section -->
                 <div class="books-section" style="align-items: center; margin-top: 3rem;">
                     <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Moodboard</h3>
-                    <div class="gallery-cta" style="text-align: center;">
-                        <a href="moodboard.html" class="gallery-cta-link">Open Moodboard <span class="arrow" aria-hidden="true">→</span></a>
+                    <div style="text-align: center;">
+                        <a href="moodboard.html" class="moodboard-link">View <span class="arrow" aria-hidden="true">→</span></a>
                     </div>
                 </div>
             </div>
