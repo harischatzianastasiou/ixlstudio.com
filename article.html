@@ -149,19 +149,17 @@
             display: flex;
             justify-content: space-between;
             gap: 1rem;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.15);
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
         }
         .letter-nav a {
-            color: rgba(0,0,0,0.7);
+            color: #e4dcd2;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
         }
-        .letter-nav a:hover { color: #1a1a1a; text-decoration: underline; }
-        body.dark-mode .letter-nav a { color: rgba(255,255,255,0.75); }
-        body.dark-mode .letter-nav a:hover { color: #e4dcd2; }
+        .letter-nav a:hover { color: #fff; text-decoration: underline; }
         .letter-nav .letter-next { margin-left: auto; }
         .error-msg { color: #c66; margin-top: 2rem; }
     </style>
@@ -259,10 +257,10 @@
                         }
                     }
                     root.innerHTML =
+                        letterNav +
                         '<h1 class="article-title">' + escapeHtml(article.title) + '</h1>' +
                         (article.date ? '<p class="article-meta">' + escapeHtml(article.date) + '</p>' : '') +
-                        '<div class="article-body">' + article.content + '</div>' +
-                        letterNav;
+                        '<div class="article-body">' + article.content + '</div>';
                 })
                 .catch(function() {
                     root.innerHTML = '<p class="error-msg">Could not load articles. Check that articles.json exists.</p>';
