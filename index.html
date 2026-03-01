@@ -5757,6 +5757,15 @@
         .agency-collage-right {
             right: 4%;
             width: clamp(160px, 18vw, 260px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .agency-collage-bg-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 4px;
         }
         /* Physical card look: layered, shadow underneath like ref */
         .agency-collage-card {
@@ -6870,6 +6879,114 @@
         #services-subtitle {
             font-size: clamp(1.2rem, 5vw, 2.5rem) !important; /* Much bigger on all devices */
             line-height: 1.4 !important; /* Better line height for readability */
+        }
+
+        /* Other Work Card - in All Stories grid */
+        .other-work-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid rgba(228, 220, 210, 0.3);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            min-height: 300px;
+            order: 2; /* Appears after SKGCHESS */
+        }
+        .articles-grid .article-card {
+            order: 1; /* SKGCHESS appears first */
+        }
+        .other-work-card:hover {
+            border-color: rgba(228, 220, 210, 0.6);
+            background: rgba(228, 220, 210, 0.05);
+        }
+        .other-work-label {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 900;
+            color: #e4dcd2;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .other-work-value {
+            font-size: 1rem;
+            color: rgba(228, 220, 210, 0.7);
+        }
+
+        /* Project Echo Section - Featured after Agency */
+        .project-echo-section {
+            padding: 4rem 4rem;
+            background: transparent;
+        }
+        .project-echo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .project-echo-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding: 2rem;
+            border: 1px solid rgba(228, 220, 210, 0.2);
+            border-radius: 8px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .project-echo-link:hover {
+            border-color: rgba(228, 220, 210, 0.5);
+            background: rgba(228, 220, 210, 0.05);
+        }
+        .project-echo-content {
+            text-align: center;
+        }
+        .project-echo-tag {
+            font-size: 0.8rem;
+            color: rgba(228, 220, 210, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .project-echo-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: #e4dcd2;
+            margin: 0.5rem 0;
+        }
+        .project-echo-excerpt {
+            font-size: 1rem;
+            color: rgba(228, 220, 210, 0.7);
+            margin-bottom: 1rem;
+        }
+        .project-echo-cta {
+            font-size: 0.9rem;
+            color: #e4dcd2;
+            font-weight: 500;
+        }
+        .project-echo-cta .arrow {
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .project-echo-link:hover .project-echo-cta .arrow {
+            transform: translateX(5px);
+        }
+        .project-echo-link {
+            position: relative;
+        }
+        .project-echo-youtube {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a53f7;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+        .project-echo-youtube:hover {
+            color: #a875ff;
+            transform: translateY(-50%) scale(1.1);
         }
 
         /* Articles section - completely static, no animations, stable on mobile scroll */
@@ -12656,6 +12773,7 @@
         /* Gallery section: CTA to gallery.html – matches index warm off-white vibe */
         #gallery .gallery-cta {
             margin-top: 1.5rem;
+            margin-bottom: 4rem;
         }
         #gallery .gallery-subtitle {
             font-size: 1rem;
@@ -22203,7 +22321,16 @@
             max-width: 650px;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: 12rem;
+            margin-bottom: 1rem;
+        }
+        .youtube-project-subtitle {
+            text-align: center;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
         }
         
         /* Books Section */
@@ -22485,7 +22612,7 @@
                 </div>
 
                 <div class="agency-collage-side agency-collage-right">
-
+                    <img src="lilithbg.png" alt="Lilith background" class="agency-collage-bg-image">
                     <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
                         <canvas id="agencyPriestCanvas"></canvas>
                     </div>
@@ -22505,14 +22632,21 @@
             </div>
         </section> -->
 
-        <!-- Articles section: list of articles; click opens article.html?id=slug (content from articles.json) -->
-        <section id="articles" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title">Monologues</h2>
-                </div>
-                <div class="articles-list-grid" id="articlesListRoot">
-                    <!-- Filled by JS from articles.json -->
+        <!-- Project Echo Section - Featured after Agency -->
+        <section id="project-echo" class="project-echo-section">
+            <div class="project-echo-container">
+                <div class="project-echo-link" onclick="window.location.href='inbetween.html'" style="cursor: pointer;">
+                    <div class="project-echo-content">
+                        <span class="project-echo-tag">Game Development</span>
+                        <h2 class="project-echo-title">PROJECT ECHO</h2>
+                        <p class="project-echo-excerpt">Currently ongoing.</p>
+                        <span class="project-echo-cta">Read more <span class="arrow">→</span></span>
+                    </div>
+                    <a href="https://www.youtube.com/@mementomori947" target="_blank" class="project-echo-youtube" title="Follow on YouTube" onclick="event.stopPropagation();">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -22784,8 +22918,46 @@
         <!-- YouTube Text Section -->
         <section id="youtube-section" class="youtube-section">
             <div class="youtube-section-content">
-                <h3 class="youtube-project-title">CURRENTLY WORKING ON</h3>
-                <p class="youtube-project-description">Building a game from scratch while documenting the entire creative journey. Starting with zero knowledge, this series explores every aspect of creation as a record of how ideas become reality. Find more below on Behind The Scenes : Project Echo.</p>
+                <h3 class="youtube-project-title">THINGS YOU SHOULD KNOW</h3>
+                
+                <h4 class="youtube-project-subtitle">I'm making a game : PROJECT LILITH</h4>
+                <p class="youtube-project-description">I am making a game and sharing here how I am learning to build it from day one. I'm documenting everything, from game design approaches to experimenting with art and learning how to actually finish it.</p>
+                
+                <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
+                <p class="youtube-project-description">I have things I want to talk about, and I believe you will be interested in hearing them. Some of them question the way things are: the logic of endless consumption, the systems we accept without thinking. Others can't be explained directly. They need to be experienced.</p>
+                <p class="youtube-project-description">At the same time, it is simply exciting to design your own world and to see it come to life, and even to learn and unlock perspectives that you did not know before.</p>
+                
+                <h4 class="youtube-project-subtitle">Why I'm sharing the process publicly</h4>
+
+                <p class="youtube-project-description">
+                    Unlike just watching separate tutorials, I am trying to do something that, to the best of my knowledge, hasn’t been widely attempted. I want to make a serious attempt at creating a good game while approaching the process with the intention of helping others who will one day try to build their own game and face the same questions I did. Why should you create? What are the steps involved? I am trying to answer this questions myself. It is an independent act and a rather ambitious attempt, but one that satisfies me in knowing that I tried to capture and express it.
+                
+                <p class="youtube-project-description">
+                    At the same time, I'm sharing the process because  I don’t want to wait for the game to be finished before saying anything about it.</p>
+
+                </p>
+                
+                <p class="youtube-project-description">
+                    Additionally, for this to grow, there needs to be a plan. Since I’m working completely alone, building a community around the project feels like the most realistic and healthy way to make it grow.
+                </p>
+                
+                <p class="youtube-project-description">
+                    Finally, it gives me a reason to stay consistent and motivated through the difficult parts, and there will definitely be many of them.
+                </p>
+
+                <h4 class="youtube-project-subtitle">What I did before starting this idea</h4>
+                <p class="youtube-project-description">I read books on game design.</p>
+                <p class="youtube-project-description">I experimented with 2D and 3D art.</p>
+                <p class="youtube-project-description">I wrote a story to communicate what I want to express.</p>
+                <p class="youtube-project-description">I tested different game engines.</p>
+                
+                <h4 class="youtube-project-subtitle">What I Commit To Do</h4>
+                <p class="youtube-project-description">
+                I’m committing to trying to make a genuinely good game. To take it seriously, to keep learning, and to actually finish it.
+                </p>
+                <p class="youtube-project-description">
+                If you’re wondering whether what I’m saying has value, I suggest following the journey here and on YouTube and deciding for yourself. You can also explore the work I’ve already done.
+                </p>
             </div>
         </section>
 
@@ -22869,7 +23041,7 @@
 
 
 
-                    <h2 class="section-title">Creations / Stories</h2>
+                    <h2 class="section-title">Work</h2>
 
 
 
@@ -22882,7 +23054,7 @@
 
 
 
-                    <!-- Articles will be dynamically loaded here -->
+                    <!-- Articles + Other Work card loaded by JavaScript -->
 
 
 
@@ -22973,6 +23145,18 @@
                 <div class="gallery-cta">
                     <p class="gallery-subtitle"></p>
                     <a href="gallery.html" class="gallery-cta-link">Explore  <span class="arrow" aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monologues section: list of articles -->
+        <section id="articles" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Articles</h2>
+                </div>
+                <div class="articles-list-grid" id="articlesListRoot">
+                    <!-- Filled by JS from articles.json -->
                 </div>
             </div>
         </section>
@@ -23604,7 +23788,7 @@
 
     
 
-                    <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item">
+                    <!-- <a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" class="contact-item">
 
                         <div class="contact-label">Other Work</div>
 
@@ -23622,7 +23806,7 @@
 
     
 
-                            </a>
+                            </a> -->
 
     
 
@@ -30592,46 +30776,6 @@
 
 
 
-                    image: "retrochess2.jpg",
-
-                    video: "show11.mp4", /* Left article – place show11.mp4 next to index.html */
-
-                    alt: "Skgchess chess platform",
-
-
-
-                    category: "Game Development",
-
-
-
-                    secondaryTag: "Godot, 2D Art, Game Design",
-
-
-
-                    title: "PROJECT ECHO",
-
-
-
-                    excerpt: "Currently ongoing.",
-
-
-
-                    date: "March 8, 2025",
-
-
-
-                    readTime: "Click to read",
-
-                    projectLink: "inbetween.html"
-
-                },
-
-
-
-                {
-
-
-
                     image: "bnwthess1.jpg",
 
                     video: "show12.mp4", /* Rename "show 12.mp4" to show12.mp4 (no space) so it loads reliably */
@@ -30797,6 +30941,14 @@
 
 
                 });
+
+                // Add Other Work card after articles
+                const otherWorkCard = document.createElement('a');
+                otherWorkCard.href = 'https://www.linkedin.com/in/haris-chatzianastasiou-084783212/';
+                otherWorkCard.target = '_blank';
+                otherWorkCard.className = 'other-work-card';
+                otherWorkCard.innerHTML = '<div class="other-work-label">SOFTWARE ENGINEER</div><div class="other-work-value">Haris Chatzianastasiou</div>';
+                this.articlesGrid.appendChild(otherWorkCard);
 
 
 
