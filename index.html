@@ -5770,19 +5770,23 @@
         .lilith-label-container {
             position: fixed;
             top: 18%;
-            right: 10%;
+            right: 18%;
             z-index: 11;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .lilith-label {
             font-family: 'Caveat', 'Comic Sans MS', cursive;
             font-size: clamp(1rem, 1.5vw, 1.4rem);
             color: #e4dcd2;
             white-space: nowrap;
+            margin-left: -2rem;
+            margin-top: -6rem;
         }
         .lilith-arrow {
-            display: none;
+            transform: rotate(135deg);
+            margin-left: -1rem;
         }
         /* Physical card look: layered, shadow underneath like ref */
         .agency-collage-card {
@@ -22637,10 +22641,10 @@
                 </div>
                 
                 <div class="lilith-label-container">
-                    <span class="lilith-label">My Dog Lilith</span>
                     <svg class="lilith-arrow" viewBox="0 0 100 50" width="80" height="40">
                         <path d="M5 40 Q 30 10, 70 15 L 65 5 L 90 20 L 60 25 L 65 15 Q 35 20, 15 40" fill="#e4dcd2" />
                     </svg>
+                    <span class="lilith-label">My Dog Lilith</span>
                 </div>
                 <img src="lilithbg.png" alt="Lilith background" class="agency-collage-bg-image">
 
