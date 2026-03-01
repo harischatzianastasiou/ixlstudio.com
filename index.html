@@ -5758,45 +5758,25 @@
             right: 4%;
             width: clamp(160px, 18vw, 260px);
         }
-        .agency-collage-bg-image {
+        .project-lilith-image {
             position: absolute;
-            top: -5%;
-            right: 0%;
-            width: clamp(150px, 16vw, 250px);
+            left: 60px;
+            top: 0%;
+            width: clamp(100px, 14vw, 160px);
             height: auto;
             border-radius: 4px;
-            z-index: 10;
             filter: saturate(0.4) brightness(0.9);
+            z-index: -1;
+            opacity: 0.7;
+            transform: rotate(0deg);
         }
-        @media (max-width: 768px) {
-            .agency-collage-bg-image,
-            .lilith-label-container {
-                display: none;
-            }
-        }
-        .lilith-label-container {
-            position: absolute;
-            top: 40%;
-            right: 12%;
-            z-index: 11;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .project-echo-section {
+        .project-echo-container {
             position: relative;
         }
-        .lilith-label {
-            font-family: 'Caveat', 'Comic Sans MS', cursive;
-            font-size: clamp(1rem, 1.5vw, 1.4rem);
-            color: #e4dcd2;
-            white-space: nowrap;
-            margin-left: -2rem;
-            margin-top: -6rem;
-        }
-        .lilith-arrow {
-            transform: rotate(135deg);
-            margin-left: -1rem;
+        @media (max-width: 768px) {
+            .project-lilith-image {
+                display: none;
+            }
         }
         .doodle {
             position: absolute;
@@ -5825,18 +5805,6 @@
             right: 22%;
             opacity: 0.19;
             transform: rotate(-18deg);
-        }
-        .doodle-star1 {
-            top: 155vh;
-            left: 20%;
-            opacity: 0.15;
-            transform: rotate(15deg);
-        }
-        .doodle-star2 {
-            top: 445vh;
-            right: 18%;
-            opacity: 0.2;
-            transform: rotate(-25deg);
         }
         .doodle-circle1 {
             top: 215vh;
@@ -7090,7 +7058,7 @@
         }
         .project-echo-youtube {
             position: absolute;
-            right: 2rem;
+            right: 6rem;
             top: 50%;
             transform: translateY(-50%);
             color: #8a53f7;
@@ -7100,6 +7068,17 @@
         .project-echo-youtube:hover {
             color: #a875ff;
             transform: translateY(-50%) scale(1.1);
+        }
+        @media (max-width: 768px) {
+            .project-echo-youtube {
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                transform: none;
+            }
+            .project-echo-youtube:hover {
+                transform: scale(1.1);
+            }
         }
 
         /* Articles section - completely static, no animations, stable on mobile scroll */
@@ -22784,17 +22763,6 @@
             </svg>
         </div>
         
-        <div class="doodle doodle-star1">
-            <svg viewBox="0 0 30 30" width="22" height="22">
-                <path d="M15 3 L17 11 L25 11 L19 16 L21 24 L15 19 L9 24 L11 16 L5 11 L13 11 Z" stroke="#ffffff" stroke-width="1.5" fill="none"/>
-            </svg>
-        </div>
-        
-        <div class="doodle doodle-star2">
-            <svg viewBox="0 0 30 30" width="18" height="18">
-                <path d="M15 3 L17 11 L25 11 L19 16 L21 24 L15 19 L9 24 L11 16 L5 11 L13 11 Z" fill="#8a53f7" opacity="0.4"/>
-            </svg>
-        </div>
         
         
         <div class="doodle doodle-circle1">
@@ -22839,8 +22807,8 @@
 
         <!-- Project Echo Section - Featured after Agency -->
         <section id="project-echo" class="project-echo-section">
-            <img src="lilithbg.png" alt="Lilith background" class="agency-collage-bg-image">
             <div class="project-echo-container">
+                <img src="lilithbg.png" alt="Lilith" class="project-lilith-image">
                 <div class="project-echo-link" onclick="window.location.href='inbetween.html'" style="cursor: pointer;">
                     <div class="project-echo-content">
                         <span class="project-echo-tag">Game Development</span>
