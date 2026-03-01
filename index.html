@@ -5757,11 +5757,17 @@
         .agency-collage-right {
             right: 4%;
             width: clamp(160px, 18vw, 260px);
+            top: 50%;
+            bottom: auto;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .agency-collage-right .agency-model-container {
+            aspect-ratio: 3/5 !important;
         }
         .agency-collage-bg-image {
-            position: absolute;
-            bottom: 100%;
-            left: 0;
             width: 100%;
             height: auto;
             margin-bottom: 1rem;
