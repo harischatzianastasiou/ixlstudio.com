@@ -600,6 +600,7 @@
                 overflow-y: scroll;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-y: none;
+                scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
             }
         }
 
@@ -1302,11 +1303,9 @@
 
             pointer-events: none;
 
-            transform: scale(1.02);
+            transform: none; /* No scale – keeps agency section in same position when menu opens on mobile */
 
-            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-
-                        transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 
         }
 
@@ -1316,7 +1315,7 @@
 
             pointer-events: auto;
 
-            transform: scale(1);
+            transform: none;
 
         }
 
@@ -1726,7 +1725,7 @@
 
 
 
-            background: #2e4a3a; /* Solid color instead of gradient */
+            background: transparent; /* Same video bg as rest of page – no brightness jump */
 
 
 
@@ -2197,42 +2196,9 @@
 
 
 
-        /* Layer 1: Subtle gradient movement */
-
-
-
+        /* Layer 1: transparent so video bg has same brightness everywhere */
         .bg-layer-1 {
-
-
-
-            background: linear-gradient(45deg, 
-
-
-
-                rgba(46, 74, 58, 0.8) 0%, 
-
-
-
-                rgba(46, 74, 58, 0.6) 25%, 
-
-
-
-                rgba(46, 74, 58, 0.8) 50%, 
-
-
-
-                rgba(46, 74, 58, 0.6) 75%, 
-
-
-
-                rgba(46, 74, 58, 0.8) 100%); /* Consistent about section color variations */
-
-
-
-
-
-
-
+            background: transparent !important;
         }
 
 
@@ -2241,30 +2207,9 @@
 
 
 
-        /* Layer 2: Subtle accent movement */
-
-
-
+        /* Layer 2: transparent for consistent video brightness */
         .bg-layer-2 {
-
-
-
-            background: radial-gradient(circle at 30% 20%, 
-
-
-
-                rgba(255, 255, 255, 0.05) 0%, 
-
-
-
-                transparent 50%); /* White accent instead of blue */
-
-
-
-
-
-
-
+            background: transparent !important;
         }
 
 
@@ -2273,30 +2218,9 @@
 
 
 
-        /* Layer 3: Secondary accent */
-
-
-
+        /* Layer 3: transparent for consistent video brightness */
         .bg-layer-3 {
-
-
-
-            background: radial-gradient(circle at 70% 80%, 
-
-
-
-                rgba(255, 255, 255, 0.03) 0%, 
-
-
-
-                transparent 50%); /* White accent instead of blue */
-
-
-
-
-
-
-
+            background: transparent !important;
         }
 
 
@@ -2305,46 +2229,9 @@
 
 
 
-        /* Layer 4: Subtle texture movement */
-
-
-
+        /* Layer 4: transparent for consistent video brightness */
         .bg-layer-4 {
-
-
-
-            background: 
-
-
-
-                radial-gradient(circle at 20% 60%, 
-
-
-
-                    rgba(255, 255, 255, 0.02) 0%, 
-
-
-
-                    transparent 30%),
-
-
-
-                radial-gradient(circle at 80% 40%, 
-
-
-
-                    rgba(255, 255, 255, 0.02) 0%, 
-
-
-
-                    transparent 30%);
-
-
-
-
-
-
-
+            background: transparent !important;
         }
 
 
@@ -2353,38 +2240,9 @@
 
 
 
-        /* Layer 5: Dynamic overlay */
-
-
-
+        /* Layer 5: transparent for consistent video brightness */
         .bg-layer-5 {
-
-
-
-            background: 
-
-
-
-                linear-gradient(90deg, 
-
-
-
-                    transparent 0%, 
-
-
-
-                    rgba(255, 255, 255, 0.02) 50%, 
-
-
-
-                    transparent 100%); /* White overlay instead of blue */
-
-
-
-
-
-
-
+            background: transparent !important;
         }
 
 
@@ -2621,11 +2479,7 @@
 
 
 
-            background: radial-gradient(circle at 30% 20%, rgba(54, 27, 6, 0.1) 0%, transparent 50%),
-
-
-
-                        radial-gradient(circle at 70% 80%, rgba(61, 51, 42, 0.1) 0%, transparent 50%); /* Updated to new palette colors */
+            background: transparent; /* No extra tint – video brightness consistent with rest of page */
 
 
 
@@ -2715,9 +2569,9 @@
 
         .hero-projects-grid {
 
-            display: flex; /* Flexbox for horizontal drag scrolling */
+            display: flex; /* Flexbox for horizontal layout */
 
-            flex-direction: row; /* Horizontal direction for drag scrolling */
+            flex-direction: row; /* Horizontal direction */
 
             gap: 1rem; /* Reduced space between project cards */
 
@@ -2735,7 +2589,9 @@
 
             -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
 
-            cursor: grab; /* Show grab cursor */
+            justify-content: center; /* Center cards in the middle */
+
+            cursor: default; /* No drag cursor */
 
             position: relative; /* Relative positioning for indicators */
 
@@ -2767,7 +2623,7 @@
 
         .hero-projects-grid.dragging {
 
-            cursor: grabbing; /* Show grabbing cursor when dragging */
+            cursor: default; /* No drag cursor */
 
             scroll-behavior: auto; /* Disable smooth scroll during drag */
 
@@ -2803,7 +2659,7 @@
 
             transition: all 0.3s ease; /* Smooth transitions */
 
-            cursor: pointer; /* Pointer cursor on hover */
+            cursor: default; /* Normal cursor – not clickable */
 
             pointer-events: auto; /* Allow clicks on project cards */
 
@@ -5569,7 +5425,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.65); /* Darker overlay on video across all sections */
+            background: transparent; /* No darkening – video stays same before/after loader, no “filter” after 1s */
             z-index: 1;
         }
 
@@ -11465,7 +11321,7 @@
 
 
 
-            cursor: pointer;
+            cursor: default; /* Normal arrow cursor – not clickable */
 
 
 
@@ -15063,7 +14919,7 @@
 
 
 
-            background: rgba(0, 0, 0, 0.35); /* Darker overlay on contact section */
+            background: transparent; /* No extra overlay – same video brightness as rest */
 
 
 
@@ -22141,6 +21997,23 @@
 
         }
 
+        /* Disable visual filters on major sections/cards so background video looks consistent */
+        section,
+        .hero,
+        .logo-section,
+        .music-section,
+        .books-section,
+        .articles-section,
+        .about-section,
+        .project-card,
+        .article-card,
+        .service-card,
+        .glassmorphism {
+            filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
 
 
         /* Desktop: header always transparent (at top and when scrolled) */
@@ -22460,12 +22333,12 @@
         .youtube-section-youtube-link {
             display: inline-flex;
             align-items: center;
-            color: #e4dcd2;
+            color: #a875ff; /* Purple by default (after "Follow the project here") */
             text-decoration: none;
             transition: color 0.2s ease;
         }
         .youtube-section-youtube-link:hover {
-            color: #a875ff;
+            color: #c4a0ff; /* Slightly lighter purple on hover */
         }
         
         /* Books Section */
@@ -22624,8 +22497,6 @@
 
                 <li><a href="#agency" onclick="scrollToSection('agency')">Home</a></li>
 
-                <li><a href="#services" onclick="scrollToSection('services')">Productions</a></li>
-
                 <li><a href="#devlog" onclick="scrollToSection('devlog')">On Creation</a></li>
                 
                 <li><a href="#contact" onclick="scrollToSection('contact')">Gallery - Other Work</a></li>
@@ -22726,7 +22597,7 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h4 class="agency-description">Project Hubris</h1>
+                <h4 class="agency-description">Project Echo</h1>
                 <br>
                                 <h2 class="agency-headline"> A Public Experiment On Creation And Self-Observation </h1>
                 
@@ -22854,105 +22725,15 @@
                 <div class="project-echo-link" onclick="window.location.href='inbetween.html'" style="cursor: pointer;">
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
-                        <h2 class="project-echo-title">PROJECT HUBRIS</h2>
-                        <p class="project-echo-excerpt">Game Development</p>
+                        <h2 class="project-echo-title">PROJECT ECHOES JOURNAL</h2>
+                        <p class="project-echo-excerpt">Ongoing documentation of making a game</p>
                         <span class="project-echo-cta">Read more <span class="arrow">→</span></span>
                     </div>
                 </div>
             </div>
         </section>
 
-                <!-- Services Section (HIDDEN) -->
-
-
-
-                <section id="services" class="services-section" style="display:none !important;">
-
-
-
-                    <!-- Video background -->
-
-        
-
-                    <div class="video-filter-wrapper">
-
-        
-
-                        <!-- <video class="sticky-video" autoplay muted loop playsinline preload="metadata">
-
-        
-
-                            <source src="1.mp4" type="video/mp4">
-
-        
-
-                        </video> -->
-
-        
-
-                        </div>
-
-        
-
-        
-
-                    <div class="services-container">
-
-        
-
-                        <div class="section-header" id="services-header">
-
-        
-
-                            <h2 class="section-title" style="text-transform: none;"> Works</h2>
-
-        
-
-                            <p class="section-subtitle" id="services-subtitle">
-
-        
-
-                                Covering everything from brand expression down to technical execution.</p>
-
-        
-
-                            </div>
-
-        
-
-                        
-
-        
-
-                        <!-- Tunnel Animation Elements -->
-
-
-<!-- 
-                        <div class="tunnel-animation-container" id="tunnel-container">
-
-        
-
-                            <div class="big-letter" id="big-letter">I</div>
-
-        
-
-                            <div class="tunnel" id="tunnel">
-
-        
-
-                                <div class="tunnel-path"></div>
-
-                                </div>
-
-                                
-
-                        </div> -->
-
-                        
-         
-
-                        <!-- Hero Section -->
-
+                <!-- Hero Section -->
                 <section id="home" class="hero">
 
         
@@ -23124,67 +22905,51 @@
 
                 </section>
 
-                </section>
+<!-- YouTube Text Section -->
+<section id="youtube-section" class="youtube-section">
+    <div class="youtube-section-content">
 
-        <!-- YouTube Text Section -->
-        <section id="youtube-section" class="youtube-section">
-            <div class="youtube-section-content">
-                <h3 class="youtube-project-title">THINGS YOU SHOULD KNOW</h3>
-                
-                <h4 class="youtube-project-subtitle">I'm making a game</h4>
-                <p class="youtube-project-description">I am making a game, Project Hubris, and sharing here how I am learning to build it from day one. I'm documenting everything : emotions, thought process, experimenting with art, and learning how to actually finish it.</p>
-                
-                <!-- <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
-                <p class="youtube-project-description">I have things I want to say, and I believe you may want to hear them. 
-                    Some of them question the way things are: the logic of endless consumption, the systems we accept without thinking. Others can't be explained directly. They need to be experienced. 
-                    <br><br> Creating this game is also part of my search for meaning, a way to express myself, to connect with a community I care about, and to build a life around this work.</p>
-                <p class="youtube-project-description">On top of that, it is simply exciting to design your own world and to see it come to life.</p>
-                 -->
-                <h2 class="youtube-project-subtitle">Why I'm sharing the process publicly</h2>
+        <h3 class="youtube-project-title">THINGS YOU SHOULD KNOW</h3>
+        
+        <h4 class="youtube-project-subtitle">I'm making a game</h4>
+        <p class="youtube-project-description">
+            I’m making a game called Project Hubris, and sharing how I’m learning to build it. I’m documenting everything — from emotions and thought process to experimenting with art and using the tools available to me.
+        </p>
+        
+        <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
+        <p class="youtube-project-description">
+            I have things I want to say, and I believe you may want to hear them. Some of them question the way things are: the logic of consumerism, the systems we accept without thinking. Others can’t be explained directly. They need to be experienced.
+        </p>      
 
-                <h6 class="youtube-project-subtitle">Because it would be interesting to have the whole attempt recorded</h6>
+        <h4 class="youtube-project-subtitle">Why I'm documenting the process</h4>
 
-                <p class="youtube-project-description">If the game eventually turns out well, documenting the entire effort from the beginning gives it a different kind of value. It stands as a complete record of a creative attempt, where the inner dialogue and evolving thought process, usually left unseen, are made visible. In that case, it would also serve as a practical reference for anyone beginning their own game from scratch. <p class="youtube-project-description">
+        <h5 class="youtube-project-subtitle">Because it would be interesting to have the whole attempt recorded</h5>
+        <p class="youtube-project-description">
+            If the game eventually turns out well, documenting the entire effort from the beginning gives it a different kind of value. It becomes a complete record of a creative attempt, making the inner dialogue and evolving thought process — usually left unseen — visible. It would also serve as a practical reference for anyone beginning their own game from scratch.
+        </p>
 
-                <h6 class="youtube-project-subtitle">Because sharing in a way fulfills the reason I started</h6>
-                
-                <p class="youtube-project-description">I began this project from an internal search and a need to offer something that has real impact beyond myself. By sharing the process openly, that intention is already being expressed.</p>
-                
-                <h6 class="youtube-project-subtitle">Because I want to turn this into my living.</h6>
+        <h5 class="youtube-project-subtitle">Because sharing in a way fulfills the reason I started</h5>
+        <p class="youtube-project-description">
+            I began this project from an internal search and a need for my work to have impact beyond myself. By sharing the process openly, that intention is already being expressed.
+        </p>
+        
+        <h5 class="youtube-project-subtitle">Because I want to make it grow</h5>
+        <p class="youtube-project-description">
+            Even if the project begins from something internal, I want it to grow into something sustainable. Making it public and building a community around it feels like the most realistic way for that to happen.
+        </p>
 
-                <p class="youtube-project-description">Even if the project begins from something internal, I want it to grow into something sustainable. Making it public and building a community around it seems like the most realistic way for that to happen.</p>
+        <h4 class="youtube-project-subtitle">Follow the project here and on YouTube</h4>
+        <p class="youtube-project-description" style="margin-top: 0.5rem;">
+            <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" style="vertical-align: middle; margin-right: 0.35em;">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                YouTube
+            </a>
+        </p>
 
-                <!-- <h4 class="youtube-project-subtitle">What I Did Before Starting This Idea</h4>
-
-                <p class="youtube-project-description">
-                Before committing to this project, I explored different directions to understand what I actually wanted to create. I read books on game design, experimented with 2D and 3D art, wrote a story to express what I had in mind, and tested different game engines.
-                </p>
-                
-                <p class="youtube-project-description">
-                    All of this was exploration, not preparation. There are no real prerequisites for starting something like this. I began documenting the project before having a clear plan for how it would come together. I simply trust that I can create something good.
-                </p>
-                
-                <p class="youtube-project-description">
-                The only transferable experience I have is my work as a software engineer, but even that is not essential. You do not need to know programming to begin. What I am trying to explore and share is the act of creating itself.
-                </p> -->
-                
-                <h4 class="youtube-project-subtitle">Follow the project here and on YouTube.</h4>
-                <p class="youtube-project-description" style="margin-top: 0.5rem;">
-                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" style="vertical-align: middle; margin-right: 0.35em;">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                        YouTube
-                    </a>
-                </p>
-                <!-- <p class="youtube-project-description">
-                I’m committing to trying to make a genuinely good game. To take it seriously, to keep learning, and to actually finish it.
-                </p> -->
-                <!-- <p class="youtube-project-description">
-                If you’re wondering whether what I’m saying has value, I suggest following the journey here and on YouTube and deciding for yourself. You can also explore the work I’ve already done.
-                </p> -->
-            </div>
-        </section>
+    </div>
+</section>
 
         <!-- Contact Section -->
 
@@ -23359,84 +23124,6 @@
 
 
 
-        </section>
-
-        <!-- Gallery section: link to gallery.html -->
-        <section id="gallery" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title"> Gallery</h2>
-                </div>
-                <div class="gallery-cta">
-                    <p class="gallery-subtitle"></p>
-                    <a href="gallery.html" class="gallery-cta-link">Explore  <span class="arrow" aria-hidden="true"></span></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blog section: list of articles -->
-        <section id="articles" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title">Blog</h2>
-                </div>
-                <div class="articles-list-grid" id="articlesListRoot">
-                    <!-- Filled by JS from articles.json -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Inspiration Section -->
-        <section id="inspiration" class="music-section">
-            <div class="section-header" style="text-align: center; margin-top: 3rem;">
-                <h2 class="section-title" style="text-align: center; width: 100%; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900;">Research</h2>
-            </div>
-            <div class="music-section-content">
-                <!-- Book Recommendations -->
-                <div class="books-section" style="align-items: center;">
-                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Books</h3>
-                    <ul class="books-list">
-                        <li class="book-list-item"><span class="book-item-title">A Theory of Fun for Game Design</span> <span class="book-item-author">Raph Koster</span></li>
-                        <li class="book-list-item"><span class="book-item-title">The Story of Art</span> <span class="book-item-author">E.H. Gombrich</span></li>
-                        <li class="book-list-item"><span class="book-item-title">The Art of Video Games</span> <span class="book-item-author">Grant Tavinor</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Meditations</span> <span class="book-item-author">Marcus Aurelius</span></li>
-                        <li class="book-list-item"><span class="book-item-title">The Art of Game Design</span> <span class="book-item-author">Jesse Schell</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Brain Rules</span> <span class="book-item-author">John Medina</span></li>
-                        <li class="book-list-item"><span class="book-item-title">History of Philosophy</span> <span class="book-item-author">A.C. Grayling</span></li>
-                    </ul>
-                </div>
-                <!-- Games -->
-                <div class="books-section" style="align-items: center; margin-top: 2rem;">
-                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Games</h3>
-                    <ul class="books-list">
-                        <li class="book-list-item"><span class="book-item-title">Dark Souls</span> <span class="book-item-author">FromSoftware</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Journey</span> <span class="book-item-author">thatgamecompany</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Shadow of the Colossus</span> <span class="book-item-author">Team Ico</span></li>
-                        <li class="book-list-item"><span class="book-item-title">The Last of Us</span> <span class="book-item-author">Naughty Dog</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Hollow Knight</span> <span class="book-item-author">Team Cherry</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Celeste</span> <span class="book-item-author">Maddy Makes Games</span></li>
-                    </ul>
-                </div>
-                <!-- Movies -->
-                <div class="books-section" style="align-items: center; margin-top: 2rem;">
-                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Movies</h3>
-                    <ul class="books-list">
-                        <li class="book-list-item"><span class="book-item-title">Interstellar</span> <span class="book-item-author">Christopher Nolan</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Blade Runner 2049</span> <span class="book-item-author">Denis Villeneuve</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Spirited Away</span> <span class="book-item-author">Hayao Miyazaki</span></li>
-                        <li class="book-list-item"><span class="book-item-title">The Matrix</span> <span class="book-item-author">The Wachowskis</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Arrival</span> <span class="book-item-author">Denis Villeneuve</span></li>
-                        <li class="book-list-item"><span class="book-item-title">Her</span> <span class="book-item-author">Spike Jonze</span></li>
-                    </ul>
-                </div>
-                <!-- Moodboard Section -->
-                <div class="books-section" style="align-items: center; margin-top: 3rem;">
-                    <h3 class="books-title" style="text-align: center; font-weight: 400; font-size: 1rem; opacity: 0.8;">Moodboard</h3>
-                    <div style="text-align: center;">
-                        <a href="moodboard.html" class="moodboard-link">View <span class="arrow" aria-hidden="true">→</span></a>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Three.js for 3D model -->
@@ -24877,6 +24564,13 @@
 
 
 
+                    // Guard: no shapes in DOM (selectors may not match)
+                    if (!allShapes.length) return;
+                    const activeShape = allShapes[currentShapeIndex];
+                    if (!activeShape) return;
+
+
+
                     // Reset all shapes to low opacity and default color
 
 
@@ -24917,11 +24611,7 @@
 
 
 
-                    // Highlight the current active shape
-
-
-
-                    const activeShape = allShapes[currentShapeIndex];
+                    // Highlight the current active shape (activeShape already set at top with guard)
 
 
 
@@ -28879,34 +28569,12 @@
 
                 })();
 
-                if (isOverProjects && !isInAboutSection) {
-
-                    document.documentElement.classList.add('drag-cursor-active'); // Hide system cursor
-
-                    cursor.classList.add('drag'); // Add drag class
-
-                    cursor.textContent = 'Drag'; // Set text content
-
-                    cursor.style.setProperty('display', 'flex', 'important'); // Show drag cursor
-
-                    cursor.style.opacity = '1'; // Fully visible
-
-                } else {
-
-                    document.documentElement.classList.remove('drag-cursor-active'); // Restore system cursor
-
-                    cursor.classList.remove('drag'); // Remove drag class
-
-                    cursor.textContent = ''; // Clear text
-
-                    cursor.style.setProperty('display', 'none', 'important'); // Hide – use system cursor everywhere else
-
-                }
-
-                
-
-                requestAnimationFrame(animateCursor);
-
+                // Drag cursor disabled – use system cursor everywhere
+                document.documentElement.classList.remove('drag-cursor-active');
+                cursor.classList.remove('drag');
+                cursor.textContent = '';
+                cursor.style.setProperty('display', 'none', 'important');
+                // Don't schedule next frame – cursor hidden so no 60fps loop (saves CPU)
             }
 
             animateCursor();
@@ -29191,7 +28859,7 @@
 
                 });
 
-            });
+            }, { passive: true });
 
         }
 
@@ -29549,7 +29217,7 @@
 
 
 
-            window.addEventListener('scroll', checkViewportCenter);
+            window.addEventListener('scroll', checkViewportCenter, { passive: true });
 
 
 
@@ -29602,6 +29270,10 @@
 
 
             if (!aboutSection) return;
+
+            // Disable dynamic brightness changes so video/background look consistent while scrolling
+            aboutSection.style.filter = 'none';
+            return;
 
 
 
@@ -29673,15 +29345,8 @@
 
 
 
-                // Apply brightness filter based on scroll progress
-
-
-
-                const brightness = 0.7 + (scrollProgress * 0.2); // Start at 70% brightness, go to 90%
-
-
-
-                aboutSection.style.filter = `brightness(${brightness})`;
+                // Disable brightness filter so sections don't change perceived video brightness
+                aboutSection.style.filter = 'none';
 
 
 
@@ -29813,7 +29478,7 @@
 
 
 
-            });
+            }, { passive: true });
 
 
 
@@ -29973,7 +29638,7 @@
 
 
 
-            });
+            }, { passive: true });
 
 
 
@@ -30097,7 +29762,7 @@
 
 
 
-            });
+            }, { passive: true });
 
 
 
@@ -31212,7 +30877,7 @@
                 otherWorkCard.href = 'https://www.linkedin.com/in/haris-chatzianastasiou-084783212/';
                 otherWorkCard.target = '_blank';
                 otherWorkCard.className = 'other-work-card';
-                otherWorkCard.innerHTML = '<img src="haris.jpg" alt="Haris" class="other-work-photo"><div class="other-work-label">Engineering Background</div><div class="other-work-value"></div>';
+                otherWorkCard.innerHTML = '<div class="other-work-label">Engineering Background</div><div class="other-work-value"></div>';
                 this.articlesGrid.appendChild(otherWorkCard);
 
 
@@ -31662,7 +31327,13 @@
 
                         if (overlay) overlay.classList.remove('active');
 
+                        var scrollRoot = getScrollRoot();
+                        if (scrollRoot) {
+                            scrollRoot.style.overflow = '';
+                            scrollRoot.style.paddingRight = '';
+                        }
                         document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
 
                         var deco = document.getElementById('mobileMenuOverlayDeco');
 
@@ -31716,7 +31387,27 @@
 
                 if (overlay) overlay.classList.toggle('active', isOpen);
 
-                document.body.style.overflow = isOpen ? 'hidden' : '';
+                // Prevent agency (and whole page) shifting right: compensate for scrollbar when locking scroll
+                var scrollRoot = getScrollRoot();
+                if (isOpen) {
+                    var scrollbarWidth = scrollRoot
+                        ? (scrollRoot.offsetWidth - scrollRoot.clientWidth)
+                        : (window.innerWidth - document.documentElement.clientWidth);
+                    if (scrollRoot) {
+                        scrollRoot.style.paddingRight = scrollbarWidth + 'px';
+                        scrollRoot.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.paddingRight = scrollbarWidth + 'px';
+                    }
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    if (scrollRoot) {
+                        scrollRoot.style.overflow = '';
+                        scrollRoot.style.paddingRight = '';
+                    }
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                }
 
                 var deco = document.getElementById('mobileMenuOverlayDeco');
 
@@ -31782,7 +31473,14 @@
 
                     if (overlay) overlay.classList.remove('active');
 
+                    // Restore scroll and remove padding so agency stays in same position
+                    var scrollRoot = getScrollRoot();
+                    if (scrollRoot) {
+                        scrollRoot.style.overflow = '';
+                        scrollRoot.style.paddingRight = '';
+                    }
                     document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
 
                     var deco = document.getElementById('mobileMenuOverlayDeco');
 
@@ -33880,7 +33578,7 @@
 
 
 
-            window.addEventListener('scroll', checkServiceCardViewportCenter);
+            window.addEventListener('scroll', checkServiceCardViewportCenter, { passive: true });
 
 
 
@@ -34004,7 +33702,7 @@
 
 
 
-            });
+            }, { passive: true });
 
 
 
@@ -35189,7 +34887,7 @@
 
                 }, 100); // Update 100ms after scrolling stops
 
-            });
+            }, { passive: true });
 
 
 
@@ -35359,7 +35057,7 @@
 
             }
 
-        });
+        }, { passive: true });
 
 
 
