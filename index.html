@@ -10504,17 +10504,21 @@
 
 
 
-        /* All Projects & Blog: same size as hero project titles (In Between, Skgchess) */
+        /* All Projects & Blog + Articles: same size as hero project titles (Features, Articles) */
 
 
 
         .services-section .section-title,
 
-        .articles-section .section-title {
+        .articles-section .section-title,
+
+        #devlog .section-title,
+
+        #articles .section-title {
 
 
 
-            font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Match hero-project-title size */
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Same size as Features */
 
 
 
@@ -21973,6 +21977,7 @@
         .music-section,
         .books-section,
         .articles-section,
+        .research-section,
         .about-section,
         .project-card,
         .article-card,
@@ -22244,6 +22249,13 @@
             max-width: 600px;
             width: 100%;
         }
+        /* Things you need to know: when inside hero, sit above background */
+        .hero .hero-things-content,
+        .hero .youtube-section-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 0;
+        }
 
         /* YouTube Embed */
         .youtube-embed {
@@ -22285,7 +22297,7 @@
         .youtube-project-subtitle {
             text-align: center;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-size: clamp(1.4rem, 3.6vw, 1.8rem);
             font-weight: 700;
             color: #e4dcd2;
             margin-top: 2.5rem;
@@ -22298,7 +22310,38 @@
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
         }
-        /* YouTube section: link + icon under "Follow the project here and on YouTube" */
+        /* Slightly smaller than .youtube-project-subtitle: for sub-headings and their descriptions */
+        .youtube-project-sub-subtitle {
+            text-align: center;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .youtube-project-description-sub {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(228, 220, 210, 0.8);
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1rem;
+        }
+        /* YouTube section: "here" and "YouTube" inline links */
+        .youtube-project-subtitle a {
+            text-decoration: none; /* No underline on "here" or "YouTube" */
+        }
+        .youtube-section-here-link {
+            color: #a875ff; /* Same purple as YouTube link */
+            transition: color 0.2s ease;
+        }
+        .youtube-section-here-link:hover {
+            color: #c4a0ff; /* Same hover as YouTube link */
+        }
         .youtube-section-youtube-link {
             display: inline-flex;
             align-items: center;
@@ -22344,6 +22387,92 @@
         .book-list-item .book-item-author {
             color: rgba(228, 220, 210, 0.5);
             font-size: 0.85rem;
+        }
+
+        /* Research section: same alignment as Articles and Features */
+        .research-section {
+            padding: 0 4rem 0; /* Same as .articles-section */
+            background: transparent !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .research-container {
+            max-width: 900px; /* Same as .articles-container */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Left-align like Articles/Features */
+        }
+        .research-section .section-header {
+            text-align: left;
+        }
+        /* Research title much smaller than Features/Articles */
+        .research-section .section-title {
+            color: #e4dcd2;
+            text-align: left;
+            font-size: 0.875rem; /* Much smaller than Features/Articles */
+            font-weight: 700;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .research-section .section-subtitle {
+            color: #e4dcd2;
+            text-align: left;
+            opacity: 0.85;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .research-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .research-col-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e4dcd2;
+            margin: 0 0 1rem 0;
+            text-align: left;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .research-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .research-list-item {
+            font-size: 0.9rem;
+            color: rgba(228, 220, 210, 0.85);
+            line-height: 1.5;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .research-section .moodboard-link {
+            margin-top: 2rem;
+            display: inline-flex;
+        }
+        @media (max-width: 900px) {
+            .research-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .research-section {
+                padding: 0 1rem 0; /* Match .articles-section on small screens */
+            }
         }
 
         /* Agency Model Container - taller and transparent */
@@ -22566,7 +22695,7 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h4 class="agency-description">Project Echoes</h1>
+                <h4 class="agency-description">Project Make A Game</h1>
                 <br>
                                 <h2 class="agency-headline"> A Public Experiment On Creation And Self-Observation </h1>
                 
@@ -22694,9 +22823,9 @@
                 <div class="project-echo-link" onclick="window.location.href='inbetween.html'" style="cursor: pointer;">
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
-                        <h2 class="project-echo-title">PROJECT ECHOES JOURNAL</h2>
-                        <p class="project-echo-excerpt">Ongoing documentation of making a game</p>
-                        <span class="project-echo-cta">Read more <span class="arrow">→</span></span>
+                        <h2 class="project-echo-title">LIVE JOURNAL</h2>
+                        <p class="project-echo-excerpt">Ongoing documentation of making my own game</p>
+                        <span class="project-echo-cta">Read <span class="arrow">→</span></span>
                     </div>
                 </div>
             </div>
@@ -22770,60 +22899,6 @@
                     
 
         
-
-                    <!-- Hero Projects Window - Large screen coverage -->
-
-                    <div class="hero-projects-window">
-
-                        <div class="hero-projects-container">
-
-                            <div class="hero-projects-grid">
-
-                                <div class="hero-project-card" data-project="in-between">
-
-                                    <img src="priest.png" alt="In Between Project" class="hero-project-image">
-
-                                    <div class="hero-project-overlay">
-
-                                        <div class="hero-project-overlay-center">
-
-                                            <h3 class="hero-project-title">ECHOES</h3>
-
-                                        </div>
-
-                                        <!-- <p class="hero-project-category">Learn more </p> -->
-
-
-                                    </div>
-
-                                </div>
-
-                                <div class="hero-project-card" data-project="skg-chess">
-
-                                    <img src="skgchess.png" alt="SKG Chess Project" class="hero-project-image">
-
-                                    <div class="hero-project-overlay">
-
-                                        <div class="hero-project-overlay-center">
-
-                                            <h3 class="hero-project-title">SKGCHESS</h3>
-
-                                        </div>
-
-                                        <!-- <p class="hero-project-category">Learn more </p> -->
-
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                     <!-- Shape Animation Container - positioned on the left side for symmetry -->
 
         
@@ -22872,17 +22947,14 @@
 
         
 
-                </section>
+                    <!-- Things you need to know: in hero -->
+                    <div id="youtube-section" class="youtube-section-content hero-things-content">
 
-<!-- YouTube Text Section -->
-<section id="youtube-section" class="youtube-section">
-    <div class="youtube-section-content">
-
-        <h3 class="youtube-project-title">THINGS YOU SHOULD KNOW</h3>
+        <h3 class="youtube-project-title">PROJECT MAKE A GAME</h3>
         
-        <h4 class="youtube-project-subtitle">I'm making a game</h4>
+        <h4 class="youtube-project-subtitle">Documenting the process</h4>
         <p class="youtube-project-description">
-            I’m making a game called Project Hubris, and sharing how I’m learning to build it. I’m documenting everything — from emotions and thought process to experimenting with art and using the tools available to me.
+            I’m currently making a game and sharing the process step by step. I’m documenting everything — from emotions and thought process to experimenting with art and using the tools available to me.
         </p>
         
         <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
@@ -22892,33 +22964,26 @@
 
         <h4 class="youtube-project-subtitle">Why I'm documenting the process</h4>
 
-        <h5 class="youtube-project-subtitle">Because it would be interesting to have the whole attempt recorded</h5>
-        <p class="youtube-project-description">
+        <h5 class="youtube-project-sub-subtitle">   Because it would be interesting to have the whole attempt recorded</h5>
+        <p class="youtube-project-description-sub">
             If the game eventually turns out well, documenting the entire effort from the beginning gives it a different kind of value. It becomes a complete record of a creative attempt, making the inner dialogue and evolving thought process — usually left unseen — visible. It would also serve as a practical reference for anyone beginning their own game from scratch.
         </p>
 
-        <h5 class="youtube-project-subtitle">Because sharing in a way fulfills the reason I started</h5>
-        <p class="youtube-project-description">
+        <h5 class="youtube-project-sub-subtitle">   Because sharing in a way fulfills the reason I started</h5>
+        <p class="youtube-project-description-sub">
             I began this project from an internal search and a need for my work to have impact beyond myself. By sharing the process openly, that intention is already being expressed.
         </p>
         
-        <h5 class="youtube-project-subtitle">Because I want to make it grow</h5>
-        <p class="youtube-project-description">
+        <h5 class="youtube-project-sub-subtitle">   Because I want to make it grow</h5>
+        <p class="youtube-project-description-sub">
             Even if the project begins from something internal, I want it to grow into something sustainable. Making it public and building a community around it feels like the most realistic way for that to happen.
         </p>
 
-        <h4 class="youtube-project-subtitle">Follow the project here and on YouTube</h4>
-        <p class="youtube-project-description" style="margin-top: 0.5rem;">
-            <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" style="vertical-align: middle; margin-right: 0.35em;">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                YouTube
-            </a>
-        </p>
+        <h4 class="youtube-project-subtitle">Follow the project <a href="inbetween.html" class="youtube-section-here-link">here</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">YouTube</a></h4>
 
-    </div>
-</section>
+                    </div>
+
+                </section>
 
         <!-- Contact Section -->
 
@@ -23093,6 +23158,57 @@
 
 
 
+        </section>
+
+        <!-- Articles section: loads from articles.json, links to article.html -->
+        <section id="articles" class="articles-section">
+            <div class="articles-container">
+                <div class="section-header">
+                    <h2 class="section-title">Articles</h2>
+                </div>
+                <div class="articles-list-grid" id="articlesListRoot">
+                    <!-- Filled by JS from articles.json; each item links to article.html?id=slug -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Research section: 4 columns in one row -->
+        <section id="research" class="research-section">
+            <div class="research-container">
+                <div class="section-header">
+                    <h2 class="section-title">Research</h2>
+                </div>
+                <div class="research-grid">
+                    <div class="research-col">
+                        <h3 class="research-col-title">Books</h3>
+                        <ul class="research-list">
+                            <li class="research-list-item">The Theory of Fun for Game Design</li>
+                            <li class="research-list-item">History of Art</li>
+                        </ul>
+                    </div>
+                    <div class="research-col">
+                        <h3 class="research-col-title">Games</h3>
+                        <ul class="research-list">
+                            <li class="research-list-item">The Last Guardian</li>
+                            <li class="research-list-item">Shadow of the Colossus</li>
+                        </ul>
+                    </div>
+                    <div class="research-col">
+                        <h3 class="research-col-title">Music</h3>
+                        <ul class="research-list">
+                            <li class="research-list-item">—</li>
+                        </ul>
+                    </div>
+                    <div class="research-col">
+                        <h3 class="research-col-title">Movies</h3>
+                        <ul class="research-list">
+                            <li class="research-list-item">12 Monkeys</li>
+                            <li class="research-list-item">—</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="moodboard.html" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
+            </div>
         </section>
 
         <!-- Three.js for 3D model -->
@@ -23971,7 +24087,7 @@
             // Fix for scroll visibility issue - ensure content is visible when page loads at any scroll position
             // This function checks if sections are already in view and makes them visible immediately
             function fixScrollVisibilityOnLoad() {
-                const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'about', 'contact'];
+                const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'research', 'about', 'contact'];
                 const windowHeight = window.innerHeight;
                 const scrollY = getScrollY();
                 
@@ -31498,7 +31614,7 @@
 
 
 
-            const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'about', 'contact'];
+            const sections = ['home', 'services', 'projects', 'devlog', 'articles', 'research', 'about', 'contact'];
 
 
 
@@ -34662,7 +34778,7 @@
 
                 const topbar = document.querySelector('.topbar'); // Get the topbar element
 
-                const sections = ['home', 'services', 'projects', 'about', 'devlog', 'articles', 'contact']; // Array of section IDs
+                const sections = ['home', 'services', 'projects', 'about', 'devlog', 'articles', 'research', 'contact']; // Array of section IDs
 
                 const sectionTexts = {
 
@@ -34677,6 +34793,8 @@
                     'devlog': 'BLOG', // Text for devlog section
                     'articles': 'ARTICLES', // Text for articles section
 
+                    'research': 'RESEARCH', // Text for research section
+
                     'contact': 'CONTACT' // Text for contact section
 
                 };
@@ -34685,7 +34803,7 @@
 
                 // Sections where topbar should be hidden
 
-                const hideTopbarSections = ['services','projects','about', 'devlog', 'articles', 'contact'];
+                const hideTopbarSections = ['services','projects','about', 'devlog', 'articles', 'research', 'contact'];
 
 
 
