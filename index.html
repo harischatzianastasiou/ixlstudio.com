@@ -4789,13 +4789,11 @@
 
 
 
-            /* Hero projects window mobile adjustments */
+            /* Hero projects window mobile – hidden on mobile */
 
             .hero-projects-window {
 
-                display: flex; /* Show projects window on mobile */
-
-                z-index: 3; /* Lower z-index on mobile to stay below content */
+                display: none;
 
             }
 
@@ -22243,6 +22241,11 @@
             justify-content: center;
             align-items: center;
         }
+        @media (min-width: 769px) {
+            .youtube-section { background: #000; }
+            .articles-section { background: #000; }
+            .contact-section { background: #000 !important; }
+        }
         .youtube-section-content {
             max-width: 600px;
             width: 100%;
@@ -23954,6 +23957,21 @@
                 }
                 document.addEventListener('click', startVideoOnce, { once: true });
                 document.addEventListener('touchstart', startVideoOnce, { once: true });
+
+                // On mobile: pause background video when "Things you should know" section is in view
+                var youtubeSection = document.getElementById('youtube-section');
+                if (youtubeSection && window.matchMedia('(max-width: 768px)').matches) {
+                    var videoObserver = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                agencyVideo.pause();
+                            } else {
+                                agencyVideo.play().catch(function() {});
+                            }
+                        });
+                    }, { root: null, rootMargin: '0px', threshold: 0.2 });
+                    videoObserver.observe(youtubeSection);
+                }
             }
 
             // Fix for scroll visibility issue - ensure content is visible when page loads at any scroll position
