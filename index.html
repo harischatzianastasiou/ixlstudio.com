@@ -22449,6 +22449,24 @@
             margin-top: 2.5rem;
             margin-bottom: 1rem;
         }
+
+        h6.youtube-project-subtitle {
+            font-size: clamp(1rem, 2.4vw, 1.25rem);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        /* YouTube section: link + icon under "Follow the project here and on YouTube" */
+        .youtube-section-youtube-link {
+            display: inline-flex;
+            align-items: center;
+            color: #e4dcd2;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .youtube-section-youtube-link:hover {
+            color: #a875ff;
+        }
         
         /* Books Section */
         .books-section {
@@ -22708,7 +22726,7 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h4 class="agency-description">Project Lilith</h1>
+                <h4 class="agency-description">Project Hubris</h1>
                 <br>
                                 <h2 class="agency-headline"> A Public Experiment On Creation And Self-Observation </h1>
                 
@@ -22834,18 +22852,12 @@
         <section id="project-echo" class="project-echo-section">
             <div class="project-echo-container">
                 <div class="project-echo-link" onclick="window.location.href='inbetween.html'" style="cursor: pointer;">
-                    <img src="lilithbg.png" alt="Lilith" class="project-lilith-image">
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
-                        <h2 class="project-echo-title">PROJECT LILITH</h2>
+                        <h2 class="project-echo-title">PROJECT HUBRIS</h2>
                         <p class="project-echo-excerpt">Game Development</p>
                         <span class="project-echo-cta">Read more <span class="arrow">→</span></span>
                     </div>
-                    <a href="https://www.youtube.com/@mementomori947" target="_blank" class="project-echo-youtube" title="Follow on YouTube" onclick="event.stopPropagation();">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                    </a>
                 </div>
             </div>
         </section>
@@ -23120,32 +23132,29 @@
                 <h3 class="youtube-project-title">THINGS YOU SHOULD KNOW</h3>
                 
                 <h4 class="youtube-project-subtitle">I'm making a game</h4>
-                <p class="youtube-project-description">I am making a game, Project Lilith, and sharing here how I am learning to build it from day one. I'm documenting everything, from emotions, decisions, and obstacles to game design approaches, experimenting with art, and learning how to actually finish it.</p>
+                <p class="youtube-project-description">I am making a game, Project Hubris, and sharing here how I am learning to build it from day one. I'm documenting everything : emotions, thought process, experimenting with art, and learning how to actually finish it.</p>
                 
-                <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
-                <p class="youtube-project-description">I have things I want to say, and I believe you may want to hear them. Some of them question the way things are: the logic of endless consumption, the systems we accept without thinking. Others can't be explained directly. They need to be experienced. 
+                <!-- <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
+                <p class="youtube-project-description">I have things I want to say, and I believe you may want to hear them. 
+                    Some of them question the way things are: the logic of endless consumption, the systems we accept without thinking. Others can't be explained directly. They need to be experienced. 
                     <br><br> Creating this game is also part of my search for meaning, a way to express myself, to connect with a community I care about, and to build a life around this work.</p>
-                <p class="youtube-project-description">On top of that, it is simply exciting to design your own world and to see it come to life, and even learn and unlock perspectives that you did not know before.</p>
-                
-                <h4 class="youtube-project-subtitle">Why I'm sharing the process publicly</h4>
+                <p class="youtube-project-description">On top of that, it is simply exciting to design your own world and to see it come to life.</p>
+                 -->
+                <h2 class="youtube-project-subtitle">Why I'm sharing the process publicly</h2>
 
-                <p class="youtube-project-description">
-                    I want to make a serious attempt at creating a good game. And I want to approach the process from the beginning with the intention of helping others who will one day try to build their own and face the same questions I do. Why should you create? What are the steps involved? What type of game? I am trying to answer these questions and document the entire process as a teaching material. It is a rather ambitious attempt, but one that satisfies me in knowing that I tried.
-                
-                <p class="youtube-project-description">
-                    At the same time, I don’t want to wait for the game to be finished in order to communicate my ideas and feelings. By sharing the learning process, creating the game becomes the act itself, not just its release.</p>
+                <h6 class="youtube-project-subtitle">Because it would be interesting to have the whole attempt recorded</h6>
 
-                </p>
-                
-                <p class="youtube-project-description">
-                    Additionally, for this to grow and reach an audience, there needs to be a plan. Since I’m working completely alone, building a community around the project feels like the most realistic and healthy way to do so.
-                </p>
-                
-                <p class="youtube-project-description">
-                    Finally, it gives me a reason to stay consistent and motivated through the difficult parts, and there will definitely be many of them.
-                </p>
+                <p class="youtube-project-description">If the game eventually turns out well, documenting the entire effort from the beginning gives it a different kind of value. It stands as a complete record of a creative attempt, where the inner dialogue and evolving thought process, usually left unseen, are made visible. In that case, it would also serve as a practical reference for anyone beginning their own game from scratch. <p class="youtube-project-description">
 
-                <h4 class="youtube-project-subtitle">What I Did Before Starting This Idea</h4>
+                <h6 class="youtube-project-subtitle">Because sharing in a way fulfills the reason I started</h6>
+                
+                <p class="youtube-project-description">I began this project from an internal search and a need to offer something that has real impact beyond myself. By sharing the process openly, that intention is already being expressed.</p>
+                
+                <h6 class="youtube-project-subtitle">Because I want to turn this into my living.</h6>
+
+                <p class="youtube-project-description">Even if the project begins from something internal, I want it to grow into something sustainable. Making it public and building a community around it seems like the most realistic way for that to happen.</p>
+
+                <!-- <h4 class="youtube-project-subtitle">What I Did Before Starting This Idea</h4>
 
                 <p class="youtube-project-description">
                 Before committing to this project, I explored different directions to understand what I actually wanted to create. I read books on game design, experimented with 2D and 3D art, wrote a story to express what I had in mind, and tested different game engines.
@@ -23157,15 +23166,23 @@
                 
                 <p class="youtube-project-description">
                 The only transferable experience I have is my work as a software engineer, but even that is not essential. You do not need to know programming to begin. What I am trying to explore and share is the act of creating itself.
-                </p>
+                </p> -->
                 
-                <h4 class="youtube-project-subtitle">What I Commit To Do</h4>
-                <p class="youtube-project-description">
+                <h4 class="youtube-project-subtitle">Follow the project here and on YouTube.</h4>
+                <p class="youtube-project-description" style="margin-top: 0.5rem;">
+                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" style="vertical-align: middle; margin-right: 0.35em;">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        YouTube
+                    </a>
+                </p>
+                <!-- <p class="youtube-project-description">
                 I’m committing to trying to make a genuinely good game. To take it seriously, to keep learning, and to actually finish it.
-                </p>
-                <p class="youtube-project-description">
+                </p> -->
+                <!-- <p class="youtube-project-description">
                 If you’re wondering whether what I’m saying has value, I suggest following the journey here and on YouTube and deciding for yourself. You can also explore the work I’ve already done.
-                </p>
+                </p> -->
             </div>
         </section>
 
