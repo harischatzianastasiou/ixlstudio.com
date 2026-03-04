@@ -28,12 +28,12 @@
     <!-- Apple touch icon: used when saving to home screen -->
     <link rel="apple-touch-icon" href="hcfavicon.png">
     
-    <!-- Preload critical assets: loader/logo, hero video, agency collage, hero project cards -->
-    <link rel="preload" as="image" href="hc.png">
+    <!-- Preload: high priority for LCP (loader logo); low for below-fold to avoid contention -->
+    <link rel="preload" as="image" href="hc.png" fetchpriority="high">
     <link rel="preload" as="video" href="hero-bg.mp4">
     <link rel="preload" as="image" href="priest.png">
-    <link rel="preload" as="image" href="book-theory-of-fun.jpg">
-    <link rel="preload" as="image" href="skgchess.png">
+    <link rel="preload" as="image" href="book-theory-of-fun.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="skgchess.png" fetchpriority="low">
 
 
 
@@ -119,9 +119,10 @@
 
         /* Single source of truth for header height – desktop gets much bigger header */
         :root {
-
             --header-height: 88px;
-
+            /* Alignment: shared max-width and horizontal padding for sections */
+            --section-max-width: 1200px;
+            --section-padding-x: 2rem;
         }
 
         /* Desktop: much bigger header and logo */
@@ -6670,32 +6671,15 @@
 
 
         .about-section {
-
-
-
             padding: 8rem 4rem 0rem 4rem; /* Added top padding to increase gap from hero section */
-
-
-
             background: transparent !important; /* Unified video background */
-
-
             position: relative;
-
-
-
             transition: background 0.8s ease; /* Smooth transition for background color changes */
-
-
-
             overflow: hidden; /* Contain floating elements */
-
-
-
             z-index: 999999998; /* Higher than topbar to scroll over it */
-
-
-
+            /* Performance: skip painting until section is near viewport */
+            content-visibility: auto;
+            contain-intrinsic-size: auto 600px;
         }
 
         /* Make all text in about section have full black color opacity */
@@ -6969,6 +6953,9 @@
         /* Articles section - completely static, no animations, stable on mobile scroll */
         .articles-section {
             touch-action: manipulation; /* Prevents accidental zoom during scroll */
+            /* Performance: skip painting until section is near viewport */
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
         }
         .articles-section .section-header {
             opacity: 1 !important; /* Instant visibility */
@@ -12593,28 +12580,14 @@
 
 
         .articles-section {
-
-
-
-            padding: 0 4rem 0; /* No gaps - sections flow immediately */
-
-
-
+            padding: 0 4rem 0; /* No gaps - sections flow immediately; use var(--section-padding-x) if unifying */
+            max-width: var(--section-max-width);
+            margin-left: auto;
+            margin-right: auto;
             background: transparent; /* Unified video background */
-
-
             position: relative;
-
-
-
             transition: background 0.8s ease;
-
-
-
             overflow: hidden;
-
-
-
         }
 
 
@@ -22653,7 +22626,7 @@
 
         <div class="loader-logo">
 
-            <img src="hc.png" alt="IXL Studio Logo" id="loaderLogoImage">
+            <img src="hc.png" alt="IXL Studio Logo" id="loaderLogoImage" width="200" height="200" fetchpriority="high">
 
         </div>
 
@@ -22694,7 +22667,7 @@
 
 
             <a href="index.html" class="logo">
-                <span class="logo-img-wrap"><img src="hc.png" alt="IXL Studio Logo" class="logo-image"></span>
+                <span class="logo-img-wrap"><img src="hc.png" alt="IXL Studio Logo" class="logo-image" width="120" height="40"></span>
             </a>
 
 
@@ -31614,26 +31587,24 @@
 
                 if (overlay) overlay.classList.toggle('active', isOpen);
 
-                // Prevent agency (and whole page) shifting right: compensate for scrollbar when locking scroll
+                // Lock scroll when menu is open; freeze scroll wrapper width so layout doesn't shift
+                // (when overflow:hidden removes the scrollbar, width would otherwise change)
                 var scrollRoot = getScrollRoot();
                 if (isOpen) {
-                    var scrollbarWidth = scrollRoot
-                        ? (scrollRoot.offsetWidth - scrollRoot.clientWidth)
-                        : (window.innerWidth - document.documentElement.clientWidth);
                     if (scrollRoot) {
-                        scrollRoot.style.paddingRight = scrollbarWidth + 'px';
+                        var w = scrollRoot.offsetWidth;
+                        scrollRoot.style.width = w + 'px';
                         scrollRoot.style.overflow = 'hidden';
-                    } else {
-                        document.body.style.paddingRight = scrollbarWidth + 'px';
+                        scrollRoot.setAttribute('data-menu-open-width', w);
                     }
                     document.body.style.overflow = 'hidden';
                 } else {
                     if (scrollRoot) {
                         scrollRoot.style.overflow = '';
-                        scrollRoot.style.paddingRight = '';
+                        scrollRoot.style.width = '';
+                        scrollRoot.removeAttribute('data-menu-open-width');
                     }
                     document.body.style.overflow = '';
-                    document.body.style.paddingRight = '';
                 }
 
                 var deco = document.getElementById('mobileMenuOverlayDeco');
@@ -31700,14 +31671,14 @@
 
                     if (overlay) overlay.classList.remove('active');
 
-                    // Restore scroll and remove padding so agency stays in same position
+                    // Restore scroll and width so agency stays in same position
                     var scrollRoot = getScrollRoot();
                     if (scrollRoot) {
                         scrollRoot.style.overflow = '';
-                        scrollRoot.style.paddingRight = '';
+                        scrollRoot.style.width = '';
+                        scrollRoot.removeAttribute('data-menu-open-width');
                     }
                     document.body.style.overflow = '';
-                    document.body.style.paddingRight = '';
 
                     var deco = document.getElementById('mobileMenuOverlayDeco');
 
