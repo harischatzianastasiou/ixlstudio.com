@@ -1653,11 +1653,14 @@
 
 
 
-                height: 100vh; /* Full viewport height on mobile */
-
-                min-height: 100svh !important; /* Small viewport height for mobile browsers */
-
-                min-height: 100dvh !important; /* Dynamic viewport height for latest browsers */
+                /* Let hero grow with content so PROJECT NEMESIS / YouTube section can be seen and scrolled */
+                height: auto;
+                min-height: 100vh;
+                min-height: 100svh; /* Small viewport height for mobile browsers */
+                min-height: 100dvh; /* Dynamic viewport height for latest browsers */
+                overflow: visible; /* Don’t clip long content so mobile users can scroll to it */
+                align-items: flex-start; /* Content from top so scrolling feels natural */
+                padding: 1rem 1rem 3rem; /* Horizontal and bottom padding so content isn’t flush to edges */
 
 
 
@@ -18306,11 +18309,11 @@
 
 
 
-                padding: 0 1rem;
+                padding: 1rem 0.75rem 3rem; /* Slightly less horizontal on very small screens */
 
 
 
-                min-height: 100vh;
+                min-height: 100vh; /* At least full screen but can grow with content */
 
 
 
@@ -22280,6 +22283,11 @@
             max-width: 600px;
             width: 100%;
         }
+        /* Black panel only from title down to "Should we start" (links line stays outside) */
+        .youtube-section-black-panel {
+            background: #0a0a0a;
+            padding: 2rem 1.5rem;
+        }
         /* Things you need to know: when inside hero, sit above background; consistent alignment */
         .hero .hero-things-content,
         .hero .youtube-section-content {
@@ -22387,6 +22395,10 @@
         .youtube-section-here-link:hover {
             color: #c4a0ff; /* Same hover as YouTube link */
         }
+        /* When "here" is inside a description paragraph, match paragraph size (not the big links-row size) */
+        .youtube-project-description .youtube-section-here-link {
+            font-size: 1em;
+        }
         .youtube-section-youtube-link {
             display: inline-flex;
             align-items: center;
@@ -22409,6 +22421,54 @@
         .youtube-section-links-center {
             text-align: center;
             font-size: 2.25rem; /* Bigger row so "and on" and icon feel right */
+            margin-top: 1.5rem; /* Space below the black panel */
+        }
+
+        /* YouTube section: mobile-friendly so black panel and text don’t overflow */
+        @media (max-width: 768px) {
+            .hero .youtube-section-content {
+                padding: 1.5rem 1rem; /* Less padding on small screens so content fits */
+            }
+            .youtube-section-black-panel {
+                padding: 1.5rem 1rem; /* Tighter horizontal padding so text isn’t flush to edges */
+            }
+            .youtube-project-title {
+                margin-top: 2rem; /* Less top margin on mobile */
+            }
+            .youtube-project-description,
+            .youtube-project-description-sub {
+                font-size: 1rem; /* Slightly smaller for narrow viewports */
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .youtube-section-links-center {
+                font-size: 1.5rem; /* Smaller so “Follow… JOURNAL … YouTube” fits / wraps nicely */
+            }
+            .youtube-section-here-link {
+                font-size: 1.5rem; /* Match links row on mobile */
+            }
+            .youtube-section-youtube-link svg {
+                width: 2rem;
+                height: 2rem; /* Slightly smaller icon on mobile */
+            }
+        }
+        @media (max-width: 480px) {
+            .hero .youtube-section-content {
+                padding: 1rem 0.75rem;
+            }
+            .youtube-section-black-panel {
+                padding: 1.25rem 0.75rem; /* Extra-small screens: minimal but safe padding */
+            }
+            .youtube-section-links-center {
+                font-size: 1.25rem;
+            }
+            .youtube-section-here-link {
+                font-size: 1.25rem;
+            }
+            .youtube-section-youtube-link svg {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
         }
         
         /* Books Section */
@@ -22753,11 +22813,11 @@
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
 
-                <h4 class="agency-description">Project Nemesis</h4>
+                <h4 class="agency-description"> My name is Haris, and here you will find me creating things and talking about them.</h4>
                 <br>
-                <h2 class="agency-headline">A Public Experiment On Creation And Self Observation</h2>
+                <h2 class="agency-headline">Every project tells a story. All stories describe the journey.</h2>
                 
-                                <p class="agency-description">Haris Chatzianastasiou</p>
+                                <p class="agency-description">.</p>
 
             </div>
 
@@ -23008,36 +23068,39 @@
                     <!-- Things you need to know: in hero -->
                     <div id="youtube-section" class="youtube-section-content hero-things-content">
 
-        <h3 class="youtube-project-title">PROJECT NEMESIS</h3>
+        <div class="youtube-section-black-panel">
+        <h3 class="youtube-project-title">A Public Experiment On Creation</h3>
+        <p class="youtube-project-posted">Posted on March 4, 2026</p>
         
-        <h4 class="youtube-project-subtitle">Documenting the process</h4>
+        <h4 class="youtube-project-subtitle">Previously</h4>
         <p class="youtube-project-description">
-            Welcome to my personal work. My name is Haris, and here you will find me creating things and talking about them. 
-            As of now, I have created a chess application (skgchess), whose story you can read below.
+             As of now, I have created a chess application, SKGCHESS. Read the story <a href="skgchess.html" class="youtube-section-here-link">here</a>.
         </p>
         
-        <h4 class="youtube-project-subtitle">Next project: Making a game (long version)</h4>
-        <p class="youtube-project-posted">Posted on March 4, 2026</p>
+        <h4 class="youtube-project-subtitle">Next</h4>
         <p class="youtube-project-description">
-            After developing Skgchess, and after months of searching, and experimenting with art, and even writing a story, and questioning why I want to invest in something so difficult and time-consuming (gasp), I realized there are <em>things</em> I want to express that a game is the right medium for.
+            After developing Skgchess, and after months of searching, experimenting with art, even writing a story, and questioning why I want to invest in something so difficult and time-consuming (gasp), I realized there are <em>things</em> I want to express that a game is the right medium for.
          <br><br>
-            So I decided to start talking about what I have in mind without waiting for the game to be finished, simply to put it out there and express myself early.
+            So, I decided to start talking about what I have in mind without waiting for the game to be finished, simply to put it out there and express myself early.
             Then I thought that this could also help the game grow. Maybe even build a small community around it. Upload devlogs. Share progress. At the end of the day, isn't that what most solo developers do?
             <br><br><br>
             And with that in mind I thought … actually, no. <br><br><br>
             To my knowledge, most indie devs I found on YouTube started uploading after they had already gotten pretty good. 
-            Moreover, I did not find anyone who tried to capture the creation process itself (with the type of game I'm thinking of making), approaching it from the perspective that they are building a game while documenting the journey for someone else. Almost like teaching while learning. And I feel like approaching it this way might make someone get better at it too.
+            Moreover, I did not find anyone who tried to capture the creation process itself (with the type of game I'm thinking of making).
+            In other words, building a game while documenting the journey (day by day) so someone else can do it too.
+            Almost like teaching while learning. And I feel like approaching it this way might make someone get better at it too.
             <br><br>
-            So I said: fine, I'll do it. <br><em>How cool would it be to make a game and have the entire process captured from the start</em> ?
+            So ... <br><em>"How cool would it be to make a game and have the entire process captured from the start?"</em>... 
             <br><br>
-            The only small detail is that I now have to learn how to write well, document everything clearly, learn video editing for YouTube, learn game design, learn art, be consistent, and learn… learn… learn… basically everything. Learn it all, make a good game, while also working and balancing life, building a community or participating in game jams, reaching out to people, finding a publisher... 
+            I said to myself. The only small detail is that I have to learn how to write well, document everything clearly, learn video editing for YouTube, learn game design, learn art, be consistent, and learn… learn… learn… basically everything. Learn it all, make a good game, while also working and balancing life, building a community or participating in game jams, reaching out to people, finding a publisher... 
             <br><br>
             Or maybe just create.
             <br><br>
             So ...
             <br><br>
-            Should we start><br><br><br>
+            Should we start?<br><br><br>
         </p>
+        </div>
         <p class="youtube-section-links-center">Follow Project Nemesis on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a> YouTube.</p>
 
                     </div>
@@ -23965,7 +24028,7 @@
 
 
 
-                © 2025 ixlstudio.com. All rights reserved.
+                © 2026 ixlstudio.com. All rights reserved.
 
 
 
