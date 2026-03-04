@@ -1619,10 +1619,8 @@
 
 
 
-            overflow: hidden;
-
-
-
+            overflow-x: hidden; /* Keep alignment stable – no horizontal shift from shapes/floats */
+            overflow-y: visible;
             padding: 0 4rem; /* Center padding for desktop */
 
 
@@ -1660,7 +1658,8 @@
                 min-height: 100vh;
                 min-height: 100svh; /* Small viewport height for mobile browsers */
                 min-height: 100dvh; /* Dynamic viewport height for latest browsers */
-                overflow: visible; /* Don’t clip long content so mobile users can scroll to it */
+                overflow-x: hidden;
+                overflow-y: visible; /* Don’t clip long content so mobile users can scroll to it */
                 align-items: flex-start; /* Content from top so scrolling feels natural */
                 padding: 1rem 1rem 3rem; /* Horizontal and bottom padding so content isn’t flush to edges */
 
@@ -22269,9 +22268,11 @@
             z-index: 2;
             width: 100%;
             max-width: 600px;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
             padding: 2rem 0;
             flex: 0 1 auto; /* Don't grow/shrink unexpectedly in flex hero */
+            box-sizing: border-box; /* Padding included in width so alignment stays fixed */
         }
 
         /* YouTube Embed */
