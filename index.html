@@ -5469,6 +5469,11 @@
             margin-right: auto;
             text-align: center; /* center description text */
         }
+        /* Smaller variant for the tagline line only; show as written (no uppercase) */
+        .agency-description.agency-tagline {
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
+            text-transform: none;
+        }
         
         /* Agency Music Player */
         .agency-music-player {
@@ -22769,12 +22774,12 @@
                     </div>
                 </div>
                 <audio id="agencyAudioPlayer"></audio>
+                <p class="agency-description agency-tagline"> Game development, software engineering, live documentation, articles and educational content.</p>
 
-                <h4 class="agency-description"> My name is Haris, and here you will find me creating things and talking about them.</h4>
                 <br>
                 <h2 class="agency-headline">Every project tells a story.</h2>
-                
-                                <p class="agency-description"> All stories describe the journey.</p>
+                <h4 class="agency-description"> - </h4>
+
 
             </div>
 
