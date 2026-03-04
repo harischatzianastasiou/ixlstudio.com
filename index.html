@@ -65,7 +65,7 @@
     <!-- Google Fonts: DM Sans for headline (rounded, bold); clean sans for tagline/body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
 
 
 
@@ -22318,11 +22318,12 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
         }
+        /* Readable serif for long-form text: Lora is easy on the eyes */
         .youtube-project-description {
             text-align: center;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
             font-size: 1.05rem;
-            line-height: 1.7;
+            line-height: 1.75;
             color: rgba(228, 220, 210, 0.8);
             max-width: 650px;
             margin-left: auto;
@@ -22336,6 +22337,13 @@
             font-weight: 700;
             color: #e4dcd2;
             margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Posted date under subtitle: centred, same colour as title */
+        .youtube-project-posted {
+            text-align: center;
+            color: #e4dcd2;
+            margin-top: 0;
             margin-bottom: 1rem;
         }
 
@@ -22357,22 +22365,24 @@
         }
         .youtube-project-description-sub {
             text-align: center;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
             font-size: 0.95rem;
-            line-height: 1.7;
+            line-height: 1.75;
             color: rgba(228, 220, 210, 0.8);
             max-width: 650px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 1rem;
         }
-        /* YouTube section: "here" and "YouTube" inline links */
+        /* YouTube section: "JOURNAL" and "YouTube" inline links */
         .youtube-project-subtitle a {
-            text-decoration: none; /* No underline on "here" or "YouTube" */
+            text-decoration: none; /* No underline on "JOURNAL" or "YouTube" */
         }
         .youtube-section-here-link {
-            color: #a875ff; /* Same purple as YouTube link */
+            color: #a875ff; /* Same purple as YouTube link (used for JOURNAL link) */
+            text-decoration: none; /* No underline on JOURNAL */
             transition: color 0.2s ease;
+            font-size: 2.25rem; /* Bigger than before – matches links row size */
         }
         .youtube-section-here-link:hover {
             color: #c4a0ff; /* Same hover as YouTube link */
@@ -22380,12 +22390,25 @@
         .youtube-section-youtube-link {
             display: inline-flex;
             align-items: center;
-            color: #a875ff; /* Purple by default (after "Follow the project here") */
+            justify-content: center;
+            color: #a875ff; /* Purple – icon uses currentColor */
             text-decoration: none;
             transition: color 0.2s ease;
+            vertical-align: middle;
         }
         .youtube-section-youtube-link:hover {
             color: #c4a0ff; /* Slightly lighter purple on hover */
+        }
+        /* YouTube icon size – match visual weight of big JOURNAL link */
+        .youtube-section-youtube-link svg {
+            width: 2.75rem;
+            height: 2.75rem;
+            display: block;
+        }
+        /* Center the "JOURNAL" and "YouTube" links row below the description */
+        .youtube-section-links-center {
+            text-align: center;
+            font-size: 2.25rem; /* Bigger row so "and on" and icon feel right */
         }
         
         /* Books Section */
@@ -22859,7 +22882,7 @@
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
                         <h2 class="project-echo-title"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span></span> <span class="journal-tag">JOURNAL</span></h2>
-                        <p class="project-echo-excerpt">Ongoing documentation of making my own game</p>
+                        <p class="project-echo-excerpt">Live journal of creations.</p>
                         <span class="project-echo-cta">Read <span class="arrow">→</span></span>
                     </div>
                 </div>
@@ -22989,32 +23012,33 @@
         
         <h4 class="youtube-project-subtitle">Documenting the process</h4>
         <p class="youtube-project-description">
-            I’m currently making a game and sharing the process step by step. I’m documenting everything — from emotions and thought process to experimenting with art and using the tools available to me.
+            Welcome to my personal work. My name is Haris, and here you will find me creating things and talking about them. 
+            As of now, I have created a chess application (skgchess), whose story you can read below.
         </p>
         
-        <h4 class="youtube-project-subtitle">Why I'm making a game</h4>
+        <h4 class="youtube-project-subtitle">Next project: Making a game (long version)</h4>
+        <p class="youtube-project-posted">Posted on March 4, 2026</p>
         <p class="youtube-project-description">
-            I have things I want to say, and I believe you may want to hear them. Some of them question the way things are: the logic of consumerism, the systems we accept without thinking. Others can’t be explained directly. They need to be experienced.
-        </p>      
-
-        <h4 class="youtube-project-subtitle">Why I'm documenting the process</h4>
-
-        <h5 class="youtube-project-sub-subtitle">   Because it would be interesting to have the whole attempt recorded</h5>
-        <p class="youtube-project-description-sub">
-            If the game eventually turns out well, documenting the entire effort from the beginning gives it a different kind of value. It becomes a complete record of a creative attempt, making the inner dialogue and evolving thought process — usually left unseen — visible. It would also serve as a practical reference for anyone beginning their own game from scratch.
+            After developing Skgchess, and after months of searching, and experimenting with art, and even writing a story, and questioning why I want to invest in something so difficult and time-consuming (gasp), I realized there are <em>things</em> I want to express that a game is the right medium for.
+         <br><br>
+            So I decided to start talking about what I have in mind without waiting for the game to be finished, simply to put it out there and express myself early.
+            Then I thought that this could also help the game grow. Maybe even build a small community around it. Upload devlogs. Share progress. At the end of the day, isn't that what most solo developers do?
+            <br><br><br>
+            And with that in mind I thought … actually, no. <br><br><br>
+            To my knowledge, most indie devs I found on YouTube started uploading after they had already gotten pretty good. 
+            Moreover, I did not find anyone who tried to capture the creation process itself (with the type of game I'm thinking of making), approaching it from the perspective that they are building a game while documenting the journey for someone else. Almost like teaching while learning. And I feel like approaching it this way might make someone get better at it too.
+            <br><br>
+            So I said: fine, I'll do it. <br><em>How cool would it be to make a game and have the entire process captured from the start</em> ?
+            <br><br>
+            The only small detail is that I now have to learn how to write well, document everything clearly, learn video editing for YouTube, learn game design, learn art, be consistent, and learn… learn… learn… basically everything. Learn it all, make a good game, while also working and balancing life, building a community or participating in game jams, reaching out to people, finding a publisher... 
+            <br><br>
+            Or maybe just create.
+            <br><br>
+            So ...
+            <br><br>
+            Should we start><br><br><br>
         </p>
-
-        <h5 class="youtube-project-sub-subtitle">   Because sharing in a way fulfills the reason I started</h5>
-        <p class="youtube-project-description-sub">
-            I began this project from an internal search and a need for my work to have impact beyond myself. By sharing the process openly, that intention is already being expressed.
-        </p>
-        
-        <h5 class="youtube-project-sub-subtitle">   Because I want to make it grow</h5>
-        <p class="youtube-project-description-sub">
-            Even if the project begins from something internal, I want it to grow into something sustainable. Making it public and building a community around it feels like the most realistic way for that to happen.
-        </p>
-
-        <h4 class="youtube-project-subtitle">Follow the project <a href="inbetween.html" class="youtube-section-here-link">here</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube">YouTube</a></h4>
+        <p class="youtube-section-links-center">Follow Project Nemesis on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a> YouTube.</p>
 
                     </div>
 
