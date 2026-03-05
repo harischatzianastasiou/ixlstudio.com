@@ -211,6 +211,48 @@
         .devlog-doc a { color: #8a53f7; }
         .devlog-doc a:hover { color: #b794f6; }
         .doc-meta { color: rgba(228, 220, 210, 0.6); border-bottom-color: rgba(228, 220, 210, 0.2); }
+        /* Markdown-rendered content (from creation-process.md) */
+        .md-content h1, .md-content h2, .md-content h3 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 700;
+            color: #e4dcd2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+        .md-content h1 { font-size: 1.5rem; text-transform: uppercase; }
+        .md-content h2 { font-size: 1.25rem; text-transform: uppercase; }
+        .md-content h3 { font-size: 1.1rem; }
+        .md-content p {
+            font-size: 1.125rem;
+            line-height: 1.85;
+            color: #e4dcd2;
+            margin-bottom: 1.5rem;
+        }
+        .md-content ul, .md-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #e4dcd2;
+        }
+        .md-content li { margin-bottom: 0.5rem; }
+        .md-content a { color: #8a53f7; text-decoration: underline; text-underline-offset: 0.15em; }
+        .md-content a:hover { color: #b794f6; }
+        .md-content code {
+            background: rgba(228, 220, 210, 0.15);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #e4dcd2;
+        }
+        .md-content pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        .md-content pre code { background: none; padding: 0; }
+        .md-content .loading { color: rgba(228, 220, 210, 0.6); font-style: italic; }
         .visit-website-btn,
         .cta-youtube {
             background: rgba(228, 220, 210, 0.1);
@@ -463,14 +505,38 @@
 
         <section class="doc-chapter">
             <h2>1. Creation process</h2>
-            <p>Just started.</p>
+            <!-- Content loaded from creation-process.md (same folder as this page) -->
+            <div id="creation-process-content" class="md-content">
+                <p class="loading">Loading…</p>
+            </div>
         </section>
 
     </article>
 
     </div><!-- .main-wrapper -->
 
+    <!-- Markdown parser: converts creation-process.md to HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
+        // Load creation-process.md from same folder and render its content
+        (function() {
+            const container = document.getElementById('creation-process-content');
+            if (!container) return;
+            fetch('creation-process.md')
+                .then(function(r) {
+                    if (!r.ok) throw new Error('Could not load creation-process.md');
+                    return r.text();
+                })
+                .then(function(md) {
+                    container.innerHTML = typeof marked === 'function'
+                        ? marked.parse(md)
+                        : '<p>Markdown parser not loaded.</p>';
+                })
+                .catch(function() {
+                    container.innerHTML = '<p class="loading">Place <strong>creation-process.md</strong> in the same folder as this page. It will be displayed here.</p>';
+                });
+        })();
+
         // Intersection Observer for photo animations
         const observerOptions = {
             threshold: 0.1,
