@@ -23839,6 +23839,8 @@
             const pauseIcon = playBtn?.querySelector('.pause-icon');
             
             if (!audio || !playBtn) return;
+            // Lower volume (0–1); 0.4 = 40% so it’s not too loud
+            audio.volume = 0.4;
             
             const playlist = [
                 // { title: 'Play Radio', artist: 'Ambient Fabric - The Path', src: 'Ambient Fabric - The Path.mp3' },
