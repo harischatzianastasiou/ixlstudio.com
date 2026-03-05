@@ -6431,17 +6431,30 @@
             .agency-get-in-touch {
                 display: none !important; /* hide "Follow on YouTube" on mobile */
             }
-            /* Both models visible on mobile, side by side above the radio */
+            /* Hide "Click to walk Lilith" etc. on mobile */
+            .lilith-controls {
+                display: none !important;
+            }
+            /* Both models visible and centred on mobile, above the radio */
+            .agency-collage {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
             .agency-collage-right {
-                display: block !important; /* show Lilith on mobile */
+                display: block !important;
+                position: relative !important;
                 left: auto !important;
-                right: 5% !important;
+                right: auto !important;
                 top: 14% !important;
                 bottom: auto !important;
                 transform: none !important;
             }
             .agency-collage-left {
-                left: 5% !important;
+                position: relative !important;
+                left: auto !important;
                 right: auto !important;
                 top: 14% !important;
                 bottom: auto !important;
@@ -6809,8 +6822,12 @@
             order: 1; /* SKGCHESS appears first */
         }
         .other-work-card:hover {
-            border-color: rgba(228, 220, 210, 0.6);
-            background: rgba(228, 220, 210, 0.05);
+            border-color: rgba(228, 220, 210, 0.4);
+            background: #000;
+        }
+        .other-work-card:hover .other-work-label,
+        .other-work-card:hover .other-work-value {
+            color: rgba(228, 220, 210, 0.95);
         }
         .other-work-photo {
             width: 120px;
@@ -31078,7 +31095,7 @@
                 otherWorkCard.href = 'https://www.linkedin.com/in/haris-chatzianastasiou-084783212/';
                 otherWorkCard.target = '_blank';
                 otherWorkCard.className = 'other-work-card';
-                otherWorkCard.innerHTML = '<div class="other-work-label">Engineering Background</div><div class="other-work-value"></div>';
+                otherWorkCard.innerHTML = '<div class="other-work-label">Engineering Background</div><div class="other-work-value">Click to read</div>';
                 this.articlesGrid.appendChild(otherWorkCard);
 
 
