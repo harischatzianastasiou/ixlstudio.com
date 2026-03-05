@@ -515,12 +515,60 @@
 
     </div><!-- .main-wrapper -->
 
-    <!-- Markdown parser: converts creation-process.md to HTML -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // Load creation-process.md from same folder and render its content
+        // Inline markdown parser (no CDN): headings, bold, italic, links, code, lists, paragraphs
+        function parseMarkdown(md) {
+            var html = '';
+            var lines = md.replace(/\r\n/g, '\n').split('\n');
+            var i = 0;
+            var inList = false;
+            var listTag = '';
+            function closeList() {
+                if (inList) { html += listTag === 'ul' ? '</ul>' : '</ol>'; inList = false; }
+            }
+            function escapeHtml(s) {
+                return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+            function inlineParse(s) {
+                return s
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                    .replace(/`([^`]+)`/g, '<code>$1</code>')
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+            }
+            while (i < lines.length) {
+                var line = lines[i];
+                var trimmed = line.trim();
+                if (/^###\s/.test(trimmed)) {
+                    closeList();
+                    html += '<h3>' + inlineParse(escapeHtml(trimmed.slice(4))) + '</h3>';
+                } else if (/^##\s/.test(trimmed)) {
+                    closeList();
+                    html += '<h2>' + inlineParse(escapeHtml(trimmed.slice(3))) + '</h2>';
+                } else if (/^#\s/.test(trimmed)) {
+                    closeList();
+                    html += '<h1>' + inlineParse(escapeHtml(trimmed.slice(2))) + '</h1>';
+                } else if (/^[-*]\s/.test(trimmed) || /^\d+\.\s/.test(trimmed)) {
+                    var tag = /^\d+\.\s/.test(trimmed) ? 'ol' : 'ul';
+                    if (!inList || listTag !== tag) { closeList(); html += tag === 'ol' ? '<ol>' : '<ul>'; inList = true; listTag = tag; }
+                    var content = trimmed.replace(/^[-*]\s/, '').replace(/^\d+\.\s/, '');
+                    html += '<li>' + inlineParse(escapeHtml(content)) + '</li>';
+                } else if (trimmed === '') {
+                    closeList();
+                    html += '\n';
+                } else {
+                    closeList();
+                    html += '<p>' + inlineParse(escapeHtml(trimmed)) + '</p>';
+                }
+                i++;
+            }
+            closeList();
+            return html;
+        }
+
+        // Load creation-process.md and render with inline parser
         (function() {
-            const container = document.getElementById('creation-process-content');
+            var container = document.getElementById('creation-process-content');
             if (!container) return;
             fetch('creation-process.md')
                 .then(function(r) {
@@ -528,9 +576,7 @@
                     return r.text();
                 })
                 .then(function(md) {
-                    container.innerHTML = typeof marked === 'function'
-                        ? marked.parse(md)
-                        : '<p>Markdown parser not loaded.</p>';
+                    container.innerHTML = parseMarkdown(md);
                 })
                 .catch(function() {
                     container.innerHTML = '<p class="loading">Place <strong>creation-process.md</strong> in the same folder as this page. It will be displayed here.</p>';
