@@ -792,20 +792,6 @@
                 max-width: 800px !important;
             }
         }
-        /* Slightly smaller logo on mobile */
-        @media (max-width: 768px) {
-            .header .logo-image {
-                height: 120px !important;
-                max-width: 320px !important;
-            }
-        }
-        /* Slightly smaller logo on laptop / non-4K (4K keeps 180px above) */
-        @media (min-width: 769px) and (max-width: 3839px) {
-            .header .logo-image {
-                height: 155px !important;
-                max-width: 680px !important;
-            }
-        }
 
 
 
@@ -6817,31 +6803,59 @@
             line-height: 1.4 !important; /* Better line height for readability */
         }
 
-        /* Other Work Card - in All Stories grid */
+        /* Other Work Card - same behaviour as article card: centred label, Click to read bottom right, same hover */
         .other-work-card {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
+            align-items: stretch;
             text-decoration: none;
             background: transparent;
-            border: 1px solid rgba(228, 220, 210, 0.3);
-            border-radius: 8px;
-            padding: 3rem 2rem;
-            transition: border-color 0.3s ease, background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            padding: 1.2rem;
             min-height: 300px;
-            order: 2; /* Appears after SKGCHESS */
+            order: 2;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
         .articles-grid .article-card {
             order: 1; /* SKGCHESS appears first */
         }
         .other-work-card:hover {
-            border-color: rgba(228, 220, 210, 0.4);
-            background: #000;
+            transform: translateY(-4px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
-        .other-work-card:hover .other-work-label,
-        .other-work-card:hover .other-work-value {
-            color: rgba(228, 220, 210, 0.95);
+        /* Wrapper so "Engineering Background" sits in the centre and middle of the card */
+        .other-work-label-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .other-work-label {
+            font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+            font-weight: 600;
+            color: rgba(228, 220, 210, 0.6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+        /* Bottom-right "Click to read" – same as article card .article-read-time */
+        .other-work-meta {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .other-work-read-time {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 0;
+            font-size: 0.8rem;
+            color: rgba(228, 220, 210, 0.7);
         }
         .other-work-photo {
             width: 120px;
@@ -6850,18 +6864,6 @@
             object-fit: cover;
             margin-bottom: 0.8rem;
             filter: saturate(0.6);
-        }
-        .other-work-label {
-            font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-            font-weight: 600;
-            color: rgba(228, 220, 210, 0.6);
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .other-work-value {
-            font-size: 1rem;
-            color: rgba(228, 220, 210, 0.7);
         }
 
         /* Project Echo Section - Featured after Agency */
@@ -31109,7 +31111,7 @@
                 otherWorkCard.href = 'https://www.linkedin.com/in/haris-chatzianastasiou-084783212/';
                 otherWorkCard.target = '_blank';
                 otherWorkCard.className = 'other-work-card';
-                otherWorkCard.innerHTML = '<div class="other-work-label">Engineering Background</div><div class="other-work-value">Click to read</div>';
+                otherWorkCard.innerHTML = '<div class="other-work-label-wrap"><div class="other-work-label">Engineering Background</div></div><div class="other-work-meta"><span class="other-work-read-time">Click to read</span></div>';
                 this.articlesGrid.appendChild(otherWorkCard);
 
 
