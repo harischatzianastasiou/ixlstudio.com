@@ -1,30 +1,117 @@
-# Sprites
+# The Journey
 
-## A sprite is a 2D graphic object obtained from a bitmap image.
+PS. I should say here that as a person, whatever I choose to work on usually comes after a lot of thinking. I tend to look for meaning in things, almost like trying to find a formula for how I want to live my life. 
 
-![](assets/20250915_163347_image.png)
+## The journey before launching ixlstudio (roughly)
 
-* For example a circle. Sprites have a Sprite Renderer.
+### April 2024
 
-A camera for example has not a Sprite Renderer it has a camera component.
+I started learning Java, to be better at work. My plan at the time was to try to be a great software developer. Learn an amazing field, that of computers, get better jobs, and eventually build something of my own.
 
-2. Scenes
+### October 2024
 
-It is a .unity file saved in our hard-drive and stores all information.
+After I learned the fundamentals in Java, I decided it's time to make a serious project. Build up a portfolio. Since I enjoy chess, I started building a chess engine.
 
-3. Control
+In the following months, I spent some time after work on it and I began to find the project more and more interesting. I was increasingly convinced that from now on I want to work on projects like this. Projects which convey a personal message. Projects that can tell a story.
 
-Alt + Left Click --> Pan around  (which is the View tool)
-Alt + Right Click --> Zoom
+### February 2025
 
-Instead of Alt, I can also do it with middle click.
+If a project tells a story, someone should experience it. I decided to turn the chess engine, previously run locally, into a full chess web application. I spend the next months building it with great enthusiasm and diving into unknown waters.
 
-q --> View
-w --> Move
-e --> Rotate
-r --> Scale
+### April 2025
 
-4. Every Game Object has a Transform component, and also other components that tell what it is and what it does ( for example sprites have sprite renderer)
-5. Order of Layer
+For the first time I had a move sent over websockets to the other player and displayed in the frontend. I was very happy to see it, and this was a turning point. From this point onwards, I started being committed to the project. I was trying to make it as good as I could. 
 
-   ![](assets/20250915_163759_image.png)
+Next, it was time to make the UI and appearance of the site. After hours of iterations, I saw myself being more satisfied with expressing my aesthetics, rather than the way I have built the app. I started to conclude that functionality is there to do just that. To work as expected. Even I that built it, would soon forget about it. The appearance and the experience of the site though, was there every time I visited. This made me understand the most important thing I needed at the time.
+
+I started seeing my own project, as with the eyes of a visitor. So, naturally I was mainly interested in the content of this chess application. What the site has to offer. I found it satisfying in seeing it has a different taste, an approach that is not commercial. It also incorporated music into it, a collection of chess quotes and images of my town thessaloniki. It even had a newspaper informing of how it was made. Three themes I personally chose. Everything that was there, I felt that in a way tells a story of the creator. And with this I don't focus on myself. It's something I experienced when playing games or watching movies too. It is just that most software projects we visit nowadays are there for a specific reason. Functionality. And when something is needed for it's functionality, having profit from it almost always comes together.
+
+If I understood something from SKGCHESS is that I want to tell a story of myself, through creating. A piece that exists, and is there to visit. To capture that specific moment in time it was created. But I also concluded that most likely this project can't be in my professional work  (software engineering) as it is always constrained by having profit from it. And I'm interested in content of an app, site etc, that has to more to do with expression rather than functionality.
+Of course software engineering is a great profession and I will continue doing it. It can too tell something about myself, to people that I work with as an example. I would like though to attempt to tell something to people outside of this field too. 
+
+### June 2025
+
+Having understood that SKGCHESS, is a personal project that attempted to tell a story to those who visited it, I started thinking in ways that I could continue viewing my work from this perspective, but creating something that people would want to be more invested in. SKGCHESS was, at the end of the day, a good personal project. For the reason it was created, even I would use chess.com or another more complete popular site.
+
+I had two <em>ways</em> : 
+
+* Game development 
+* Freelancing (trying out more projects like this where mainly I can express aesthetics but not ideas. Mostly small projects, maybe in an area where I help someone).
+
+### Mid June 2025
+
+#### The First Game Concept
+
+Having always liked playing games or watching movies, I knew from the moment I started studying Computer Science in university, that game development could be a career I pursue. Specifically solo game development, as years passed by. Before June 2025, I had already tried before to play with a game engine, the first time being in winter in 2023, where I just messed up with things, and the second in February of 2025, spending a few days. It's worth noting that the model of the dog appearing in the front page, was made during those days. It is my dog Lilith, as you can see here :)
+
+(image of lilith)
+
+Both times, I thought of game development and I tried to examine it but rejected the option. In 2023 because I believed that I should first attempt software engineering and try to make a good carreer in it, and the second time because I was still coming into peace with all these ideas I described earlier.
+
+This third time, I did not open up any engine. Since <em>content and meaning</em> is what I care about, I said to myself that : If I figure out that I want to tell a story and it has meaning for me, then how to tell the story comes second. I will find the way to do it. To enjoy the process. That is of course not so true and I believe that someone could just try game development without thinking like this. It's just that this is my way of looking(epeksergasia) at things.
+
+So I wrote down an idea for a scenario. Very roughly: you are inside the mind of a protagonist who is in a state of dormancy, and you are asked to explore its different regions. Each region represents a lost emotion. Afterwards, I started thinking about gameplay mechanics around this idea. For example, the player could have a weapon that “fires” emotions, and depending on the emotion it shoots, it has different effects on the environment. There are many more ideas, but it’s probably better not to expand too much here. I found myself being more attracted though to the atmosphere and feeling of the game. I would like something cinematic, thought provoking, handling existential questions or like philosophizing. While also being fun to play.
+
+I realized that I needed to better understand what a game actually is. So I read a book about game design named “A Theory of Fun for Game Design” by Raph Koster. I kept many interestins viewpoints from the game and continued working in my mind to understand what I want to create, if making a game is the correct choice for it.
+
+
+### End June 2025
+
+I received an email about skgchess. I had posted it on LinkedIn some time ago, and a friend from work approached me to help. The whole discussion pushed me to return to the project again and “perfect” it in order to post it when I would be ready, in the website of one of the few local chess clubs in my hometown, Thessaloniki.
+
+### August 2025
+
+The chess project was almost ready. All this effort pushed me to think about starting freelancing, something that is for sure much easier than creating a game.
+
+I launched IXLSTUDIO as my freelancing page. The idea was for people that visit SKGCHESS, to check on IXLSTUDIO and my work too. 
+
+I spent the rest of the month and early september, experimenting with the design of the IXLSTUDIO. 
+
+### Mid September 2025
+
+After returning from vacation, I decided it was time to take a step back.
+
+I had now spent more than seven months of what I call inner searching and constant exploration. I needed to slow down a bit.
+
+I rested for quite some time and enjoyed daily life. The idea of posting SKGCHESS and freelancing  was something I was not so sure I wanted to continue. 
+
+In that time, I chose to continue being somehow distant from all of these. I came back to try game development though, this time just following a tutorial in Unreal Engine. Since my PC could not run the engine very well, rented the Shadow PC service and I created some landscapes and played with assets. It was actually really creative. 
+
+With this, I started being curious about art in general (if I were to make a game I would like to create my own art in a way) . I began painting for the fist time. Also, I read a book that a good friend gifted to me, “The Story of Art” by Gombrich. I also started experimenting with Blender, as well as FLStudio for Music.
+
+I would then spent the next months being involved from time to time with game development. I would frequently though come back and forth in thinking about the idea of creating a game and having the follow questions. 
+
+Do I really want to make a game? Is the game the right medium to be expressed? If so, What kind of game I would like to make? And what kind of game I can realistically make? 
+
+### January 2025
+
+I came back to what I did in June with the scenario attempt and this time I tried harder. Or it just clicked. I wrote a complete story. I made a document with the entire history of the world: how it could be delivered narratively, what type of game could help achieve the message, and how the gameplay mechanics could connect with the story of the world.
+
+With knowing I have a story to tell the questions that still played were. What type of game? 3D or 2D? Platformer or shooter? For example I would like to make an atmospheric game. A cinematic one maybe. Something that has clever mechanincs. There are specific genres and perspectives, for each desired result. 
+
+The decision of 3D or 2D would also affect the chosen game engine, as Unreal is suggested for 3D and Unity for 2D.
+
+### February 2026
+
+After moving away from Spotify, I decide more broadly that I want to avoid proprietary software. I switched fully to open source. I reinstalled Linux (which I had used as a student), purged windows, and with it Shadow PC service too. With this shift, I decide that if I would make a game, it should also be in an open source engine. So I started looking into Godot.
+
+
+### Today 05 March 2026
+
+The journey of almost one year of constant searching feels like it is finally coming to an end. Along the way, since many of these questions were existential, I changed my perspective on things many times. Ideas slowly matured. I imagine that every few years in a person’s life something like this happens: a new perspective appears, and a new chapter begins.
+
+So now I begin making a game in Godot, based on the scenario I have written. I don’t want to overthink it anymore, so I will simply start with a 3D first-person game. Mainly because I want 3D, and first-person avoids the animation and camera complexity that third-person requires. A few days ago I finished ixlstudio in the form you see now. At the same time I also started teaching some classes related to my profession at a college. Daily job continues to go well. It’s a good period where the work of the past year starts coming together as this new project begins. 
+
+So now that the backstory is finished, we can move forward in a more structured way.
+
+We start with Day 1.
+
+## Start here
+
+### Day 1 06 March 2026
+
+If we’re going to do this properly, let’s start simply with the most obviously useful resource:
+
+Godot Engine Documentation.
+
+I’ll be back tomorrow with progress.
