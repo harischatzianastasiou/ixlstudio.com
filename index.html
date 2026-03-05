@@ -792,6 +792,20 @@
                 max-width: 800px !important;
             }
         }
+        /* Slightly smaller logo on mobile */
+        @media (max-width: 768px) {
+            .header .logo-image {
+                height: 120px !important;
+                max-width: 320px !important;
+            }
+        }
+        /* Slightly smaller logo on laptop / non-4K (4K keeps 180px above) */
+        @media (min-width: 769px) and (max-width: 3839px) {
+            .header .logo-image {
+                height: 155px !important;
+                max-width: 680px !important;
+            }
+        }
 
 
 
