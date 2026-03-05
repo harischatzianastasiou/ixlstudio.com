@@ -6431,20 +6431,27 @@
             .agency-get-in-touch {
                 display: none !important; /* hide "Follow on YouTube" on mobile */
             }
+            /* Both models visible on mobile, side by side above the radio */
             .agency-collage-right {
-                display: none !important; /* hide priest.png on mobile */
+                display: block !important; /* show Lilith on mobile */
+                left: auto !important;
+                right: 5% !important;
+                top: 14% !important;
+                bottom: auto !important;
+                transform: none !important;
             }
             .agency-collage-left {
-                left: 50% !important; /* center the 3D model container */
-                top: auto !important; /* remove top positioning */
-                bottom: 5% !important; /* position below the agency description */
-                transform: translateX(-50%) !important; /* only center horizontally */
+                left: 5% !important;
+                right: auto !important;
+                top: 14% !important;
+                bottom: auto !important;
+                transform: none !important;
             }
             .agency-center {
                 padding: 0 1rem;
                 max-width: 100%;
                 width: 100%;
-                top: 48%;
+                top: 54%; /* below the two models */
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -6468,7 +6475,7 @@
                 max-width: 100%;
             }
             .agency-collage-side {
-                width: clamp(140px, 40vw, 200px); /* wider for centered model */
+                width: clamp(100px, 26vw, 140px); /* both models side by side above radio */
             }
             .agency-collage-peek {
                 width: 50%;
@@ -6575,7 +6582,7 @@
             .agency-center {
                 padding: 0 1rem;
                 max-width: 96%;
-                top: 46%;
+                top: 52%; /* keep center below both models on small screens */
             }
             .agency-tagline {
                 font-size: 0.85rem;
@@ -6588,7 +6595,7 @@
             }
             .agency-collage-side {
                 width: clamp(80px, 22vw, 120px);
-                top: 78%;
+                top: 12%; /* both models stay above radio on extra small */
             }
             .agency-get-in-touch {
                 font-size: 0.7rem;
