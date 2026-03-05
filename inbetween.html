@@ -159,12 +159,17 @@
             color: #e4dcd2;
         }
 
-        /* Devlog document: markdown-like reading layout */
+        /* Devlog document: use most of the width between margins, text left-aligned */
         .devlog-doc {
-            max-width: 42em;
-            margin: 0 auto;
-            padding: 4rem 2rem 5rem;
+            max-width: min(85em, 100%);
+            width: 100%;
+            margin: 0;
+            margin-left: 14rem;
+            margin-right: 5rem;
+            padding: 4rem 0 5rem;
             font-family: Georgia, 'Times New Roman', serif;
+            text-align: left;
+            box-sizing: border-box;
         }
         .doc-chapter {
             margin-bottom: 3rem;
@@ -211,7 +216,10 @@
         .devlog-doc a { color: #8a53f7; }
         .devlog-doc a:hover { color: #b794f6; }
         .doc-meta { color: rgba(228, 220, 210, 0.6); border-bottom-color: rgba(228, 220, 210, 0.2); }
-        /* Markdown-rendered content (from creation-process.md) */
+        /* Markdown-rendered content (from creation-process.md), left-aligned */
+        .md-content {
+            text-align: left;
+        }
         .md-content h1, .md-content h2, .md-content h3 {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-weight: 700;
@@ -386,6 +394,18 @@
         }
 
         /* Responsive design */
+        @media (max-width: 1200px) {
+            .devlog-doc {
+                margin-left: 10rem;
+                margin-right: 4rem;
+            }
+        }
+        @media (max-width: 1024px) {
+            .devlog-doc {
+                margin-left: 6rem;
+                margin-right: 3rem;
+            }
+        }
         @media (max-width: 768px) {
             .header {
                 padding: 1rem 2rem;
@@ -422,7 +442,9 @@
             }
 
             .devlog-doc {
-                padding: 3rem 1.5rem 4rem;
+                margin-left: 2rem;
+                margin-right: 2rem;
+                padding: 3rem 0 4rem;
             }
 
             .photo-container {
@@ -466,7 +488,9 @@
             }
 
             .devlog-doc {
-                padding: 2.5rem 1rem 3rem;
+                margin-left: 1.25rem;
+                margin-right: 1.25rem;
+                padding: 2.5rem 0 3rem;
             }
 
             .hero-content {
