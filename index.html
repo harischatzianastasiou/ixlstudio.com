@@ -6803,7 +6803,7 @@
             line-height: 1.4 !important; /* Better line height for readability */
         }
 
-        /* Other Work Card - same behaviour as article card: centred label, Click to read bottom right, same hover */
+        /* Other Work Card – same animation as JOURNAL window: subtle border + background on hover, no lift */
         .other-work-card {
             display: flex;
             flex-direction: column;
@@ -6811,23 +6811,22 @@
             align-items: stretch;
             text-decoration: none;
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0;
+            border: 1px solid rgba(228, 220, 210, 0.2);
+            border-radius: 8px;
             padding: 1.2rem;
             min-height: 300px;
             order: 2;
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: border-color 0.3s ease, background 0.3s ease;
         }
         .articles-grid .article-card {
             order: 1; /* SKGCHESS appears first */
         }
         .other-work-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: rgba(228, 220, 210, 0.5);
+            background: rgba(228, 220, 210, 0.05);
         }
         /* Wrapper so "Engineering Background" sits in the centre and middle of the card */
         .other-work-label-wrap {
@@ -23844,10 +23843,8 @@
             
             const playlist = [
                 // { title: 'Play Radio', artist: 'Ambient Fabric - The Path', src: 'Ambient Fabric - The Path.mp3' },
-                { title: "Play Radio", artist: '☀️', src: "Heaven's Night.mp3" },
                 { title: 'Play Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
                 { title: 'Play Radio', artist: '☀️', src: 'Non Phixion - Legacy (Instrumental).mp3' },
-                { title: 'Play Radio', artist: '☀️', src: 'East Flatbush Project - Tried By 12 (Instrumental).mp3' },
                 { title: 'Play Radio', artist: '☀️', src: 'Citizen Kane - Blackrain (Instrumental).mp3' }
 
             ];
