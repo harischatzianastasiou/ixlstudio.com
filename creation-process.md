@@ -1,10 +1,10 @@
-1. Sprites
+# Sprites
 
-A sprite is a 2D graphic object obtained from a bitmap image.
+## A sprite is a 2D graphic object obtained from a bitmap image.
 
 ![](assets/20250915_163347_image.png)
 
-For example a circle. Sprites have a Sprite Renderer.
+* For example a circle. Sprites have a Sprite Renderer.
 
 A camera for example has not a Sprite Renderer it has a camera component.
 
