@@ -46,7 +46,7 @@ Having always liked playing games or watching movies, I knew from the moment I s
 
 (image of lilith)
 
-Both times, I thought of game development and I tried to examine it but rejected the option. In 2023 because I believed that I should first attempt software engineering and try to make a good carreer in it, and the second time because I was still coming into peace with all these ideas I described earlier.
+Both times, I thought of game development and I tried to examine it but rejected the option. In 2023 because I believed that I should first attempt software engineering and try to make a good career in it, and the second time because I was still coming into peace with all these ideas I described earlier.
 
 This third time, I did not open up any engine. Since <em>content and meaning</em> is what I care about, I said to myself that : If I figure out that I want to tell a story and it has meaning for me, then how to tell the story comes second. I will find the way to do it. To enjoy the process. That is of course not so true and I believe that someone could just try game development without thinking like this. It's just that this is my way of looking(epeksergasia) at things.
 
@@ -77,17 +77,17 @@ I rested for quite some time and enjoyed daily life. The idea of posting SKGCHES
 
 In that time, I chose to continue being somehow distant from all of these. I came back to try game development though, this time just following a tutorial in Unreal Engine. Since my PC could not run the engine very well, rented the Shadow PC service and I created some landscapes and played with assets. It was actually really creative. 
 
-With this, I started being curious about art in general (if I were to make a game I would like to create my own art in a way) . I began painting for the fist time. Also, I read a book that a good friend gifted to me, “The Story of Art” by Gombrich. I also started experimenting with Blender, as well as FLStudio for Music.
+With this, I started being curious about art in general (if I were to make a game I would like to create my own art in a way) . I began painting for the first time. Also, I read a book that a good friend gifted to me, “The Story of Art” by Gombrich. I also started experimenting with Blender, as well as FLStudio for Music.
 
-I would then spent the next months being involved from time to time with game development. I would frequently though come back and forth in thinking about the idea of creating a game and having the follow questions. 
+I would then spent the next months being involved from time to time with game development. I would frequently though come back and forth in thinking about the idea of creating a game and having the following questions. 
 
 Do I really want to make a game? Is the game the right medium to be expressed? If so, What kind of game I would like to make? And what kind of game I can realistically make? 
 
-### January 2025
+### January 2026
 
 I came back to what I did in June with the scenario attempt and this time I tried harder. Or it just clicked. I wrote a complete story. I made a document with the entire history of the world: how it could be delivered narratively, what type of game could help achieve the message, and how the gameplay mechanics could connect with the story of the world.
 
-With knowing I have a story to tell the questions that still played were. What type of game? 3D or 2D? Platformer or shooter? For example I would like to make an atmospheric game. A cinematic one maybe. Something that has clever mechanincs. There are specific genres and perspectives, for each desired result. 
+With knowing I have a story to tell the questions that still played were. What type of game? 3D or 2D? Platformer or shooter? For example I would like to make an atmospheric game. A cinematic one maybe. Something that has clever mechanics. There are specific genres and perspectives, for each desired result. 
 
 The decision of 3D or 2D would also affect the chosen game engine, as Unreal is suggested for 3D and Unity for 2D.
 
