@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IXLSTUDIO - BLOG</title>
+    <title>IXLSTUDIO - TIMELINE</title>
     <link rel="icon" type="image/png" href="ixl.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,10 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            text-decoration: none;
+            color: inherit;
         }
+        .logo-container:hover .logo { color: rgba(255,255,255,0.8); }
         .logo {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             font-size: 1.2rem;
@@ -166,21 +169,21 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo-container">
-            <a href="index.html" class="logo" id="logo-link">IXLSTUDIO</a>
-            <span class="logo-subtitle">THOUGHTS</span>
-        </div>
+        <a href="index.html" class="logo-container" id="logo-link">
+            <span class="logo">IXLSTUDIO</span>
+            <span class="logo-subtitle">TIMELINE</span>
+        </a>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
     </header>
     <div class="scroll-wrapper">
         <main class="article-wrap">
-            <a href="index.html#articles" class="back-link" id="back-to-articles">← Back to Blog</a>
+            <a href="index.html#articles" class="back-link" id="back-to-articles">← Back to Home</a>
             <div id="article-root">
             </div>
         </main>
     </div>
     <script>
-        // Back link and logo: use history.back() when possible so index intro doesn't replay
+        // Back link: use history.back() when possible so index intro doesn't replay
         (function() {
             function goBackIfPossible(e) {
                 if (window.history.length > 1) {
@@ -189,8 +192,8 @@
                 }
             }
             document.getElementById('back-to-articles').addEventListener('click', goBackIfPossible);
-            document.getElementById('logo-link').addEventListener('click', goBackIfPossible);
         })();
+        // Logo (IXLSTUDIO TIMELINE): always goes to index.html
         // Theme toggle: same key as inbetween (devlog-theme) so preference is shared
         (function() {
             var stored = localStorage.getItem('devlog-theme');
