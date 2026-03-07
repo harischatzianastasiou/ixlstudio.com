@@ -118,11 +118,13 @@
 
 
         /* Single source of truth for header height – desktop gets much bigger header */
+        /* Aggro Crab–style: bold white titles, brighter body, slightly larger type */
         :root {
             --header-height: 88px;
-            /* Alignment: shared max-width and horizontal padding for sections */
             --section-max-width: 1200px;
             --section-padding-x: 2rem;
+            --title-color: #ffffff;   /* Bold white for headlines (game-studio feel) */
+            --text-color: #e8e6e3;   /* Slightly brighter body for better contrast */
         }
 
         /* Desktop: much bigger header and logo */
@@ -3149,7 +3151,7 @@
 
         .hero-title {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Match agency/IXL headlines */
-            font-size: clamp(3rem, 8vw, 8rem);
+            font-size: clamp(3.25rem, 8.5vw, 8.5rem); /* Slightly larger, Aggro Crab–style impact */
             font-weight: 900;
 
             line-height: 0.85;
@@ -3160,7 +3162,7 @@
 
             letter-spacing: -0.03em;
 
-            color: #e4dcd2; /* Warm off-white for titles */
+            color: var(--title-color); /* Bold white for game-studio feel */
 
             text-transform: none;
 
@@ -4903,7 +4905,7 @@
 
             /* Larger hero text on mobile to fill the first section */
             .hero-title {
-                font-size: clamp(2.8rem, 12vw, 5.5rem); /* Bigger: uses more viewport */
+                font-size: clamp(3rem, 12vw, 6rem); /* Slightly larger, Aggro Crab–style */
                 margin-bottom: 1.25rem;
             }
 
@@ -5449,20 +5451,20 @@
         }
         .agency-headline {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2.25rem, 4.85vw, 3.5rem); /* Slightly smaller than original */
+            font-size: clamp(2.4rem, 5vw, 3.75rem); /* Slightly larger, Aggro Crab–style */
             font-weight: 700;
             line-height: 1.08;
             letter-spacing: -0.03em;
-            color: #e4dcd2; /* Warm off-white for titles */
+            color: var(--title-color);
             margin-bottom: 1rem;
             text-align: center; /* center headline text */
         }
         .agency-description {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            font-size: clamp(0.9rem, 1.25vw, 1.05rem);
+            font-size: clamp(0.95rem, 1.35vw, 1.1rem);
             font-weight: 400;
             line-height: 1.65;
-            color: #D0D0D0;
+            color: var(--text-color);
             margin: 0;
             max-width: 460px;
             margin-left: auto;
@@ -5495,7 +5497,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #e4dcd2;
+            background: var(--text-color);
             border: none;
             cursor: pointer;
             display: flex;
@@ -5524,7 +5526,7 @@
         .agency-track-title {
             font-size: 0.85rem;
             font-weight: 500;
-            color: #e4dcd2;
+            color: var(--text-color);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -6192,27 +6194,27 @@
         }
         .about-this-place-title {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2rem, 5vw, 2.75rem); /* Bigger */
+            font-size: clamp(2.15rem, 5.2vw, 2.9rem); /* Slightly larger */
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--title-color);
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
             text-align: center;
         }
         .about-this-place-intro {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            font-size: clamp(1.1rem, 1.4vw, 1.25rem); /* Bigger */
+            font-size: clamp(1.15rem, 1.5vw, 1.3rem);
             line-height: 1.65;
-            color: #D0D0D0;
+            color: var(--text-color);
             margin-bottom: 2.5rem;
             text-align: center; /* Centre the "Start Here -> 1. The Initiation" line */
         }
         /* Subsection titles – same size as main About IXL Studio title */
         .about-this-place-heading {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2rem, 5vw, 2.75rem); /* Bigger */
+            font-size: clamp(2.15rem, 5.2vw, 2.9rem); /* Slightly larger */
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--title-color);
             letter-spacing: -0.02em;
             margin-top: 2.5rem;
             margin-bottom: 0.75rem;
@@ -6310,7 +6312,7 @@
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--text-color);
             letter-spacing: -0.02em;
             margin-bottom: 1rem;
         }
@@ -6901,7 +6903,7 @@
         .project-echo-title {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: 900;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin: 0.5rem 0;
         }
         /* Live indicator: pulsing dot next to LIVE */
@@ -6939,7 +6941,7 @@
         }
         .project-echo-cta {
             font-size: 0.9rem;
-            color: #e4dcd2;
+            color: var(--text-color);
             font-weight: 500;
         }
         .project-echo-cta .arrow {
@@ -6990,7 +6992,7 @@
         }
         
         .articles-section .section-subtitle {
-            font-size: clamp(1.8rem, 5vw, 2.5rem) !important; /* Much bigger on all devices */
+            font-size: clamp(1.95rem, 5.2vw, 2.65rem) !important; /* Slightly larger */
             line-height: 1.4 !important; /* Better line height for readability */
             font-weight: 400 !important; /* Slightly bolder for better presence */
             opacity: 1 !important; /* Instant visibility - no animation lag */
@@ -10564,7 +10566,7 @@
 
 
 
-            font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Same size as Features */
+            font-size: clamp(1.35rem, 2.8vw, 1.65rem); /* Slightly larger, Aggro Crab–style */
 
 
 
@@ -10572,7 +10574,7 @@
 
 
 
-            color: #e4dcd2; /* Warm off-white (not pure white) – same as other titles */
+            color: var(--title-color);
 
 
 
@@ -10660,8 +10662,9 @@
 
         .section-title {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Match agency/IXL headlines */
-            font-size: clamp(2.5rem, 5vw, 4rem); /* Balanced size - not too small, not too large */
+            font-size: clamp(2.75rem, 5.5vw, 4.5rem); /* Slightly larger for Aggro Crab–style impact */
             font-weight: 900; /* Increased weight */
+            color: var(--title-color);
 
 
 
@@ -10669,7 +10672,7 @@
 
 
 
-            color: #e4dcd2; /* Warm off-white for titles */
+            color: var(--title-color);
 
             line-height: 0.9; /* Tighter line height for modern look */
 
@@ -12737,7 +12740,7 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0;
-            color: #e4dcd2;
+            color: var(--text-color);
             text-decoration: none;
             transition: background 0.2s ease, border-color 0.2s ease;
         }
@@ -12746,9 +12749,9 @@
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
         }
-        .articles-list-item .item-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.35rem; display: block; }
-        .articles-list-item .item-excerpt { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; display: block; margin-top: 0.5rem; }
-        .articles-list-item .item-date { font-size: 0.8rem; opacity: 0.7; margin-top: 0.5rem; display: block; }
+        .articles-list-item .item-title { font-weight: 600; font-size: 1.15rem; margin-bottom: 0.35rem; display: block; }
+        .articles-list-item .item-excerpt { font-size: 0.95rem; opacity: 0.9; line-height: 1.5; display: block; margin-top: 0.5rem; }
+        .articles-list-item .item-date { font-size: 0.85rem; opacity: 0.75; margin-top: 0.5rem; display: block; }
         #articles .articles-list-grid:empty::after { content: 'No articles yet.'; opacity: 0.7; }
 
         /* Gallery section: CTA to gallery.html – matches index warm off-white vibe */
@@ -12768,7 +12771,7 @@
             gap: 0.75rem;
             padding: 1.25rem 2rem;
             background: rgba(228, 220, 210, 0.08);
-            color: #e4dcd2;
+            color: var(--text-color);
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
@@ -12794,7 +12797,7 @@
             gap: 0.5rem;
             padding: 0.8rem 1.5rem;
             background: rgba(228, 220, 210, 0.08);
-            color: #e4dcd2;
+            color: var(--text-color);
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
@@ -12819,7 +12822,7 @@
 
 
         .articles-section .section-title {
-            color: #e4dcd2; /* Match site title color */
+            color: var(--title-color);
 
 
 
@@ -15461,7 +15464,7 @@
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Same as section titles */
             font-size: 1rem;
             font-weight: 800;
-            color: #e4dcd2; /* Match site title color */
+            color: var(--text-color); /* Match site title color */
             margin-bottom: 1rem;
 
 
@@ -22179,16 +22182,16 @@
             transition: none !important;
         }
 
-        /* Digital Stories, Blog, Articles: titles use #e4dcd2 (override gradient-text) */
+        /* Digital Stories, Blog, Articles: titles use var(--text-color) (override gradient-text) */
         .hero-title,
         .hero-content {
             opacity: 1 !important; /* Full opacity for Digital Stories */
         }
         .hero-title {
-            color: #e4dcd2 !important;
+            color: var(--title-color) !important;
             display: none !important; /* Hidden on desktop and mobile */
         }
-        /* All Projects, Blog, Articles: use warm off-white #e4dcd2 (not white) */
+        /* All Projects, Blog, Articles: bold white titles (Aggro Crab–style) */
         #devlog .section-title,
         .articles-section .section-title,
         .projects-section .section-title,
@@ -22197,11 +22200,11 @@
             -webkit-background-clip: unset !important;
             -webkit-text-fill-color: unset !important;
             background-clip: unset !important;
-            color: #e4dcd2 !important;
+            color: var(--title-color) !important;
         }
         #devlog .section-subtitle,
         .articles-section .section-subtitle {
-            color: #e4dcd2 !important;
+            color: var(--text-color) !important;
         }
         
         /* Override any GSAP transforms */
@@ -22239,9 +22242,9 @@
             margin-bottom: 2rem;
         }
         .music-section .section-title {
-            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-size: clamp(1.35rem, 2.8vw, 1.65rem);
             font-weight: 900;
-            color: #e4dcd2;
+            color: var(--title-color);
             margin-bottom: 0.5rem;
         }
         .music-section-content {
@@ -22323,7 +22326,7 @@
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 900;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin-bottom: 1.5rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -22345,7 +22348,7 @@
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: clamp(1.4rem, 3.6vw, 1.8rem);
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin-top: 2.5rem;
             margin-bottom: 1rem;
         }
@@ -22353,14 +22356,14 @@
         /* Author name above the posted date */
         .youtube-project-author {
             text-align: center;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 0.25rem;
             font-size: 1rem;
         }
         .youtube-project-posted {
             text-align: center;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 1rem;
         }
@@ -22377,7 +22380,7 @@
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: clamp(1.05rem, 2.6vw, 1.35rem);
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
         }
@@ -22490,7 +22493,7 @@
         }
         .books-title {
             font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Match section-title size */
-            color: #e4dcd2;
+            color: var(--text-color);
             font-weight: 900; /* Match section-title weight */
             margin: 0;
             text-align: left;
@@ -22537,14 +22540,14 @@
         }
         /* Research title much smaller than Features/Articles */
         .research-section .section-title {
-            color: #e4dcd2;
+            color: var(--title-color);
             text-align: left;
-            font-size: 0.875rem; /* Much smaller than Features/Articles */
+            font-size: 1rem; /* Slightly larger for readability */
             font-weight: 700;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         .research-section .section-subtitle {
-            color: #e4dcd2;
+            color: var(--text-color);
             text-align: left;
             opacity: 0.85;
             margin-top: 0.5rem;
@@ -22565,7 +22568,7 @@
         .research-col-title {
             font-size: 0.9rem;
             font-weight: 700;
-            color: #e4dcd2;
+            color: var(--text-color);
             margin: 0 0 1rem 0;
             text-align: left;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
