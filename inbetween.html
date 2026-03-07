@@ -264,6 +264,21 @@
         }
         .md-content pre code { background: none; padding: 0; }
         .md-content .loading { color: rgba(228, 220, 210, 0.6); font-style: italic; }
+        /* Day articles: same folder as Events Timeline articles (list + blocks) */
+        .creation-process-days { max-width: 720px; margin: 0 auto; }
+        .days-list { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(228, 220, 210, 0.2); }
+        .days-list a { color: #e4dcd2; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        .days-list a:hover { text-decoration: underline; color: #fff; }
+        .day-article { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(228, 220, 210, 0.15); }
+        .day-article:last-child { border-bottom: none; }
+        .day-article .day-title { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.35rem; font-weight: 700; color: #e4dcd2; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .day-article .day-body { font-size: 1.0625rem; line-height: 1.8; color: #e4dcd2; }
+        .day-article .day-body p { margin-bottom: 1.25rem; }
+        .day-article .day-body h2, .day-article .day-body h3, .day-article .day-body h4 { margin-top: 1.25rem; margin-bottom: 0.5rem; color: #e4dcd2; font-weight: 700; }
+        .day-article .day-body ul, .day-article .day-body ol { margin: 1rem 0 1rem 1.5rem; padding-left: 1.5rem; }
+        .day-article .day-body li { margin-bottom: 0.35rem; }
+        .day-article .day-body a { color: #8a53f7; text-decoration: underline; text-underline-offset: 0.15em; }
+        .day-article .day-body code { background: rgba(228, 220, 210, 0.15); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.95em; }
         .visit-website-btn,
         .cta-youtube {
             background: rgba(228, 220, 210, 0.1);
@@ -549,7 +564,7 @@
             return html;
         }
 
-        // Load creation-process.md and render with inline parser
+        // Split creation-process.md by "# Day 1", "# Day 2", ... and render each as an article-like block
         (function() {
             var container = document.getElementById('creation-process-content');
             if (!container) return;
@@ -559,11 +574,37 @@
                     return r.text();
                 })
                 .then(function(md) {
-                    container.innerHTML = parseMarkdown(md);
+                    var raw = md.replace(/\r\n/g, '\n').trim();
+                    // Split at lines that start with "# Day " followed by digits (optional rest of line)
+                    var segments = raw.split(/\n(?=# Day \d+)/);
+                    var listHtml = '';
+                    var articlesHtml = '';
+                    for (var i = 0; i < segments.length; i++) {
+                        var seg = segments[i].trim();
+                        if (!seg) continue;
+                        var firstLineEnd = seg.indexOf('\n');
+                        var firstLine = firstLineEnd >= 0 ? seg.slice(0, firstLineEnd) : seg;
+                        var bodyRaw = firstLineEnd >= 0 ? seg.slice(firstLineEnd + 1).trim() : '';
+                        // First line is e.g. "# Day 1" or "# Day 1 06 March 2026" – use as title
+                        var title = firstLine.replace(/^#\s*/, '').trim();
+                        var dayNum = (i + 1);
+                        var slug = 'day-' + dayNum;
+                        listHtml += '<a href="#' + slug + '">' + escapeHtml(title) + '</a>';
+                        var bodyHtml = bodyRaw ? parseMarkdown(bodyRaw) : '<p class="loading">(No content yet.)</p>';
+                        articlesHtml += '<article class="day-article" id="' + slug + '"><h2 class="day-title">' + escapeHtml(title) + '</h2><div class="day-body">' + bodyHtml + '</div></article>';
+                    }
+                    if (!listHtml && !articlesHtml) {
+                        container.innerHTML = '<p class="loading">Add entries in <strong>creation-process.md</strong> using <code># Day 1</code>, <code># Day 2</code>, etc. Each heading starts a new article.</p>';
+                        return;
+                    }
+                    container.innerHTML = '<div class="creation-process-days"><nav class="days-list" aria-label="Days">' + listHtml + '</nav><div class="day-articles">' + articlesHtml + '</div></div>';
                 })
                 .catch(function() {
                     container.innerHTML = '<p class="loading">Place <strong>creation-process.md</strong> in the same folder as this page. It will be displayed here.</p>';
                 });
+            function escapeHtml(s) {
+                return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
         })();
 
         // Intersection Observer for photo animations
