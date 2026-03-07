@@ -177,23 +177,11 @@
     </header>
     <div class="scroll-wrapper">
         <main class="article-wrap">
-            <a href="index.html#articles" class="back-link" id="back-to-articles">← Back to Home</a>
             <div id="article-root">
             </div>
         </main>
     </div>
     <script>
-        // Back link: use history.back() when possible so index intro doesn't replay
-        (function() {
-            function goBackIfPossible(e) {
-                if (window.history.length > 1) {
-                    e.preventDefault();
-                    window.history.back();
-                }
-            }
-            document.getElementById('back-to-articles').addEventListener('click', goBackIfPossible);
-        })();
-        // Logo (IXLSTUDIO TIMELINE): always goes to index.html
         // Theme toggle: same key as inbetween (devlog-theme) so preference is shared
         (function() {
             var stored = localStorage.getItem('devlog-theme');
