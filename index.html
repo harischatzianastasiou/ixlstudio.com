@@ -31416,10 +31416,11 @@
                         var title = (a.title || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                         var excerpt = (a.excerpt || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                         var date = (a.date || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        var isTimeline = a.id.indexOf('creation-') === 0;
                         return '<a href="article.html?id=' + encodeURIComponent(a.id) + '" class="articles-list-item">' +
                             '<span class="item-title">' + title + '</span>' +
-                            (excerpt ? '<span class="item-excerpt">' + excerpt + '</span>' : '') +
-                            (date ? '<span class="item-date">' + date + '</span>' : '') +
+                            (!isTimeline && excerpt ? '<span class="item-excerpt">' + excerpt + '</span>' : '') +
+                            (!isTimeline && date ? '<span class="item-date">' + date + '</span>' : '') +
                             '</a>';
                     }).join('');
                 })

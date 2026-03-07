@@ -258,10 +258,12 @@
                             letterNav += '</nav>';
                         }
                     }
+                    // Events Timeline (creation-*) articles: no subtitle/date under title
+                    var showMeta = article.date && article.id.indexOf('creation-') !== 0;
                     root.innerHTML =
                         letterNav +
                         '<h1 class="article-title">' + escapeHtml(article.title) + '</h1>' +
-                        (article.date ? '<p class="article-meta">' + escapeHtml(article.date) + '</p>' : '') +
+                        (showMeta ? '<p class="article-meta">' + escapeHtml(article.date) + '</p>' : '') +
                         '<div class="article-body">' + article.content + '</div>';
                 })
                 .catch(function() {
