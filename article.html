@@ -231,27 +231,30 @@
                         return;
                     }
                     document.title = article.title + ' — IXLSTUDIO';
-                    // Build prev/next letter links if this is part of the "letter from the creator" series (id = letter-from-the-creator-N)
+                    // Build prev/next links for multi-part series: "letter from the creator" (letter-from-the-creator-N) or "creation process" (creation-N-...)
                     var letterNav = '';
-                    var match = article.id.match(/^letter-from-the-creator-(\d+)$/);
-                    if (match) {
-                        var num = parseInt(match[1], 10);
+                    var letterMatch = article.id.match(/^letter-from-the-creator-(\d+)$/);
+                    var creationMatch = article.id.match(/^creation-(\d+)-/);
+                    if (letterMatch) {
+                        var num = parseInt(letterMatch[1], 10);
                         var prevId = num > 0 ? 'letter-from-the-creator-' + (num - 1) : null;
                         var nextId = 'letter-from-the-creator-' + (num + 1);
                         var prevArticle = prevId ? articles.find(function(a) { return a.id === prevId; }) : null;
                         var nextArticle = articles.find(function(a) { return a.id === nextId; });
                         if (prevArticle || nextArticle) {
                             letterNav = '<nav class="letter-nav" aria-label="Letter navigation">';
-                            if (prevArticle) {
-                                letterNav += '<a href="article.html?id=' + encodeURIComponent(prevArticle.id) + '" class="letter-prev">← Previous letter</a>';
-                            } else {
-                                letterNav += '<span></span>';
-                            }
-                            if (nextArticle) {
-                                letterNav += '<a href="article.html?id=' + encodeURIComponent(nextArticle.id) + '" class="letter-next">Next letter →</a>';
-                            } else {
-                                letterNav += '<span></span>';
-                            }
+                            letterNav += prevArticle ? '<a href="article.html?id=' + encodeURIComponent(prevArticle.id) + '" class="letter-prev">← Previous letter</a>' : '<span></span>';
+                            letterNav += nextArticle ? '<a href="article.html?id=' + encodeURIComponent(nextArticle.id) + '" class="letter-next">Next letter →</a>' : '<span></span>';
+                            letterNav += '</nav>';
+                        }
+                    } else if (creationMatch) {
+                        var num = parseInt(creationMatch[1], 10);
+                        var prevArticle = articles.find(function(a) { var m = a.id.match(/^creation-(\d+)-/); return m && parseInt(m[1], 10) === num - 1; });
+                        var nextArticle = articles.find(function(a) { var m = a.id.match(/^creation-(\d+)-/); return m && parseInt(m[1], 10) === num + 1; });
+                        if (prevArticle || nextArticle) {
+                            letterNav = '<nav class="letter-nav" aria-label="Creation process navigation">';
+                            letterNav += prevArticle ? '<a href="article.html?id=' + encodeURIComponent(prevArticle.id) + '" class="letter-prev">← Previous</a>' : '<span></span>';
+                            letterNav += nextArticle ? '<a href="article.html?id=' + encodeURIComponent(nextArticle.id) + '" class="letter-next">Next →</a>' : '<span></span>';
                             letterNav += '</nav>';
                         }
                     }
