@@ -22291,9 +22291,26 @@
             width: 100%;
         }
         /* Black panel only from title down to "Should we start" (links line stays outside) */
+        .youtube-section-panels {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* Space between each black panel */
+        }
+        .youtube-section-panels .youtube-section-black-panel:first-child .youtube-project-title {
+            margin-top: 0; /* No extra top margin inside first panel */
+        }
         .youtube-section-black-panel {
             background: #0a0a0a;
             padding: 2rem 1.5rem;
+            max-width: 640px;   /* Limit panel width so text never gets too long */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* Extra space above Sections Overview panel so it sits further down */
+        .hero .hero-things-content .youtube-section-panels .youtube-section-black-panel:nth-child(2) {
+            margin-top: 4.5rem;
         }
         /* Things you need to know: when inside hero, sit above background; consistent alignment */
         .hero .hero-things-content,
@@ -22307,6 +22324,47 @@
             padding: 2rem 0;
             flex: 0 1 auto; /* Don't grow/shrink unexpectedly in flex hero */
             box-sizing: border-box; /* Padding included in width so alignment stays fixed */
+        }
+        /* Manifesto: only title, author and posted date centered; rest left */
+        .hero .hero-things-content .youtube-project-title {
+            text-align: center;
+            font-size: clamp(1.85rem, 5vw, 2.85rem); /* Bigger than default for manifesto */
+        }
+        .hero .hero-things-content .youtube-project-author,
+        .hero .hero-things-content .youtube-project-posted {
+            text-align: center;
+        }
+        .hero .hero-things-content .youtube-project-subtitle {
+            text-align: center;
+        }
+        .hero .hero-things-content .youtube-project-description,
+        .hero .hero-things-content .youtube-project-description p,
+        .hero .hero-things-content .quote-question {
+            text-align: center;
+        }
+        .hero .hero-things-content .youtube-project-description {
+            line-height: 1.85;
+            font-size: 1.1rem;
+        }
+        .hero .hero-things-content .youtube-project-description p {
+            margin-bottom: 1.5rem;
+        }
+        /* Sections Overview: list centered, arrows inline */
+        .hero-things-content .manifesto-overview-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 1rem 0;
+            text-align: center;
+        }
+        .hero-things-content .manifesto-overview-list li {
+            margin-bottom: 0.85rem;
+            padding-left: 0;
+            line-height: 1.8;
+        }
+        .hero-things-content .manifesto-overview-list li::before {
+            content: "→ ";
+            color: rgba(168, 117, 255, 0.8);
+            font-weight: bold;
         }
 
         /* YouTube Embed */
@@ -22328,7 +22386,7 @@
             margin-top: 4rem;
             text-align: center;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(1.5rem, 3.5vw, 2.25rem); /* Smaller title */
             font-weight: 900;
             color: var(--text-color);
             margin-bottom: 1.5rem;
@@ -22340,12 +22398,20 @@
             text-align: center;
             font-family: 'Lora', Georgia, 'Times New Roman', serif;
             font-size: 1.05rem;
-            line-height: 1.75;
             color: rgba(228, 220, 210, 0.8);
-            max-width: 650px;
+            max-width: 65ch;   /* Optimal line length for reading (~65 characters) */
+            width: 100%;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        .youtube-project-description p {
+            margin-bottom: 1.4rem;   /* ~22px – space between paragraphs */
+            line-height: 1.75;
+        }
+        .youtube-project-description p:last-child {
+            margin-bottom: 0;
         }
         .youtube-project-subtitle {
             text-align: center;
@@ -22353,8 +22419,21 @@
             font-size: clamp(1.4rem, 3.6vw, 1.8rem);
             font-weight: 700;
             color: var(--text-color);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
+            margin-top: 3.5rem;   /* 60px – clear gap above each section title */
+            margin-bottom: 1.5rem; /* 25px – space below title before text */
+        }
+        .youtube-section-black-panel > .youtube-project-subtitle:first-of-type {
+            margin-top: 1.5rem;   /* Smaller gap above first section ("Previously") */
+        }
+        .quote-question {
+            font-style: italic;
+            text-align: center;
+            margin: 2.25rem 0;  /* 35px – visual anchor around the question */
+            opacity: 0.95;
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
+            font-size: 1.1rem;
+            color: rgba(228, 220, 210, 0.9);
+            line-height: 1.7;
         }
         /* Posted date under subtitle: centred, same colour as title */
         /* Author name above the posted date */
@@ -22830,9 +22909,10 @@
                     </div>
                 </div>
                 <br>
-                <p class="agency-description agency-tagline"> Creating things and documenting the process.</p>
 
                 <audio id="agencyAudioPlayer"></audio>
+                <p class="agency-sub-description">Creating things and documenting the process.</p>
+                <!-- Announcement: active project + JOURNAL/YouTube follow CTA -->
                 <p class="youtube-section-links-center"><strong><em>Active Project : Make a Game</em></strong> <br><br><br>Follow on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a> YouTube.</p>
 
 
@@ -23068,58 +23148,53 @@
 
         
 
-                    <!-- Things you need to know: in hero -->
+                    <!-- Manifesto: "Things you need to know" – Previously / Now / Purpose / Sections Overview -->
                     <div id="youtube-section" class="youtube-section-content hero-things-content">
 
+        <div class="youtube-section-panels">
         <div class="youtube-section-black-panel">
-        <h3 class="youtube-project-title">A Public Experiment On Creation</h3>
+        <h3 class="youtube-project-title">A Public Experiment On Creation And Self Observation</h3>
         <p class="youtube-project-author">Haris Chatzianastasiou</p>
         <p class="youtube-project-posted">Posted on March 4, 2026</p>
         
         <h4 class="youtube-project-subtitle">Previously</h4>
-        <p class="youtube-project-description">
-             Hi, my name is Haris. As of now, I have created a chess application, SKGCHESS.
-        </p>
+        <div class="youtube-project-description">
+        <p>Hi, my name is Haris. As of now, I have created a chess application, SKGCHESS.</p>
+        </div>
         
         <h4 class="youtube-project-subtitle">Now</h4>
-        <p class="youtube-project-description">
-            After developing Skgchess, and after months of searching, experimenting with art, and even writing a story, I realized there are <em>things</em> I want to express that a game is the right medium for.       
-            <br><br>
-            So, I decided to make a game. 
-            <br><br>
-            Moreover, to share these <em>things</em>, without waiting for the final result, I decided to document publicly the process of creating it.
-            <br><br>
-            And I will do so, starting from the very beginning, so that anyone in the future who is starting from scratch can benefit from my experience.
-            <br><br>
-            You can find this attempt in the <strong>JOURNAL</strong>.
-            <br><br>
-            <h4 class="youtube-project-subtitle">This site's purpose</h4>
-            <p class="youtube-project-description">
-                To be more specific, in the JOURNAL, I would like to document the creation process itself.
-                <br><br>
-                <em>Why should someone create? What is the thought process behind it?</em>
-                <br><br>
-                I want to capture everything involved, detailing how the project will eventually evolve into something I resonate with, and including all the overlooked aspects along the way.
-                <br><br>
-                This is the general idea of this site. 
-                <br><br>
-                It is a place where I document my story, as seen through creating, hoping to provide a personal perspective on processing <em>things</em>. I would like this documentation to have educational value, not only in terms of technical aspects but, more importantly, in showcasing a person's efforts to express their thoughts and, above all, to connect with others.
-                </p>
-                <h4 class="youtube-project-subtitle">Sections Overview</h4>
-                <p class="youtube-project-description">
-                To read my story up until now, you can go to the <strong>TIMELINE</strong>.
-                <br><br>
-                To explore the technical development of the previous project you can visit the <em>skgchess</em> in <strong></strong>FEATURES</strong>.
-                <br><br>
-                To read about the current project, you may go directly to the <strong></strong>JOURNAL</strong>.
-                <br><br>
-                <em>Note that for the current project, there will also be YouTube videos, although more compact and focused on the technical aspects than the JOURNAL.</em>
-                <br><br>
-                In the RESEARCH section, you can find sources that have influenced me in a way.
-                <br><br>
-                Finally, you can find the MOODBOARD where I have active's project inspiration, mainly music.
-                </p>
-            </div>
+        <div class="youtube-project-description">
+        <p>After developing Skgchess, and after months of personal exploration, I realized there are <em>things</em> I want to talk about, and a game is the right medium to do so. Thus, I am announcing here that I will attempt to make one.
+        <p>Additionally, rather than waiting for the final result to express these <em>things</em>, I will attempt to document the entire process publicly. 
+        I will start from the very beginning, so that anyone in the future who is, like me, starting from scratch can have a reference point.</p>
+        <p></p>You can find this attempt in the <strong>JOURNAL</strong>.</p>
+        </div>
+        
+        <h4 class="youtube-project-subtitle">Purpose of this site</h4>
+        <div class="youtube-project-description">
+        <p>To be more specific, in the JOURNAL I would like to document the creation process itself.</p>
+        <p class="quote-question">Why should someone create? What is the thought process behind it?
+        I want to capture everything involved: how the project gradually evolves into something I truly resonate with, as well as the many overlooked aspects along the way.</p>
+        <p>This is the general idea behind this site.
+        <p>My goal is to provide educational value, not only in technical terms, but more importantly in showing a person's effort to constantly explore, express their thoughts, find meaning in them, and connect with others by sharing them openly.
+        </div>
+        </div>
+
+        <div class="youtube-section-black-panel">
+        <h4 class="youtube-project-subtitle">Sections Overview</h4>
+        <div class="youtube-project-description">
+        <ul class="manifesto-overview-list" aria-label="Site sections">
+        <p>This place also serves as a personal archive, describing my journey through the act of creating projects, each one with its own story that leads to the next.</p>
+        <p>To read my story up until now and understand what led here, you can go to the <strong>TIMELINE</strong>.</p>
+        <p>To explore the development of the previous project, you can visit <strong>FEATURES</strong>.</p>
+        <p>To read about the current project, you may go directly to the <strong>JOURNAL</strong>.</p>
+        <p>In the <strong>RESEARCH</strong> section you can find sources that have influenced me in some way.</p>
+        <p>Finally, you can visit the <strong>MOODBOARD</strong>, where I collect inspiration for the current project, mainly music.</p>
+        
+        <p><em>Note that for the current project there will also be YouTube videos, although they will be more compact and focused on technical aspects than the JOURNAL.</em></p>
+        </div>
+        </div>
+        </div>
 
                     </div>
 
