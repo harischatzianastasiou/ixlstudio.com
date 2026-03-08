@@ -26,7 +26,7 @@
         /* Body does not scroll – keeps mobile address bar visible (Chrome/Safari); bg from picker */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--page-bg, #1a1a1a);
+            background-color: var(--page-bg, #312d11);
             color: #e4dcd2;
             line-height: 1.6;
             height: 100%;
@@ -105,7 +105,7 @@
         .hero {
             min-height: 100vh;
             position: relative;
-            background: var(--page-bg, #1a1a1a);
+            background: var(--page-bg, #312d11);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -269,7 +269,7 @@
         .main-wrapper {
             position: relative;
             z-index: 1;
-            background: var(--page-bg, #1a1a1a);
+            background: var(--page-bg, #312d11);
         }
 
         /* Large photos section - transparent, white text */
@@ -440,7 +440,7 @@
         <div class="header-controls">
             <div class="bg-bar" role="group" aria-label="Page background color">
                 <span class="bg-bar-label">Background</span>
-                <input type="color" id="bgColorPicker" class="bg-color-picker" value="#1a1a1a" title="Choose page background color" aria-label="Page background color">
+                <input type="color" id="bgColorPicker" class="bg-color-picker" value="#312d11" title="Choose page background color" aria-label="Page background color">
             </div>
         </div>
     </header>
@@ -519,7 +519,7 @@
         });
         // Color picker: same key as article/inbetween so preference is shared
         (function() {
-            var key = 'devlog-bg';
+            var key = 'skgchess-bg';
             var picker = document.getElementById('bgColorPicker');
             if (!picker) return;
             var saved = localStorage.getItem(key);

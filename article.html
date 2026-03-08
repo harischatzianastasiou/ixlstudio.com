@@ -14,7 +14,7 @@
         /* Page background from CSS variable so the bar can change it; default gray */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--page-bg, #1a1a1a);
+            background-color: var(--page-bg, #291131);
             color: #e4dcd2;
             line-height: 1.7;
             height: 100%;
@@ -226,7 +226,7 @@
         <div class="header-controls">
             <div class="bg-bar" role="group" aria-label="Page background color">
                 <span class="bg-bar-label">Background</span>
-                <input type="color" id="bgColorPicker" class="bg-color-picker" value="#1a1a1a" title="Choose page background color" aria-label="Page background color">
+                <input type="color" id="bgColorPicker" class="bg-color-picker" value="#291131" title="Choose page background color" aria-label="Page background color">
             </div>
         </div>
     </header>
@@ -239,7 +239,7 @@
     <script>
         // Color picker: whatever color you choose becomes the page background; saved in localStorage
         (function() {
-            var key = 'devlog-bg';
+            var key = 'article-bg';
             var picker = document.getElementById('bgColorPicker');
             if (!picker) return;
             var saved = localStorage.getItem(key);
