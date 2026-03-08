@@ -30,7 +30,6 @@
     
     <!-- Preload: high priority for LCP (loader logo); low for below-fold to avoid contention -->
     <link rel="preload" as="image" href="hc.png" fetchpriority="high">
-    <link rel="preload" as="video" href="hero-bg.mp4">
     <link rel="preload" as="image" href="priest.png">
     <link rel="preload" as="image" href="book-theory-of-fun.jpg" fetchpriority="low">
     <link rel="preload" as="image" href="skgchess.png" fetchpriority="low">
@@ -5383,7 +5382,7 @@
             box-sizing: border-box;
         }
 
-        /* Full-page background video (fixed, behind entire page) */
+        /* Full-page background (fixed, behind entire page); color from picker */
         .page-bg-video-wrap {
             position: fixed;
             top: 0;
@@ -5391,12 +5390,7 @@
             right: 0;
             bottom: 0;
             z-index: 0;
-            background: #1a1a1a;
-        }
-        .agency-bg-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: var(--page-bg, #831192);
         }
         .agency-video-overlay {
             position: absolute;
@@ -5406,6 +5400,21 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.62); /* Same dark overlay on desktop and mobile – video stays same before/after loader, no “filter” after 1s */
             z-index: 1;
+        }
+        /* Header: background color picker */
+        .header .bg-bar { display: flex; align-items: center; gap: 0.5rem; }
+        .header .bg-bar-label { font-size: 0.7rem; color: rgba(255,255,255,0.6); white-space: nowrap; }
+        .header .bg-color-picker {
+            width: 28px; height: 28px; padding: 0;
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;
+            cursor: pointer; background: transparent;
+        }
+        .header .bg-color-picker::-webkit-color-swatch-wrapper { padding: 1px; }
+        .header .bg-color-picker::-webkit-color-swatch { border: none; border-radius: 3px; }
+        .header .bg-color-picker::-moz-color-swatch { border: none; border-radius: 3px; }
+        @media (max-width: 768px) {
+            .header .bg-bar-label { display: none; }
+            .header .bg-color-picker { width: 24px; height: 24px; }
         }
         /* Vertical "Follow on YouTube" on the left – ref style */
         .agency-get-in-touch {
@@ -22786,8 +22795,6 @@
 
     <div class="page-bg-video-wrap">
 
-        <video class="agency-bg-video" autoplay muted loop playsinline preload="auto" id="agencyBgVideo" src="hero-bg.mp4"></video>
-
         <div class="agency-video-overlay"></div>
 
     </div>
@@ -22859,7 +22866,9 @@
 
         </nav>
 
-
+        <div class="bg-bar" role="group" aria-label="Page background color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#831192" title="Choose page background color" aria-label="Page background color">
+        </div>
 
     </header>
 
@@ -22929,7 +22938,7 @@
                 <audio id="agencyAudioPlayer"></audio>
                 <p class="agency-sub-description">Creating things and documenting the process.</p>
                 <!-- Announcement: active project + JOURNAL/YouTube follow CTA -->
-                <p class="youtube-section-links-center"><strong><em>Active Project : Make a Game</em></strong> <br><br><br>Follow on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a> YouTube.</p>
+                <p class="youtube-section-links-center"><strong>Active Project : Make a Game</strong> <br><br><br>Follow on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a> YouTube.</p>
 
 
 
@@ -24283,9 +24292,20 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
-
-
-
+            // Background color picker for index page (stored separately as index-bg)
+            (function() {
+                var key = 'index-bg';
+                var picker = document.getElementById('indexBgColorPicker');
+                if (!picker) return;
+                var saved = localStorage.getItem(key);
+                function setBg(hex) {
+                    document.documentElement.style.setProperty('--page-bg', hex);
+                    picker.value = hex;
+                    localStorage.setItem(key, hex);
+                }
+                if (saved) setBg(saved);
+                picker.addEventListener('input', function() { setBg(picker.value); });
+            })();
 
             // Force header to stay transparent (at top and when scrolled)
 
@@ -24303,38 +24323,6 @@
 
                 headerEl.style.webkitBackdropFilter = 'none';
 
-            }
-
-            // Force hero background video to play (browsers often block autoplay until muted is set in JS)
-            const agencyVideo = document.getElementById('agencyBgVideo') || document.querySelector('.agency-bg-video');
-            if (agencyVideo) {
-                agencyVideo.muted = true;
-                agencyVideo.playsInline = true;
-                agencyVideo.playbackRate = 0.5; // half speed for calmer background
-                agencyVideo.play().catch(function() {});
-                // If autoplay was blocked, start video on first click anywhere
-                function startVideoOnce() {
-                    agencyVideo.play().catch(function() {});
-                    document.removeEventListener('click', startVideoOnce);
-                    document.removeEventListener('touchstart', startVideoOnce);
-                }
-                document.addEventListener('click', startVideoOnce, { once: true });
-                document.addEventListener('touchstart', startVideoOnce, { once: true });
-
-                // On mobile: pause background video when "Things you should know" section is in view
-                var youtubeSection = document.getElementById('youtube-section');
-                if (youtubeSection && window.matchMedia('(max-width: 768px)').matches) {
-                    var videoObserver = new IntersectionObserver(function(entries) {
-                        entries.forEach(function(entry) {
-                            if (entry.isIntersecting) {
-                                agencyVideo.pause();
-                            } else {
-                                agencyVideo.play().catch(function() {});
-                            }
-                        });
-                    }, { root: null, rootMargin: '0px', threshold: 0.2 });
-                    videoObserver.observe(youtubeSection);
-                }
             }
 
             // Fix for scroll visibility issue - ensure content is visible when page loads at any scroll position
@@ -24440,39 +24428,17 @@
 
             const videoElements = document.querySelectorAll('video');
 
-
-
             videoElements.forEach(video => {
-
-
-
-                // Check if video has MP4 source
-
-
 
                 const mp4Source = video.querySelector('source[src*=".mp4"]');
 
-
-
                 if (mp4Source) {
-
-
-
-                    // Remove the video element entirely to prevent loading
-
-
 
                     video.parentElement.removeChild(video);
 
-
-
                     console.log('Removed MP4 video for better performance');
 
-
-
                 }
-
-
 
             });
 
