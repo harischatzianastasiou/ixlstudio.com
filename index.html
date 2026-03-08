@@ -22172,6 +22172,10 @@
 
 
 
+        /* Gap after Timeline (last article) and before Features title */
+        #devlog {
+            margin-top: 4rem;
+        }
         /* FINAL OVERRIDE: Articles section completely static - no animations whatsoever */
         #devlog .section-header,
         #devlog .section-subtitle,
@@ -31126,14 +31130,6 @@
 
                 });
 
-                // Add Other Work card after articles
-                const otherWorkCard = document.createElement('a');
-                otherWorkCard.href = 'https://www.linkedin.com/in/haris-chatzianastasiou-084783212/';
-                otherWorkCard.target = '_blank';
-                otherWorkCard.className = 'other-work-card';
-                otherWorkCard.innerHTML = '<div class="other-work-label-wrap"><div class="other-work-label">Engineering Background</div></div><div class="other-work-meta"><span class="other-work-read-time">Click to read</span></div>';
-                this.articlesGrid.appendChild(otherWorkCard);
-
 
 
                 
@@ -31422,14 +31418,18 @@
         });
 
         // Load standalone articles list from articles.json (click opens article.html?id=slug)
+        // First item: Engineering Background (same size as other timeline articles), then months from JSON
         document.addEventListener('DOMContentLoaded', function() {
             var root = document.getElementById('articlesListRoot');
             if (!root) return;
+            var engineeringItem = '<a href="https://www.linkedin.com/in/haris-chatzianastasiou-084783212/" target="_blank" rel="noopener noreferrer" class="articles-list-item">' +
+                '<span class="item-title">Engineering Background</span>' +
+                '</a>';
             fetch('articles.json')
                 .then(function(res) { return res.ok ? res.json() : Promise.reject(); })
                 .then(function(articles) {
-                    if (!Array.isArray(articles) || articles.length === 0) return;
-                    root.innerHTML = articles.map(function(a) {
+                    if (!Array.isArray(articles)) articles = [];
+                    var listHtml = articles.map(function(a) {
                         var title = (a.title || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                         var excerpt = (a.excerpt || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                         var date = (a.date || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -31440,8 +31440,9 @@
                             (!isTimeline && date ? '<span class="item-date">' + date + '</span>' : '') +
                             '</a>';
                     }).join('');
+                    root.innerHTML = engineeringItem + listHtml;
                 })
-                .catch(function() {});
+                .catch(function() { root.innerHTML = engineeringItem; });
         });
 
 
