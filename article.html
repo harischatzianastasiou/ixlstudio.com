@@ -14,7 +14,7 @@
         /* Page background from CSS variable so the bar can change it; default gray */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--article-bg, #1a1a1a);
+            background-color: var(--page-bg, #1a1a1a);
             color: #e4dcd2;
             line-height: 1.7;
             height: 100%;
@@ -82,20 +82,7 @@
             transition: color 0.3s ease;
         }
         .nav-menu a:hover { color: rgba(255, 255, 255, 0.7); }
-        .theme-toggle {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .theme-toggle:hover {
-            background: rgba(255,255,255,0.25);
-        }
-        /* Background color picker next to theme toggle */
+        /* Background color picker in header */
         .header-controls {
             display: flex;
             align-items: center;
@@ -241,7 +228,6 @@
                 <span class="bg-bar-label">Background</span>
                 <input type="color" id="bgColorPicker" class="bg-color-picker" value="#1a1a1a" title="Choose page background color" aria-label="Page background color">
             </div>
-            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
     <div class="scroll-wrapper">
@@ -251,21 +237,6 @@
         </main>
     </div>
     <script>
-        // Theme toggle: same key as inbetween (devlog-theme) so preference is shared
-        (function() {
-            var stored = localStorage.getItem('devlog-theme');
-            if (stored === 'dark') document.body.classList.add('dark-mode');
-            var btn = document.getElementById('themeToggle');
-            if (btn) {
-                btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
-                btn.addEventListener('click', function() {
-                    document.body.classList.toggle('dark-mode');
-                    var isDark = document.body.classList.contains('dark-mode');
-                    btn.textContent = isDark ? 'Light' : 'Dark';
-                    localStorage.setItem('devlog-theme', isDark ? 'dark' : 'light');
-                });
-            }
-        })();
         // Color picker: whatever color you choose becomes the page background; saved in localStorage
         (function() {
             var key = 'devlog-bg';
@@ -273,7 +244,7 @@
             if (!picker) return;
             var saved = localStorage.getItem(key);
             function setBg(hex) {
-                document.body.style.setProperty('--article-bg', hex);
+                document.documentElement.style.setProperty('--page-bg', hex);
                 picker.value = hex;
                 localStorage.setItem(key, hex);
             }
