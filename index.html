@@ -12736,18 +12736,34 @@
         }
         .articles-list-item {
             display: block;
-            padding: 1.25rem;
+            padding: 1.25rem 1.25rem 1.25rem 1.5rem; /* extra left for accent border */
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0;
             color: var(--text-color);
             text-decoration: none;
-            transition: background 0.2s ease, border-color 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        /* Alternating card backgrounds for a softer, more varied look */
+        #articles .articles-list-item:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid rgba(168, 117, 255, 0.45);
+        }
+        #articles .articles-list-item:nth-child(even) {
+            background: rgba(168, 117, 255, 0.04);
+            border-left: 3px solid rgba(120, 200, 200, 0.4);
+        }
+        #articles .articles-list-item:nth-child(3n) {
+            background: rgba(255, 255, 255, 0.055);
+            border-left: 3px solid rgba(220, 180, 120, 0.35);
         }
         .articles-list-item:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
+        }
+        #articles .articles-list-item:hover {
+            border-left-width: 3px;
         }
         .articles-list-item .item-title { font-weight: 600; font-size: 1.15rem; margin-bottom: 0.35rem; display: block; }
         .articles-list-item .item-excerpt { font-size: 0.95rem; opacity: 0.9; line-height: 1.5; display: block; margin-top: 0.5rem; }
@@ -23176,7 +23192,7 @@
         <p class="quote-question">Why should someone create? What is the thought process behind it?
         I want to capture everything involved: how the project gradually evolves into something I truly resonate with, as well as the many overlooked aspects along the way.</p>
         <p>This is the general idea behind this site.</p>
-        <p>My goal is not only to share technical knowledge, but to document the effort of a person exploring their thoughts, find meaning in them, and sharing them openly in order to connect with others.
+        <p>My goal is not only to share technical knowledge, but to document the effort of a person exploring their thoughts, finding meaning in them, and sharing them openly in order to connect with others.
             <p>All while approaching the process with the understanding that it is meant to be a learning experience for others as well.</p>
         </div>        </div>
 
