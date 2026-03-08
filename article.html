@@ -11,10 +11,10 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { color-scheme: light; height: 100%; }
-        /* Body does not scroll – keeps mobile address bar visible (Chrome/Safari) */
+        /* Page background from CSS variable so the bar can change it; default gray */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #1a1a1a;
+            background-color: var(--article-bg, #1a1a1a);
             color: #e4dcd2;
             line-height: 1.7;
             height: 100%;
@@ -95,10 +95,44 @@
         .theme-toggle:hover {
             background: rgba(255,255,255,0.25);
         }
+        /* Bar of background color swatches next to theme toggle */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .bg-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .bg-bar-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-right: 0.25rem;
+        }
+        .bg-swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.2s ease;
+        }
+        .bg-swatch:hover {
+            transform: scale(1.15);
+            border-color: rgba(255,255,255,0.6);
+        }
+        .bg-swatch.active {
+            border-color: #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+        }
         @media (max-width: 768px) {
             .header { padding: 1rem 2rem; height: 70px; }
             .logo { font-size: 1rem; }
             .logo-subtitle { font-size: 0.7rem; margin-top: 0.1rem; }
+            .bg-bar-label { display: none; }
+            .bg-swatch { width: 18px; height: 18px; }
         }
         @media (max-width: 480px) {
             .header { padding: 0.8rem 1rem; height: 60px; }
@@ -207,7 +241,18 @@
             <span class="logo">IXLSTUDIO</span>
             <span class="logo-subtitle">TIMELINE</span>
         </a>
-        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+        <div class="header-controls">
+            <div class="bg-bar" role="group" aria-label="Page background color">
+                <span class="bg-bar-label">Background</span>
+                <button type="button" class="bg-swatch active" data-bg="#1a1a1a" title="Gray" aria-label="Gray background"></button>
+                <button type="button" class="bg-swatch" data-bg="#0d0d0d" title="Near black" aria-label="Near black background"></button>
+                <button type="button" class="bg-swatch" data-bg="#1f1a18" title="Warm dark" aria-label="Warm dark background"></button>
+                <button type="button" class="bg-swatch" data-bg="#151a1f" title="Cool dark" aria-label="Cool dark background"></button>
+                <button type="button" class="bg-swatch" data-bg="#1a1518" title="Soft purple" aria-label="Soft purple tint background"></button>
+                <button type="button" class="bg-swatch" data-bg="#1c1917" title="Warm brown" aria-label="Warm brown background"></button>
+            </div>
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+        </div>
     </header>
     <div class="scroll-wrapper">
         <main class="article-wrap">
@@ -230,6 +275,25 @@
                     localStorage.setItem('devlog-theme', isDark ? 'dark' : 'light');
                 });
             }
+        })();
+        // Background color bar: apply choice to body and persist in localStorage
+        (function() {
+            var key = 'devlog-bg';
+            var swatches = document.querySelectorAll('.bg-swatch');
+            var saved = localStorage.getItem(key);
+            function setBg(hex) {
+                document.body.style.setProperty('--article-bg', hex);
+                swatches.forEach(function(s) {
+                    s.classList.toggle('active', s.getAttribute('data-bg') === hex);
+                });
+                localStorage.setItem(key, hex);
+            }
+            if (saved) setBg(saved);
+            swatches.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    setBg(btn.getAttribute('data-bg'));
+                });
+            });
         })();
         // Read article id from URL (?id=slug or #slug)
         function getArticleId() {
