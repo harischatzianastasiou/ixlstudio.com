@@ -134,7 +134,28 @@
         .article-body {
             font-size: 1.05rem;
         }
-        .article-body p { margin-bottom: 1.25rem; }
+        .article-body p {
+            margin-bottom: 1.25rem;
+            padding: 1rem 1rem 1rem 1.35rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+        /* Paragraph blocks: subtle tint + left accent in 3-color cycle (matches timeline cards) */
+        .article-body p:nth-of-type(3n+1) {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid rgba(168, 117, 255, 0.45);
+        }
+        .article-body p:nth-of-type(3n+2) {
+            background: rgba(168, 117, 255, 0.03);
+            border-left: 3px solid rgba(120, 200, 200, 0.4);
+        }
+        .article-body p:nth-of-type(3n) {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 3px solid rgba(220, 180, 120, 0.35);
+        }
+        .article-body p:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
         .article-body a { color: #e4dcd2; text-decoration: underline; }
         .article-body a:hover { color: #fff; }
         .article-body code {
@@ -142,9 +163,22 @@
             padding: 0.15em 0.4em;
             font-size: 0.9em;
         }
-        .article-body h2 { font-size: 1.35rem; margin: 2rem 0 0.75rem; color: #e4dcd2; }
-        .article-body h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
-        .article-body ul, .article-body ol { margin: 1rem 0 1rem 1.5rem; }
+        .article-body h2 {
+            font-size: 1.35rem;
+            margin: 2rem 0 0.75rem;
+            color: #e4dcd2;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(168, 117, 255, 0.2);
+        }
+        .article-body h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; color: rgba(228, 220, 210, 0.95); }
+        .article-body h4 { color: rgba(228, 220, 210, 0.9); }
+        .article-body ul, .article-body ol {
+            margin: 1rem 0 1rem 1.5rem;
+            padding: 1rem 1rem 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid rgba(120, 200, 200, 0.35);
+            border-radius: 4px;
+        }
         .article-body li { margin-bottom: 0.4rem; }
         .article-body hr { margin: 2rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.2); }
         /* Prev/next letter navigation for multi-part story */
