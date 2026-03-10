@@ -20,6 +20,11 @@
 
     <title>ixlstudio</title>
 
+    <!-- Apply saved background color before first paint to avoid flash of default -->
+    <script>
+    (function(){var s=localStorage.getItem('index-bg');if(s)document.documentElement.style.setProperty('--page-bg',s);})();
+    </script>
+
 
 
     <!-- Favicon: use square cropped version so logo reads clearly at small sizes -->
@@ -5401,8 +5406,14 @@
             background: rgba(0, 0, 0, 0.62); /* Same dark overlay on desktop and mobile – video stays same before/after loader, no “filter” after 1s */
             z-index: 1;
         }
-        /* Header: background color picker */
-        .header .bg-bar { display: flex; align-items: center; gap: 0.5rem; }
+        /* Header: logo and color picker grouped so picker sits exactly next to logo (mobile + desktop) */
+        .header-logo-and-picker {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .header .bg-bar { display: flex; align-items: center; gap: 0.5rem; opacity: 0; transition: opacity 0.15s ease; }
+        .header .bg-bar.bg-bar-ready { opacity: 1; }
         .header .bg-bar-label { font-size: 0.7rem; color: rgba(255,255,255,0.6); white-space: nowrap; }
         .header .bg-color-picker {
             width: 28px; height: 28px; padding: 0;
@@ -22809,21 +22820,16 @@
 
 
 
-        <div class="logo-container">
-
-
-
-            <a href="index.html" class="logo">
-                <span class="logo-img-wrap"><img src="hc.png" alt="IXL Studio Logo" class="logo-image" width="120" height="40"></span>
-            </a>
-
-
-
+        <div class="header-logo-and-picker">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <span class="logo-img-wrap"><img src="hc.png" alt="IXL Studio Logo" class="logo-image" width="120" height="40"></span>
+                </a>
+            </div>
+            <div class="bg-bar" role="group" aria-label="Page background color">
+                <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#C65D5D" title="Choose page background color" aria-label="Page background color">
+            </div>
         </div>
-
-
-
-
 
         <nav>
 
@@ -22865,10 +22871,6 @@
 
 
         </nav>
-
-        <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#C65D5D" title="Choose page background color" aria-label="Page background color">
-        </div>
 
     </header>
 
@@ -23184,40 +23186,38 @@
         
         <h4 class="youtube-project-subtitle">Previously</h4>
         <div class="youtube-project-description">
-        <p>Hi, my name is Haris. As of now, I have created a chess application, SKGCHESS.</p>
+        <p>As of now, I have created a chess application, SKGCHESS.</p>
         </div>
-        
         <h4 class="youtube-project-subtitle">Now</h4>
         <div class="youtube-project-description">
-        <p>After creating SKGCHESS, I spent several months exploring what I wanted to do next. </p>
-        <p>I realized there are <em>things</em> I want to talk about, and a game feels like the right medium to convey them.</p>
+        <p>After creating SKGCHESS, and after months of personal exploration, I realized there are <em>things</em> I want to express, and a game feels like the right medium to do so.</p>
         <p>So, I decided to attempt to make one.</p>
-        <p>And rather than waiting for the final result to express these <em>things</em>, I will attempt to document the entire process publicly.</p>
-        <p>I will start from the very beginning, so that anyone in the future who is, like me, starting from scratch can have a reference point.</p>
+        <p>Rather than waiting for the final result to discuss these <em>things</em>, I will attempt to document the entire process publicly. In fact, I will start from the very beginning, so that anyone in the future who is, like me, starting from scratch can have a reference point.</p>
         <p>You can find this attempt in the <strong>JOURNAL</strong>.</p>
         </div>
         
-        <h4 class="youtube-project-subtitle">Purpose of this place</h4>
+        <h4 class="youtube-project-subtitle"> What exactly am I trying to do?</h4>
         <div class="youtube-project-description">
-        <p>In the JOURNAL, I would like to document the creation process itself.</p>
-        <p class="quote-question">Why should someone create? What is the thought process behind it?</p>
-        <p>I would like to capture everything involved: how the project gradually evolves into something I truly resonate with, as well as the many overlooked aspects along the way.</p>
+        <p>In this documentation effort, I would like to describe the creation process and the thought process behind it.</p>
+        <p class="quote-question">Why am I creating? How do I approach it? What are the overlooked aspects along the way of creating something?</p>
+        <p>I would like to answer these questions from the perspective of someone starting from scratch, capturing everything involved as a way to document an individual's attempt to create something to express themselves, and for it to be used by anyone who may want to learn from it, whether for technical purposes or simply to gain insight into something valuable to them.</p>
+        <p>With this attempt, I hope to encourage myself and others to pursue what they want to do, prioritizing exploration and authenticity over the pursuit of what is considered <em>success</em>, as this effort is entirely independent of external expectations.</p>
+        <p>If you like this project,  please share it with anyone who might benefit, and check back for updates. </p>
+        <p>Note that I will also be posting YouTube videos, although they will be more compact and  focused on the technical aspects, for those interested solely in that part.</p>
+        <p>Thank you for reading.</p>
+    </p>
         <!-- <p>So, the purpose of this place is to provide educational value, not only by sharing technical knowledge, but also by documenting the creative process of exploring thoughts and searching for meaning in them.</p> -->
-            <p>I hope that in this way, anyone reading can gain honest insights into another person's journey, promoting transparency and authenticity, which are increasingly important in today's world, as well as engagement with activities that prioritize exploration and meaning over the pursuit of what is considered <em>success</em>.</p>
         </div>        </div>
 
         <div class="youtube-section-black-panel">
         <h4 class="youtube-project-subtitle">Sections Overview</h4>
         <div class="youtube-project-description">
         <p class="manifesto-overview-list" aria-label="Site sections">
-        <p>Since creation is a constant process, the current project of making a game is a continuation of SKGCHESS, with both describing my story up until now.</p>
-        <p>To read this story and understand what led here, you can go to the <strong>TIMELINE</strong>.</p>
-        <p>To explore the development of the SKGCHESS, you can visit <strong>FEATURES</strong>.</p>
+        <p>To read my story and understand what led here, you can go to the <strong>TIMELINE</strong>.</p>
+        <p>To explore the development of SKGCHESS, you can visit <strong>FEATURES</strong>.</p>
         <p>To read about the project of making a game, you may go directly to the <strong>JOURNAL</strong>.</p>
-        <p>In the <strong>RESEARCH</strong> section you can find sources that have influenced me in some way.</p>
+        <p>I have also included a <strong>RESEARCH</strong> section, where you can find sources that I like and might have influenced me in some way.</p>
         <p>Finally, you can visit the <strong>MOODBOARD</strong>, where I collect inspiration for the current project, mainly music.</p>
-        
-        <p><em>Note that for the current project of making a game there will also be YouTube videos, although they will be more compact and focused on technical aspects than the JOURNAL.</em></p>
         </div>
         </div>
         </div>
@@ -24306,6 +24306,7 @@
                 }
                 if (saved) setBg(saved);
                 picker.addEventListener('input', function() { setBg(picker.value); });
+                picker.closest('.bg-bar').classList.add('bg-bar-ready');
             })();
 
             // Force header to stay transparent (at top and when scrolled)
