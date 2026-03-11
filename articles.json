@@ -46,24 +46,32 @@
     "title": "September 2025",
     "excerpt": "Taking a step back, Unreal Engine, painting, Blender, FL Studio, and the big questions.",
     "date": "September 2025",
-    "content": "<p>After returning from vacation, I decided it was time to take a step back.</p><p>I had spent more than seven months in what felt like constant exploration, and I needed to slow down a bit.</p><p>After resting for some time, I realized I was no longer so sure I wanted to continue with posting SKGCHESS or pursuing freelancing.</p><p>I decided to try game development again, this time following a tutorial in Unreal Engine. Since my PC could not run the engine smoothly, I rented the Shadow PC service. Over the next few days, I created some landscapes and experimented with assets. It was genuinely creative and engaging.</p><p>This sparked a broader curiosity about art in general — if I were to make a game, I wanted to be able to create my own art in some way. I began painting for the first time, read a book gifted by a good friend, <em>The Story of Art</em> by Gombrich, and started experimenting with Blender and FL Studio for music.</p><p>Over the following months, I engaged with these activities from time to time, but I would frequently return to the idea of creating a game, asking myself the same questions:</p><p>Do I really want to make a game? Is a game the right medium for what I want to express? If so, what kind of game would I like to make, and what kind of game can I realistically create?</p>"
+    "content": "<p>After working on it a little more and having everything ready, I went on vacation and had some time to reflect.</p><p>Coming back, I decided to postpone the launch.</p><p>I had spent more than seven months in what felt like constant exploration, and I decided I needed to slow down a bit.</p>"
   },
   {
-    "id": "creation-8-january-2026",
+    "id": "creation-8-october-2025",
+    "title": "November 2025",
+    "excerpt": "T a step back, Unreal Engine, painting, Blender, FL Studio, and the big questions.",
+    "date": "October 2025",
+    "content": "<p>I returned to the idea of game development, but this time in a calmer way. Since I had already explored the story I wanted to tell, understood what a game designer actually does, and experimented with Blender earlier, my next question was whether the game should be 3D or 2D. To answer this, I needed to actually work in a game engine and experience what each approach had to offer. I followed a tutorial in Unreal Engine. Since my PC could not run the engine smoothly, I rented the Shadow PC service. Over the next few days, I created some landscapes and experimented with assets. It was genuinely creative and engaging. This sparked a broader curiosity about art in general. If I were to make a game, I wanted to be able to create my own art in some way. The question of 2D versus 3D became more pressing with art in mind. Essentially, I was trying to figure out whether I could achieve what I imagined without using 3D, since although I prefer 3D, I know how difficult it can be. Along the way, I began painting for the first time and read a book gifted to me by a good friend, <em>The Story of Art</em> by Gombrich. I also started experimenting with Blender and FL Studio for music, as well as tried out Unity Engine. Over the following months, I engaged with these activities from time to time, and I frequently returned to reevaluate the game development idea.</p>"
+  },
+
+  {
+    "id": "creation-9-january-2026",
     "title": "January 2026",
     "excerpt": "Writing the complete story and the world document.",
     "date": "January 2026",
-    "content": "<p>I came back to what I did in June with the scenario attempt and this time I tried harder. I wrote a complete story, a mixed version of my first scenario, along with new direction. I made a document with the entire history of the world: how it could be delivered narratively, what type of game could help achieve the message, and how the gameplay mechanics could connect with the story of the world.</p><p>Knowing that I had a story to tell, the questions that still remained were: What type of game? 3D or 2D? Platformer or shooter? For example, I wanted to make an atmospheric game, perhaps a cinematic one, with clever mechanics. Each desired result is tied to specific genres and perspectives.</p><p>The decision between 3D and 2D would also affect the choice of game engine, as Unreal is generally recommended for 3D and Unity for 2D.</p>"
+    "content": "<p>After some time, I now knew I wanted to create and was committed to pursuing it.</p><p> Now, to investigate the game development idea seriously, I came back to what I did in June with the scenario attempt and this time I tried harder. I wrote a complete story, a mixed version of my first scenario, along with new direction. I made a document with the entire history of the world: how it could be delivered narratively, what type of game could help achieve the message, and how the gameplay mechanics could connect with the story of the world.</p>"
   },
   {
-    "id": "creation-9-february-2026",
+    "id": "creation-10-february-2026",
     "title": "February 2026",
     "excerpt": "Switching to open source and looking into Godot.",
     "date": "February 2026",
-    "content": "<p>After moving away from Spotify, I decided more broadly that I want to avoid proprietary software. I switched fully to open source. I reinstalled Linux (which I had used as a student), purged Windows, and with it the Shadow PC service as well. With this shift, I decided that if I were to make a game, it should also be in an open source engine. So I started looking into Godot Game Engine.</p>"
+    "content": "<p>After moving away from Spotify, I decided more broadly that I want to avoid proprietary software. I switched fully to open source. I reinstalled Linux (which I had used as a student), purged Windows, and with it the Shadow PC service as well. With this shift, I decided that if I were to make a game, it should also be in an open source engine. So I started looking into Godot Engine.</p>"
   },
   {
-    "id": "creation-10-march-2026",
+    "id": "creation-11-march-2026",
     "title": "March 2026 - Date of writing this",
     "excerpt": "Starting the game in Godot and Day 1 with the documentation.",
     "date": "March 2026",
