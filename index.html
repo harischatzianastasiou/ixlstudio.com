@@ -5453,18 +5453,24 @@
         .agency-center {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top:15;
             transform: translate(-50%, -50%);
-            max-width: 580px;
+            max-width: 900px;
             text-align: center;
             padding: 0 2rem;
             z-index: 5;
         }
-        /* Desktop: position block slightly lower after previous adjustment */
+        /* Desktop: keep around the same height */
         @media (min-width: 769px) {
             .agency-center {
-                top: 44%;
+                top: 15%;
                 transform: translate(-50%, -50%);
+            }
+        }
+        /* Mobile: push Observer + radio slightly further down */
+        @media (max-width: 768px) {
+            .agency-center {
+                top: 50%; /* lower on small screens, without touching base rules above */
             }
         }
         .agency-tagline {
@@ -22453,6 +22459,10 @@
             margin-bottom: 1.4rem;   /* ~22px – space between paragraphs */
             line-height: 1.75;
         }
+        /* Override center alignment for specific paragraphs */
+        .youtube-project-description p.align-left {
+            text-align: left;
+        }
         .youtube-project-description p:last-child {
             margin-bottom: 0;
         }
@@ -22612,7 +22622,18 @@
         @media (max-width: 768px) {
             .youtube-section-links-center { margin-top: 3rem; }
         }
-        
+
+        /* Observer image: responsive and centered on all screens */
+        .observer-image-wrapper {
+            max-width: 800px;
+            margin: 0.5rem auto 0; /* small gap under logo region */
+        }
+        .observer-image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
         /* Books Section */
         .books-section {
             display: flex;
@@ -22920,9 +22941,8 @@
 
             <div class="agency-center">
 
-                
                 <!-- Music Player -->
-                <div class="agency-music-player" id="agencyMusicPlayer">
+                <div class="agency-music-player" id="agencyMusicPlayer" style="margin-top: 1.5rem;">
                     <button class="agency-play-btn" id="agencyPlayBtn" aria-label="Play/Pause">
                         <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
@@ -22946,9 +22966,12 @@
                     </div>
                 </div>
 
-                <audio id="agencyAudioPlayer"></audio>
                 <!-- Announcement: active project + JOURNAL/YouTube follow CTA -->
-                <p class="youtube-section-links-center"> <strong><em>Project: Make a Game</em></strong> <br><br><br>Follow on <a href="inbetween.html" class="youtube-section-here-link journal-tag">JOURNAL</a> and on <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="youtube-section-youtube-link" title="Follow on YouTube" aria-label="Follow on YouTube"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg></a></p>
+                <div class="observer-image-wrapper">
+                    <img src="theobserver.png" alt="The Observer" />
+                </div>
+
+                <audio id="agencyAudioPlayer"></audio>
 
 
 
@@ -23188,7 +23211,7 @@
 
         <div class="youtube-section-panels">
         <div class="youtube-section-black-panel">
-        <h3 class="youtube-project-title">A PUBLIC EXPERIMENT ON CREATION AND SELF OBSERVATION</h3>
+        <h3 class="youtube-project-title">README</h3>
         <p class="youtube-project-author">Haris Chatzianastasiou</p>
         <p class="youtube-project-posted">Posted on March 4, 2026</p>
         
@@ -23198,13 +23221,19 @@
         </div>
         <h4 class="youtube-project-subtitle">Now</h4>
         <div class="youtube-project-description">
-        <p>After creating SKGCHESS, and after months of personal exploration, I realized there are <em>things</em> I want to talk about, and a game feels like the right medium to express them.</p>
-        <p>So, I decided to attempt to make one.</p>
-        <p>Rather than waiting for the final result to discuss these <em>things</em>, I will document the entire process publicly. In fact, I will start from the very beginning, so that anyone in the future who is, like me, starting without any experience can have a reference point.</p>
-        <p>You can find this attempt in the <strong>JOURNAL</strong>.</p>
+            <p>After creating SKGCHESS and spending months exploring on my own, I realized there are <em>things</em> I want to talk about.</p>
+            <p>Some people understand these things. Others are unaware. Of course, it is not their fault.</p>
+            <p>They just need a <strong>different narrative.</strong></p>
+            <p><strong>A different time.</strong><br>
+            A different reality.</p>
+            <p class="align-left">For those who want to experience it, <br> <em>I will be making a game.</em></p>
+            <p class="align-left">For those who want to learn how to build it,<br><em>I will be documenting the process from the very beginning.</em></p>
+                        
+            <p>This is</p>
+                <img src="theobserver.png" alt="The Observer" style="width: 100%; max-width: 420px; height: auto; display: block; margin: 6px auto 0;">
         </div>
         
-        <h4 class="youtube-project-subtitle"> What exactly is this project about?</h4>
+        <!-- <h4 class="youtube-project-subtitle"> What exactly is this project about?</h4>
         <div class="youtube-project-description">
         <p>In this documentation effort, I would like to go beyond the purely technical aspects of game development and focus on the creation process and the thought process behind it.</p>
         <p class="quote-question">What is involved in creating? How does expression fit into the process? What will be the overlooked aspects along the way?</p>
@@ -23213,19 +23242,18 @@
         <p>If you like this idea, please share it with others who may find it useful, and check back for updates.</p>
         <p> <em>PS1: The reflections are important, but the ultimate goal is to make a good game that achieves the intended expression.</em>
         <p> <em>PS2: I will also be posting YouTube videos, although they will be more focused on the technical aspects for those interested solely in that part.</em>
-        <p>Thank you for reading.</p>
-    </p>
+        <p>Thank you for reading.</p> -->
         <!-- <p>So, the purpose of this place is to provide educational value, not only by sharing technical knowledge, but also by documenting the creative process of exploring thoughts and searching for meaning in them.</p> -->
-        </div>        </div>
+      
 
         <div class="youtube-section-black-panel">
         <h4 class="youtube-project-subtitle">Sections Overview</h4>
         <div class="youtube-project-description">
         <p class="manifesto-overview-list" aria-label="Site sections">
-        <p>As this place serves as both a personal archive and a space to reflect on my ongoing <em>journey</em> through projects, I have included a section that describes <em>The Story So Far</em>. You can read it in the <strong>TIMELINE</strong>. Eventually, I hope that this information, together with my past and current projects, will help narrate my journey to anyone visiting this site over time.</p>
-        <p>To explore the previous project, SKGCHESS, you can visit <strong>FEATURES</strong>.</p>
-        <p>To read about the project of making a game, you may go directly to the <strong>JOURNAL</strong>.</p>
-        <p>I have also included a <strong>RESEARCH</strong> section, where you can find sources that I like and might have influenced me in some way.</p>
+        <p>The events that led here are documented in a section called <strong>TIMELINE</strong>.</p>
+        <p>To explore the story of SKGCHESS, you can visit <strong>FEATURES</strong>.</p>
+        <p>To read the documentation of THE OBSERVER, you may go directly to the <strong>JOURNAL</strong>.</p>
+        <p>I have also included a <strong>RESEARCH</strong> section, where you can find sources that I like.</p>
         <p>Finally, you can visit the <strong>MOODBOARD</strong>, where I collect inspiration for the current project, mainly music.</p>
         </div>
         </div>
@@ -23244,7 +23272,7 @@
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
                         <h2 class="project-echo-title"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span></span> <span class="journal-tag">JOURNAL</span></h2>
-                        <p class="project-echo-excerpt">of current project, Make a Game.</p>
+                        <p class="project-echo-excerpt"><em>Not everything has to do with success. Some things are more important.</em></p>                    </p>
                         <span class="project-echo-cta">Read <span class="arrow">→</span></span>
                     </div>
                 </div>
@@ -23447,30 +23475,10 @@
                 </div>
                 <div class="research-grid">
                     <div class="research-col">
-                        <h3 class="research-col-title">Books</h3>
+                        <!-- <h3 class="research-col-title">Books</h3> -->
                         <ul class="research-list">
                             <li class="research-list-item">The Theory of Fun for Game Design</li>
                             <li class="research-list-item">History of Art</li>
-                        </ul>
-                    </div>
-                    <div class="research-col">
-                        <h3 class="research-col-title">Games</h3>
-                        <ul class="research-list">
-                            <li class="research-list-item">The Last Guardian</li>
-                            <li class="research-list-item">Shadow of the Colossus</li>
-                        </ul>
-                    </div>
-                    <div class="research-col">
-                        <h3 class="research-col-title">Music</h3>
-                        <ul class="research-list">
-                            <li class="research-list-item">Heaven's Night — Akira Yamaoka</li>
-                        </ul>
-                    </div>
-                    <div class="research-col">
-                        <h3 class="research-col-title">Movies</h3>
-                        <ul class="research-list">
-                            <li class="research-list-item">12 Monkeys</li>
-                            <li class="research-list-item">—</li>
                         </ul>
                     </div>
                 </div>
