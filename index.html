@@ -28546,6 +28546,7 @@
 
 
         // Chrome/Brave fix: vertical wheel over main content scrolls the page (grids capture wheel otherwise)
+        // Simplified so we only intercept when a custom scroll root exists; otherwise let browser handle scroll normally.
         (function() {
             document.addEventListener('wheel', function(e) {
                 var main = document.querySelector('.main-content');
@@ -28553,7 +28554,8 @@
                 if (e.target.closest && e.target.closest('textarea, [contenteditable="true"]')) return;
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                     var r = getScrollRoot();
-                    if (r) r.scrollTop += e.deltaY; else window.scrollBy(0, e.deltaY);
+                    if (!r) return; // no custom scroll root – let default scrolling happen
+                    r.scrollTop += e.deltaY;
                     e.preventDefault();
                 }
             }, { capture: true, passive: false });
@@ -28963,27 +28965,7 @@
 
             if (!loader || !loaderLogo || !headerLogo) return; // Exit if elements don't exist
 
-            // Skip intro animation if user has already seen it this session (returning via back button)
-            const hasSeenIntro = sessionStorage.getItem('ixl-intro-seen');
-            if (hasSeenIntro) {
-                loader.style.display = 'none';
-                loader.style.pointerEvents = 'none';
-                const header = document.querySelector('.header');
-                if (header) {
-                    header.style.opacity = '1';
-                    header.style.background = 'transparent';
-                    header.style.backgroundColor = 'transparent';
-                    header.style.backgroundImage = 'none';
-                    header.style.backdropFilter = 'none';
-                    header.style.webkitBackdropFilter = 'none';
-                }
-                gsap.set(headerLogo, { opacity: 1, scaleX: 1, scaleY: 1, transformOrigin: 'center center' });
-                const agencyCenter = document.querySelector('.agency-center');
-                const agencyGetInTouch = document.querySelector('.agency-get-in-touch');
-                if (agencyCenter) gsap.set(agencyCenter, { opacity: 1, y: 0 });
-                if (agencyGetInTouch) gsap.set(agencyGetInTouch, { opacity: 1, y: 0 });
-                return; // Skip the rest of the animation setup
-            }
+            // Always run intro animation on first page load (per session), but allow bfcache handler to skip when going back.
 
             loaderLogo.style.opacity = '0'; // Force invisible so fade-in is visible when timeline runs
 
