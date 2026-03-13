@@ -81,8 +81,11 @@
 
 
 
-        /* Prevent browser dark mode from overriding our colors (burger, nav, etc.) */
-        html { color-scheme: light; }
+        /* Prevent browser dark mode from overriding our colors (burger, nav, etc.) and keep scrollbar gutter stable so layout doesn't shift */
+        html {
+            color-scheme: light;
+            scrollbar-gutter: stable;
+        }
         
         /* Preload cursor states to prevent lag on first cursor change */
         body::after {
@@ -594,20 +597,27 @@
 
 
 
-        /* Mobile: fixed body + scroll wrapper keeps address bar visible (no zoom on scroll) */
+        /* Mobile: scroll normally (no fixed body), but keep wrapper as scroll root for GSAP */
         @media (max-width: 768px) {
             body {
-                position: fixed !important;
-                height: 100vh !important;
-                overflow: hidden !important;
+                position: static !important;
+                height: auto !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
                 width: 100%;
             }
             .page-scroll-wrapper {
-                height: 100%;
-                overflow-y: scroll;
+                min-height: 100vh;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                overflow-y: visible;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-y: none;
                 scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
+            }
+            .main-content {
+                flex: 1 0 auto;
             }
         }
 
@@ -1393,6 +1403,17 @@
             .nav-menu.active a {
                 font-size: 1.1rem;
                 font-weight: 600;
+            }
+        }
+
+        /* Mobile-only tweaks: reduce extra space below contact + footer so there's no big gap at bottom */
+        @media (max-width: 768px) {
+            .contact-section {
+                padding-bottom: 2.5rem;
+            }
+            .footer {
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
             }
         }
 
@@ -5453,7 +5474,7 @@
         .agency-center {
             position: absolute;
             left: 50%;
-            top:15;
+            top: 15%;
             transform: translate(-50%, -50%);
             max-width: 900px;
             text-align: center;
@@ -5467,10 +5488,10 @@
                 transform: translate(-50%, -50%);
             }
         }
-        /* Mobile: push Observer + radio slightly further down */
+        /* Mobile: push Observer + radio even further down (without changing desktop layout) */
         @media (max-width: 768px) {
             .agency-center {
-                top: 50%; /* lower on small screens, without touching base rules above */
+                top: 70%; /* move hero content lower on mobile */
             }
         }
         .agency-tagline {
@@ -6499,7 +6520,7 @@
                 padding: 0 1rem;
                 max-width: 100%;
                 width: 100%;
-                top: 54%; /* below the two models */
+                top: 65%; /* lower below the two models on tablets/large phones */
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -6630,7 +6651,7 @@
             .agency-center {
                 padding: 0 1rem;
                 max-width: 96%;
-                top: 52%; /* keep center below both models on small screens */
+                top: 68%; /* push content further down on very small screens */
             }
             .agency-tagline {
                 font-size: 0.85rem;
@@ -22357,6 +22378,12 @@
             width: 100%;
             box-sizing: border-box;
         }
+        /* Overview panel after JOURNAL: no box – transparent, no border */
+        .overview-panel-journal-style {
+            border: none;
+            background: transparent;
+            box-shadow: none;
+        }
         /* Extra space above Sections Overview panel so it sits further down */
         .hero .hero-things-content .youtube-section-panels .youtube-section-black-panel:nth-child(2) {
             margin-top: 4.5rem;
@@ -23013,8 +23040,7 @@
         <!-- <section class="about-this-place-section">
             <div class="about-this-place-container">
                 <h2 class="about-this-place-title">Welcome</h2>
-                <!-- <p class="about-this-place-intro">Welcome to my personal work, where I create things and document my thinking, self-reflection, and viewpoints.</p> -->
-               <!-- <p class="about-this-place-intro">Read Letter 0 ⟶<span class="no-break"></span> <a href="article.html?id=letter-from-the-creator-0" class="about-this-place-cta">From the creator</a>.</p>
+                (intro and link commented out)
             </div>
         </section> -->
 
@@ -23225,21 +23251,19 @@
         </div> -->
         <!-- <h4 class="youtube-project-subtitle">Now</h4> -->
         <div class="youtube-project-description">
-            <br>
-            <p><strong>A future city living on invisible control.
-            <br>A mind constantly rewriting itself.
-            <br>A consciousness sent to observe.</strong></p>
-            <p>Explore the inside of a living brain.<br>
-            Visit memories and uncover new paths as the protagonist’s life reshapes the world around you.</p>
-            <p>Find the way out.</p> 
-            
-            Welcome to
-          
-            <p><em></em></p>
+            <div class="observer-tagline">
+                <p><strong>A city living on an identity chip.<br>
+                A citizen taught to obey.<br>
+                A command from the future sent to <em>change things</em>.</strong></p>
+                <p>Infiltrate the inside of a living brain.<br>
+                Visit memories and uncover new paths as the protagonist’s life reshapes the world around you.</p>
+                <p><strong>Be the change.</strong></p>
+                <p>Be</p>
+            </div>
                 <img src="theobserver.png" alt="The Observer" style="width: 100%; max-width: 420px; height: auto; display: block; margin: 6px auto 0;">
         
                 <br>
-                <p>Follow on the <em>Journal</em> section,<br> or visit the <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer" style="color: purple; text-decoration: none;">YouTube channel</a>.        </p>
+                <p>Follow on  <em>Journal,</em><br> or visit the <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer" style="color: purple; text-decoration: none;">YouTube channel</a>.        </p>
             </div>
         
         <!-- <h4 class="youtube-project-subtitle"> What exactly is this project about?</h4>
@@ -23253,20 +23277,6 @@
         <p> <em>PS2: I will also be posting YouTube videos, although they will be more focused on the technical aspects for those interested solely in that part.</em>
         <p>Thank you for reading.</p> -->
         <!-- <p>So, the purpose of this place is to provide educational value, not only by sharing technical knowledge, but also by documenting the creative process of exploring thoughts and searching for meaning in them.</p> -->
-      
-
-        <div class="youtube-section-black-panel">
-        <h4 class="youtube-project-subtitle">IXLSTUDIO Overview</h4>
-        <p class="youtube-project-author">Haris Chatzianastasiou</p>
-        <p class="youtube-project-posted">Posted on March 4, 2026</p>
-        <div class="youtube-project-description">
-        <p class="manifesto-overview-list" aria-label="Site sections">
-        <p>This is a personal page.</p>
-        <p>To explore my previous project, SKGCHESS, you can visit <em>Previously</em> section.</p>
-        <p>To read the events that led to THE OBSERVER, <br>as well as learn the story of SKGCHESS,<br> visit the <a href="article.html?id=creation-timeline-2024-2026" style="color: purple; text-decoration: none;"><em>timeline</em></a>.</p>
-        <p>To explore sources, go to the <em>Research</em> section.</p>
-        <p>To find inspiration for the current project visit the <em>Moodboard</em>.</p>
-        </div>
         </div>
         </div>
 
@@ -31723,24 +31733,22 @@
 
                 if (overlay) overlay.classList.toggle('active', isOpen);
 
-                // Lock scroll when menu is open; freeze scroll wrapper width so layout doesn't shift
-                // (when overflow:hidden removes the scrollbar, width would otherwise change)
+                // Lock scroll only on mobile; rely on stable scrollbar gutter to avoid layout shift on desktop
                 var scrollRoot = getScrollRoot();
-                if (isOpen) {
-                    if (scrollRoot) {
-                        var w = scrollRoot.offsetWidth;
-                        scrollRoot.style.width = w + 'px';
-                        scrollRoot.style.overflow = 'hidden';
-                        scrollRoot.setAttribute('data-menu-open-width', w);
+                if (window.innerWidth <= 768) {
+                    if (isOpen) {
+                        if (scrollRoot) {
+                            scrollRoot.style.overflow = 'hidden';
+                            scrollRoot.style.overflowX = 'hidden';
+                        }
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        if (scrollRoot) {
+                            scrollRoot.style.overflow = '';
+                            scrollRoot.style.overflowX = '';
+                        }
+                        document.body.style.overflow = '';
                     }
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    if (scrollRoot) {
-                        scrollRoot.style.overflow = '';
-                        scrollRoot.style.width = '';
-                        scrollRoot.removeAttribute('data-menu-open-width');
-                    }
-                    document.body.style.overflow = '';
                 }
 
                 var deco = document.getElementById('mobileMenuOverlayDeco');
@@ -31807,14 +31815,14 @@
 
                     if (overlay) overlay.classList.remove('active');
 
-                    // Restore scroll and width so agency stays in same position
+                    // Restore scroll and padding so agency stays in same position
                     var scrollRoot = getScrollRoot();
                     if (scrollRoot) {
+                        scrollRoot.style.paddingRight = '';
                         scrollRoot.style.overflow = '';
-                        scrollRoot.style.width = '';
-                        scrollRoot.removeAttribute('data-menu-open-width');
                     }
                     document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
 
                     var deco = document.getElementById('mobileMenuOverlayDeco');
 
