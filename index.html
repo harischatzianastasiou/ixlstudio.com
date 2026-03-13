@@ -24220,27 +24220,17 @@
 
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-        // Mobile: body fixed + scroll wrapper keeps address bar visible; use wrapper as scroll root
+        // Scroll helpers – always use the window scroll (no custom scroll root)
         function getScrollRoot() {
-            var w = document.querySelector('.page-scroll-wrapper');
-            if (w && getComputedStyle(document.body).position === 'fixed') return w;
             return null;
         }
         function getScrollY() {
-            var r = getScrollRoot();
-            return r ? r.scrollTop : window.scrollY;
+            return window.scrollY;
         }
         function scrollPageTo(y, opts) {
-            var r = getScrollRoot();
-            if (r) r.scrollTo({ top: y, ...(opts || {}) });
-            else window.scrollTo({ top: y, ...(opts || {}) });
+            window.scrollTo({ top: y, ...(opts || {}) });
         }
         document.addEventListener('DOMContentLoaded', function() {
-            var r = getScrollRoot();
-            if (r) {
-                ScrollTrigger.config({ scroller: r });
-                r.addEventListener('scroll', function() { window.dispatchEvent(new Event('scroll')); }, { passive: true });
-            }
             // YouTube overlay: one click enables the iframe so user can play; until then page scroll works over the video
             var overlay = document.getElementById('youtube-video-overlay');
             if (overlay) {
