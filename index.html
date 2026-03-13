@@ -22696,6 +22696,12 @@
             font-weight: 700;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        /* Previously title: same size as Research title */
+        #devlog .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
         .research-section .section-subtitle {
             color: var(--text-color);
             text-align: left;
@@ -23232,6 +23238,8 @@
             <p><em></em></p>
                 <img src="theobserver.png" alt="The Observer" style="width: 100%; max-width: 420px; height: auto; display: block; margin: 6px auto 0;">
         
+                <br>
+                <p>Follow on the <em>Journal</em> section,<br> or visit the <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer" style="color: purple; text-decoration: none;">YouTube channel</a>.        </p>
             </div>
         
         <!-- <h4 class="youtube-project-subtitle"> What exactly is this project about?</h4>
@@ -23253,11 +23261,11 @@
         <p class="youtube-project-posted">Posted on March 4, 2026</p>
         <div class="youtube-project-description">
         <p class="manifesto-overview-list" aria-label="Site sections">
-        <p>This is a personal page. The events that led here are documented in a section called <strong>TIMELINE</strong>.</p>
-        <p>To follow current project THE OBSERVER, you may go directly to the <strong>JOURNAL</strong> where I document it's process, or visit my <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer" style="color: purple; text-decoration: none;">YouTube channel</a>.</p>
-        <p>To explore previous projects, you can visit <strong>SKGCHESS</strong>.</p>
-        <p>To explore sources, visit the <strong>RESEARCH</strong> section.</p>
-        <p>To find inspiration for the current project, mainly music, visit the <strong>MOODBOARD</strong>.</p>
+        <p>This is a personal page.</p>
+        <p>To explore my previous project, SKGCHESS, you can visit <em>Previously</em> section.</p>
+        <p>To read the events that led to THE OBSERVER, <br>as well as learn the story of SKGCHESS,<br> visit the <a href="article.html?id=creation-timeline-2024-2026" style="color: purple; text-decoration: none;"><em>timeline</em></a>.</p>
+        <p>To explore sources, go to the <em>Research</em> section.</p>
+        <p>To find inspiration for the current project visit the <em>Moodboard</em>.</p>
         </div>
         </div>
         </div>
@@ -23275,26 +23283,14 @@
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
                         <h2 class="project-echo-title"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span></span> <span class="journal-tag">JOURNAL</span></h2>
-                        <p class="project-echo-excerpt"><em>The story unfolds.</em></p> 
-                        <span class="project-echo-cta">Read <span class="arrow">→</span></span>
+                        <p class="project-echo-excerpt"><em> Live documentation of creating THE OBSERVER.</em></p> 
+                        <span class="project-echo-cta">The story unfolds <span class="arrow">→</span></span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Articles section: loads from articles.json, links to article.html -->
-        <section id="articles" class="articles-section">
-            <div class="articles-container">
-                <div class="section-header">
-                    <h2 class="section-title">Timeline</h2>
-                </div>
-                <div class="articles-list-grid" id="articlesListRoot">
-                    <!-- Filled by JS from articles.json; each item links to article.html?id=slug -->
-                </div>
-            </div>
-        </section>
-
-
+        <!-- Articles section removed: timeline now lives on article.html -->
         <section id="devlog" class="articles-section">
 
 
@@ -23373,7 +23369,7 @@
 
 
 
-                    <h2 class="section-title">SKGCHESS</h2>
+                    <h2 class="section-title">Previously</h2>
 
 
 
@@ -31064,7 +31060,7 @@
 
 
 
-                    // title: "SKGCHESS",
+                    title: "SKGCHESS",
 
 
 

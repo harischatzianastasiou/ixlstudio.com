@@ -126,6 +126,41 @@
             margin: 0 auto;
             padding: 6rem 2rem 4rem;
         }
+        .engineering-window {
+            margin-bottom: 2.5rem;
+            padding: 1.25rem 1.5rem;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(168, 117, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .engineering-window-title {
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
+        }
+        .engineering-window-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e4dcd2;
+        }
+        .engineering-window-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .engineering-window-cta {
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+            color: rgba(168, 208, 255, 0.9);
+        }
+        .engineering-window:hover {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: rgba(168, 117, 255, 0.7);
+        }
         .back-link {
             display: inline-block;
             margin-bottom: 2rem;
@@ -232,6 +267,14 @@
     </header>
     <div class="scroll-wrapper">
         <main class="article-wrap">
+            <div class="engineering-window" onclick="window.location.href='engineering.html'">
+                <div class="engineering-window-title">Window</div>
+                <div class="engineering-window-heading">Engineering Background</div>
+                <div class="engineering-window-text">
+                    Notes on the engineering path that runs alongside the creative timeline.
+                </div>
+                <div class="engineering-window-cta">Open engineering background →</div>
+            </div>
             <div id="article-root">
             </div>
         </main>
