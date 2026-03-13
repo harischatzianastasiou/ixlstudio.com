@@ -597,7 +597,7 @@
 
 
 
-        /* Mobile: scroll normally (no fixed body), but keep wrapper as scroll root for GSAP */
+        /* Mobile: normal page scroll (no fixed body); ScrollTrigger falls back to window as scroller */
         @media (max-width: 768px) {
             body {
                 position: static !important;
@@ -609,15 +609,10 @@
             .page-scroll-wrapper {
                 min-height: 100vh;
                 height: auto;
-                display: flex;
-                flex-direction: column;
                 overflow-y: visible;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-y: none;
                 scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
-            }
-            .main-content {
-                flex: 1 0 auto;
             }
         }
 
