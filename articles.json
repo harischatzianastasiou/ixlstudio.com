@@ -4,28 +4,28 @@
     "title": "April 2024",
     "excerpt": "Learning Java and the beginning of the journey.",
     "date": "April 2024",
-    "content": "<p>My plan at the time was to become very good in my profession: learn an amazing field, get better jobs, and potentially build something of my own.</p><p>I started learning Java to follow that path.</p>"
+    "content": "<p>My plan at the time was to become good in my profession, software engineering.</p>"
   },
   {
     "id": "creation-2-october-2024",
     "title": "October 2024",
     "excerpt": "Building a chess engine and wanting projects that tell a story.",
     "date": "October 2024",
-    "content": "<p>After I learned the fundamentals in Java, and after exploring a Java framework at work, I decided it's time to make a serious project. Build up a portfolio.</p><p>Since I enjoy chess, I started building a chess engine.</p><p>In the following months, I spent some time after work on it and I began to find the project more and more interesting. I was increasingly convinced that from now on I want to work on projects like this one. Projects that are interesting but at the same time more personal, and can describe a part of my personality, like enjoying chess.</p>"
+    "content": "<p>I started reading a Java book.</p><p>After learning the fundamentals, and exploring a framework at work, I decided to make a personal project. Build up a portfolio.</p><p>Since I enjoy chess, I started building a chess engine.</p><p>In the following months, I spent some time after work on it and I began to find the project more and more interesting.</p>"
   },
   {
     "id": "creation-3-february-2025",
     "title": "February 2025",
     "excerpt": "Turning the chess engine into a full chess web application.",
     "date": "February 2025",
-    "content": "<p>If a project tells a part of my personality, I want people to experience it the way I communicate it.</p><p>I decided to turn the chess engine, previously run locally, into a full chess web application, SKGCHESS.</p><p>I spend the next months building it with great enthusiasm.</p>"
+    "content": "<p>I wanted people to experience what I was working on.</p><p>I decided to turn the chess engine, previously run locally, into a full chess web application, SKGCHESS.</p><p>I spend the next months building it with great enthusiasm.</p>"
   },
   {
     "id": "creation-4-april-2025",
     "title": "April 2025",
     "excerpt": "First move over websockets, UI, and learning that appearance and story matter.",
     "date": "April 2025",
-    "content": "<p>For the first time, I had a move sent over WebSockets to the other player and displayed in the frontend. I was very happy to see it working, and next I wanted to shape its appearance to communicate and express myself.</p><p>This part took much longer than I expected. I wanted visiting the site to create a specific atmosphere, almost like a small narrative, expressed through the content, the colors, the music, the quotes, and the overall presentation.</p><p>I realized that I am more interested in the user experiencing what I create as a narrative than in the functionality of the application.</p><p>Moreover, I understood that most professional software exists to serve a clear purpose and ultimately create profit.</p><p>This made me reflect on my work as a software engineer.</p><p>Although I am very proud of it, respect it as a field, and I will always enjoy working with people who share the same passion for software, specifically people who are collaborative and committed to producing exceptional work, I realized that I have a need to create <em>things</em> that have meaning beyond myself. Things that are created with the purpose of touching on broader ideas, raising questions about social or human matters, and inviting reflection, rather than being constrained to meet expectations and just <em>work as expected</em>.</p><p>I continued refining SKGCHESS to match the way I had imagined it, until finally stepping away from it in June.</p>" 
+    "content": "<p>For the first time, I had a move sent and displayed to the other player. Next I wanted to shape the app's appearance.</p><p>This part took much longer than I expected. I wanted visiting the site to create a specific narrative, expressed through the content, colors, music, and the overall presentation.</p><p>I realized that I am more interested in the user experiencing what I create as a narrative than in the functionality of the application.</p><p>Moreover, I understood that most professional software exists to serve a clear purpose and ultimately create profit.</p><p>This made me reflect on my work as a software engineer.</p><p>Although I am very proud of it, respect it as a field, and I will always enjoy working with people who share the same passion for software, specifically people who are collaborative and committed to producing exceptional work, I realized that I have a need to create <em>things</em> that have meaning beyond myself. Things that are created with the purpose of touching on broader ideas, raising questions about social or human matters, and inviting reflection, rather than being constrained to meet expectations and just <em>work as expected</em>.</p><p>I continued refining SKGCHESS to match the way I had imagined it, until finally stepping away from it in June.</p>" 
     },
   {
     "id": "creation-5-june-2025",
