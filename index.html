@@ -597,7 +597,7 @@
 
 
 
-        /* Mobile: normal page scroll (no fixed body); ScrollTrigger falls back to window as scroller */
+        /* Mobile: scroll normally (no fixed body), but keep wrapper as scroll root for GSAP */
         @media (max-width: 768px) {
             body {
                 position: static !important;
@@ -609,10 +609,15 @@
             .page-scroll-wrapper {
                 min-height: 100vh;
                 height: auto;
+                display: flex;
+                flex-direction: column;
                 overflow-y: visible;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-y: none;
                 scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
+            }
+            .main-content {
+                flex: 1 0 auto;
             }
         }
 
@@ -23293,7 +23298,7 @@
                     <div class="project-echo-content">
                         <span class="project-echo-tag"></span>
                         <h2 class="project-echo-title"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span></span> <span class="journal-tag">JOURNAL</span></h2>
-                        <p class="project-echo-excerpt"><em> Making of THE OBSERVER.</em></p> 
+                        <p class="project-echo-excerpt"><em> Live documentation of creating THE OBSERVER.</em></p> 
                         <span class="project-echo-cta">The story unfolds <span class="arrow">→</span></span>
                     </div>
                 </div>
@@ -24220,17 +24225,27 @@
 
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-        // Scroll helpers – always use the window scroll (no custom scroll root)
+        // Mobile: body fixed + scroll wrapper keeps address bar visible; use wrapper as scroll root
         function getScrollRoot() {
+            var w = document.querySelector('.page-scroll-wrapper');
+            if (w && getComputedStyle(document.body).position === 'fixed') return w;
             return null;
         }
         function getScrollY() {
-            return window.scrollY;
+            var r = getScrollRoot();
+            return r ? r.scrollTop : window.scrollY;
         }
         function scrollPageTo(y, opts) {
-            window.scrollTo({ top: y, ...(opts || {}) });
+            var r = getScrollRoot();
+            if (r) r.scrollTo({ top: y, ...(opts || {}) });
+            else window.scrollTo({ top: y, ...(opts || {}) });
         }
         document.addEventListener('DOMContentLoaded', function() {
+            var r = getScrollRoot();
+            if (r) {
+                ScrollTrigger.config({ scroller: r });
+                r.addEventListener('scroll', function() { window.dispatchEvent(new Event('scroll')); }, { passive: true });
+            }
             // YouTube overlay: one click enables the iframe so user can play; until then page scroll works over the video
             var overlay = document.getElementById('youtube-video-overlay');
             if (overlay) {
@@ -28546,7 +28561,6 @@
 
 
         // Chrome/Brave fix: vertical wheel over main content scrolls the page (grids capture wheel otherwise)
-        // Simplified so we only intercept when a custom scroll root exists; otherwise let browser handle scroll normally.
         (function() {
             document.addEventListener('wheel', function(e) {
                 var main = document.querySelector('.main-content');
@@ -28554,8 +28568,7 @@
                 if (e.target.closest && e.target.closest('textarea, [contenteditable="true"]')) return;
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                     var r = getScrollRoot();
-                    if (!r) return; // no custom scroll root – let default scrolling happen
-                    r.scrollTop += e.deltaY;
+                    if (r) r.scrollTop += e.deltaY; else window.scrollBy(0, e.deltaY);
                     e.preventDefault();
                 }
             }, { capture: true, passive: false });
@@ -28965,7 +28978,27 @@
 
             if (!loader || !loaderLogo || !headerLogo) return; // Exit if elements don't exist
 
-            // Always run intro animation on first page load (per session), but allow bfcache handler to skip when going back.
+            // Skip intro animation if user has already seen it this session (returning via back button)
+            const hasSeenIntro = sessionStorage.getItem('ixl-intro-seen');
+            if (hasSeenIntro) {
+                loader.style.display = 'none';
+                loader.style.pointerEvents = 'none';
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.style.opacity = '1';
+                    header.style.background = 'transparent';
+                    header.style.backgroundColor = 'transparent';
+                    header.style.backgroundImage = 'none';
+                    header.style.backdropFilter = 'none';
+                    header.style.webkitBackdropFilter = 'none';
+                }
+                gsap.set(headerLogo, { opacity: 1, scaleX: 1, scaleY: 1, transformOrigin: 'center center' });
+                const agencyCenter = document.querySelector('.agency-center');
+                const agencyGetInTouch = document.querySelector('.agency-get-in-touch');
+                if (agencyCenter) gsap.set(agencyCenter, { opacity: 1, y: 0 });
+                if (agencyGetInTouch) gsap.set(agencyGetInTouch, { opacity: 1, y: 0 });
+                return; // Skip the rest of the animation setup
+            }
 
             loaderLogo.style.opacity = '0'; // Force invisible so fade-in is visible when timeline runs
 
