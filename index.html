@@ -5826,6 +5826,7 @@
             color: rgba(0,0,0,0.92);
             text-shadow: 0 2px 0 rgba(255,255,255,0.35);
         }
+        .lilith-modal.hide-title .lilith-modal-comic-title { display: none; }
         .lilith-modal-comic-sub {
             margin-top: 0.15rem;
             font-family: 'Comic Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -24174,6 +24175,8 @@
                 let placeholder = null;
                 let isOpen = false;
                 let bubbleSide = 0;
+                let introTimer = null;
+                let introShownOnce = false;
 
                 function resizeLilith() {
                     const w = container.clientWidth || 300;
@@ -24189,11 +24192,21 @@
                     bubbleSide = (bubbleSide + 1) % 2;
                     modal.classList.toggle('lilith-bubble-left', bubbleSide === 0);
                     modal.classList.toggle('lilith-bubble-right', bubbleSide === 1);
+                    // Modal should be immediately "ready to walk"
+                    isActive = true;
                     placeholder = document.createComment('lilith-modal-placeholder');
                     container.parentNode.insertBefore(placeholder, container);
                     stage.appendChild(container);
                     modal.classList.add('is-open');
                     modal.setAttribute('aria-hidden', 'false');
+                    canvas.focus();
+                    // "I'm Lilith!" should only be a start intro
+                    modal.classList.remove('hide-title');
+                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
+                    introTimer = setTimeout(() => {
+                        modal.classList.add('hide-title');
+                        introShownOnce = true;
+                    }, 1100);
                     requestAnimationFrame(() => {
                         resizeLilith();
                         updateControlHints();
@@ -24205,6 +24218,7 @@
                     isOpen = false;
                     modal.classList.remove('is-open');
                     modal.setAttribute('aria-hidden', 'true');
+                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
                     if (placeholder && placeholder.parentNode) {
                         placeholder.parentNode.insertBefore(container, placeholder);
                         placeholder.parentNode.removeChild(placeholder);
@@ -24230,6 +24244,14 @@
                 });
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') closeModal();
+                });
+
+                // If user starts interacting, hide the intro title immediately
+                canvas.addEventListener('keydown', function() {
+                    if (!modal.classList.contains('is-open')) return;
+                    modal.classList.add('hide-title');
+                    introShownOnce = true;
+                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
                 });
             })();
             
