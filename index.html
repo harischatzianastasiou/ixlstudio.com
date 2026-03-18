@@ -6483,9 +6483,10 @@
         /* Mobile responsiveness – landing section readable on all screens */
         @media (max-width: 768px) {
             .agency-promo-section {
-                height: 100vh;
+                height: auto; /* Allow section to grow so mobile page scroll never gets capped */
                 min-height: 100dvh;
                 min-height: 500px;
+                overflow: visible; /* Prevent clipping that can make the page appear non-scrollable */
             }
             .agency-get-in-touch {
                 display: none !important; /* hide "Follow on YouTube" on mobile */
