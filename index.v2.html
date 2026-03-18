@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IXL Studio - The Observer</title>
+  <style>
+    :root{
+      --page-bg:#5A3A47;
+      --header-height:88px;
+      --title-color:#ffffff;
+      --text-color:rgba(228,220,210,0.9);
+      --muted:rgba(228,220,210,0.7);
+      --purple:#8a53f7;
+    }
+    @media (min-width: 769px){
+      :root{ --header-height:140px; }
+    }
+
+    html{
+      scroll-behavior:smooth;
+      scroll-padding-top:var(--header-height);
+    }
+    body{
+      margin:0;
+      background:transparent;
+      color:#fff;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* Header */
+    .header{
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:9999;
+      height:var(--header-height);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 2rem;
+      pointer-events:auto;
+    }
+    .header-inner{
+      width:100%;
+      max-width:1200px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+    .header-logo-and-picker{
+      display:flex;
+      align-items:center;
+      gap:0.25rem;
+      flex-wrap:nowrap;
+    }
+    .logo-img-wrap{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:transparent;
+    }
+    .logo-image{
+      display:block;
+      height:40px;
+      width:auto;
+    }
+    @media (min-width: 769px){
+      .logo-image{ height:40px; } /* keep logo readable, not scaled aggressively */
+    }
+    .bg-bar{
+      display:flex;
+      align-items:center;
+      gap:0;
+    }
+    .bg-color-picker{
+      width:28px;
+      height:28px;
+      padding:0;
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:4px;
+      cursor:pointer;
+      background:transparent;
+    }
+    @media (max-width: 768px){
+      .bg-color-picker{ width:24px; height:24px; }
+      .header-inner{ justify-content:center; }
+      .nav-menu-wrap{ display:none; }
+    }
+
+    nav{ position:relative; }
+    .nav-menu-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .nav-menu{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      gap:1.25rem;
+      align-items:center;
+    }
+    .nav-menu a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      font-size:0.9rem;
+      white-space:nowrap;
+    }
+
+    /* Mobile menu */
+    .mobile-menu-btn{
+      width:40px;
+      height:40px;
+      border-radius:6px;
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(0,0,0,0.2);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .mobile-menu-btn span{
+      display:block;
+      width:18px;
+      height:2px;
+      background:#fff;
+      margin:3px 0;
+    }
+    @media (max-width: 768px){
+      .mobile-menu-btn{ display:flex; flex-direction:column; }
+      .nav-drawer{
+        position:fixed;
+        top:var(--header-height);
+        left:0; right:0;
+        background:rgba(0,0,0,0.88);
+        border-top:1px solid rgba(255,255,255,0.15);
+        transform:translateY(-10px);
+        opacity:0;
+        pointer-events:none;
+        transition:opacity .2s ease, transform .2s ease;
+        z-index:9998;
+        padding:1rem 1.25rem;
+      }
+      .nav-drawer.active{
+        opacity:1;
+        transform:translateY(0);
+        pointer-events:auto;
+      }
+      .nav-drawer ul{
+        list-style:none;
+        padding:0; margin:0;
+        display:flex;
+        flex-direction:column;
+        gap:1rem;
+      }
+    }
+
+    /* Background layers (scroll-safe: never block touch) */
+    .page-bg{
+      position:fixed;
+      inset:0;
+      background:var(--page-bg);
+      z-index:-2;
+      pointer-events:none;
+    }
+    .page-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.62);
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    /* Hero */
+    .hero{
+      min-height:100svh;
+      position:relative;
+      padding-top:var(--header-height);
+      overflow:visible; /* crucial: never clip page scrolling */
+    }
+    .hero-animated-background{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(800px 500px at 15% 20%, rgba(138,83,247,0.22), transparent 55%),
+        radial-gradient(650px 420px at 85% 28%, rgba(168,117,255,0.18), transparent 55%),
+        radial-gradient(700px 520px at 50% 78%, rgba(255,255,255,0.06), transparent 55%);
+    }
+    .hero-floating-elements{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+    }
+    .hero-floating-element{
+      position:absolute;
+      border:2px solid rgba(255,255,255,0.22);
+      border-radius:50%;
+      width:96px;
+      height:96px;
+      top:18%;
+      left:12%;
+      opacity:.85;
+      animation:floatHero 18s ease-in-out infinite;
+    }
+    .hero-floating-element:nth-child(2){
+      width:120px;
+      height:2px;
+      left:auto;
+      right:12%;
+      top:38%;
+      border:none;
+      background:linear-gradient(90deg, transparent, rgba(168,117,255,0.7), transparent);
+      opacity:.6;
+      border-radius:0;
+    }
+    @keyframes floatHero{
+      0%,100%{ transform:translateY(0) rotate(0deg); }
+      33%{ transform:translateY(-18px) rotate(10deg); }
+      66%{ transform:translateY(12px) rotate(-10deg); }
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:center;
+      padding:3rem 1.25rem 2.5rem;
+    }
+    .hero-grid{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:2rem;
+      align-items:start;
+    }
+    @media (min-width: 900px){
+      .hero-grid{
+        grid-template-columns: 1.1fr 0.9fr;
+        gap:3rem;
+        align-items:center;
+      }
+    }
+
+    /* Models block */
+    .models-stage{
+      position:relative;
+      min-height:420px;
+    }
+    .models-canvas-wrap{
+      position:relative;
+      height:420px;
+      width:100%;
+    }
+    .model-canvas{
+      width:100%;
+      height:100%;
+      display:block;
+      border-radius:8px;
+    }
+
+    .radio-and-image{
+      display:flex;
+      flex-direction:column;
+      gap:1.25rem;
+      align-items:center;
+      text-align:center;
+    }
+    .observer-image-wrapper img{
+      width:100%;
+      max-width:420px;
+      height:auto;
+      display:block;
+    }
+
+    .music-player{
+      width:100%;
+      max-width:420px;
+      display:flex;
+      flex-direction:column;
+      gap:.75rem;
+      align-items:center;
+    }
+    .music-player .title{
+      font-size:0.9rem;
+      color:rgba(255,255,255,0.85);
+    }
+    .music-controls{
+      display:flex;
+      gap:.8rem;
+      align-items:center;
+      justify-content:center;
+    }
+    .music-controls button{
+      width:44px; height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.22);
+      background:rgba(0,0,0,0.25);
+      color:#fff;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+
+    /* Doodles (shapes) */
+    .doodle{
+      position:absolute;
+      z-index:3;
+      pointer-events:none;
+      opacity:.2;
+    }
+    /* Doodles were tuned for the original longer page. In v2 the page is shorter,
+       so extremely large top:vh values create extra scrollable blank space after the footer.
+       These values keep the vibe while fitting within the v2 document height. */
+    .doodle-potion{ top:170vh; left:18%; opacity:.24; transform:rotate(3deg); }
+    .doodle-skull{ top:105vh; right:15%; opacity:.17; transform:rotate(-8deg); }
+    .doodle-lightning{ top:225vh; right:12%; opacity:.21; transform:rotate(22deg); }
+    .doodle-dice{ top:255vh; right:22%; opacity:.19; transform:rotate(-18deg); }
+    .doodle-circle1{ top:125vh; left:25%; opacity:.18; }
+    .doodle-circle2{ top:200vh; right:28%; opacity:.22; }
+    .doodle-cross{ top:160vh; right:20%; opacity:.14; transform:rotate(12deg); }
+    .doodle-dots{ top:210vh; left:22%; opacity:.2; transform:rotate(5deg); }
+    .doodle-zigzag{ top:240vh; right:16%; opacity:.17; transform:rotate(-8deg); }
+    .doodle-spiral{ top:190vh; left:26%; opacity:.15; transform:rotate(-30deg); }
+
+    /* Section scaffolding */
+    .section{
+      position:relative;
+      z-index:2;
+      padding:5rem 1.25rem;
+    }
+    .container{
+      max-width:900px;
+      margin:0 auto;
+    }
+
+    /* Black panel */
+    .observer-panel{
+      background:#0a0a0a;
+      max-width:640px;
+      margin:0 auto;
+      padding:2rem 1.5rem;
+      box-sizing:border-box;
+    }
+    .observer-panel p{
+      margin:0 0 1rem 0;
+      line-height:1.8;
+      color:rgba(228,220,210,0.85);
+      font-family:'Lora', Georgia, 'Times New Roman', serif;
+      text-align:left;
+    }
+    .observer-panel .bold-lines{
+      font-family:inherit;
+      font-weight:700;
+      color:#fff;
+      margin-bottom:1rem;
+      text-align:left;
+    }
+    .observer-panel .follow{
+      text-align:left;
+      font-family:inherit;
+      color:rgba(228,220,210,0.85);
+      margin-top:1rem;
+    }
+    .observer-panel .follow a{
+      color:var(--purple);
+      text-decoration:none;
+    }
+
+    /* Journal card */
+    .journal-card{
+      max-width:900px;
+      margin:0 auto;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      padding:1.5rem 1.25rem;
+      cursor:pointer;
+    }
+    .journal-card .tag{
+      display:inline-flex;
+      gap:.75rem;
+      align-items:center;
+      margin-bottom:.5rem;
+      font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight:800;
+      letter-spacing:2px;
+      font-size:1rem;
+    }
+    .journal-card h2{
+      margin:0 0 .75rem 0;
+      font-size:2rem;
+      font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing:0.1em;
+    }
+    .journal-card p{
+      margin:0;
+      font-size:1rem;
+      color:rgba(228,220,210,0.85);
+      font-family:'Lora', Georgia, 'Times New Roman', serif;
+    }
+
+    /* Previously + cards */
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(1, 1fr);
+      gap:1rem;
+      margin-top:2rem;
+    }
+    @media (min-width: 769px){
+      .card-grid{ grid-template-columns:repeat(2, 1fr); }
+    }
+    .article-card{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      padding:1.25rem;
+      text-decoration:none;
+      color:inherit;
+    }
+    .article-card .title{
+      font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight:900;
+      letter-spacing:0.06em;
+      margin-bottom:.5rem;
+      text-transform:uppercase;
+    }
+    .article-card .excerpt{
+      font-family:'Lora', Georgia, 'Times New Roman', serif;
+      color:rgba(228,220,210,0.85);
+      line-height:1.7;
+      margin:0;
+    }
+
+    /* Research */
+    .research-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:2rem;
+      align-items:start;
+      margin-top:2rem;
+    }
+    @media (min-width: 900px){
+      .research-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    .research-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+    }
+    .research-list li{
+      color:rgba(228,220,210,0.75);
+      font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight:500;
+    }
+    .moodboard-link{
+      display:inline-flex;
+      gap:.75rem;
+      align-items:center;
+      color:var(--purple);
+      text-decoration:none;
+      font-weight:700;
+      font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      border:1px solid rgba(255,255,255,0.12);
+      padding:.9rem 1rem;
+      background:rgba(255,255,255,0.04);
+    }
+
+    /* Footer */
+    .footer{
+      background:#000;
+      padding:2.5rem 1rem;
+      border-top:1px solid rgba(255,255,255,0.1);
+      text-align:center;
+    }
+    .footer .footer-logo{
+      font-weight:900;
+      letter-spacing:2px;
+      margin-bottom:1rem;
+    }
+    .footer .footer-text{
+      color:#888;
+      margin:0;
+      font-size:.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fixed background color (click-through so it never breaks scrolling) -->
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="page-overlay" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-logo-and-picker">
+        <div class="logo-container">
+          <a href="index.html" class="logo" style="text-decoration:none;">
+            <span class="logo-img-wrap">
+              <img src="hc.png" alt="IXL Studio Logo" class="logo-image">
+            </span>
+          </a>
+        </div>
+        <div class="bg-bar" role="group" aria-label="Page background color">
+          <input
+            type="color"
+            id="indexBgColorPicker"
+            class="bg-color-picker"
+            value="#5A3A47"
+            title="Choose page background color"
+            aria-label="Page background color"
+          >
+        </div>
+      </div>
+
+      <div class="nav-menu-wrap">
+        <nav aria-label="Main navigation">
+          <ul class="nav-menu">
+            <li><a href="#home">THE OBSERVER</a></li>
+            <li><a href="#project-echo">JOURNAL</a></li>
+            <li><a href="#devlog">SKGCHESS</a></li>
+            <li><a href="#research">RESEARCH</a></li>
+            <li><a href="#moodboard">MOODBOARD</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-controls="navDrawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <ul>
+      <li><a href="#home">THE OBSERVER</a></li>
+      <li><a href="#project-echo">JOURNAL</a></li>
+      <li><a href="#devlog">SKGCHESS</a></li>
+      <li><a href="#research">RESEARCH</a></li>
+      <li><a href="#moodboard">MOODBOARD</a></li>
+    </ul>
+  </div>
+
+  <main id="home" class="hero">
+    <div class="hero-animated-background" aria-hidden="true"></div>
+
+    <div class="hero-floating-elements" aria-hidden="true">
+      <div class="hero-floating-element"></div>
+      <div class="hero-floating-element"></div>
+    </div>
+
+    <!-- Shapes: doodles -->
+    <div class="doodle doodle-potion">
+      <svg viewBox="0 0 35 50" width="30" height="43" aria-hidden="true">
+        <path d="M12 5 L12 15 L5 40 Q5 45 17 45 Q30 45 30 40 L23 15 L23 5 Z" stroke="#8a53f7" stroke-width="2" fill="none"/>
+        <line x1="10" y1="5" x2="25" y2="5" stroke="#ffffff" stroke-width="2"/>
+        <ellipse cx="17" cy="35" rx="8" ry="5" fill="#8a53f7" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-skull">
+      <svg viewBox="0 0 40 45" width="35" height="40" aria-hidden="true">
+        <ellipse cx="20" cy="18" rx="15" ry="14" stroke="#ffffff" stroke-width="2" fill="none"/>
+        <circle cx="13" cy="16" r="4" fill="#8a53f7"/>
+        <circle cx="27" cy="16" r="4" fill="#8a53f7"/>
+        <path d="M15 30 L15 38 M20 30 L20 38 M25 30 L25 38" stroke="#ffffff" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-lightning">
+      <svg viewBox="0 0 30 50" width="25" height="42" aria-hidden="true">
+        <path d="M18 5 L8 22 L15 22 L10 45 L25 20 L17 20 L22 5 Z" stroke="#8a53f7" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-dice">
+      <svg viewBox="0 0 40 40" width="35" height="35" aria-hidden="true">
+        <rect x="5" y="5" width="30" height="30" rx="4" stroke="#ffffff" stroke-width="2" fill="none"/>
+        <circle cx="13" cy="13" r="2.5" fill="#8a53f7"/>
+        <circle cx="27" cy="13" r="2.5" fill="#8a53f7"/>
+        <circle cx="20" cy="20" r="2.5" fill="#8a53f7"/>
+        <circle cx="13" cy="27" r="2.5" fill="#8a53f7"/>
+        <circle cx="27" cy="27" r="2.5" fill="#8a53f7"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-circle1">
+      <svg viewBox="0 0 30 30" width="25" height="25" aria-hidden="true">
+        <circle cx="15" cy="15" r="10" stroke="#8a53f7" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-circle2">
+      <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true">
+        <circle cx="10" cy="10" r="6" fill="#ffffff" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-cross">
+      <svg viewBox="0 0 25 25" width="20" height="20" aria-hidden="true">
+        <line x1="5" y1="5" x2="20" y2="20" stroke="#8a53f7" stroke-width="2"/>
+        <line x1="20" y1="5" x2="5" y2="20" stroke="#8a53f7" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-dots">
+      <svg viewBox="0 0 30 10" width="25" height="8" aria-hidden="true">
+        <circle cx="5" cy="5" r="2" fill="#ffffff"/>
+        <circle cx="15" cy="5" r="2" fill="#ffffff"/>
+        <circle cx="25" cy="5" r="2" fill="#ffffff"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-zigzag">
+      <svg viewBox="0 0 50 20" width="40" height="16" aria-hidden="true">
+        <path d="M5 15 L15 5 L25 15 L35 5 L45 15" stroke="#8a53f7" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="doodle doodle-spiral">
+      <svg viewBox="0 0 35 35" width="28" height="28" aria-hidden="true">
+        <path d="M17 17 Q20 14 23 17 Q26 20 23 23 Q18 28 13 23 Q8 18 13 13 Q20 6 27 13" stroke="#ffffff" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <section class="hero-content">
+      <div class="hero-grid">
+        <!-- Left: models -->
+        <div class="models-stage">
+          <div class="models-canvas-wrap">
+            <div style="position:absolute; inset:0;">
+              <canvas id="agencyHumanoidCanvas" class="model-canvas"></canvas>
+            </div>
+            <div style="position:absolute; inset:0; pointer-events:none; display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:60%; height:60%; opacity:.85;">
+                <canvas id="agencyPriestCanvas" class="model-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: radio + observer image -->
+        <div class="radio-and-image">
+          <div class="music-player" aria-label="Radio player">
+            <div class="title" id="agencyTrackTitle">Maternal Heart</div>
+            <div class="music-controls">
+              <button id="agencyPrevBtn" aria-label="Previous track">◀</button>
+              <button id="agencyPlayBtn" aria-label="Play/Pause">▶</button>
+              <button id="agencyNextBtn" aria-label="Next track">▶</button>
+            </div>
+          </div>
+
+          <div class="observer-image-wrapper">
+            <img src="theobserver.png" alt="The Observer">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Black panel (Things you need to know) -->
+  <section class="section" aria-label="Observer intro">
+    <div class="observer-panel">
+      <p class="bold-lines">
+        A society sunk in numbness.<br>
+        A command from the far future to change things.
+      </p>
+
+      <p>
+        Explore the inside of a human brain and rewrite the narrative.<br><br>
+        Welcome to
+      </p>
+
+      <img src="theobserver.png" alt="The Observer" style="width:100%; max-width:420px; height:auto; display:block; margin:10px auto 0;">
+
+      <div class="follow">
+        Follow on <em style="color:#b794f6;">Journal</em><br>
+        or visit the
+        <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer">YouTube channel</a>.
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL window -->
+  <section id="project-echo" class="section" style="padding-top:2.5rem;">
+    <div class="container">
+      <div class="journal-card" onclick="window.location.href='inbetween.html'" role="button" tabindex="0" aria-label="Open Journal">
+        <div class="tag">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#8a53f7;opacity:.9;"></span>
+          <span>JOURNAL</span>
+        </div>
+        <h2>THE STORY UNFOLDS</h2>
+        <p><em>Making of THE OBSERVER.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Previously -->
+  <section id="devlog" class="section" style="padding-top:1.5rem;">
+    <div class="container">
+      <div style="text-align:left; margin:0 auto; max-width:900px;">
+        <div style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; font-size:1.4rem; font-weight:900; letter-spacing:.06em;">Previously</div>
+      </div>
+
+      <div class="card-grid" id="articlesGrid">
+        <a class="article-card" href="skgchess.html">
+          <div class="title">SKGCHESS</div>
+          <p class="excerpt">This is the story of skgchess.</p>
+        </a>
+        <a class="article-card" href="inbetween.html">
+          <div class="title">IN BETWEEN</div>
+          <p class="excerpt">A bridge between thoughts: making, meaning, and iteration.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research + Moodboard -->
+  <section id="research" class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div style="text-align:left; max-width:900px; margin:0 auto;">
+        <div style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; font-size:1.4rem; font-weight:900; letter-spacing:.06em;">Research</div>
+      </div>
+
+      <div class="research-grid">
+        <div>
+          <ul class="research-list">
+            <li>The Theory of Fun for Game Design</li>
+            <li>History of Art</li>
+          </ul>
+        </div>
+
+        <div id="moodboard">
+          <a class="moodboard-link" href="moodboard.html">View Moodboard <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">IXLSTUDIO</div>
+      <p class="footer-text">Crafting digital stories. © 2026 ixlstudio.com. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* Background picker: persist selected color into CSS variable --page-bg */
+    (function(){
+      var picker = document.getElementById('indexBgColorPicker');
+      if (!picker) return;
+      var key = 'index-bg';
+      var saved = localStorage.getItem(key);
+      if (saved) {
+        document.documentElement.style.setProperty('--page-bg', saved);
+        picker.value = saved;
+      }
+      picker.addEventListener('input', function(){
+        document.documentElement.style.setProperty('--page-bg', picker.value);
+        localStorage.setItem(key, picker.value);
+      });
+    })();
+
+    /* Mobile drawer: simple toggle, never locks scroll (so scrolling always works) */
+    (function(){
+      var btn = document.getElementById('mobileMenuBtn');
+      var drawer = document.getElementById('navDrawer');
+      if (!btn || !drawer) return;
+
+      btn.addEventListener('click', function(){
+        var active = drawer.classList.toggle('active');
+        drawer.setAttribute('aria-hidden', active ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', active ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', function(e){
+        if (!drawer.classList.contains('active')) return;
+        if (drawer.contains(e.target) || btn.contains(e.target)) return;
+        drawer.classList.remove('active');
+        drawer.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+      });
+    })();
+
+    /* Audio player: small, scroll-safe (no scroll locking) */
+    (function(){
+      var audio = document.createElement('audio');
+      audio.preload = 'none';
+      audio.volume = 0.4;
+
+      var playBtn = document.getElementById('agencyPlayBtn');
+      var prevBtn = document.getElementById('agencyPrevBtn');
+      var nextBtn = document.getElementById('agencyNextBtn');
+      var titleEl = document.getElementById('agencyTrackTitle');
+      if (!playBtn || !prevBtn || !nextBtn || !titleEl) return;
+
+      var playlist = [
+        { title:'Maternal Heart', src:'Maternal Heart.mp3' },
+        { title:'Citizen Kane - Blackrain (Instrumental)', src:'Citizen Kane - Blackrain (Instrumental).mp3' }
+      ];
+
+      var idx = 0;
+      var playing = false;
+
+      function loadTrack(i){
+        idx = (i + playlist.length) % playlist.length;
+        audio.src = playlist[idx].src;
+        titleEl.textContent = playlist[idx].title;
+      }
+
+      function setPlayUI(){
+        playBtn.textContent = playing ? '❚❚' : '▶';
+      }
+
+      function togglePlay(){
+        if (!audio.src) loadTrack(0);
+        if (playing) {
+          audio.pause();
+          playing = false;
+        } else {
+          audio.play();
+          playing = true;
+        }
+        setPlayUI();
+      }
+
+      prevBtn.addEventListener('click', function(){
+        loadTrack(idx - 1);
+        if (playing) audio.play();
+      });
+      nextBtn.addEventListener('click', function(){
+        loadTrack(idx + 1);
+        if (playing) audio.play();
+      });
+      playBtn.addEventListener('click', togglePlay);
+
+      audio.addEventListener('ended', function(){ nextBtn.click(); });
+      loadTrack(0);
+      setPlayUI();
+      document.body.appendChild(audio);
+    })();
+  </script>
+
+  <!-- Three.js models (simplified: auto-rotate, no drag, scroll-safe) -->
+  <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    function createRenderer(canvas){
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      return renderer;
+    }
+
+    function setupScene(canvas, glbUrl){
+      if (!canvas) return;
+
+      const renderer = createRenderer(canvas);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+      dir.position.set(2,3,2);
+      scene.add(dir);
+
+      const purple = new THREE.PointLight(0x8a53f7, 0.6, 10);
+      purple.position.set(-1.5,0,2);
+      scene.add(purple);
+
+      function resize(){
+        const w = canvas.clientWidth || 300;
+        const h = canvas.clientHeight || 400;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      camera.position.set(0, 1.2, 4.5);
+      camera.lookAt(0, 1, 0);
+
+      const loader = new GLTFLoader();
+      let model = null;
+
+      loader.load(glbUrl, function(gltf){
+        model = gltf.scene;
+        scene.add(model);
+
+        // Normalize scale so it looks good in the frame.
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        const scale = 2.2 / maxDim;
+        model.scale.setScalar(scale);
+        model.position.y -= box.min.y; // roughly ground it
+      });
+
+      function animate(){
+        requestAnimationFrame(animate);
+        if (model) model.rotation.y += 0.003;
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    // Humanoid model: uses the existing GLB name from index.html
+    const humanoidCanvas = document.getElementById('agencyHumanoidCanvas');
+    setupScene(humanoidCanvas, 'HUMANOID_02_Linux.glb');
+
+    // Priest model: uses the idle GLB from index.html (simplified)
+    const priestCanvas = document.getElementById('agencyPriestCanvas');
+    setupScene(priestCanvas, 'Untitled2_idle.glb');
+  </script>
+</body>
+</html>
+
