@@ -5679,6 +5679,25 @@
         .project-echo-link {
             position: relative;
         }
+        /* Desktop: show Lilith model under the JOURNAL card */
+        .journal-lilith-wrap {
+            display: none;
+            max-width: 900px;
+            margin: 1.25rem auto 0;
+            padding: 0 4rem;
+            box-sizing: border-box;
+        }
+        .journal-lilith-wrap .agency-model-container {
+            width: clamp(220px, 22vw, 320px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 769px) {
+            .journal-lilith-wrap { display: block; }
+        }
+        @media (max-width: 768px) {
+            .journal-lilith-wrap { display: none; }
+        }
         @media (max-width: 768px) {
             .project-lilith-image {
                 display: none;
@@ -22739,8 +22758,8 @@
         }
         .research-media-col {
             position: absolute;
-            left: -260px; /* pull out of flow so it doesn't push the text right */
-            top: 0;
+            left: -330px; /* more left on desktop */
+            top: -22px;   /* slightly up on desktop */
             width: 240px;
             display: flex;
             flex-direction: column;
@@ -23081,16 +23100,6 @@
 
             <div class="agency-collage">
 
-                <div class="agency-collage-side agency-collage-right">
-
-                    <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
-                        <canvas id="agencyPriestCanvas"></canvas>
-                    </div>
-
-                </div>
-                
-                
-
             </div>
 
         </section>
@@ -23361,6 +23370,12 @@
                         <p class="project-echo-excerpt"><em> Making of THE OBSERVER.</em></p> 
                         <span class="project-echo-cta">The story unfolds <span class="arrow">→</span></span>
                     </div>
+                </div>
+            </div>
+
+            <div class="journal-lilith-wrap" aria-label="Lilith model">
+                <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
+                    <canvas id="agencyPriestCanvas"></canvas>
                 </div>
             </div>
         </section>
@@ -23733,8 +23748,23 @@
                 }
             }, { passive: true });
             
+            // Pause rendering when the humanoid isn't visible to reduce page lag
+            let rafId = 0;
+            let isVisible = true;
+            let visibilityObserver = null;
+            function startLoop() {
+                if (rafId) return;
+                rafId = requestAnimationFrame(animate);
+            }
+            function stopLoop() {
+                if (!rafId) return;
+                cancelAnimationFrame(rafId);
+                rafId = 0;
+            }
+
             function animate() {
-                requestAnimationFrame(animate);
+                rafId = requestAnimationFrame(animate);
+                if (!isVisible) return;
                 
                 if (!hasInteracted) {
                     autoRotationY += 0.003;
@@ -23753,7 +23783,20 @@
                 
                 renderer.render(scene, camera);
             }
-            animate();
+
+            // Observe visibility of the model container (moved near Research)
+            if ('IntersectionObserver' in window) {
+                visibilityObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        isVisible = !!entry.isIntersecting;
+                        if (isVisible) startLoop();
+                        else stopLoop();
+                    });
+                }, { threshold: 0.05 });
+                visibilityObserver.observe(container);
+            }
+
+            startLoop();
             
             window.addEventListener('resize', function() {
                 const w = container.clientWidth || 350;
