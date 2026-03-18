@@ -24140,9 +24140,6 @@
             }
             
             function updateControlHints() {
-                const hints = container.querySelector('.lilith-controls');
-                if (!hints) return;
-                
                 const stateText = {
                     idle: 'W to walk',
                     walk: 'SHIFT for run | SPACE for jump',
@@ -24150,7 +24147,15 @@
                     jump: 'jumping...'
                 };
                 
-                hints.textContent = isActive ? stateText[currentState] : 'Click to walk Lilith';
+                const nextText = isActive ? stateText[currentState] : 'Click to walk Lilith';
+
+                // Right-of-lilith vertical label (outside the canvas container)
+                const hints = document.querySelector('.journal-model--lilith .lilith-controls');
+                if (hints) hints.textContent = nextText;
+
+                // Modal bubble dynamic text
+                const modalSub = document.querySelector('#lilithModal .lilith-modal-comic-sub');
+                if (modalSub) modalSub.textContent = nextText;
             }
             
             // The Lilith hint element is created in HTML (not dynamically here)
@@ -24170,6 +24175,14 @@
                 let isOpen = false;
                 let bubbleSide = 0;
 
+                function resizeLilith() {
+                    const w = container.clientWidth || 300;
+                    const h = container.clientHeight || 400;
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h);
+                }
+
                 function openModal() {
                     if (isOpen) return;
                     isOpen = true;
@@ -24181,6 +24194,10 @@
                     stage.appendChild(container);
                     modal.classList.add('is-open');
                     modal.setAttribute('aria-hidden', 'false');
+                    requestAnimationFrame(() => {
+                        resizeLilith();
+                        updateControlHints();
+                    });
                 }
 
                 function closeModal() {
@@ -24193,6 +24210,10 @@
                         placeholder.parentNode.removeChild(placeholder);
                     }
                     placeholder = null;
+                    requestAnimationFrame(() => {
+                        resizeLilith();
+                        updateControlHints();
+                    });
                 }
 
                 // Open on lilith click (same click already activates controls)
