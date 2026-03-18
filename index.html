@@ -5759,6 +5759,8 @@
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.78);
+            opacity: 0;
+            transition: opacity 320ms cubic-bezier(.2,.8,.2,1);
         }
         .lilith-modal-content {
             position: relative;
@@ -5774,6 +5776,33 @@
             justify-content: flex-start;
             padding: 1rem 1rem 1.25rem;
             box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(14px) scale(0.985);
+            transition:
+                opacity 320ms cubic-bezier(.2,.8,.2,1),
+                transform 380ms cubic-bezier(.2,.8,.2,1);
+            overflow: hidden;
+        }
+        .lilith-modal.is-open .lilith-modal-backdrop { opacity: 1; }
+        .lilith-modal.is-open .lilith-modal-content { opacity: 1; transform: translateY(0) scale(1); }
+
+        .lilith-modal-bgvideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.8) contrast(1.05) brightness(0.55);
+            transform: scale(1.03);
+            z-index: 0;
+        }
+        .lilith-modal-bgoverlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(60% 50% at 50% 55%, rgba(0,0,0,0.12), rgba(0,0,0,0.75)),
+                linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.6));
+            z-index: 1;
         }
         /* Bubble is positioned relative to the model area (center of modal stage) */
         .lilith-modal-comic {
@@ -5782,10 +5811,10 @@
             top: 50%;
             transform:
                 translate(-50%, -50%)
-                translate(clamp(-170px, -14vw, -110px), clamp(-215px, -18vh, -140px));
+                translate(clamp(-170px, -14vw, -110px), clamp(-120px, -10vh, -70px));
             margin: 0;
             pointer-events: none;
-            z-index: 2;
+            z-index: 3;
         }
         /* Comic "cloud" bubble */
         .lilith-modal-comic-bubble {
@@ -5837,11 +5866,39 @@
             justify-content: center;
             overflow: hidden; /* keep model strictly inside modal */
             position: relative;
+            z-index: 2;
         }
         .lilith-modal-stage .agency-model-container {
             width: min(520px, 80vw) !important;
             height: min(640px, 78vh) !important;
             aspect-ratio: auto !important;
+        }
+
+        /* PNG trigger button (next to Lilith on desktop) */
+        .lilith-modal-trigger {
+            position: absolute;
+            left: -22px;
+            top: 14px;
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            z-index: 20;
+        }
+        .lilith-modal-trigger img {
+            width: 96px;
+            height: auto;
+            display: block;
+            image-rendering: auto;
+            filter: drop-shadow(0 12px 26px rgba(0,0,0,0.45));
+            transition: transform 220ms ease, filter 220ms ease;
+        }
+        .lilith-modal-trigger:hover img {
+            transform: translateY(-2px) scale(1.02);
+            filter: drop-shadow(0 16px 30px rgba(0,0,0,0.55));
+        }
+        @media (max-width: 768px) {
+            .lilith-modal-trigger { display: none; }
         }
         @media (min-width: 769px) {
             .journal-lilith-wrap { display: block; }
@@ -23533,6 +23590,9 @@
                         </div>
                     </div>
                     <div class="journal-model journal-model--lilith">
+                        <button class="lilith-modal-trigger" id="lilithModalTrigger" type="button" aria-label="Open Lilith">
+                            <img src="lilithbg.png" alt="Open Lilith" />
+                        </button>
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
@@ -24166,6 +24226,7 @@
             (function initLilithModal() {
                 const modal = document.getElementById('lilithModal');
                 const stage = document.getElementById('lilithModalStage');
+                const trigger = document.getElementById('lilithModalTrigger');
                 if (!modal || !stage) return;
                 let placeholder = null;
                 let isOpen = false;
@@ -24222,10 +24283,12 @@
                     });
                 }
 
-                // Open on lilith click (same click already activates controls)
-                canvas.addEventListener('click', function() {
-                    openModal();
-                });
+                // Open only via PNG trigger
+                if (trigger) {
+                    trigger.addEventListener('click', function() {
+                        openModal();
+                    });
+                }
 
                 // Close on backdrop / close button
                 modal.addEventListener('click', function(e) {
@@ -24545,6 +24608,10 @@
     <div class="lilith-modal" id="lilithModal" aria-hidden="true">
         <div class="lilith-modal-backdrop" data-lilith-close="1"></div>
         <div class="lilith-modal-content" role="dialog" aria-modal="true" aria-label="Lilith">
+            <video class="lilith-modal-bgvideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                <source src="https://cdn.coverr.co/videos/coverr-soft-smoke-4619/1080p.mp4" type="video/mp4">
+            </video>
+            <div class="lilith-modal-bgoverlay" aria-hidden="true"></div>
             <div class="lilith-modal-comic" aria-hidden="true">
                 <div class="lilith-modal-comic-bubble">
                     <div class="lilith-modal-comic-sub">Click to walk Lilith</div>
