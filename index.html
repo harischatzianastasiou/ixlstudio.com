@@ -22720,7 +22720,7 @@
             padding: 0 4rem 0; /* Same as .articles-section */
             background: transparent !important;
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* allow left-positioned model next to text */
         }
         .research-container {
             max-width: 900px; /* Same as .articles-container */
@@ -22728,6 +22728,58 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start; /* Left-align like Articles/Features */
+        }
+
+        /* Desktop: keep research text position, place model beside without pushing */
+        .research-layout {
+            width: 100%;
+            position: relative;
+            display: block;
+            box-sizing: border-box;
+        }
+        .research-media-col {
+            position: absolute;
+            left: -260px; /* pull out of flow so it doesn't push the text right */
+            top: 0;
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .research-model-wrapper {
+            width: 100%;
+            max-width: 240px;
+        }
+        .research-text-col {
+            width: 100%;
+        }
+
+        /* The follow link was absolute/rotated in the Agency hero; in Research it must be normal flow */
+        .research-section .agency-get-in-touch {
+            position: static;
+            left: auto;
+            top: auto;
+            transform: none;
+            transform-origin: initial;
+            z-index: auto;
+        }
+
+        @media (max-width: 768px) {
+            .research-layout {
+                display: flex;
+                flex-direction: column;
+            }
+            .research-text-col { order: 1; }
+            .research-media-col {
+                position: static;
+                order: 2; /* model comes after research text on mobile */
+                width: 100%;
+                max-width: 420px;
+            }
+            .research-model-wrapper {
+                max-width: 100%;
+            }
         }
         .research-section .section-header {
             text-align: left;
@@ -22982,9 +23034,7 @@
 
         <section id="agency" class="agency-promo-section">
 
-            <!-- Vertical "Follow on YouTube" on the left -->
-
-            <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="agency-get-in-touch">Follow on YouTube</a>
+            <!-- Follow link moved next to Research -->
 
             <!-- Central content: tagline, headline, description -->
 
@@ -23030,14 +23080,6 @@
             <!-- Image stacks: left and right columns, each with base + overlapping peek card -->
 
             <div class="agency-collage">
-
-                <div class="agency-collage-side agency-collage-left">
-
-                    <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
-                        <canvas id="agencyHumanoidCanvas"></canvas>
-                    </div>
-
-                </div>
 
                 <div class="agency-collage-side agency-collage-right">
 
@@ -23502,20 +23544,36 @@
         <!-- Research section: 4 columns in one row -->
         <section id="research" class="research-section">
             <div class="research-container">
-                <div class="section-header">
-                    <h2 class="section-title">Research</h2>
-                </div>
-                <div class="research-grid">
-                    <div class="research-col">
-                        <!-- <h3 class="research-col-title">Books</h3> -->
-                        <ul class="research-list">
-                            <li class="research-list-item">The Theory of Fun for Game Design</li>
-                            <li class="research-list-item">History of Art</li>
-                        </ul>
+                <div class="research-layout">
+                    <div class="research-media-col">
+                        <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="agency-get-in-touch">Follow on YouTube</a>
+
+                        <div class="research-model-wrapper">
+                            <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
+                                <canvas id="agencyHumanoidCanvas"></canvas>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div id="moodboard">
-                    <a href="moodboard.html" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
+
+                    <div class="research-text-col">
+                        <div class="section-header">
+                            <h2 class="section-title">Research</h2>
+                        </div>
+
+                        <div class="research-grid">
+                            <div class="research-col">
+                                <!-- <h3 class="research-col-title">Books</h3> -->
+                                <ul class="research-list">
+                                    <li class="research-list-item">The Theory of Fun for Game Design</li>
+                                    <li class="research-list-item">History of Art</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="moodboard">
+                            <a href="moodboard.html" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
