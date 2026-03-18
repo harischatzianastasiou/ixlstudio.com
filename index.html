@@ -5743,6 +5743,8 @@
             border-radius: 0;
             padding: 0;
             white-space: nowrap;
+            pointer-events: none; /* never block canvas interactions */
+            z-index: 10;
         }
         @media (min-width: 769px) {
             .journal-lilith-wrap { display: block; }
@@ -23436,6 +23438,7 @@
                     <div class="journal-model journal-model--lilith">
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
                             <canvas id="agencyPriestCanvas"></canvas>
+                            <div class="lilith-controls" aria-hidden="true">Click to walk Lilith</div>
                         </div>
                     </div>
                 </div>
@@ -24050,12 +24053,7 @@
                 hints.textContent = isActive ? stateText[currentState] : 'Click to walk Lilith';
             }
             
-            const controlHints = document.createElement('div');
-            controlHints.className = 'lilith-controls';
-            controlHints.textContent = 'Click to walk Lilith';
-            controlHints.style.cssText = 'pointer-events:none;white-space:nowrap;z-index:10;';
-            container.style.position = 'relative';
-            container.appendChild(controlHints);
+            // The Lilith hint element is created in HTML (not dynamically here)
             
             canvas.addEventListener('click', function() {
                 isActive = true;
