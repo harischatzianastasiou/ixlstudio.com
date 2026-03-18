@@ -5478,7 +5478,7 @@
             position: absolute;
             left: 50%;
             top: 15%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%); /* Desktop: avoid vertical shift differences across browsers */
             max-width: 900px;
             text-align: center;
             padding: 0 2rem;
@@ -5488,13 +5488,14 @@
         @media (min-width: 769px) {
             .agency-center {
                 top: 15%;
-                transform: translate(-50%, -50%);
+                transform: translateX(-50%); /* Desktop: stable horizontal centering only */
             }
         }
         /* Mobile: push Observer + radio even further down (without changing desktop layout) */
         @media (max-width: 768px) {
             .agency-center {
                 top: 70%; /* move hero content lower on mobile */
+                transform: translate(-50%, -50%); /* Mobile: keep original vertical centering */
             }
         }
         .agency-tagline {
