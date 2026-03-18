@@ -5951,9 +5951,10 @@
             .journal-follow-vertical {
                 position: static;
                 transform: none;
-                writing-mode: vertical-rl;
+                writing-mode: horizontal-tb; /* mobile: horizontal label */
                 margin-top: 0.5rem;
                 margin-bottom: 0.5rem;
+                letter-spacing: 0.14em;
             }
         }
         @media (max-width: 768px) {
@@ -22897,7 +22898,7 @@
         /* YouTube section: mobile-friendly so black panel and text don’t overflow */
         @media (max-width: 768px) {
             .hero .youtube-section-content {
-                padding: 1.5rem 1rem; /* Less padding on small screens so content fits */
+                padding: 4.25rem 1rem 1.5rem; /* push black panel further down on mobile */
             }
             .youtube-section-black-panel {
                 padding: 1.5rem 1rem; /* Tighter horizontal padding so text isn’t flush to edges */
