@@ -5723,6 +5723,27 @@
         .journal-model .agency-model-container {
             width: 100%;
         }
+        .journal-model--lilith {
+            position: relative;
+        }
+        /* Vertical "Click to walk Lilith" label beside lilith (desktop) */
+        .journal-model--lilith .lilith-controls {
+            position: absolute;
+            right: -1.6rem;
+            top: 50%;
+            transform: translate(100%, -50%) rotate(90deg);
+            transform-origin: center center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #B0B0B0;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
         @media (min-width: 769px) {
             .journal-lilith-wrap { display: block; }
         }
@@ -24032,7 +24053,7 @@
             const controlHints = document.createElement('div');
             controlHints.className = 'lilith-controls';
             controlHints.textContent = 'Click to walk Lilith';
-            controlHints.style.cssText = 'position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(228,220,210,0.7);background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:4px;pointer-events:none;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,sans-serif;z-index:10;';
+            controlHints.style.cssText = 'pointer-events:none;white-space:nowrap;z-index:10;';
             container.style.position = 'relative';
             container.appendChild(controlHints);
             
