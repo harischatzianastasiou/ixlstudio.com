@@ -5689,7 +5689,7 @@
         .journal-lilith-wrap {
             display: none;
             max-width: 900px;
-            margin: 1.25rem auto 0;
+            margin: 6.5rem auto 0; /* more gap from the JOURNAL window */
             padding: 0 4rem;
             box-sizing: border-box;
         }
@@ -5785,7 +5785,7 @@
             height: min(720px, calc(100vh - 2rem));
             margin: 1rem auto;
             background: #000; /* fallback if video can't play */
-            background-image: url('lilithbg.png'); /* fallback poster */
+            background-image: url('lilithbg.jpg'); /* fallback poster */
             background-size: cover;
             background-position: center;
             border: 1px solid rgba(255,255,255,0.12);
@@ -5912,6 +5912,10 @@
             background: transparent;
             display: block;
             outline: none;
+        }
+        /* Make the Lilith trigger less tall than the 3D model cards */
+        #lilithModalTrigger {
+            aspect-ratio: 3 / 5 !important;
         }
         .lilith-modal-trigger:focus,
         .lilith-modal-trigger:focus-visible {
@@ -23623,7 +23627,7 @@
                     </div>
                     <div class="journal-model journal-model--lilith">
                         <button class="lilith-modal-trigger agency-collage-card agency-collage-base agency-model-container" id="lilithModalTrigger" type="button" aria-label="Open Lilith">
-                            <img src="lilithbg.png" alt="Open Lilith" />
+                            <img src="lilithbg.jpg" alt="Open Lilith" />
                         </button>
                     </div>
                 </div>
