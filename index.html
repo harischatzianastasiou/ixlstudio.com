@@ -5940,7 +5940,21 @@
             .journal-lilith-wrap { display: block; }
         }
         @media (max-width: 768px) {
-            .journal-lilith-wrap { display: none; }
+            /* On mobile we want the humanoid model after the "Previously / SKGCHESS" area */
+            .journal-lilith-wrap { display: block; margin-top: 2.25rem; padding: 0 1rem; }
+            .journal-models-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            .journal-model--lilith { display: none; } /* mobile: show only humanoid */
+            .journal-follow-vertical {
+                position: static;
+                transform: none;
+                writing-mode: vertical-rl;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
         }
         @media (max-width: 768px) {
             .project-lilith-image {
@@ -22944,7 +22958,7 @@
 
         @media (max-width: 768px) {
             .observer-image-wrapper {
-                margin-top: 1.6rem; /* push observer.png further down on mobile */
+                margin-top: 4rem; /* push observer.png further down on mobile */
             }
         }
 
