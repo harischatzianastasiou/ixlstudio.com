@@ -5480,8 +5480,14 @@
             top: 15%;
             transform: translateX(-50%); /* Desktop: avoid vertical shift differences across browsers */
             max-width: 900px;
+            width: min(900px, calc(100% - 4rem)); /* stable width so centering never drifts */
             text-align: center;
             padding: 0 2rem;
+            margin: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* keep radio + observer perfectly centered */
             z-index: 5;
         }
         /* Desktop: keep around the same height */
@@ -22931,6 +22937,7 @@
         .observer-image-wrapper {
             max-width: 800px;
             margin: 0.5rem auto 0; /* small gap under logo region */
+            width: 100%;
         }
         .observer-image-wrapper img {
             display: block;
@@ -24287,9 +24294,15 @@
                     requestAnimationFrame(() => {
                         modal.classList.add('is-open');
                         isActive = true;
-                        canvas.focus();
+                        // Don't focus the canvas (can cause page scroll jumps). We capture keys globally while modal is open.
                         resizeLilith();
                         updateControlHints();
+                        const vid = modal.querySelector('.lilith-modal-bgvideo');
+                        if (vid) {
+                            try { vid.currentTime = 0; } catch (e) {}
+                            const p = vid.play();
+                            if (p && typeof p.catch === 'function') p.catch(() => {});
+                        }
                     });
                 }
 
@@ -24299,6 +24312,10 @@
                     modal.classList.remove('is-open');
                     modal.setAttribute('aria-hidden', 'true');
                     isActive = false;
+                    const vid = modal.querySelector('.lilith-modal-bgvideo');
+                    if (vid) {
+                        try { vid.pause(); } catch (e) {}
+                    }
                     // allow close animation to finish, then unmount
                     setTimeout(() => {
                         modal.classList.remove('is-mounted');
@@ -24632,7 +24649,7 @@
         <div class="lilith-modal-backdrop" data-lilith-close="1"></div>
         <div class="lilith-modal-content" role="dialog" aria-modal="true" aria-label="Lilith">
             <video class="lilith-modal-bgvideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-                <source src="eggs.mp4" type="video/mp4">
+                <source src="eggs.mp4#t=0.001" type="video/mp4">
             </video>
             <div class="lilith-modal-bgoverlay" aria-hidden="true"></div>
             <div class="lilith-modal-comic" aria-hidden="true">
