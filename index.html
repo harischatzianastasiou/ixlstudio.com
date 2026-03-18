@@ -5775,15 +5775,18 @@
             padding: 1rem 1rem 1.25rem;
             box-sizing: border-box;
         }
+        /* Bubble is positioned relative to the model area (center of modal stage) */
         .lilith-modal-comic {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 0.35rem 0 0.65rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform:
+                translate(-50%, -50%)
+                translate(clamp(-220px, -18vw, -140px), clamp(-260px, -22vh, -170px));
+            margin: 0;
             pointer-events: none;
+            z-index: 2;
         }
-        .lilith-modal.is-open.lilith-bubble-left .lilith-modal-comic { justify-content: flex-start; }
-        .lilith-modal.is-open.lilith-bubble-right .lilith-modal-comic { justify-content: flex-end; }
         /* Comic "cloud" bubble */
         .lilith-modal-comic-bubble {
             position: relative;
@@ -5798,8 +5801,7 @@
             max-width: min(620px, 92%);
             text-align: center;
         }
-        .lilith-modal.is-open.lilith-bubble-left .lilith-modal-comic-bubble { margin-left: 1.25rem; }
-        .lilith-modal.is-open.lilith-bubble-right .lilith-modal-comic-bubble { margin-right: 1.25rem; }
+        /* (No left/right alternating; bubble always sits above-left of Lilith) */
         .lilith-modal-comic-bubble::before,
         .lilith-modal-comic-bubble::after {
             content: "";
@@ -5834,6 +5836,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden; /* keep model strictly inside modal */
+            position: relative;
         }
         .lilith-modal-stage .agency-model-container {
             width: min(520px, 80vw) !important;
@@ -24170,7 +24173,6 @@
                 if (!modal || !stage) return;
                 let placeholder = null;
                 let isOpen = false;
-                let bubbleSide = 0;
 
                 function resizeLilith() {
                     const w = container.clientWidth || 300;
@@ -24178,8 +24180,8 @@
                     const modalOpen = modal.classList.contains('is-open');
                     if (modalOpen) {
                         // Taller canvas in modal needs different framing to keep Lilith centered
-                        camera.position.set(0, 1.55, 3.15);
-                        camera.lookAt(0, 1.15, 0);
+                        camera.position.set(0, 1.05, 3.6);
+                        camera.lookAt(0, 0.78, 0);
                     } else {
                         camera.position.copy(defaultCameraPos);
                         camera.lookAt(defaultLookAt);
@@ -24192,9 +24194,6 @@
                 function openModal() {
                     if (isOpen) return;
                     isOpen = true;
-                    bubbleSide = (bubbleSide + 1) % 2;
-                    modal.classList.toggle('lilith-bubble-left', bubbleSide === 0);
-                    modal.classList.toggle('lilith-bubble-right', bubbleSide === 1);
                     // Modal should be immediately "ready to walk"
                     isActive = true;
                     placeholder = document.createComment('lilith-modal-placeholder');
