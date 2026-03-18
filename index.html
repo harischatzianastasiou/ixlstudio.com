@@ -24512,14 +24512,29 @@
             function togglePlay() {
                 if (isPlaying) {
                     audio.pause();
+                    isPlaying = false;
                     playIcon.style.display = 'block';
                     pauseIcon.style.display = 'none';
+                    return;
+                }
+
+                // Try to play; only mark playing on success
+                const p = audio.play();
+                if (p && typeof p.then === 'function') {
+                    p.then(() => {
+                        isPlaying = true;
+                        playIcon.style.display = 'none';
+                        pauseIcon.style.display = 'block';
+                    }).catch(() => {
+                        isPlaying = false;
+                        playIcon.style.display = 'block';
+                        pauseIcon.style.display = 'none';
+                    });
                 } else {
-                    audio.play();
+                    isPlaying = true;
                     playIcon.style.display = 'none';
                     pauseIcon.style.display = 'block';
                 }
-                isPlaying = !isPlaying;
             }
             
             function nextTrack() {
@@ -24534,7 +24549,12 @@
                 if (isPlaying) audio.play();
             }
             
-            playBtn.addEventListener('click', togglePlay);
+            // Use exactly ONE gesture handler (avoid pointerup+click double-toggling on mobile)
+            if (window.PointerEvent) {
+                playBtn.addEventListener('pointerup', function(e) { e.preventDefault(); e.stopPropagation(); togglePlay(); });
+            } else {
+                playBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); togglePlay(); });
+            }
             nextBtn?.addEventListener('click', nextTrack);
             prevBtn?.addEventListener('click', prevTrack);
             audio.addEventListener('ended', nextTrack);
