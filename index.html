@@ -69,7 +69,7 @@
     <!-- Google Fonts: DM Sans for headline (rounded, bold); clean sans for tagline/body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Permanent+Marker&family=Comic+Neue:wght@700;800;900&family=Bangers&display=swap" rel="stylesheet">
 
 
 
@@ -5745,6 +5745,106 @@
             white-space: nowrap;
             pointer-events: none; /* never block canvas interactions */
             z-index: 10;
+        }
+
+        /* Lilith fullscreen modal */
+        .lilith-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+        }
+        .lilith-modal.is-open { display: block; }
+        .lilith-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+        }
+        .lilith-modal-content {
+            position: relative;
+            width: min(980px, calc(100vw - 2rem));
+            height: min(720px, calc(100vh - 2rem));
+            margin: 1rem auto;
+            background: rgba(10, 10, 10, 0.92);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem 1rem 1.25rem;
+            box-sizing: border-box;
+        }
+        .lilith-modal-comic {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 0.35rem 0 0.65rem;
+            pointer-events: none;
+        }
+        .lilith-modal.is-open.lilith-bubble-left .lilith-modal-comic { justify-content: flex-start; }
+        .lilith-modal.is-open.lilith-bubble-right .lilith-modal-comic { justify-content: flex-end; }
+        /* Comic "cloud" bubble */
+        .lilith-modal-comic-bubble {
+            position: relative;
+            display: inline-block;
+            padding: 0.85rem 1.1rem;
+            background: rgba(255,255,255,0.96);
+            border: 3px solid rgba(0,0,0,0.9);
+            border-radius: 999px;
+            box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+            transform: translateX(0);
+            animation: lilithBubbleFloat 3.2s ease-in-out infinite;
+            max-width: min(620px, 92%);
+            text-align: center;
+        }
+        .lilith-modal.is-open.lilith-bubble-left .lilith-modal-comic-bubble { margin-left: 1.25rem; }
+        .lilith-modal.is-open.lilith-bubble-right .lilith-modal-comic-bubble { margin-right: 1.25rem; }
+        .lilith-modal-comic-bubble::before,
+        .lilith-modal-comic-bubble::after {
+            content: "";
+            position: absolute;
+            background: rgba(255,255,255,0.96);
+            border: 3px solid rgba(0,0,0,0.9);
+            border-radius: 999px;
+        }
+        /* little "cloud bumps" */
+        .lilith-modal-comic-bubble::before { width: 34px; height: 22px; left: 22px; bottom: -12px; transform: rotate(-12deg); }
+        .lilith-modal-comic-bubble::after  { width: 22px; height: 16px; left: 52px; bottom: -18px; transform: rotate(10deg); }
+
+        @keyframes lilithBubbleFloat {
+            0%, 100% { transform: translateX(-10px) translateY(0) rotate(-0.5deg); }
+            50%      { transform: translateX(10px) translateY(-4px) rotate(0.5deg); }
+        }
+
+        .lilith-modal-comic-title {
+            font-family: 'Bangers', 'Comic Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: clamp(1.2rem, 2.8vw, 1.75rem);
+            color: rgba(0,0,0,0.92);
+            text-shadow: 0 2px 0 rgba(255,255,255,0.35);
+        }
+        .lilith-modal-comic-sub {
+            margin-top: 0.15rem;
+            font-family: 'Comic Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 900;
+            color: rgba(0,0,0,0.78);
+            font-size: clamp(0.92rem, 2.1vw, 1.12rem);
+        }
+        .lilith-modal-stage {
+            width: 100%;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+        }
+        .lilith-modal-stage .agency-model-container {
+            width: min(520px, 80vw) !important;
+            height: min(620px, 78vh) !important;
+            aspect-ratio: auto !important;
         }
         @media (min-width: 769px) {
             .journal-lilith-wrap { display: block; }
@@ -24060,6 +24160,57 @@
                 canvas.focus();
                 updateControlHints();
             });
+
+            // Fullscreen Lilith modal (moves the existing container into a modal stage)
+            (function initLilithModal() {
+                const modal = document.getElementById('lilithModal');
+                const stage = document.getElementById('lilithModalStage');
+                if (!modal || !stage) return;
+                let placeholder = null;
+                let isOpen = false;
+                let bubbleSide = 0;
+
+                function openModal() {
+                    if (isOpen) return;
+                    isOpen = true;
+                    bubbleSide = (bubbleSide + 1) % 2;
+                    modal.classList.toggle('lilith-bubble-left', bubbleSide === 0);
+                    modal.classList.toggle('lilith-bubble-right', bubbleSide === 1);
+                    placeholder = document.createComment('lilith-modal-placeholder');
+                    container.parentNode.insertBefore(placeholder, container);
+                    stage.appendChild(container);
+                    modal.classList.add('is-open');
+                    modal.setAttribute('aria-hidden', 'false');
+                }
+
+                function closeModal() {
+                    if (!isOpen) return;
+                    isOpen = false;
+                    modal.classList.remove('is-open');
+                    modal.setAttribute('aria-hidden', 'true');
+                    if (placeholder && placeholder.parentNode) {
+                        placeholder.parentNode.insertBefore(container, placeholder);
+                        placeholder.parentNode.removeChild(placeholder);
+                    }
+                    placeholder = null;
+                }
+
+                // Open on lilith click (same click already activates controls)
+                canvas.addEventListener('click', function() {
+                    openModal();
+                });
+
+                // Close on backdrop / close button
+                modal.addEventListener('click', function(e) {
+                    const t = e.target;
+                    if (t && t.getAttribute && t.getAttribute('data-lilith-close') === '1') {
+                        closeModal();
+                    }
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') closeModal();
+                });
+            })();
             
             canvas.setAttribute('tabindex', '0');
             canvas.style.outline = 'none';
@@ -24339,11 +24490,19 @@
 
     </main>
 
-
-
-
-
-
+    <!-- Lilith fullscreen modal (desktop + mobile) -->
+    <div class="lilith-modal" id="lilithModal" aria-hidden="true">
+        <div class="lilith-modal-backdrop" data-lilith-close="1"></div>
+        <div class="lilith-modal-content" role="dialog" aria-modal="true" aria-label="Lilith">
+            <div class="lilith-modal-comic" aria-hidden="true">
+                <div class="lilith-modal-comic-bubble">
+                    <div class="lilith-modal-comic-title">I’m Lilith!</div>
+                    <div class="lilith-modal-comic-sub">Click to walk me.</div>
+                </div>
+            </div>
+            <div class="lilith-modal-stage" id="lilithModalStage"></div>
+        </div>
+    </div>
 
     <!-- Footer -->
 
