@@ -5806,18 +5806,6 @@
         .lilith-modal.is-open .lilith-modal-backdrop { opacity: 1; }
         .lilith-modal.is-open .lilith-modal-content { opacity: 1; transform: translateY(0) scale(1); }
 
-        .lilith-modal-bgvideo {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: saturate(1) contrast(1.05) brightness(1.25);
-            transform: scale(1.03);
-            z-index: 0;
-            opacity: 0; /* only show once it can actually play */
-            transition: opacity 350ms ease;
-        }
         .lilith-modal-bgoverlay {
             position: absolute;
             inset: 0;
@@ -5827,7 +5815,6 @@
             z-index: 1;
             opacity: 1; /* always visible when modal is mounted */
         }
-        .lilith-modal.video-ready .lilith-modal-bgvideo { opacity: 1; }
         /* Bubble is positioned relative to the model area (center of modal stage) */
         .lilith-modal-comic {
             position: absolute;
@@ -24270,18 +24257,6 @@
                 const trigger = document.getElementById('lilithModalTrigger');
                 if (!modal || !stage) return;
                 let isOpen = false;
-                const bgVideo = modal.querySelector('.lilith-modal-bgvideo');
-
-                function armVideoSignals() {
-                    if (!bgVideo || bgVideo.dataset.armed === '1') return;
-                    bgVideo.dataset.armed = '1';
-                    const onReady = () => modal.classList.add('video-ready');
-                    const onError = () => modal.classList.remove('video-ready');
-                    bgVideo.addEventListener('canplay', onReady);
-                    bgVideo.addEventListener('playing', onReady);
-                    bgVideo.addEventListener('error', onError);
-                    bgVideo.addEventListener('stalled', onError);
-                }
 
                 function resizeLilith() {
                     const w = container.clientWidth || 300;
@@ -24307,22 +24282,6 @@
                     isActive = true;
                     modal.classList.add('is-mounted');
                     modal.setAttribute('aria-hidden', 'false');
-                    modal.classList.remove('video-ready');
-                    armVideoSignals();
-                    // Start video immediately (keep user-gesture context)
-                    const vidNow = bgVideo;
-                    if (vidNow) {
-                        try { vidNow.muted = true; } catch (e) {}
-                        try { vidNow.setAttribute('muted', ''); } catch (e) {}
-                        try { vidNow.setAttribute('playsinline', ''); } catch (e) {}
-                        try { vidNow.pause(); } catch (e) {}
-                        try { vidNow.currentTime = 0; } catch (e) {}
-                        try { vidNow.load(); } catch (e) {}
-                        try {
-                            const pNow = vidNow.play();
-                            if (pNow && typeof pNow.catch === 'function') pNow.catch(() => {});
-                        } catch (e) {}
-                    }
                     // next frame: trigger CSS transitions
                     requestAnimationFrame(() => {
                         modal.classList.add('is-open');
@@ -24339,14 +24298,9 @@
                     modal.classList.remove('is-open');
                     modal.setAttribute('aria-hidden', 'true');
                     isActive = false;
-                    const vid = bgVideo;
-                    if (vid) {
-                        try { vid.pause(); } catch (e) {}
-                    }
                     // allow close animation to finish, then unmount
                     setTimeout(() => {
                         modal.classList.remove('is-mounted');
-                        modal.classList.remove('video-ready');
                     }, 420);
                     updateControlHints();
                 }
@@ -24676,9 +24630,6 @@
     <div class="lilith-modal" id="lilithModal" aria-hidden="true">
         <div class="lilith-modal-backdrop" data-lilith-close="1"></div>
         <div class="lilith-modal-content" role="dialog" aria-modal="true" aria-label="Lilith">
-            <video class="lilith-modal-bgvideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" poster="lilithbg.png">
-                <source src="eggs.mp4" type="video/mp4">
-            </video>
             <div class="lilith-modal-bgoverlay" aria-hidden="true"></div>
             <div class="lilith-modal-comic" aria-hidden="true">
                 <div class="lilith-modal-comic-bubble">
