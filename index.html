@@ -5833,11 +5833,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: visible;
+            overflow: hidden; /* keep model strictly inside modal */
         }
         .lilith-modal-stage .agency-model-container {
             width: min(520px, 80vw) !important;
-            height: min(620px, 78vh) !important;
+            height: min(640px, 78vh) !important;
             aspect-ratio: auto !important;
         }
         @media (min-width: 769px) {
@@ -24178,8 +24178,8 @@
                     const modalOpen = modal.classList.contains('is-open');
                     if (modalOpen) {
                         // Taller canvas in modal needs different framing to keep Lilith centered
-                        camera.position.set(0, 1.15, 3.25);
-                        camera.lookAt(0, 0.9, 0);
+                        camera.position.set(0, 1.55, 3.15);
+                        camera.lookAt(0, 1.15, 0);
                     } else {
                         camera.position.copy(defaultCameraPos);
                         camera.lookAt(defaultLookAt);
@@ -24202,8 +24202,10 @@
                     stage.appendChild(container);
                     modal.classList.add('is-open');
                     modal.setAttribute('aria-hidden', 'false');
-                    canvas.focus();
+                    // Focus can blur during DOM move; re-assert active+focus after the move
                     requestAnimationFrame(() => {
+                        isActive = true;
+                        canvas.focus();
                         resizeLilith();
                         updateControlHints();
                     });
@@ -24247,6 +24249,12 @@
             canvas.style.outline = 'none';
             
             canvas.addEventListener('blur', function() {
+                // When modal is open we want keyboard control without re-clicking
+                if (lilithModalEl && lilithModalEl.classList.contains('is-open')) {
+                    isActive = true;
+                    updateControlHints();
+                    return;
+                }
                 isActive = false;
                 if (currentState !== 'idle' && currentState !== 'jump') {
                     switchAnimation('idle');
