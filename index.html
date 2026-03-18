@@ -5782,7 +5782,7 @@
             top: 50%;
             transform:
                 translate(-50%, -50%)
-                translate(clamp(-220px, -18vw, -140px), clamp(-260px, -22vh, -170px));
+                translate(clamp(-170px, -14vw, -110px), clamp(-215px, -18vh, -140px));
             margin: 0;
             pointer-events: none;
             z-index: 2;
@@ -23536,7 +23536,7 @@
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer">
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
-                        <div class="lilith-controls" aria-hidden="true">Click to walk Lilith</div>
+                        <div class="lilith-controls" aria-hidden="true">CLICK TO WALK LILITH</div>
                     </div>
                 </div>
             </div>
@@ -24148,10 +24148,6 @@
                 };
                 
                 const nextText = isActive ? stateText[currentState] : 'Click to walk Lilith';
-
-                // Right-of-lilith vertical label (outside the canvas container)
-                const hints = document.querySelector('.journal-model--lilith .lilith-controls');
-                if (hints) hints.textContent = nextText;
 
                 // Modal bubble dynamic text
                 const modalSub = document.querySelector('#lilithModal .lilith-modal-comic-sub');
