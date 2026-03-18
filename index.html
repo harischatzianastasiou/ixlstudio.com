@@ -5817,22 +5817,15 @@
             50%      { transform: translateX(10px) translateY(-4px) rotate(0.5deg); }
         }
 
-        .lilith-modal-comic-title {
+        .lilith-modal-comic-sub {
+            margin-top: 0;
             font-family: 'Bangers', 'Comic Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             font-weight: 400;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            font-size: clamp(1.2rem, 2.8vw, 1.75rem);
-            color: rgba(0,0,0,0.92);
+            color: rgba(0,0,0,0.88);
             text-shadow: 0 2px 0 rgba(255,255,255,0.35);
-        }
-        .lilith-modal.hide-title .lilith-modal-comic-title { display: none; }
-        .lilith-modal-comic-sub {
-            margin-top: 0.15rem;
-            font-family: 'Comic Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            font-weight: 900;
-            color: rgba(0,0,0,0.78);
-            font-size: clamp(0.92rem, 2.1vw, 1.12rem);
+            font-size: clamp(1.05rem, 2.6vw, 1.45rem);
         }
         .lilith-modal-stage {
             width: 100%;
@@ -23978,6 +23971,7 @@
         function initLilithController() {
             const container = document.getElementById('agencyPriestModelContainer');
             const canvas = document.getElementById('agencyPriestCanvas');
+            const lilithModalEl = document.getElementById('lilithModal');
             
             if (!container || !canvas) {
                 console.error('Lilith model container or canvas not found');
@@ -24175,8 +24169,6 @@
                 let placeholder = null;
                 let isOpen = false;
                 let bubbleSide = 0;
-                let introTimer = null;
-                let introShownOnce = false;
 
                 function resizeLilith() {
                     const w = container.clientWidth || 300;
@@ -24200,13 +24192,6 @@
                     modal.classList.add('is-open');
                     modal.setAttribute('aria-hidden', 'false');
                     canvas.focus();
-                    // "I'm Lilith!" should only be a start intro
-                    modal.classList.remove('hide-title');
-                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
-                    introTimer = setTimeout(() => {
-                        modal.classList.add('hide-title');
-                        introShownOnce = true;
-                    }, 1100);
                     requestAnimationFrame(() => {
                         resizeLilith();
                         updateControlHints();
@@ -24218,7 +24203,6 @@
                     isOpen = false;
                     modal.classList.remove('is-open');
                     modal.setAttribute('aria-hidden', 'true');
-                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
                     if (placeholder && placeholder.parentNode) {
                         placeholder.parentNode.insertBefore(container, placeholder);
                         placeholder.parentNode.removeChild(placeholder);
@@ -24246,13 +24230,6 @@
                     if (e.key === 'Escape') closeModal();
                 });
 
-                // If user starts interacting, hide the intro title immediately
-                canvas.addEventListener('keydown', function() {
-                    if (!modal.classList.contains('is-open')) return;
-                    modal.classList.add('hide-title');
-                    introShownOnce = true;
-                    if (introTimer) { clearTimeout(introTimer); introTimer = null; }
-                });
             })();
             
             canvas.setAttribute('tabindex', '0');
@@ -24267,10 +24244,10 @@
             });
             
             const keys = { w: false, shift: false, space: false };
-            
-            canvas.addEventListener('keydown', function(e) {
+
+            function onLilithKeyDown(e) {
                 if (!isActive) return;
-                
+
                 if (e.key.toLowerCase() === 'w' && !keys.w) {
                     keys.w = true;
                     if (keys.shift) {
@@ -24287,12 +24264,11 @@
                 }
                 if (e.key === ' ' && !keys.space && currentState !== 'jump') {
                     keys.space = true;
-                    const prevState = currentState;
                     switchAnimation('jump');
-                    
+
                     if (animations.jump) {
-                        mixer.addEventListener('finished', function onFinished(e) {
-                            if (e.action === animations.jump) {
+                        mixer.addEventListener('finished', function onFinished(ev) {
+                            if (ev.action === animations.jump) {
                                 mixer.removeEventListener('finished', onFinished);
                                 keys.space = false;
                                 if (keys.w) {
@@ -24304,12 +24280,11 @@
                         });
                     }
                 }
-                e.preventDefault();
-            });
-            
-            canvas.addEventListener('keyup', function(e) {
+            }
+
+            function onLilithKeyUp(e) {
                 if (!isActive) return;
-                
+
                 if (e.key.toLowerCase() === 'w') {
                     keys.w = false;
                     if (currentState !== 'jump') {
@@ -24322,9 +24297,28 @@
                         switchAnimation('walk');
                     }
                 }
-                
+            }
+
+            canvas.addEventListener('keydown', function(e) {
+                onLilithKeyDown(e);
                 e.preventDefault();
             });
+            canvas.addEventListener('keyup', function(e) {
+                onLilithKeyUp(e);
+                e.preventDefault();
+            });
+
+            // While modal is open, capture keys globally (so no extra click is needed)
+            document.addEventListener('keydown', function(e) {
+                if (!lilithModalEl || !lilithModalEl.classList.contains('is-open')) return;
+                onLilithKeyDown(e);
+                e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('keyup', function(e) {
+                if (!lilithModalEl || !lilithModalEl.classList.contains('is-open')) return;
+                onLilithKeyUp(e);
+                e.preventDefault();
+            }, { passive: false });
             
             function animate() {
                 requestAnimationFrame(animate);
@@ -24539,8 +24533,7 @@
         <div class="lilith-modal-content" role="dialog" aria-modal="true" aria-label="Lilith">
             <div class="lilith-modal-comic" aria-hidden="true">
                 <div class="lilith-modal-comic-bubble">
-                    <div class="lilith-modal-comic-title">I’m Lilith!</div>
-                    <div class="lilith-modal-comic-sub">Click to walk me.</div>
+                    <div class="lilith-modal-comic-sub">Click to walk Lilith</div>
                 </div>
             </div>
             <div class="lilith-modal-stage" id="lilithModalStage"></div>
