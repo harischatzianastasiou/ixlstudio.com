@@ -25516,6 +25516,9 @@
                 let lockWrapperTop = 0;
                 let wrapperScrollLocked = false;
                 const scrollWrapperEl = document.querySelector('.page-scroll-wrapper');
+                const useWrapperScroller =
+                    !!scrollWrapperEl &&
+                    !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
                 const prevBodyOverflow = document.body.style.overflow;
                 const prevHtmlOverflow = document.documentElement.style.overflow;
                 const prevWrapperStyle = scrollWrapperEl
@@ -25581,6 +25584,14 @@
                     try {
                         scrollWrapperEl.scrollTop = lockWrapperTop;
                     } catch (e) {}
+                }
+
+                function resetLockedScrollPosition() {
+                    if (wrapperScrollLocked && scrollWrapperEl) {
+                        try { scrollWrapperEl.scrollTop = lockWrapperTop; } catch (e) {}
+                    } else {
+                        window.scrollTo({ top: lockScrollY });
+                    }
                 }
                 const FIRST_SENTENCE_DELAY_MS = 1550; // slightly slower so it feels calm/meditative
                 let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
@@ -25773,7 +25784,7 @@
                     step5.classList.remove('cta-shown');
 
                     // Freeze scroll for the entire black overlay sequence.
-                    lockScrollY = window.scrollY;
+                    lockScrollY = useWrapperScroller && scrollWrapperEl ? scrollWrapperEl.scrollTop : window.scrollY;
                     lockScrollContainers();
                     enableStepScrollLock();
 
@@ -25875,7 +25886,7 @@
                     tryStartRadioForTrailer();
                     e.preventDefault();
                     e.stopPropagation();
-                    window.scrollTo({ top: lockScrollY });
+                    resetLockedScrollPosition();
                 }
 
                 let lastTouchY = 0; // used to detect swipe direction
@@ -25892,7 +25903,7 @@
                     lastTouchY = y;
                     e.preventDefault();
                     e.stopPropagation();
-                    window.scrollTo({ top: lockScrollY });
+                    resetLockedScrollPosition();
                 }
 
                 function onKeyDownLock(e) {
@@ -25903,7 +25914,7 @@
                     if (!blocks) return;
                     e.preventDefault();
                     e.stopPropagation();
-                    window.scrollTo({ top: lockScrollY });
+                    resetLockedScrollPosition();
                 }
 
                 // Trailer start is now controlled only by ScrollTrigger
@@ -25911,6 +25922,7 @@
 
                 ScrollTrigger.create({
                     trigger: trailerTrigger || panel,
+                    scroller: useWrapperScroller ? scrollWrapperEl : undefined,
                     start: 'center center', // start when the observer trigger section is centered
                     end: 'bottom center',
                     onEnter: () => {
