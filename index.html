@@ -22691,18 +22691,20 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.12s ease;
-            will-change: opacity;
+            transform: translateY(18px);
+            transition: opacity 0.52s ease, transform 0.52s ease;
+            will-change: opacity, transform;
             padding-top: 0;
             box-sizing: border-box;
         }
         /* Make the first image fade in slightly slower (less “pop”). */
         .observer-trailer-step-1 {
             /* Keep transitions consistent across all steps. */
-            transition: opacity 0.12s ease;
+            transition: opacity 0.56s ease, transform 0.56s ease;
         }
         .observer-trailer-step.is-visible {
             opacity: 1;
+            transform: translateY(0);
         }
         .observer-trailer-skip {
             position: absolute;
@@ -22743,7 +22745,11 @@
             max-width: min(1180px, 92vw);
             max-height: 76vh;
             display: block;
-            filter: drop-shadow(0 14px 34px rgba(0,0,0,0.6));
+            opacity: 0.02;
+            transform: scale(0.985);
+            filter: blur(2.2px) brightness(0.95) drop-shadow(0 14px 34px rgba(0,0,0,0.6));
+            transition: opacity 0.52s ease, transform 0.52s ease, filter 0.52s ease;
+            will-change: opacity, transform, filter;
         }
 
         /* Make first 3 steps larger than the last one */
@@ -22763,9 +22769,25 @@
             max-width: min(980px, 84vw);
             max-height: 72vh;
         }
+        /* Keep 4 -> 5 sequence in the old, simple style (quick clear fade). */
+        .observer-trailer-step-4,
+        .observer-trailer-step-5 {
+            transform: none;
+            transition: opacity 0.12s ease;
+            will-change: opacity;
+        }
+        .observer-trailer-step-4 .observer-trailer-media,
+        .observer-trailer-step-5 .observer-trailer-media {
+            opacity: 1;
+            transform: none;
+            filter: drop-shadow(0 14px 34px rgba(0,0,0,0.6));
+            transition: opacity 0.12s ease;
+            will-change: opacity;
+        }
         .observer-trailer-step.is-visible .observer-trailer-media {
-            /* No transform-based animation: keeps the PNGs perfectly readable. */
-            animation: none;
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0) brightness(1) drop-shadow(0 14px 34px rgba(0,0,0,0.6));
         }
         .observer-trailer-welcome {
             display: flex;
@@ -25077,7 +25099,7 @@
                 let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
                 const FIRST_STEP_HOLD_MS = 3000; // step 1 stays for 3s
                 const STEP2_HOLD_MS = 3000; // sentence 2 stays for 3s
-                const STEP3_HOLD_MS = 3000; // sentence 3 stays for 3s
+                const STEP3_HOLD_MS = 3200; // sentence 3 stays for 3s
                 const STEP4_HOLD_MS = 3000; // sentence 4 stays for 2s
                 const STEP5_HOLD_MS = 2000; // sentence 5 stays for 2s
 
