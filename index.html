@@ -25552,6 +25552,23 @@
                     body.style.right = '0';
                     body.style.width = '100%';
                     body.style.overflow = 'hidden';
+
+                    // Also lock the scroll wrapper (on this page mobile content is often inside it).
+                    const wrapper = document.querySelector('.page-scroll-wrapper');
+                    if (wrapper) {
+                        wrapper.dataset.trailerWrapperLocked = '1';
+                        wrapper.style.position = 'fixed';
+                        wrapper.style.top = `-${y}px`;
+                        wrapper.style.left = '0';
+                        wrapper.style.right = '0';
+                        wrapper.style.width = '100%';
+                        wrapper.style.height = '100vh';
+                        wrapper.style.overflow = 'hidden';
+                    }
+
+                    // Extra guard: stop any html-driven scrolling.
+                    document.documentElement.style.overflow = 'hidden';
+                    body.style.touchAction = 'none';
                 }
 
                 function unlockBodyScroll() {
@@ -25569,6 +25586,21 @@
                     body.style.right = '';
                     body.style.width = '';
                     body.style.overflow = '';
+                    body.style.touchAction = '';
+
+                    const wrapper = document.querySelector('.page-scroll-wrapper');
+                    if (wrapper && wrapper.dataset.trailerWrapperLocked === '1') {
+                        delete wrapper.dataset.trailerWrapperLocked;
+                        wrapper.style.position = '';
+                        wrapper.style.top = '';
+                        wrapper.style.left = '';
+                        wrapper.style.right = '';
+                        wrapper.style.width = '';
+                        wrapper.style.height = '';
+                        wrapper.style.overflow = '';
+                    }
+
+                    document.documentElement.style.overflow = '';
 
                     window.scrollTo({ top: y });
                 }
@@ -25813,6 +25845,7 @@
                                 isActive = false;
                                 overlay.classList.remove('is-live');
                                 disableStepScrollLock();
+                                unlockBodyScroll();
 
                                 step1.classList.remove('is-visible');
                                 step1.classList.remove('is-leaving-12');
