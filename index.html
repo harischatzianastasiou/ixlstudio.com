@@ -22679,6 +22679,11 @@
             text-align: center;
             padding: clamp(1.25rem, 3vw, 2.75rem);
         }
+        /* During the trailer, show a clickable cursor over the sentence images. */
+        .youtube-trailer-overlay.is-live {
+            pointer-events: auto;
+            cursor: pointer;
+        }
         #observerTrailerPanel {
             position: relative;
             z-index: 41; /* above overlay */
@@ -22691,20 +22696,20 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.52s ease, transform 0.52s ease;
-            will-change: opacity, transform;
+            transform: none;
+            transition: opacity 2.8s cubic-bezier(0.16, 0.9, 0.2, 1);
+            will-change: opacity;
             padding-top: 0;
             box-sizing: border-box;
         }
         /* Make the first image fade in slightly slower (less “pop”). */
         .observer-trailer-step-1 {
             /* Keep transitions consistent across all steps. */
-            transition: opacity 0.56s ease, transform 0.56s ease;
+            transition: opacity 2.8s cubic-bezier(0.16, 0.9, 0.2, 1);
         }
         .observer-trailer-step.is-visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
         .observer-trailer-skip {
             position: absolute;
@@ -22748,7 +22753,7 @@
             opacity: 0.02;
             transform: scale(0.985);
             filter: blur(2.2px) brightness(0.84) contrast(0.96) sepia(0.12) saturate(1.05) drop-shadow(0 16px 40px rgba(0,0,0,0.72));
-            transition: opacity 0.52s ease, transform 0.52s ease, filter 0.52s ease;
+            transition: opacity 0.95s cubic-bezier(0.16, 0.9, 0.2, 1), transform 0.95s cubic-bezier(0.16, 0.9, 0.2, 1), filter 0.95s cubic-bezier(0.16, 0.9, 0.2, 1);
             will-change: opacity, transform, filter;
         }
 
@@ -22765,40 +22770,218 @@
             max-height: 78vh;
         }
 
+        /* 4th sentence: enter more naturally (settle from below). */
+        .observer-trailer-step-4 .observer-trailer-media {
+            transform: scale(0.93);
+        }
+        .observer-trailer-step-4.is-visible .observer-trailer-media {
+            transform: scale(1.05);
+            filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+        }
+
+        /* 3 -> 4: make sentence 4 feel like a CTA line to grab attention */
+        .observer-trailer-step-4::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 64%;
+            width: min(560px, 70vw);
+            height: 2px;
+            background: #a875ff;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3;
+            /* Make the line never “re-animate” when classes toggle. */
+            transition: none !important;
+        }
+        .observer-trailer-step-4.is-visible::after {
+            opacity: 0.95;
+            transform: translateX(-50%) scaleX(1);
+        }
+        .observer-trailer-step-4.is-visible.is-leaving-45::after,
+        .observer-trailer-step-4.is-leaving-45::after {
+            /* Keep CTA line stable while sentence 4 transitions to sentence 5 */
+            opacity: 0.95;
+            transform: translateX(-50%) scaleX(1);
+        }
+        @keyframes observerTrailerCTALineIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scaleX(0);
+            }
+            65% {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1);
+            }
+            100% {
+                opacity: 0.95;
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+
+        /* 5th sentence CTA line (same purple as the page) */
+        .observer-trailer-step-5::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 64%;
+            width: min(560px, 70vw);
+            height: 2px;
+            background: #a875ff;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3;
+            transition: none !important;
+        }
+        .observer-trailer-step-5.is-visible::after {
+            opacity: 0.95;
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* Stick the CTA underline once it has shown (no leaving animation). */
+        .observer-trailer-step-4.cta-shown::after,
+        .observer-trailer-step-5.cta-shown::after {
+            opacity: 0.95;
+            transform: translateX(-50%) scaleX(1);
+            transition: none !important;
+        }
+
         .observer-trailer-step-5 .observer-trailer-media {
             max-width: min(980px, 84vw);
             max-height: 72vh;
         }
-        /* Keep 4 -> 5 sequence in the old, simple style (quick clear fade). */
+        /* Sentence 1-3: match black overlay fade speed (1.3s) */
+        .observer-trailer-step-1,
+        .observer-trailer-step-2,
+        .observer-trailer-step-3 {
+            transform: none;
+            transition: opacity 1.3s cubic-bezier(0.16, 0.9, 0.2, 1);
+            will-change: opacity;
+        }
+        .observer-trailer-step-1 .observer-trailer-media,
+        .observer-trailer-step-2 .observer-trailer-media,
+        .observer-trailer-step-3 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            transition: opacity 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), transform 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), filter 1.3s cubic-bezier(0.16, 0.9, 0.2, 1);
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+            will-change: opacity, transform, filter;
+        }
+
+        /* Sentence 4-5: keep the existing calm reveal speed */
         .observer-trailer-step-4,
         .observer-trailer-step-5 {
             transform: none;
-            transition: opacity 0.12s ease;
+            transition: opacity 0.95s cubic-bezier(0.16, 0.9, 0.2, 1);
             will-change: opacity;
         }
         .observer-trailer-step-4 .observer-trailer-media,
         .observer-trailer-step-5 .observer-trailer-media {
-            opacity: 0.78;
-            transform: none;
-            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
-            transition: opacity 0.12s ease;
-            will-change: opacity;
-        }
-        /* Sentence 4: very gradual trailer-style reveal (fade + slow enlarge). */
-        .observer-trailer-step-4 .observer-trailer-media {
             opacity: 0;
             transform: scale(0.93);
-            transition: opacity 1.05s ease, transform 1.05s ease;
-            will-change: opacity, transform;
-        }
-        .observer-trailer-step-4.is-visible .observer-trailer-media {
-            opacity: 0.78;
-            transform: scale(1);
+            transition: opacity 0.95s cubic-bezier(0.16, 0.9, 0.2, 1), transform 0.95s cubic-bezier(0.16, 0.9, 0.2, 1);
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+            will-change: opacity, transform, filter;
         }
         .observer-trailer-step.is-visible .observer-trailer-media {
             opacity: 0.78;
             transform: scale(1);
             filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+            animation: observerTrailerCalmBreath 10.5s ease-in-out infinite;
+        }
+
+        /* Sentence 4 CTA weight: small scale bump overriding the generic is-visible style */
+        .observer-trailer-step-4.is-visible .observer-trailer-media {
+            transform: scale(1.05);
+        }
+
+        /* Keep it clean: step 4 and step 5 should not loop-breathe. */
+        .observer-trailer-step-4.is-visible .observer-trailer-media,
+        .observer-trailer-step-5.is-visible .observer-trailer-media {
+            animation: observerTrailerCalmBreath 10.5s ease-in-out infinite !important;
+        }
+
+        /* Smooth-out phase (dystopian calm): keep opacity stable, shift filter feel. */
+        .observer-trailer-step.is-visible.is-leaving .observer-trailer-media {
+            opacity: 0.78; /* no fadeout during calm smooth-out */
+            transform: scale(0.99);
+            animation: none; /* remove breathing motion while leaving */
+            transition: filter 1.3s ease, transform 1.3s ease;
+            filter: blur(0.65px) brightness(0.60) contrast(1.18) sepia(0.28) saturate(0.88) grayscale(0.18) drop-shadow(0 18px 44px rgba(0,0,0,0.9));
+        }
+
+        /* Step 1 leaving uses the same calm dystopian style for consistency. */
+        .observer-trailer-step.is-visible.is-leaving-12 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            animation: none;
+            transition: opacity 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), transform 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), filter 1.3s cubic-bezier(0.16, 0.9, 0.2, 1);
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+        }
+
+        /* Transition styles: make 2->3, 3->4, 4->5 feel different */
+        .observer-trailer-step.is-visible.is-leaving-23 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            animation: none;
+            transition: opacity 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), transform 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), filter 1.3s cubic-bezier(0.16, 0.9, 0.2, 1);
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+        }
+        .observer-trailer-step.is-visible.is-leaving-34 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            animation: observerTrailerErase34 var(--observer-trailer-speed) ease-in both;
+            transition: none;
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+        }
+
+        /* 3 -> 4: erasing effect (shrink to center + disappear). */
+        @keyframes observerTrailerErase34 {
+            0% {
+                transform: scale(1) translateY(0);
+                opacity: 0.78;
+            }
+            55% {
+                transform: scale(0.98) translateY(26px);
+                opacity: 0.55;
+                filter: blur(1.1px) brightness(0.55) contrast(1.25) sepia(0.30) saturate(0.75) grayscale(0.25);
+            }
+            100% {
+                transform: scale(0.97) translateY(52px);
+                opacity: 0;
+                filter: blur(1.35px) brightness(0.38) contrast(1.45) sepia(0.48) saturate(0.65) grayscale(0.40);
+            }
+        }
+        .observer-trailer-step.is-visible.is-leaving-45 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            animation: none;
+            transition: opacity 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), transform 1.3s cubic-bezier(0.16, 0.9, 0.2, 1), filter 1.3s cubic-bezier(0.16, 0.9, 0.2, 1);
+            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+        }
+
+        /* Force unified observer trailer transition speed. */
+        :root {
+            --observer-trailer-speed: 1.3s;
+        }
+        .observer-trailer-step,
+        .observer-trailer-media {
+            transition-duration: var(--observer-trailer-speed) !important;
+        }
+
+        /* Calm “meditation breath” (very subtle; no blur changes that cause dizziness). */
+        @keyframes observerTrailerCalmBreath {
+            0%,
+            100% {
+                filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+            }
+            50% {
+                filter: blur(0.35px) brightness(0.78) contrast(0.90) sepia(0.16) saturate(1.04) drop-shadow(0 20px 48px rgba(0,0,0,0.85));
+            }
         }
         .observer-trailer-welcome {
             display: flex;
@@ -24667,6 +24850,7 @@
             
             const playlist = [
                 // { title: 'Play Radio', artist: 'Ambient Fabric - The Path', src: 'Ambient Fabric - The Path.mp3' },
+                { title: 'Play Radio', artist: '☀️', src: 'Odd Behavior - c’est la vie..mp3'},
                 { title: 'Play Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
                 { title: 'Play Radio', artist: '☀️', src: 'Citizen Kane - Blackrain (Instrumental).mp3' }
 
@@ -24674,6 +24858,12 @@
             
             let currentTrack = 0;
             let isPlaying = false;
+
+            function setPlayerUi(playing) {
+                isPlaying = playing;
+                if (playIcon) playIcon.style.display = playing ? 'none' : 'block';
+                if (pauseIcon) pauseIcon.style.display = playing ? 'block' : 'none';
+            }
             
             function loadTrack(index) {
                 currentTrack = index;
@@ -24685,30 +24875,69 @@
             function togglePlay() {
                 if (isPlaying) {
                     audio.pause();
-                    isPlaying = false;
-                    playIcon.style.display = 'block';
-                    pauseIcon.style.display = 'none';
+                    setPlayerUi(false);
                     return;
                 }
 
                 // Try to play; only mark playing on success
+                audio.muted = false;
                 const p = audio.play();
                 if (p && typeof p.then === 'function') {
                     p.then(() => {
-                        isPlaying = true;
-                        playIcon.style.display = 'none';
-                        pauseIcon.style.display = 'block';
+                        setPlayerUi(true);
                     }).catch(() => {
-                        isPlaying = false;
-                        playIcon.style.display = 'block';
-                        pauseIcon.style.display = 'none';
+                        setPlayerUi(false);
                     });
                 } else {
-                    isPlaying = true;
-                    playIcon.style.display = 'none';
-                    pauseIcon.style.display = 'block';
+                    setPlayerUi(true);
                 }
             }
+
+            // Expose a gesture-safe "play only" API for trailer/start handlers.
+            window.startAgencyRadio = function() {
+                if (!audio.paused) {
+                    setPlayerUi(true);
+                    return Promise.resolve(true);
+                }
+                const p = audio.play();
+                if (p && typeof p.then === 'function') {
+                    return p.then(function() { setPlayerUi(true); return true; })
+                        .catch(function() { setPlayerUi(false); return false; });
+                }
+                setPlayerUi(true);
+                return Promise.resolve(true);
+            };
+
+            // Force-start path for trailer: start muted (allowed by autoplay policies),
+            // then unmute so sound is heard during the black screen.
+            window.forceStartAgencyRadio = function() {
+                const targetVolume = audio.volume || 0.4;
+                if (!audio.paused) {
+                    audio.muted = false;
+                    audio.volume = targetVolume;
+                    setPlayerUi(true);
+                    return Promise.resolve(true);
+                }
+
+                audio.muted = false;
+                const p = audio.play();
+                if (p && typeof p.then === 'function') {
+                    return p.then(function() {
+                        setPlayerUi(true);
+                        audio.volume = targetVolume;
+                        audio.muted = false;
+                        return true;
+                    }).catch(function() {
+                        setPlayerUi(false);
+                        return false;
+                    });
+                }
+
+                setPlayerUi(true);
+                audio.volume = targetVolume;
+                audio.muted = false;
+                return Promise.resolve(true);
+            };
             
             function nextTrack() {
                 currentTrack = (currentTrack + 1) % playlist.length;
@@ -24731,8 +24960,32 @@
             nextBtn?.addEventListener('click', nextTrack);
             prevBtn?.addEventListener('click', prevTrack);
             audio.addEventListener('ended', nextTrack);
+            audio.addEventListener('pause', function() { setPlayerUi(false); });
+            audio.addEventListener('play', function() { setPlayerUi(true); });
             
             loadTrack(0);
+            // Prime audio pipeline early (muted autoplay is usually allowed),
+            // so trailer-time unmute becomes immediate and reliable.
+            audio.preload = 'auto';
+            audio.muted = true;
+            try {
+                const prime = audio.play();
+                if (prime && typeof prime.then === 'function') {
+                    prime.then(function() {
+                        // Keep running muted; UI stays idle until explicit start.
+                        setPlayerUi(false);
+                    }).catch(function() {
+                        // If priming is blocked, keep normal manual behavior.
+                        audio.muted = false;
+                        setPlayerUi(false);
+                    });
+                } else {
+                    setPlayerUi(false);
+                }
+            } catch (e) {
+                audio.muted = false;
+                setPlayerUi(false);
+            }
         }
         
         if (document.readyState === 'loading') {
@@ -25115,18 +25368,102 @@
                 let currentStep = 1; // 1..4: which image is currently shown
                 let stepShownAt = 0; // performance.now() when current step became visible; 0 = still in "delay before first sentence"
                 let lockScrollY = 0; // keep scroll position stable while locking forward scroll
-                const FIRST_SENTENCE_DELAY_MS = 1100; // noticeable delay after black screen before sentence 1 appears
+                const FIRST_SENTENCE_DELAY_MS = 1550; // slightly slower so it feels calm/meditative
                 let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
-                const OVERLAY_APPEAR_DELAY_MS = 350; // wait until the black panel is visible before showing the overlay
+                const OVERLAY_APPEAR_DELAY_MS = 550; // smoother overlay entrance
                 let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
-                const FIRST_STEP_HOLD_MS = 3000; // step 1 stays for 3s
-                const STEP2_HOLD_MS = 3000; // sentence 2 stays for 3s
-                const STEP3_HOLD_MS = 3200; // sentence 3 stays for 3s
-                const STEP4_HOLD_MS = 4500; // sentence 4 stays for 2s
-                const STEP5_HOLD_MS = 2000; // sentence 5 stays for 2s
+                // Hold times: 1->2->3 reads as one (faster), 4 is punchy, 4->5 is middle.
+                const FIRST_STEP_HOLD_MS = 1800; // sentence 1 hold
+                const STEP2_HOLD_MS = 1800; // sentence 2 hold
+                const STEP3_HOLD_MS = 2500; // sentence 3 hold
+                const STEP4_HOLD_MS = 3500; // sentence 4 hold (punchy)
+                const STEP5_HOLD_MS = 2000; // sentence 5 hold (middle)
+
+                // Out durations (smooth-out / leaving) per boundary.
+                const OUT_12_MS = 650; // 1 -> 2 fast dystopian
+                const OUT_23_MS = 650; // 2 -> 3 fast dystopian (similar vibe)
+                const OUT_34_MS = 450; // 3 -> 4 punchy (quicker switch)
+                const OUT_45_MS = 450; // 4 -> 5 clean direct
 
                 let trailerCompleted = false; // once we reveal the perfect black panel, don't run again
                 const trailerTimeouts = [];
+                let radioFallbackArmed = false;
+                let trailerAudioGestureArmed = false;
+
+                function tryStartRadioForTrailer() {
+                    const radioAudio = document.getElementById('agencyAudioPlayer');
+                    const radioPlayBtn = document.getElementById('agencyPlayBtn');
+                    if (!radioAudio || !radioPlayBtn || !radioAudio.paused) return;
+
+                    try {
+                        if (typeof window.forceStartAgencyRadio === 'function') {
+                            window.forceStartAgencyRadio();
+                        } else if (typeof window.startAgencyRadio === 'function') {
+                            window.startAgencyRadio();
+                        } else {
+                            radioPlayBtn.click();
+                        }
+                    } catch (e) {
+                        // Ignore click errors.
+                    }
+
+                    // If autoplay is blocked, retry on the next real user gesture while trailer is active.
+                    if (radioAudio.paused && !radioFallbackArmed) {
+                        radioFallbackArmed = true;
+                        const fallbackPlay = function() {
+                            if (!isActive) {
+                                cleanup();
+                                return;
+                            }
+                            try {
+                                if (typeof window.forceStartAgencyRadio === 'function') {
+                                    window.forceStartAgencyRadio();
+                                } else if (typeof window.startAgencyRadio === 'function') {
+                                    window.startAgencyRadio();
+                                } else {
+                                    radioPlayBtn.click();
+                                }
+                            } catch (e) {}
+                            if (!radioAudio.paused) cleanup();
+                        };
+                        const cleanup = function() {
+                            if (!radioFallbackArmed) return;
+                            radioFallbackArmed = false;
+                            window.removeEventListener('pointerdown', fallbackPlay, true);
+                            window.removeEventListener('touchstart', fallbackPlay, true);
+                            window.removeEventListener('keydown', fallbackPlay, true);
+                            window.removeEventListener('wheel', fallbackPlay, true);
+                        };
+                        window.addEventListener('pointerdown', fallbackPlay, true);
+                        window.addEventListener('touchstart', fallbackPlay, true);
+                        window.addEventListener('keydown', fallbackPlay, true);
+                        window.addEventListener('wheel', fallbackPlay, { passive: false, capture: true });
+                    }
+                }
+
+                function armTrailerNextGestureToStartRadio() {
+                    if (trailerAudioGestureArmed) return;
+                    trailerAudioGestureArmed = true;
+
+                    const onGesture = function() {
+                        // If trailer isn't active anymore, stop arming.
+                        if (!isActive) return;
+
+                        const radioAudio = document.getElementById('agencyAudioPlayer');
+                        if (!radioAudio || !radioAudio.paused) return;
+
+                        // Use the most direct play/unmute path we have.
+                        if (typeof window.forceStartAgencyRadio === 'function') {
+                            window.forceStartAgencyRadio();
+                        } else if (typeof window.startAgencyRadio === 'function') {
+                            window.startAgencyRadio();
+                        }
+                    };
+
+                    // Important: pointer/touch is treated as a real user gesture by browsers.
+                    window.addEventListener('pointerdown', onGesture, { once: true, capture: true });
+                    window.addEventListener('touchstart', onGesture, { once: true, capture: true });
+                }
 
                 function clearTrailerTimeouts() {
                     while (trailerTimeouts.length) clearTimeout(trailerTimeouts.pop());
@@ -25155,8 +25492,8 @@
                     step4.classList.remove('is-visible');
                     step5.classList.remove('is-visible');
 
-                    gsap.to(overlay, { opacity: 0, duration: 0.25, ease: 'power2.out' });
-                    gsap.to(panelTextBlock, { opacity: 1, duration: 0.25, ease: 'power2.out' });
+                    gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' });
+                    gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' });
                 }
 
                 skipBtn.addEventListener('click', function(e) {
@@ -25196,9 +25533,15 @@
                     if (hasPlayedOnce) return;
                     hasPlayedOnce = true;
 
+                    // Start radio when trailer starts.
+                    tryStartRadioForTrailer();
+
                     isActive = true;
                     trailerCompleted = false;
                     overlay.classList.add('is-live');
+                    // Start radio on the next trusted gesture (tap) during the trailer.
+                    // This avoids relying on wheel/scroll which some browsers reject for audio.
+                    armTrailerNextGestureToStartRadio();
                     gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect panel text under overlay
 
                     // Hide all steps before starting the trailer.
@@ -25223,35 +25566,55 @@
                     overlayAppearDelayId = setTimeout(function() {
                         overlayAppearDelayId = null;
                         gsap.set(panelTextBlock, { opacity: 0 });
-                        gsap.to(overlay, { opacity: 1, duration: 0.85, ease: 'power3.out' });
+                        gsap.to(overlay, { opacity: 1, duration: 1.3, ease: 'power3.out' });
 
                         firstSentenceDelayId = setTimeout(function() {
                             firstSentenceDelayId = null;
                             step1.classList.add('is-visible');
 
-                                // Step 2 (after step 1)
+                                // Timeline is relative to: when step1 becomes visible.
+
+                                // 1 -> 2
+                                schedule(function() {
+                                    step1.classList.add('is-leaving-12');
+                                }, FIRST_STEP_HOLD_MS);
                                 schedule(function() {
                                     step1.classList.remove('is-visible');
+                                    step1.classList.remove('is-leaving-12');
                                     step2.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS);
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS);
 
-                                // Step 3 (after step 1 + step 2)
+                                // 2 -> 3
+                                schedule(function() {
+                                    step2.classList.add('is-leaving-23');
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS);
                                 schedule(function() {
                                     step2.classList.remove('is-visible');
+                                    step2.classList.remove('is-leaving-23');
                                     step3.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS);
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS);
 
-                                // Step 4 (after step 1 + step 2 + step 3)
+                                // 3 -> 4
+                                schedule(function() {
+                                    step3.classList.add('is-leaving-34');
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS + STEP3_HOLD_MS);
                                 schedule(function() {
                                     step3.classList.remove('is-visible');
+                                    step3.classList.remove('is-leaving-34');
                                     step4.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS);
+                                    step4.classList.add('cta-shown');
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS + STEP3_HOLD_MS + OUT_34_MS);
 
-                                // Step 5 (after step 1 + step 2 + step 3 + step 4)
+                                // 4 -> 5
+                                schedule(function() {
+                                    step4.classList.add('is-leaving-45');
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS + STEP3_HOLD_MS + OUT_34_MS + STEP4_HOLD_MS);
                                 schedule(function() {
                                     step4.classList.remove('is-visible');
+                                    step4.classList.remove('is-leaving-45');
                                     step5.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS);
+                                    step5.classList.add('cta-shown');
+                                }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS + STEP3_HOLD_MS + OUT_34_MS + STEP4_HOLD_MS + OUT_45_MS);
 
                             // End
                             schedule(function() {
@@ -25261,14 +25624,19 @@
                                 disableStepScrollLock();
 
                                 step1.classList.remove('is-visible');
+                                step1.classList.remove('is-leaving-12');
                                 step2.classList.remove('is-visible');
+                                step2.classList.remove('is-leaving-23');
                                 step3.classList.remove('is-visible');
+                                step3.classList.remove('is-leaving-34');
                                 step4.classList.remove('is-visible');
+                                step4.classList.remove('is-leaving-45');
                                 step5.classList.remove('is-visible');
+                                step5.classList.remove('is-leaving-45');
 
-                                gsap.to(overlay, { opacity: 0, duration: 0.35, ease: 'power2.out' });
-                                gsap.to(panelTextBlock, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-                            }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS);
+                                gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' });
+                                gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' });
+                            }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS + OUT_12_MS + OUT_23_MS + OUT_34_MS + OUT_45_MS);
                         }, FIRST_SENTENCE_DELAY_MS);
                     }, OVERLAY_APPEAR_DELAY_MS);
                 }
@@ -25280,6 +25648,8 @@
 
                 function onWheelLock(e) {
                     if (!shouldLockForwardScroll()) return;
+                    // Retry radio start on wheel input while trailer is active.
+                    tryStartRadioForTrailer();
                     e.preventDefault();
                     e.stopPropagation();
                     window.scrollTo({ top: lockScrollY });
@@ -25316,6 +25686,17 @@
                 // If the trailer hasn't been played yet, ANY first scroll should start it.
                 // This makes it feel like a “game intro trailer”: user scroll -> trailer starts.
                 (function attachFirstScrollStart() {
+                    let firstStartAttached = true;
+                    let keyStartHandler = null;
+
+                    function detachFirstStartListeners() {
+                        if (!firstStartAttached) return;
+                        firstStartAttached = false;
+                        window.removeEventListener('wheel', startFromEvent, true);
+                        window.removeEventListener('touchmove', startFromEvent, true);
+                        if (keyStartHandler) window.removeEventListener('keydown', keyStartHandler, true);
+                    }
+
                     function startFromEvent(e) {
                         // Don't hijack taps on interactive UI (e.g., the music player).
                         // On some mobiles, a tiny finger jitter can fire `touchmove` and would otherwise
@@ -25333,9 +25714,15 @@
                             if (isInteractive) return;
                         }
 
+                        // This is the real starter event; prevent duplicate starts.
+                        detachFirstStartListeners();
+
                         // Freeze scroll immediately when the trailer is triggered.
                         // This prevents the “tiny scroll then start” feel.
                         lockScrollY = window.scrollY;
+                        // Start radio on the same first-scroll user gesture (before preventDefault),
+                        // which improves autoplay reliability across browsers.
+                        tryStartRadioForTrailer();
                         if (e && e.cancelable) {
                             e.preventDefault();
                             e.stopPropagation();
@@ -25347,14 +25734,15 @@
                         });
                     }
 
-                    window.addEventListener('wheel', startFromEvent, { passive: false, once: true, capture: true });
-                    window.addEventListener('touchmove', startFromEvent, { passive: false, once: true, capture: true });
-                    window.addEventListener('keydown', function(e) {
+                    window.addEventListener('wheel', startFromEvent, { passive: false, capture: true });
+                    window.addEventListener('touchmove', startFromEvent, { passive: false, capture: true });
+                    keyStartHandler = function(e) {
                         const k = e.key;
                         const blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
                         if (!blocks) return;
                         startFromEvent(e);
-                    }, { once: true });
+                    };
+                    window.addEventListener('keydown', keyStartHandler, { capture: true });
                 })();
 
                 ScrollTrigger.create({
@@ -25374,8 +25762,8 @@
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
                         disableStepScrollLock(); // restore normal scrolling
-                        gsap.to(overlay, { opacity: 0, duration: 0.75, ease: 'power2.out' }); // hide black screen
-                        gsap.to(panelTextBlock, { opacity: 1, duration: 0.5, ease: 'power2.out' }); // restore perfect panel text
+                        gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide black screen
+                        gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // restore perfect panel text
 
                         step1.classList.remove('is-visible');
                         step2.classList.remove('is-visible');
@@ -25411,7 +25799,7 @@
                         overlayAppearDelayId = setTimeout(function() {
                             overlayAppearDelayId = null;
                             gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect text when overlay is visible
-                            gsap.to(overlay, { opacity: 1, duration: 0.85, ease: 'power3.out' }); // show black screen again on reverse
+                            gsap.to(overlay, { opacity: 1, duration: 1.3, ease: 'power3.out' }); // show black screen again on reverse
                             firstSentenceDelayId = setTimeout(function() {
                                 firstSentenceDelayId = null;
                                 step1.classList.add('is-visible');
@@ -25444,8 +25832,8 @@
 
                         isActive = false;
                         disableStepScrollLock();
-                        gsap.to(overlay, { opacity: 0, duration: 0.75, ease: 'power2.out' }); // hide trailer
-                        gsap.to(panelTextBlock, { opacity: 1, duration: 0.5, ease: 'power2.out' }); // show panel text
+                        gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide trailer
+                        gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // show panel text
 
                         step1.classList.remove('is-visible');
                         step2.classList.remove('is-visible');
