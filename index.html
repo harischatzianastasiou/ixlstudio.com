@@ -24532,10 +24532,21 @@
             
             const keys = { w: false, shift: false, space: false };
 
+            // Use physical key codes first so controls work across keyboard layouts (EN, GR, etc.).
+            function isWalkKey(e) {
+                return e.code === 'KeyW' || ((e.key || '').toLowerCase() === 'w');
+            }
+            function isShiftKey(e) {
+                return e.code === 'ShiftLeft' || e.code === 'ShiftRight' || e.key === 'Shift';
+            }
+            function isJumpKey(e) {
+                return e.code === 'Space' || e.key === ' ';
+            }
+
             function onLilithKeyDown(e) {
                 if (!isActive) return;
 
-                if (e.key.toLowerCase() === 'w' && !keys.w) {
+                if (isWalkKey(e) && !keys.w) {
                     keys.w = true;
                     if (keys.shift) {
                         switchAnimation('run');
@@ -24543,13 +24554,13 @@
                         switchAnimation('walk');
                     }
                 }
-                if (e.key === 'Shift' && !keys.shift) {
+                if (isShiftKey(e) && !keys.shift) {
                     keys.shift = true;
                     if (keys.w) {
                         switchAnimation('run');
                     }
                 }
-                if (e.key === ' ' && !keys.space && currentState !== 'jump') {
+                if (isJumpKey(e) && !keys.space && currentState !== 'jump') {
                     keys.space = true;
                     switchAnimation('jump');
 
@@ -24572,13 +24583,13 @@
             function onLilithKeyUp(e) {
                 if (!isActive) return;
 
-                if (e.key.toLowerCase() === 'w') {
+                if (isWalkKey(e)) {
                     keys.w = false;
                     if (currentState !== 'jump') {
                         switchAnimation('idle');
                     }
                 }
-                if (e.key === 'Shift') {
+                if (isShiftKey(e)) {
                     keys.shift = false;
                     if (keys.w && currentState !== 'jump') {
                         switchAnimation('walk');
