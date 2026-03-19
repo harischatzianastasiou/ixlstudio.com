@@ -603,26 +603,21 @@
 
 
 
-        /* Mobile: lock viewport and scroll inside wrapper to keep browser bar visible */
+        /* Mobile: normal page scroll (no fixed body); ScrollTrigger falls back to window as scroller */
         @media (max-width: 768px) {
-            html {
-                height: 100%;
-                overflow: hidden !important;
-            }
             body {
-                position: fixed !important;
-                inset: 0;
-                height: 100% !important;
+                position: static !important;
+                height: auto !important;
                 overflow-x: hidden !important;
-                overflow-y: hidden !important;
+                overflow-y: auto !important;
                 width: 100%;
             }
             .page-scroll-wrapper {
-                min-height: 100dvh;
-                height: 100dvh;
-                overflow-y: auto;
+                min-height: 100vh;
+                height: auto;
+                overflow-y: visible;
                 -webkit-overflow-scrolling: touch;
-                overscroll-behavior-y: contain;
+                overscroll-behavior-y: none;
                 scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
             }
         }
@@ -25291,21 +25286,12 @@
 
         // Scroll helpers – always use the window scroll (no custom scroll root)
         function getScrollRoot() {
-            if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
-                return document.querySelector('.page-scroll-wrapper');
-            }
             return null;
         }
         function getScrollY() {
-            const root = getScrollRoot();
-            return root ? root.scrollTop : window.scrollY;
+            return window.scrollY;
         }
         function scrollPageTo(y, opts) {
-            const root = getScrollRoot();
-            if (root) {
-                root.scrollTo({ top: y, ...(opts || {}) });
-                return;
-            }
             window.scrollTo({ top: y, ...(opts || {}) });
         }
         document.addEventListener('DOMContentLoaded', function() {
@@ -25547,55 +25533,6 @@
                 const trailerTimeouts = [];
                 let radioFallbackArmed = false;
                 let trailerAudioGestureArmed = false;
-                let bodyScrollLocked = false;
-
-                function lockBodyScroll() {
-                    if (bodyScrollLocked) return;
-                    bodyScrollLocked = true;
-
-                    const y = getScrollY() || 0;
-                    lockScrollY = y;
-                    const body = document.body;
-                    body.dataset.trailerScrollY = String(y);
-                    body.style.position = 'fixed';
-                    body.style.top = `-${y}px`;
-                    body.style.left = '0';
-                    body.style.right = '0';
-                    body.style.width = '100%';
-                    body.style.overflow = 'hidden';
-                    body.style.touchAction = 'none';
-
-                    const wrapper = document.querySelector('.page-scroll-wrapper');
-                    if (wrapper) {
-                        wrapper.dataset.trailerWrapperLocked = '1';
-                        wrapper.style.overflow = 'hidden';
-                    }
-                    document.documentElement.style.overflow = 'hidden';
-                }
-
-                function unlockBodyScroll() {
-                    if (!bodyScrollLocked) return;
-                    bodyScrollLocked = false;
-
-                    const body = document.body;
-                    const y = Number(body.dataset.trailerScrollY || lockScrollY || 0);
-                    delete body.dataset.trailerScrollY;
-                    body.style.position = '';
-                    body.style.top = '';
-                    body.style.left = '';
-                    body.style.right = '';
-                    body.style.width = '';
-                    body.style.overflow = '';
-                    body.style.touchAction = '';
-
-                    const wrapper = document.querySelector('.page-scroll-wrapper');
-                    if (wrapper && wrapper.dataset.trailerWrapperLocked === '1') {
-                        delete wrapper.dataset.trailerWrapperLocked;
-                        wrapper.style.overflow = '';
-                    }
-                    document.documentElement.style.overflow = '';
-                    scrollPageTo(y);
-                }
 
                 function tryStartRadioForTrailer() {
                     const radioAudio = document.getElementById('agencyAudioPlayer');
@@ -25692,7 +25629,6 @@
                     if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
 
                     disableStepScrollLock();
-                    unlockBodyScroll();
 
                     step1.classList.remove('is-visible');
                     step2.classList.remove('is-visible');
@@ -25766,8 +25702,7 @@
                     step5.classList.remove('cta-shown');
 
                     // Freeze scroll for the entire black overlay sequence.
-                    lockScrollY = getScrollY();
-                    lockBodyScroll();
+                    lockScrollY = window.scrollY;
                     enableStepScrollLock();
 
                     // Clear any pending timers (safe re-entry during fast scroll).
@@ -25837,7 +25772,6 @@
                                 isActive = false;
                                 overlay.classList.remove('is-live');
                                 disableStepScrollLock();
-                                unlockBodyScroll();
 
                                 step1.classList.remove('is-visible');
                                 step1.classList.remove('is-leaving-12');
@@ -25868,7 +25802,7 @@
                     tryStartRadioForTrailer();
                     e.preventDefault();
                     e.stopPropagation();
-                    scrollPageTo(lockScrollY);
+                    window.scrollTo({ top: lockScrollY });
                 }
 
                 let lastTouchY = 0; // used to detect swipe direction
@@ -25885,7 +25819,7 @@
                     lastTouchY = y;
                     e.preventDefault();
                     e.stopPropagation();
-                    scrollPageTo(lockScrollY);
+                    window.scrollTo({ top: lockScrollY });
                 }
 
                 function onKeyDownLock(e) {
@@ -25896,7 +25830,7 @@
                     if (!blocks) return;
                     e.preventDefault();
                     e.stopPropagation();
-                    scrollPageTo(lockScrollY);
+                    window.scrollTo({ top: lockScrollY });
                 }
 
                 // Trailer start is now controlled only by ScrollTrigger
@@ -25919,7 +25853,6 @@
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
                         disableStepScrollLock(); // restore normal scrolling
-                        unlockBodyScroll();
                         gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide black screen
                         gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // restore perfect panel text
 
@@ -25959,7 +25892,6 @@
 
                         isActive = false;
                         disableStepScrollLock();
-                        unlockBodyScroll();
                         gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide trailer
                         gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // show panel text
 
