@@ -611,6 +611,17 @@
                         return;
                     }
                     container.innerHTML = '<div class="creation-process-days"><nav class="days-list" aria-label="Days">' + listHtml + '</nav><div class="day-articles">' + articlesHtml + '</div></div>';
+                    // Keep day navigation out of browser history so Back goes to index.html.
+                    var dayLinks = container.querySelectorAll('.days-list a[href^="#"]');
+                    dayLinks.forEach(function(link) {
+                        link.addEventListener('click', function(ev) {
+                            ev.preventDefault();
+                            var targetId = (link.getAttribute('href') || '').slice(1);
+                            if (!targetId) return;
+                            var targetEl = document.getElementById(targetId);
+                            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    });
                 })
                 .catch(function() {
                     container.innerHTML = '<p class="loading">Place <strong>creation-process.md</strong> in the same folder as this page. It will be displayed here.</p>';
@@ -638,9 +649,10 @@
             const photoItems = document.querySelectorAll('.photo-item');
             photoItems.forEach(item => observer.observe(item));
         });
-        // Use history.back() when clicking logo so index intro doesn't replay
+        // Always navigate directly to home when clicking the header logo.
         document.getElementById('logo-link').addEventListener('click', function(e) {
-            if (window.history.length > 1) { e.preventDefault(); window.history.back(); }
+            e.preventDefault();
+            window.location.href = 'index.html';
         });
         // Color picker: same key as article/skgchess so preference is shared
         (function() {
