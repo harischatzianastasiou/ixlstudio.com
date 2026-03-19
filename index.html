@@ -22784,6 +22784,17 @@
             transition: opacity 0.12s ease;
             will-change: opacity;
         }
+        /* Sentence 4: very gradual trailer-style reveal (fade + slow enlarge). */
+        .observer-trailer-step-4 .observer-trailer-media {
+            opacity: 0;
+            transform: scale(0.93);
+            transition: opacity 1.05s ease, transform 1.05s ease;
+            will-change: opacity, transform;
+        }
+        .observer-trailer-step-4.is-visible .observer-trailer-media {
+            opacity: 1;
+            transform: scale(1);
+        }
         .observer-trailer-step.is-visible .observer-trailer-media {
             opacity: 1;
             transform: scale(1);
@@ -25100,7 +25111,7 @@
                 const FIRST_STEP_HOLD_MS = 3000; // step 1 stays for 3s
                 const STEP2_HOLD_MS = 3000; // sentence 2 stays for 3s
                 const STEP3_HOLD_MS = 3200; // sentence 3 stays for 3s
-                const STEP4_HOLD_MS = 3000; // sentence 4 stays for 2s
+                const STEP4_HOLD_MS = 5000; // sentence 4 stays for 2s
                 const STEP5_HOLD_MS = 2000; // sentence 5 stays for 2s
 
                 let trailerCompleted = false; // once we reveal the perfect black panel, don't run again
