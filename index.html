@@ -25912,11 +25912,6 @@
                     trigger: trailerTrigger || panel,
                     start: 'center center', // start when the observer trigger section is centered
                     end: 'bottom center',
-                    // On mobile this page scrolls inside .page-scroll-wrapper, not the window.
-                    // Using the right scroller makes "centered" detection reliable.
-                    scroller: (((window.matchMedia && window.matchMedia('(max-width: 768px)').matches)
-                        ? document.querySelector('.page-scroll-wrapper')
-                        : null) || undefined),
                     onEnter: () => {
                         startObserverTrailerSequence();
                     },
