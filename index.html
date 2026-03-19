@@ -25512,6 +25512,75 @@
                 let currentStep = 1; // 1..4: which image is currently shown
                 let stepShownAt = 0; // performance.now() when current step became visible; 0 = still in "delay before first sentence"
                 let lockScrollY = 0; // keep scroll position stable while locking forward scroll
+                let lockWrapperTop = 0;
+                let wrapperScrollLocked = false;
+                const scrollWrapperEl = document.querySelector('.page-scroll-wrapper');
+                const prevBodyOverflow = document.body.style.overflow;
+                const prevHtmlOverflow = document.documentElement.style.overflow;
+                const prevWrapperStyle = scrollWrapperEl
+                    ? {
+                          position: scrollWrapperEl.style.position,
+                          top: scrollWrapperEl.style.top,
+                          left: scrollWrapperEl.style.left,
+                          right: scrollWrapperEl.style.right,
+                          width: scrollWrapperEl.style.width,
+                          height: scrollWrapperEl.style.height,
+                          overflow: scrollWrapperEl.style.overflow
+                      }
+                    : null;
+
+                function lockScrollContainers() {
+                    if (wrapperScrollLocked) return;
+                    wrapperScrollLocked = true;
+
+                    // Stop body/html scrolling.
+                    document.body.style.overflow = 'hidden';
+                    document.documentElement.style.overflow = 'hidden';
+
+                    // Lock the actual scroll container on mobile.
+                    if (!scrollWrapperEl) return;
+                    lockWrapperTop = scrollWrapperEl.scrollTop;
+                    scrollWrapperEl.style.position = 'fixed';
+                    scrollWrapperEl.style.top = `-${lockWrapperTop}px`;
+                    scrollWrapperEl.style.left = '0';
+                    scrollWrapperEl.style.right = '0';
+                    scrollWrapperEl.style.width = '100%';
+                    scrollWrapperEl.style.height = '100vh';
+                    scrollWrapperEl.style.overflow = 'hidden';
+                }
+
+                function unlockScrollContainers() {
+                    if (!wrapperScrollLocked) return;
+                    wrapperScrollLocked = false;
+
+                    // Restore body/html scrolling.
+                    document.body.style.overflow = prevBodyOverflow;
+                    document.documentElement.style.overflow = prevHtmlOverflow;
+
+                    // Restore the wrapper and its scroll position.
+                    if (!scrollWrapperEl) return;
+                    if (prevWrapperStyle) {
+                        scrollWrapperEl.style.position = prevWrapperStyle.position;
+                        scrollWrapperEl.style.top = prevWrapperStyle.top;
+                        scrollWrapperEl.style.left = prevWrapperStyle.left;
+                        scrollWrapperEl.style.right = prevWrapperStyle.right;
+                        scrollWrapperEl.style.width = prevWrapperStyle.width;
+                        scrollWrapperEl.style.height = prevWrapperStyle.height;
+                        scrollWrapperEl.style.overflow = prevWrapperStyle.overflow;
+                    } else {
+                        scrollWrapperEl.style.position = '';
+                        scrollWrapperEl.style.top = '';
+                        scrollWrapperEl.style.left = '';
+                        scrollWrapperEl.style.right = '';
+                        scrollWrapperEl.style.width = '';
+                        scrollWrapperEl.style.height = '';
+                        scrollWrapperEl.style.overflow = '';
+                    }
+                    // Put the wrapper back where it was.
+                    try {
+                        scrollWrapperEl.scrollTop = lockWrapperTop;
+                    } catch (e) {}
+                }
                 const FIRST_SENTENCE_DELAY_MS = 1550; // slightly slower so it feels calm/meditative
                 let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
                 const OVERLAY_APPEAR_DELAY_MS = 1000; // delay before black screen starts
@@ -25629,6 +25698,7 @@
                     if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
 
                     disableStepScrollLock();
+                    unlockScrollContainers();
 
                     step1.classList.remove('is-visible');
                     step2.classList.remove('is-visible');
@@ -25703,6 +25773,7 @@
 
                     // Freeze scroll for the entire black overlay sequence.
                     lockScrollY = window.scrollY;
+                    lockScrollContainers();
                     enableStepScrollLock();
 
                     // Clear any pending timers (safe re-entry during fast scroll).
@@ -25772,6 +25843,7 @@
                                 isActive = false;
                                 overlay.classList.remove('is-live');
                                 disableStepScrollLock();
+                                unlockScrollContainers();
 
                                 step1.classList.remove('is-visible');
                                 step1.classList.remove('is-leaving-12');
@@ -25840,6 +25912,11 @@
                     trigger: trailerTrigger || panel,
                     start: 'center center', // start when the observer trigger section is centered
                     end: 'bottom center',
+                    // On mobile this page scrolls inside .page-scroll-wrapper, not the window.
+                    // Using the right scroller makes "centered" detection reliable.
+                    scroller: (((window.matchMedia && window.matchMedia('(max-width: 768px)').matches)
+                        ? document.querySelector('.page-scroll-wrapper')
+                        : null) || undefined),
                     onEnter: () => {
                         startObserverTrailerSequence();
                     },
@@ -25853,6 +25930,7 @@
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
                         disableStepScrollLock(); // restore normal scrolling
+                        unlockScrollContainers();
                         gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide black screen
                         gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // restore perfect panel text
 
@@ -25892,6 +25970,7 @@
 
                         isActive = false;
                         disableStepScrollLock();
+                        unlockScrollContainers();
                         gsap.to(overlay, { opacity: 0, duration: 1.3, ease: 'power2.out' }); // hide trailer
                         gsap.to(panelTextBlock, { opacity: 1, duration: 1.3, ease: 'power2.out' }); // show panel text
 
