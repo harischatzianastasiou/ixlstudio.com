@@ -25273,6 +25273,22 @@
                 // This makes it feel like a “game intro trailer”: user scroll -> trailer starts.
                 (function attachFirstScrollStart() {
                     function startFromEvent(e) {
+                        // Don't hijack taps on interactive UI (e.g., the music player).
+                        // On some mobiles, a tiny finger jitter can fire `touchmove` and would otherwise
+                        // steal the gesture before the click/pointer event reaches the control.
+                        const t = e && e.target;
+                        if (t && typeof t.closest === 'function') {
+                            const isInteractive =
+                                t.closest('#agencyMusicPlayer') ||
+                                t.closest('button') ||
+                                t.closest('a') ||
+                                t.closest('input') ||
+                                t.closest('select') ||
+                                t.closest('textarea') ||
+                                t.closest('[data-no-trailer]');
+                            if (isInteractive) return;
+                        }
+
                         // Freeze scroll immediately when the trailer is triggered.
                         // This prevents the “tiny scroll then start” feel.
                         lockScrollY = window.scrollY;
