@@ -603,19 +603,20 @@
 
 
 
-        /* Mobile: normal page scroll (no fixed body); ScrollTrigger falls back to window as scroller */
+        /* Mobile: fixed body + internal scroll wrapper so browser bar stays shown */
         @media (max-width: 768px) {
             body {
-                position: static !important;
-                height: auto !important;
+                position: fixed !important;
+                inset: 0;
+                height: 100dvh !important;
                 overflow-x: hidden !important;
-                overflow-y: auto !important;
+                overflow-y: hidden !important;
                 width: 100%;
             }
             .page-scroll-wrapper {
-                min-height: 100vh;
-                height: auto;
-                overflow-y: visible;
+                min-height: 100dvh;
+                height: 100dvh;
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-y: none;
                 scrollbar-gutter: stable; /* Reserve space for scrollbar so content doesn’t shift when menu opens */
