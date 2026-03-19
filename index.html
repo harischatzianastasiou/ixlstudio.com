@@ -22661,6 +22661,98 @@
             width: 100%;
             box-sizing: border-box;
         }
+        /* Full-screen trailer overlay for the observer panel */
+        .youtube-trailer-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 60;
+            pointer-events: none;
+            opacity: 0;
+            will-change: opacity;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: clamp(1.25rem, 3vw, 2.75rem);
+        }
+        #observerTrailerPanel {
+            position: relative;
+            z-index: 41; /* above overlay */
+        }
+        /* Big scroll trailer steps (different from the “perfect” black panel text) */
+        .observer-trailer-step {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.12s ease;
+            will-change: opacity;
+            padding-top: 0;
+            box-sizing: border-box;
+        }
+        /* Make the first image fade in slightly slower (less “pop”). */
+        .observer-trailer-step-1 {
+            /* Keep transitions consistent across all steps. */
+            transition: opacity 0.12s ease;
+        }
+        .observer-trailer-step.is-visible {
+            opacity: 1;
+        }
+        .observer-trailer-media {
+            width: auto;
+            height: auto;
+            max-width: min(1180px, 92vw);
+            max-height: 76vh;
+            display: block;
+            filter: drop-shadow(0 14px 34px rgba(0,0,0,0.6));
+        }
+
+        /* Make first 3 steps larger than the last one */
+        .observer-trailer-step-1 .observer-trailer-media,
+        .observer-trailer-step-2 .observer-trailer-media,
+        .observer-trailer-step-3 .observer-trailer-media {
+            max-width: min(1320px, 96vw);
+            max-height: 78vh;
+        }
+
+        .observer-trailer-step-4 .observer-trailer-media {
+            max-width: min(1320px, 96vw);
+            max-height: 78vh;
+        }
+
+        .observer-trailer-step-5 .observer-trailer-media {
+            max-width: min(980px, 84vw);
+            max-height: 72vh;
+        }
+        .observer-trailer-step.is-visible .observer-trailer-media {
+            /* No transform-based animation: keeps the PNGs perfectly readable. */
+            animation: none;
+        }
+        .observer-trailer-welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.1rem;
+        }
+        .observer-trailer-welcome-title {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 900;
+            line-height: 1.05;
+            font-size: clamp(2rem, 5.4vw, 3.8rem);
+            letter-spacing: 0.02em;
+            margin: 0;
+        }
+        .observer-trailer-welcome-logo {
+            width: min(520px, 70vw);
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 12px 28px rgba(0,0,0,0.55));
+            opacity: 0.98;
+        }
         /* Overview panel after JOURNAL: no box – transparent, no border */
         .overview-panel-journal-style {
             border: none;
@@ -23575,7 +23667,7 @@
                     <div id="youtube-section" class="youtube-section-content hero-things-content">
 
         <div class="youtube-section-panels">
-        <div class="youtube-section-black-panel">
+        <div class="youtube-section-black-panel" id="observerTrailerPanel">
         <!-- <h3 class="youtube-project-title">THE OBSERVER</h3> -->
   
         
@@ -23585,22 +23677,24 @@
         </div> -->
         <!-- <h4 class="youtube-project-subtitle">Now</h4> -->
         <div class="youtube-project-description">
-            <div class="observer-tagline">
+            <div class="observer-tagline" id="observerTrailerText">
                 <p><strong>
-                    A society sunk in numbness.<br>
-                    A command from the far future to change things.
+                    A society sunk in numbness<br>
+                    A command sent from the far future<br>
+                    A simulation inside the mind
                     </strong></p>
                     
                 <!-- Normal weight; "Rewrite narratives" in italics to match design -->
                 <p>
                     <br>
-                    Explore the inside of a human brain and rewrite the narrative.<br><br>
+                    Explore what's real.<br>
+                    Rewrite the narrative.<br><br>
                 
                 
                 <!-- <strong>Be the change...</strong><br><br> -->
-                Welcome to<br><br></p>
+                Be<br><br></p>
             </div>
-                <img src="theobserver.png" alt="The Observer" style="width: 100%; max-width: 420px; height: auto; display: block; margin: 6px auto 0;">
+                <img id="observerTrailerLogo" src="theobserver.png" alt="The Observer" style="width: 100%; max-width: 420px; height: auto; display: block; margin: 6px auto 0;">
         
                 <br>
                 <p>Follow on  <em>Journal,</em><br> or visit the <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener noreferrer" style="color: purple; text-decoration: none;">YouTube channel</a>.        </p>
@@ -24849,6 +24943,473 @@
                 if (saved) setBg(saved);
                 picker.addEventListener('input', function() { setBg(picker.value); });
                 picker.closest('.bg-bar').classList.add('bg-bar-ready');
+            })();
+
+            // Observer black panel trailer animation (full-screen overlay + sequential reveal)
+            (function initObserverTrailer() {
+                const panel = document.getElementById('observerTrailerPanel'); // the perfect “black panel” container
+                if (!panel) return; // stop if panel doesn't exist
+
+                // Persist “play once forever” across refreshes.
+                const STORAGE_KEY = 'observerTrailerPlayedEver';
+                try {
+                    if (localStorage.getItem(STORAGE_KEY) === '1') {
+                        return;
+                    }
+                } catch (e) {
+                    // If storage is blocked, fall back to non-persistent behavior.
+                }
+
+                // We temporarily hide the panel text while the full-screen trailer is active.
+                const panelTextBlock =
+                    panel.querySelector('.youtube-project-description') ||
+                    panel;
+
+                // Build a separate full-screen “black screen” trailer (NOT the existing panel).
+                const overlay = document.createElement('div'); // fixed overlay div
+                overlay.className = 'youtube-trailer-overlay observer-trailer-overlay'; // use our overlay CSS
+                overlay.setAttribute('aria-hidden', 'true'); // purely visual
+
+                // 5 image steps:
+                // step1 = theobserver.png, then sentence1.png..sentence4.png
+                const step1 = document.createElement('div'); // step container
+                step1.className = 'observer-trailer-step observer-trailer-step-1'; // styling hook
+                const img1 = document.createElement('img');
+                img1.className = 'observer-trailer-media';
+                img1.src = 'sentence1.png';
+                img1.alt = 'Trailer step 1 (The Observer)';
+                step1.appendChild(img1);
+
+                const step2 = document.createElement('div');
+                step2.className = 'observer-trailer-step observer-trailer-step-2';
+                const img2 = document.createElement('img');
+                img2.className = 'observer-trailer-media';
+                img2.src = 'sentence2.png';
+                img2.alt = 'Trailer step 2';
+                step2.appendChild(img2);
+
+                const step3 = document.createElement('div');
+                step3.className = 'observer-trailer-step observer-trailer-step-3';
+                const img3 = document.createElement('img');
+                img3.className = 'observer-trailer-media';
+                img3.src = 'sentence3.png';
+                img3.alt = 'Trailer step 3';
+                step3.appendChild(img3);
+
+                const step4 = document.createElement('div');
+                step4.className = 'observer-trailer-step observer-trailer-step-4';
+                const img4 = document.createElement('img');
+                img4.className = 'observer-trailer-media';
+                img4.src = 'sentence4.png';
+                img4.alt = 'Trailer step 4';
+                step4.appendChild(img4);
+
+                const step5 = document.createElement('div');
+                step5.className = 'observer-trailer-step observer-trailer-step-5';
+                const img5 = document.createElement('img');
+                img5.className = 'observer-trailer-media';
+                img5.src = 'sentence5.png';
+                img5.alt = 'Trailer step 5';
+                step5.appendChild(img5);
+
+                overlay.appendChild(step1);
+                overlay.appendChild(step2);
+                overlay.appendChild(step3);
+                overlay.appendChild(step4);
+                overlay.appendChild(step5);
+                document.body.appendChild(overlay); // mount overlay to DOM
+
+                // Start in “panel mode” (overlay hidden, panel text visible).
+                gsap.set(overlay, { opacity: 0 });
+                // Steps start hidden via CSS (.observer-trailer-step { opacity: 0; ... })
+                gsap.set(panelTextBlock, { opacity: 1 });
+
+                // Respect reduced-motion.
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduced) {
+                    // No trailer overlay: keep perfect panel always visible.
+                    overlay.remove();
+                    return;
+                }
+
+                let hasPlayedOnce = false; // only play the trailer one time total
+                let isActive = false; // true only while the scroll window is active
+                let currentStep = 1; // 1..4: which image is currently shown
+                let stepShownAt = 0; // performance.now() when current step became visible; 0 = still in "delay before first sentence"
+                let lockScrollY = 0; // keep scroll position stable while locking forward scroll
+                const FIRST_SENTENCE_DELAY_MS = 1100; // noticeable delay after black screen before sentence 1 appears
+                let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
+                const OVERLAY_APPEAR_DELAY_MS = 350; // wait until the black panel is visible before showing the overlay
+                let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
+                const FIRST_STEP_HOLD_MS = 3000; // step 1 stays for 3s
+                const STEP2_HOLD_MS = 3500; // sentence 2 stays for 3s
+                const STEP3_HOLD_MS = 3250; // sentence 3 stays for 3s
+                const STEP4_HOLD_MS = 3500; // sentence 4 stays for 2s
+                const STEP5_HOLD_MS = 2000; // sentence 5 stays for 2s
+
+                let trailerCompleted = false; // once we reveal the perfect black panel, don't run again
+
+                // Lock scroll input while the current step hasn't been visible for 2 seconds.
+                // This prevents skipping by aggressive scrolling.
+                let scrollLockEnabled = false;
+
+                function enableStepScrollLock() {
+                    if (scrollLockEnabled) return;
+                    scrollLockEnabled = true;
+
+                    window.addEventListener('wheel', onWheelLock, { passive: false });
+                    window.addEventListener('touchstart', onTouchStartLock, { passive: true });
+                    window.addEventListener('touchmove', onTouchMoveLock, { passive: false });
+                    window.addEventListener('keydown', onKeyDownLock, { passive: false });
+                }
+
+                function disableStepScrollLock() {
+                    if (!scrollLockEnabled) return;
+                    scrollLockEnabled = false;
+
+                    window.removeEventListener('wheel', onWheelLock);
+                    window.removeEventListener('touchstart', onTouchStartLock);
+                    window.removeEventListener('touchmove', onTouchMoveLock);
+                    window.removeEventListener('keydown', onKeyDownLock);
+                }
+
+                // Start the full-screen “welcome to the observer” sequence immediately.
+                // This is triggered by the first user scroll (before the trailer was ever played),
+                // and is also safe to call multiple times because it guards with `hasPlayedOnce`.
+                function startObserverTrailerSequence() {
+                    if (hasPlayedOnce) return;
+                    hasPlayedOnce = true;
+                    try {
+                        localStorage.setItem(STORAGE_KEY, '1');
+                    } catch (e) {
+                        // Ignore if storage is blocked.
+                    }
+
+                    isActive = true;
+                    trailerCompleted = false;
+                    gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect panel text under overlay
+
+                    // Hide all steps before starting the trailer.
+                    step1.classList.remove('is-visible');
+                    step2.classList.remove('is-visible');
+                    step3.classList.remove('is-visible');
+                    step4.classList.remove('is-visible');
+                    step5.classList.remove('is-visible');
+
+                    // Freeze scroll for the entire black overlay sequence.
+                    lockScrollY = window.scrollY;
+                    enableStepScrollLock();
+
+                    // Clear any pending timers (safe re-entry during fast scroll).
+                    if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
+                    firstSentenceDelayId = null;
+                    if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
+                    overlayAppearDelayId = null;
+
+                    // Start overlay in after the panel is “ready”, then show step1 after a delay.
+                    overlayAppearDelayId = setTimeout(function() {
+                        overlayAppearDelayId = null;
+                        gsap.set(panelTextBlock, { opacity: 0 });
+                        gsap.to(overlay, { opacity: 1, duration: 0.85, ease: 'power3.out' });
+
+                        firstSentenceDelayId = setTimeout(function() {
+                            firstSentenceDelayId = null;
+                            step1.classList.add('is-visible');
+
+                                // Step 2 (after step 1)
+                                setTimeout(function() {
+                                    step1.classList.remove('is-visible');
+                                    step2.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS);
+
+                                // Step 3 (after step 1 + step 2)
+                                setTimeout(function() {
+                                    step2.classList.remove('is-visible');
+                                    step3.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS);
+
+                                // Step 4 (after step 1 + step 2 + step 3)
+                                setTimeout(function() {
+                                    step3.classList.remove('is-visible');
+                                    step4.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS);
+
+                                // Step 5 (after step 1 + step 2 + step 3 + step 4)
+                                setTimeout(function() {
+                                    step4.classList.remove('is-visible');
+                                    step5.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS);
+
+                            // End
+                            setTimeout(function() {
+                                trailerCompleted = true;
+                                isActive = false;
+                                disableStepScrollLock();
+
+                                step1.classList.remove('is-visible');
+                                step2.classList.remove('is-visible');
+                                step3.classList.remove('is-visible');
+                                step4.classList.remove('is-visible');
+                                step5.classList.remove('is-visible');
+
+                                gsap.to(overlay, { opacity: 0, duration: 0.35, ease: 'power2.out' });
+                                gsap.to(panelTextBlock, { opacity: 1, duration: 0.35, ease: 'power2.out' });
+                            }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS);
+                        }, FIRST_SENTENCE_DELAY_MS);
+                    }, OVERLAY_APPEAR_DELAY_MS);
+                }
+
+                function shouldLockForwardScroll() {
+                    // While the black overlay/trailer is running, freeze scrolling completely.
+                    return isActive;
+                }
+
+                function onWheelLock(e) {
+                    if (!shouldLockForwardScroll()) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.scrollTo({ top: lockScrollY });
+                }
+
+                let lastTouchY = 0; // used to detect swipe direction
+                function onTouchStartLock(e) {
+                    if (!e.touches || !e.touches[0]) return;
+                    lastTouchY = e.touches[0].clientY;
+                }
+
+                function onTouchMoveLock(e) {
+                    if (!shouldLockForwardScroll()) return;
+                    if (!e.touches || !e.touches[0]) return;
+                    const y = e.touches[0].clientY;
+                    const dy = lastTouchY - y; // swipe up (dy>0) => scroll down (forward)
+                    lastTouchY = y;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.scrollTo({ top: lockScrollY });
+                }
+
+                function onKeyDownLock(e) {
+                    if (!shouldLockForwardScroll()) return;
+                    const k = e.key;
+                    // Block common scroll keys while the trailer is active.
+                    const blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
+                    if (!blocks) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.scrollTo({ top: lockScrollY });
+                }
+
+                // If the trailer hasn't been played yet, ANY first scroll should start it.
+                // This makes it feel like a “game intro trailer”: user scroll -> trailer starts.
+                (function attachFirstScrollStart() {
+                    function startFromEvent(e) {
+                        // Freeze scroll immediately when the trailer is triggered.
+                        // This prevents the “tiny scroll then start” feel.
+                        lockScrollY = window.scrollY;
+                        if (e && e.cancelable) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                        startObserverTrailerSequence();
+                        // Re-apply the current scroll position on the next frame.
+                        requestAnimationFrame(function() {
+                            window.scrollTo({ top: lockScrollY });
+                        });
+                    }
+
+                    window.addEventListener('wheel', startFromEvent, { passive: false, once: true, capture: true });
+                    window.addEventListener('touchmove', startFromEvent, { passive: false, once: true, capture: true });
+                    window.addEventListener('keydown', function(e) {
+                        const k = e.key;
+                        const blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
+                        if (!blocks) return;
+                        startFromEvent(e);
+                    }, { once: true });
+                })();
+
+                ScrollTrigger.create({
+                    trigger: panel, // the perfect panel controls when the trailer starts
+                    start: 'top 90%', // start when the black panel is first coming into view
+                    end: 'bottom 0%', // end later; we'll reveal the panel earlier via timing
+                    onEnter: () => {
+                        if (hasPlayedOnce) return;
+                        hasPlayedOnce = true;
+                        try {
+                            localStorage.setItem(STORAGE_KEY, '1');
+                        } catch (e) {
+                            // Ignore if storage is blocked.
+                        }
+                        isActive = true;
+                        trailerCompleted = false;
+                        gsap.set(panelTextBlock, { opacity: 0 }); // keep perfect text hidden until trailer ends
+
+                        // Hide all steps before starting the trailer.
+                        step1.classList.remove('is-visible');
+                        step2.classList.remove('is-visible');
+                        step3.classList.remove('is-visible');
+                        step4.classList.remove('is-visible');
+                        step5.classList.remove('is-visible');
+
+                        // Freeze scroll for the entire black overlay sequence.
+                        lockScrollY = window.scrollY;
+                        enableStepScrollLock();
+
+                        // Clear any pending timers (safe re-entry during fast scroll).
+                        if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
+                        firstSentenceDelayId = null;
+                        if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
+                        overlayAppearDelayId = null;
+
+                        // Start: fade overlay in after the panel is visible.
+                        overlayAppearDelayId = setTimeout(function() {
+                            overlayAppearDelayId = null;
+                            gsap.set(panelTextBlock, { opacity: 0 }); // keep perfect panel hidden under overlay
+                            gsap.to(overlay, { opacity: 1, duration: 0.85, ease: 'power3.out' }); // black screen on
+
+                            // Step 1 appears after the designed delay from overlay start.
+                            firstSentenceDelayId = setTimeout(function() {
+                                firstSentenceDelayId = null;
+                                step1.classList.add('is-visible');
+
+                                // Step 2 (after step 1 has been visible)
+                                setTimeout(function() {
+                                    step1.classList.remove('is-visible');
+                                    step2.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS);
+
+                                // Step 3 (after step 1 + step 2)
+                                setTimeout(function() {
+                                    step2.classList.remove('is-visible');
+                                    step3.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS);
+
+                                // Step 4 (after step 1 + step 2 + step 3)
+                                setTimeout(function() {
+                                    step3.classList.remove('is-visible');
+                                    step4.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS);
+
+                                // Step 5 (after step 1 + step 2 + step 3 + step 4)
+                                setTimeout(function() {
+                                    step4.classList.remove('is-visible');
+                                    step5.classList.add('is-visible');
+                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS);
+
+                                // End: restore the perfect black panel.
+                                setTimeout(function() {
+                                    trailerCompleted = true;
+                                    isActive = false;
+                                    disableStepScrollLock();
+
+                                    step1.classList.remove('is-visible');
+                                    step2.classList.remove('is-visible');
+                                    step3.classList.remove('is-visible');
+                                    step4.classList.remove('is-visible');
+                                    step5.classList.remove('is-visible');
+
+                                    gsap.to(overlay, { opacity: 0, duration: 0.35, ease: 'power2.out' });
+                                    gsap.to(panelTextBlock, { opacity: 1, duration: 0.35, ease: 'power2.out' });
+                            }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS);
+                            }, FIRST_SENTENCE_DELAY_MS);
+                        }, OVERLAY_APPEAR_DELAY_MS);
+                    },
+                    onLeave: () => {
+                        // If the user scrolled out of the ScrollTrigger window too fast,
+                        // we still keep the trailer running until we've satisfied the
+                        // per-sentence time gate. Only release scroll when we're done.
+                        if (!trailerCompleted) return;
+
+                        isActive = false;
+                        if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
+                        if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
+                        disableStepScrollLock(); // restore normal scrolling
+                        gsap.to(overlay, { opacity: 0, duration: 0.75, ease: 'power2.out' }); // hide black screen
+                        gsap.to(panelTextBlock, { opacity: 1, duration: 0.5, ease: 'power2.out' }); // restore perfect panel text
+
+                        step1.classList.remove('is-visible');
+                        step2.classList.remove('is-visible');
+                        step3.classList.remove('is-visible');
+                        step4.classList.remove('is-visible');
+                        step5.classList.remove('is-visible');
+                    },
+                    onEnterBack: () => {
+                        if (hasPlayedOnce) {
+                            // Don't interrupt the first-time trailer while it's running.
+                            if (trailerCompleted) {
+                                gsap.set(panelTextBlock, { opacity: 1 });
+                                gsap.set(overlay, { opacity: 0 });
+                            }
+                            return; // never restart
+                        }
+                        isActive = true;
+                        gsap.set(overlay, { opacity: 0 }); // keep hidden until overlay delay finishes
+                        gsap.set(panelTextBlock, { opacity: 1 }); // keep panel text visible until overlay fades in
+                        step1.classList.remove('is-visible'); // delay before showing sentence 1 again
+                        step2.classList.remove('is-visible');
+                        step3.classList.remove('is-visible');
+                        step4.classList.remove('is-visible');
+                        step5.classList.remove('is-visible');
+
+                        currentStep = 1;
+                        stepShownAt = 0;
+                        lockScrollY = window.scrollY;
+                        enableStepScrollLock();
+                        if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
+                        if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
+                        firstSentenceDelayId = null;
+                        overlayAppearDelayId = setTimeout(function() {
+                            overlayAppearDelayId = null;
+                            gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect text when overlay is visible
+                            gsap.to(overlay, { opacity: 1, duration: 0.85, ease: 'power3.out' }); // show black screen again on reverse
+                            firstSentenceDelayId = setTimeout(function() {
+                                firstSentenceDelayId = null;
+                                step1.classList.add('is-visible');
+                                stepShownAt = performance.now();
+                            }, FIRST_SENTENCE_DELAY_MS);
+                        }, OVERLAY_APPEAR_DELAY_MS);
+                    },
+                    onLeaveBack: () => {
+                        // While the trailer is still running, never interrupt it.
+                        if (!trailerCompleted) return;
+                        if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
+                        if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
+                        if (hasPlayedOnce) {
+                            // After the first play, do not show the trailer again.
+                            gsap.set(panelTextBlock, { opacity: 1 });
+                            gsap.set(overlay, { opacity: 0 });
+                            step1.classList.remove('is-visible');
+                            step2.classList.remove('is-visible');
+                            step3.classList.remove('is-visible');
+                            step4.classList.remove('is-visible');
+                            step5.classList.remove('is-visible');
+                            currentStep = 1;
+                            stepShownAt = 0;
+                            disableStepScrollLock();
+                            return;
+                        }
+                        // Same idea as onLeave: only release scrolling once the trailer
+                        // finished its timed reveal sequence.
+                        if (!trailerCompleted) return;
+
+                        isActive = false;
+                        disableStepScrollLock();
+                        gsap.to(overlay, { opacity: 0, duration: 0.75, ease: 'power2.out' }); // hide trailer
+                        gsap.to(panelTextBlock, { opacity: 1, duration: 0.5, ease: 'power2.out' }); // show panel text
+
+                        step1.classList.remove('is-visible');
+                        step2.classList.remove('is-visible');
+                        step3.classList.remove('is-visible');
+                        step4.classList.remove('is-visible');
+                        step5.classList.remove('is-visible');
+
+                        currentStep = 1;
+                        stepShownAt = 0; // reset so the next enter-back starts clean
+                    },
+                    // We run the trailer like a video (timers), so scroll updates should do nothing.
+                    onUpdate: () => {
+                        return;
+                    }
+                });
             })();
 
             // Force header to stay transparent (at top and when scrolled)
