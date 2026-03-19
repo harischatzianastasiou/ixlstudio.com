@@ -22,7 +22,13 @@
 
     <!-- Apply saved background color before first paint to avoid flash of default -->
     <script>
-    (function(){var s=localStorage.getItem('index-bg');if(s)document.documentElement.style.setProperty('--page-bg',s);})();
+    (function(){
+        var s = localStorage.getItem('index-bg');
+        if (s) document.documentElement.style.setProperty('--page-bg', s);
+
+        var mode = localStorage.getItem('index-bg-mode') || 'gradient';
+        document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
+    })();
     </script>
 
 
@@ -1308,7 +1314,7 @@
 
             bottom: 0;
 
-            background: #252525;
+            background: #1f1f1f; /* slightly darker grey */
 
             z-index: 9999998;
 
@@ -1341,8 +1347,8 @@
         }
         .mobile-menu-overlay-deco .deco-shape {
             position: absolute;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             opacity: 0;
         }
         .mobile-menu-overlay-deco .deco-shape--diamond { border-radius: 4px; transform: rotate(45deg); }
@@ -5412,8 +5418,44 @@
             right: 0;
             bottom: 0;
             z-index: 0;
-            background: var(--page-bg, #640C0C);
+            /* Subtle "space" background: soft glows + dark gradient, driven by the picker color. */
+            background-color: var(--page-bg, #9126D9);
+            background-image:
+                /* Top-left glow: softened so it doesn't look "intense" or harsh. */
+                radial-gradient(950px circle at 18% 12%, color-mix(in srgb, var(--page-bg, #9126D9) 18%, black) 0%, rgba(0,0,0,0) 58%),
+                /* Lower-right glow: reduced so it doesn't form a visible "band" lower down. */
+                radial-gradient(780px circle at 78% 68%, color-mix(in srgb, var(--page-bg, #9126D9) 14%, black) 0%, rgba(0,0,0,0) 52%),
+                /* Vertical fade: two-stop only (no mid-stop), so there is no harsh step/band. */
+                linear-gradient(180deg, color-mix(in srgb, var(--page-bg, #9126D9) 46%, black) 0%, #000000 100%),
+                radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.16) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 28% 61%, rgba(255,255,255,0.12) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 44% 35%, rgba(255,255,255,0.14) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 62% 18%, rgba(255,255,255,0.10) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 76% 48%, rgba(255,255,255,0.12) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 86% 66%, rgba(255,255,255,0.10) 0 1px, rgba(255,255,255,0) 3px);
             pointer-events: none; /* Let the page receive scroll/touch gestures */
+        }
+        /* Plain mode: use only the picked color (no space gradients / no stars). */
+        .page-bg-plain .page-bg-video-wrap {
+            background-image: none !important;
+        }
+        .page-bg-plain .page-bg-video-wrap::after {
+            display: none !important;
+            opacity: 0;
+        }
+        /* Extra faint star dust (kept very low intensity). */
+        .page-bg-video-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(1px 1px at 18% 78%, rgba(255,255,255,0.08) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.07) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 54% 56%, rgba(255,255,255,0.06) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 67% 32%, rgba(255,255,255,0.06) 0 1px, rgba(255,255,255,0) 3px),
+                radial-gradient(1px 1px at 93% 28%, rgba(255,255,255,0.07) 0 1px, rgba(255,255,255,0) 3px);
+            opacity: 0.25;
         }
         .agency-video-overlay {
             position: absolute;
@@ -5443,6 +5485,23 @@
             border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;
             cursor: pointer; background: transparent;
         }
+        .header .bg-style-picker {
+            height: 28px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 4px;
+            background: rgba(0,0,0,0.25);
+            color: rgba(255,255,255,0.86);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.7rem;
+            padding: 0 0.35rem;
+            cursor: pointer;
+            outline: none;
+            margin-left: 0.35rem;
+        }
+        .header .bg-style-picker option {
+            background: #0b0b0b;
+            color: rgba(255,255,255,0.92);
+        }
         .header .bg-color-picker::-webkit-color-swatch-wrapper { padding: 1px; }
         .header .bg-color-picker::-webkit-color-swatch { border: none; border-radius: 3px; }
         .header .bg-color-picker::-moz-color-swatch { border: none; border-radius: 3px; }
@@ -5450,6 +5509,12 @@
             .header .bg-bar-label { display: none; }
             .header .bg-color-picker { width: 24px; height: 24px; }
             .header .bg-bar { margin-left: -0.2rem; }
+            .header .bg-style-picker {
+                height: 24px;
+                font-size: 0.65rem;
+                padding: 0 0.25rem;
+                margin-left: 0.25rem;
+            }
         }
         /* Vertical "Follow on YouTube" on the left – ref style */
         .agency-get-in-touch {
@@ -5918,7 +5983,11 @@
         /* Make the Lilith trigger less tall than the 3D model cards */
         #lilithModalTrigger {
             aspect-ratio: 3 / 5 !important;
-            transform: translateY(310px); /* move image down more */
+            transform: translateY(0); /* center in the Lilith-only row now */
+            margin: 0 auto;
+            display: flex !important; /* center the image inside the button */
+            align-items: center;
+            justify-content: center;
         }
         .lilith-modal-trigger:focus,
         .lilith-modal-trigger:focus-visible {
@@ -5930,6 +5999,7 @@
             height: 100%;
             display: block;
             object-fit: contain;
+            object-position: center center;
             opacity: 1 !important; /* override generic base-card image dimming */
             filter: drop-shadow(0 12px 26px rgba(0,0,0,0.35));
             transition: transform 220ms ease, filter 220ms ease;
@@ -23306,6 +23376,35 @@
             }
         }
 
+        /* Observer trailer trigger: centered section that starts the black screen trailer */
+        .observer-trailer-trigger-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        .observer-trailer-trigger-inner {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .observer-image-wrapper--trailer {
+            margin-top: 0; /* keep the centered layout clean */
+            max-width: 700px;
+        }
+
+        /* Mobile: prevent the centered observer trigger from visually overlapping the radio */
+        @media (max-width: 768px) {
+            .observer-trailer-trigger-section {
+                margin-top: 56vh; /* push observer section further down on mobile */
+            }
+        }
+
         /* Books Section */
         .books-section {
             display: flex;
@@ -23588,7 +23687,11 @@
                 </a>
             </div>
             <div class="bg-bar" role="group" aria-label="Page background color">
-                <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#640C0C" title="Choose page background color" aria-label="Page background color">
+                <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#9126D9" title="Choose page background color" aria-label="Page background color">
+                <select id="indexBgStylePicker" class="bg-style-picker" aria-label="Background style">
+                    <option value="gradient">Gradient</option>
+                    <option value="plain">Plain</option>
+                </select>
             </div>
         </div>
 
@@ -23693,9 +23796,12 @@
                     </div>
                 </div>
 
-                <!-- Announcement: active project + JOURNAL/YouTube follow CTA -->
-                <div class="observer-image-wrapper">
-                    <img src="theobserver.png" alt="The Observer" />
+                <!-- Announcement: active project + JOURNAL/YouTube follow CTA (humanoid sits here now) -->
+                <div class="journal-model journal-model--humanoid agency-humanoid-slot">
+                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="journal-follow-vertical">Follow on YouTube</a>
+                    <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
+                        <canvas id="agencyHumanoidCanvas"></canvas>
+                    </div>
                 </div>
 
                 <audio id="agencyAudioPlayer"></audio>
@@ -23711,6 +23817,15 @@
 
             </div>
 
+        </section>
+
+        <!-- Observer trigger section: when centered, scroll starts the black screen trailer -->
+        <section id="observerTrailerTriggerSection" class="observer-trailer-trigger-section">
+            <div class="observer-trailer-trigger-inner">
+                <div class="observer-image-wrapper observer-image-wrapper--trailer">
+                    <img src="theobserver.png" alt="The Observer" />
+                </div>
+            </div>
         </section>
 
         <!-- Welcome / about this place – intro to personal work (same style as previous “Project In Between” block) -->
@@ -23986,12 +24101,6 @@
 
             <div class="journal-lilith-wrap" aria-label="Models">
                 <div class="journal-models-row" aria-label="Humanoid and Lilith models">
-                    <div class="journal-model journal-model--humanoid">
-                        <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener noreferrer" class="journal-follow-vertical">Follow on YouTube</a>
-                        <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
-                            <canvas id="agencyHumanoidCanvas"></canvas>
-                        </div>
-                    </div>
                     <div class="journal-model journal-model--lilith">
                         <button class="lilith-modal-trigger agency-collage-card agency-collage-base agency-model-container" id="lilithModalTrigger" type="button" aria-label="Open Lilith">
                             <img src="lilithbg.png" alt="Open Lilith" />
@@ -25266,14 +25375,30 @@
                 var key = 'index-bg';
                 var picker = document.getElementById('indexBgColorPicker');
                 if (!picker) return;
+                var modeKey = 'index-bg-mode';
+                var stylePicker = document.getElementById('indexBgStylePicker');
                 var saved = localStorage.getItem(key);
+                var savedMode = localStorage.getItem(modeKey) || 'gradient';
                 function setBg(hex) {
                     document.documentElement.style.setProperty('--page-bg', hex);
                     picker.value = hex;
                     localStorage.setItem(key, hex);
                 }
+                function setMode(mode) {
+                    var isPlain = mode === 'plain';
+                    document.documentElement.classList.toggle('page-bg-plain', isPlain);
+                    if (stylePicker) stylePicker.value = mode;
+                    localStorage.setItem(modeKey, mode);
+                }
                 if (saved) setBg(saved);
+                setMode(savedMode);
                 picker.addEventListener('input', function() { setBg(picker.value); });
+                if (stylePicker) {
+                    stylePicker.addEventListener('change', function() {
+                        setMode(stylePicker.value);
+                        stylePicker.closest('.bg-bar').classList.add('bg-bar-ready');
+                    });
+                }
                 picker.closest('.bg-bar').classList.add('bg-bar-ready');
             })();
 
@@ -25281,6 +25406,9 @@
             (function initObserverTrailer() {
                 const panel = document.getElementById('observerTrailerPanel'); // the perfect “black panel” container
                 if (!panel) return; // stop if panel doesn't exist
+
+                // New trigger: start the trailer when this section is centered.
+                const trailerTrigger = document.getElementById('observerTrailerTriggerSection');
 
                 // NOTE: Trailer plays every time (no localStorage guard).
 
@@ -25363,14 +25491,26 @@
                     return;
                 }
 
-                let hasPlayedOnce = false; // only play the trailer one time total
+                // Only play once per tab-session (navigation away/back doesn't reset),
+                // but allow again on a real page reload/refresh.
+                const trailerPlayedKey = 'observerTrailerPlayedOnce';
+                try {
+                    const navEntries =
+                        (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
+                    const navType = navEntries[0] && navEntries[0].type;
+                    if (navType === 'reload') sessionStorage.removeItem(trailerPlayedKey);
+                } catch (e) {}
+                let hasPlayedOnce = false;
+                try {
+                    hasPlayedOnce = sessionStorage.getItem(trailerPlayedKey) === '1';
+                } catch (e) {}
                 let isActive = false; // true only while the scroll window is active
                 let currentStep = 1; // 1..4: which image is currently shown
                 let stepShownAt = 0; // performance.now() when current step became visible; 0 = still in "delay before first sentence"
                 let lockScrollY = 0; // keep scroll position stable while locking forward scroll
                 const FIRST_SENTENCE_DELAY_MS = 1550; // slightly slower so it feels calm/meditative
                 let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
-                const OVERLAY_APPEAR_DELAY_MS = 550; // smoother overlay entrance
+                const OVERLAY_APPEAR_DELAY_MS = 1000; // delay before black screen starts
                 let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
                 // Hold times: 1->2->3 reads as one (faster), 4 is punchy, 4->5 is middle.
                 const FIRST_STEP_HOLD_MS = 1800; // sentence 1 hold
@@ -25532,6 +25672,7 @@
                 function startObserverTrailerSequence() {
                     if (hasPlayedOnce) return;
                     hasPlayedOnce = true;
+                    try { sessionStorage.setItem(trailerPlayedKey, '1'); } catch (e) {}
 
                     // Start radio when trailer starts.
                     tryStartRadioForTrailer();
@@ -25683,72 +25824,13 @@
                     window.scrollTo({ top: lockScrollY });
                 }
 
-                // If the trailer hasn't been played yet, ANY first scroll should start it.
-                // This makes it feel like a “game intro trailer”: user scroll -> trailer starts.
-                (function attachFirstScrollStart() {
-                    let firstStartAttached = true;
-                    let keyStartHandler = null;
-
-                    function detachFirstStartListeners() {
-                        if (!firstStartAttached) return;
-                        firstStartAttached = false;
-                        window.removeEventListener('wheel', startFromEvent, true);
-                        window.removeEventListener('touchmove', startFromEvent, true);
-                        if (keyStartHandler) window.removeEventListener('keydown', keyStartHandler, true);
-                    }
-
-                    function startFromEvent(e) {
-                        // Don't hijack taps on interactive UI (e.g., the music player).
-                        // On some mobiles, a tiny finger jitter can fire `touchmove` and would otherwise
-                        // steal the gesture before the click/pointer event reaches the control.
-                        const t = e && e.target;
-                        if (t && typeof t.closest === 'function') {
-                            const isInteractive =
-                                t.closest('#agencyMusicPlayer') ||
-                                t.closest('button') ||
-                                t.closest('a') ||
-                                t.closest('input') ||
-                                t.closest('select') ||
-                                t.closest('textarea') ||
-                                t.closest('[data-no-trailer]');
-                            if (isInteractive) return;
-                        }
-
-                        // This is the real starter event; prevent duplicate starts.
-                        detachFirstStartListeners();
-
-                        // Freeze scroll immediately when the trailer is triggered.
-                        // This prevents the “tiny scroll then start” feel.
-                        lockScrollY = window.scrollY;
-                        // Start radio on the same first-scroll user gesture (before preventDefault),
-                        // which improves autoplay reliability across browsers.
-                        tryStartRadioForTrailer();
-                        if (e && e.cancelable) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }
-                        startObserverTrailerSequence();
-                        // Re-apply the current scroll position on the next frame.
-                        requestAnimationFrame(function() {
-                            window.scrollTo({ top: lockScrollY });
-                        });
-                    }
-
-                    window.addEventListener('wheel', startFromEvent, { passive: false, capture: true });
-                    window.addEventListener('touchmove', startFromEvent, { passive: false, capture: true });
-                    keyStartHandler = function(e) {
-                        const k = e.key;
-                        const blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
-                        if (!blocks) return;
-                        startFromEvent(e);
-                    };
-                    window.addEventListener('keydown', keyStartHandler, { capture: true });
-                })();
+                // Trailer start is now controlled only by ScrollTrigger
+                // (when #observerTrailerTriggerSection reaches the center).
 
                 ScrollTrigger.create({
-                    trigger: panel, // the perfect panel controls when the trailer starts
-                    start: 'top 90%', // start when the black panel is first coming into view
-                    end: 'bottom 0%', // end later; we'll reveal the panel earlier via timing
+                    trigger: trailerTrigger || panel,
+                    start: 'center center', // start when the observer trigger section is centered
+                    end: 'bottom center',
                     onEnter: () => {
                         startObserverTrailerSequence();
                     },
@@ -25772,40 +25854,9 @@
                         step5.classList.remove('is-visible');
                     },
                     onEnterBack: () => {
-                        if (hasPlayedOnce) {
-                            // Don't interrupt the first-time trailer while it's running.
-                            if (trailerCompleted) {
-                                gsap.set(panelTextBlock, { opacity: 1 });
-                                gsap.set(overlay, { opacity: 0 });
-                            }
-                            return; // never restart
-                        }
-                        isActive = true;
-                        gsap.set(overlay, { opacity: 0 }); // keep hidden until overlay delay finishes
-                        gsap.set(panelTextBlock, { opacity: 1 }); // keep panel text visible until overlay fades in
-                        step1.classList.remove('is-visible'); // delay before showing sentence 1 again
-                        step2.classList.remove('is-visible');
-                        step3.classList.remove('is-visible');
-                        step4.classList.remove('is-visible');
-                        step5.classList.remove('is-visible');
-
-                        currentStep = 1;
-                        stepShownAt = 0;
-                        lockScrollY = window.scrollY;
-                        enableStepScrollLock();
-                        if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
-                        if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
-                        firstSentenceDelayId = null;
-                        overlayAppearDelayId = setTimeout(function() {
-                            overlayAppearDelayId = null;
-                            gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect text when overlay is visible
-                            gsap.to(overlay, { opacity: 1, duration: 1.3, ease: 'power3.out' }); // show black screen again on reverse
-                            firstSentenceDelayId = setTimeout(function() {
-                                firstSentenceDelayId = null;
-                                step1.classList.add('is-visible');
-                                stepShownAt = performance.now();
-                            }, FIRST_SENTENCE_DELAY_MS);
-                        }, OVERLAY_APPEAR_DELAY_MS);
+                        // Trailer starts only on downward scroll (onEnter).
+                        // Do nothing on reverse scrolling so it can't "replay".
+                        return;
                     },
                     onLeaveBack: () => {
                         // While the trailer is still running, never interrupt it.
