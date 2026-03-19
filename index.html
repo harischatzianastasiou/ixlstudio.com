@@ -25356,8 +25356,12 @@
 
 
         // All content visible by default - no GSAP scroll animations (clean, smooth on both devices)
-        gsap.set('.fade-in, .slide-in-left, .slide-in-right, .scale-in', { opacity: 1, y: 0, x: 0, scale: 1 });
-        gsap.set('.hero-description, .hero-cta, .hero-subtitle, .hero-logo', { opacity: 1, y: 0, scale: 1 });
+        if (document.querySelector('.fade-in, .slide-in-left, .slide-in-right, .scale-in')) {
+            gsap.set('.fade-in, .slide-in-left, .slide-in-right, .scale-in', { opacity: 1, y: 0, x: 0, scale: 1 });
+        }
+        if (document.querySelector('.hero-description, .hero-cta, .hero-subtitle, .hero-logo')) {
+            gsap.set('.hero-description, .hero-cta, .hero-subtitle, .hero-logo', { opacity: 1, y: 0, scale: 1 });
+        }
 
 
 
@@ -25940,10 +25944,10 @@
                 // First, make sure hero section elements are visible if we're at the top
                 if (scrollY < windowHeight) {
                     // Show hero elements immediately if we're in the hero section
-                    gsap.set('.hero-description', { opacity: 1, y: 0 });
-                    gsap.set('.hero-cta', { opacity: 1, y: 0, scale: 1 });
-                    gsap.set('.hero-subtitle', { opacity: 1 });
-                    gsap.set('.hero-logo', { opacity: 1, y: 0, scale: 1 });
+                    if (document.querySelector('.hero-description')) gsap.set('.hero-description', { opacity: 1, y: 0 });
+                    if (document.querySelector('.hero-cta')) gsap.set('.hero-cta', { opacity: 1, y: 0, scale: 1 });
+                    if (document.querySelector('.hero-subtitle')) gsap.set('.hero-subtitle', { opacity: 1 });
+                    if (document.querySelector('.hero-logo')) gsap.set('.hero-logo', { opacity: 1, y: 0, scale: 1 });
                 }
                 
                 // Make sure agency section is always visible (it's the first section)
@@ -26066,14 +26070,13 @@
 
 
             // Set remaining initial states for wave animation - simplified transforms
+            const hasHeroAnimationTargets =
+                !!document.querySelector('.hero-subtitle, .hero-description, .hero-logo, .hero-cta');
 
-
-
-            gsap.set('.hero-subtitle', { opacity: 0, x: 200 }); // Removed rotationY for better performance
-
-
-
-            gsap.set('.hero-description', { opacity: 0, y: 100, scale: 0.5 });
+            if (hasHeroAnimationTargets) {
+                gsap.set('.hero-subtitle', { opacity: 0, x: 200 }); // Removed rotationY for better performance
+                gsap.set('.hero-description', { opacity: 0, y: 100, scale: 0.5 });
+            }
 
 
 
@@ -26082,10 +26085,7 @@
 
 
             // Create wave-like animation sequence - optimized for faster loading
-
-
-
-            heroTimeline
+            if (hasHeroAnimationTargets) heroTimeline
 
 
 
@@ -27792,179 +27792,8 @@
 
 
 
-                // Animate the pseudo-elements with scroll - simplified
-
-
-
-            gsap.to('#projects::before', {
-
-
-
-                scrollTrigger: {
-
-
-
-                    trigger: '#projects',
-
-
-
-                    start: "top bottom",
-
-
-
-                    end: "bottom top",
-
-
-
-                        scrub: 1,
-
-
-
-                        fastScrollEnd: true
-
-
-
-                    },
-
-
-
-                    y: -60, // Reduced movement
-
-
-
-                    rotation: 180, // Reduced rotation
-
-
-
-                    scale: 1.1, // Reduced scale change
-
-
-
-                ease: "none"
-
-
-
-            });
-
-
-
-
-
-
-
-            // Removed animation for projects section bottom right circle
-
-
-
-
-
-
-
-            gsap.to('#about::before', {
-
-
-
-                scrollTrigger: {
-
-
-
-                    trigger: '#about',
-
-
-
-                    start: "top bottom",
-
-
-
-                    end: "bottom top",
-
-
-
-                        scrub: 1,
-
-
-
-                        fastScrollEnd: true
-
-
-
-                    },
-
-
-
-                    y: -80, // Reduced movement
-
-
-
-                    rotation: 120, // Reduced rotation
-
-
-
-                    scale: 1.2, // Reduced scale change
-
-
-
-                ease: "none"
-
-
-
-            });
-
-
-
-
-
-
-
-            gsap.to('#about::after', {
-
-
-
-                scrollTrigger: {
-
-
-
-                    trigger: '#about',
-
-
-
-                    start: "top bottom",
-
-
-
-                    end: "bottom top",
-
-
-
-                        scrub: 1,
-
-
-
-                        fastScrollEnd: true
-
-
-
-                    },
-
-
-
-                    y: 40, // Reduced movement
-
-
-
-                    rotation: -60, // Reduced rotation
-
-
-
-                    scale: 0.95, // Reduced scale change
-
-
-
-                ease: "none"
-
-
-
-            });
+            // Removed pseudo-element GSAP targets (#projects::before, #about::before/#after)
+            // because GSAP cannot target pseudo-elements directly and this causes console warnings.
 
 
 
@@ -28033,7 +27862,6 @@
 
             // Check if servicesGrid exists before proceeding
             if (!servicesGrid) {
-                console.warn('Services grid element not found, skipping animations');
                 return;
             }
 
@@ -28703,18 +28531,7 @@
 
 
         function setupProjectCardAnimations() {
-
-
-
-            console.log('Setting up project card animations...'); // Debug log
-
-
-
             const projectCards = document.querySelectorAll('.project-card');
-
-
-
-            console.log('Found project cards:', projectCards.length); // Debug log
 
 
 
@@ -28778,11 +28595,6 @@
 
 
 
-                    console.log('Project card interacted!'); // Debug log
-
-
-
-                    console.log('Project:', this.getAttribute('data-project')); // Debug log
 
 
 
@@ -30150,14 +29962,7 @@
         // Hero project card click animations
 
         function setupHeroProjectCardAnimations() {
-
-            console.log('Setting up hero project card animations...'); // Debug log
-
-            
-
             const heroProjectCards = document.querySelectorAll('.hero-project-card'); // Get all hero project cards
-
-            console.log('Found hero project cards:', heroProjectCards.length); // Debug log
 
 
 
@@ -35308,7 +35113,7 @@
 
 
 
-        // Call test function when page loads (remove in production)
+        // Optional debug helpers are disabled in production.
 
 
 
@@ -35316,15 +35121,15 @@
 
 
 
-            testScrollBehavior();
+            // testScrollBehavior();
 
 
 
-            // Start performance monitoring (remove in production)
+            // Start performance monitoring (disabled in production)
 
 
 
-            monitorPerformance();
+            // monitorPerformance();
 
 
 
