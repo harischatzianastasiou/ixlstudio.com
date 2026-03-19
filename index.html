@@ -22863,8 +22863,9 @@
             opacity: 0;
             pointer-events: none;
             z-index: 3;
-            /* Make the line never “re-animate” when classes toggle. */
-            transition: none !important;
+            /* Allow smooth in/out transitions during class changes. */
+            transition: opacity var(--observer-trailer-speed) cubic-bezier(0.16, 0.9, 0.2, 1),
+                        transform var(--observer-trailer-speed) cubic-bezier(0.16, 0.9, 0.2, 1);
         }
         .observer-trailer-step-4.is-visible::after {
             opacity: 0.95;
@@ -22872,9 +22873,9 @@
         }
         .observer-trailer-step-4.is-visible.is-leaving-45::after,
         .observer-trailer-step-4.is-leaving-45::after {
-            /* Keep CTA line stable while sentence 4 transitions to sentence 5 */
-            opacity: 0.95;
-            transform: translateX(-50%) scaleX(1);
+            /* Fade the line away during sentence 4 -> 5. */
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0.4);
         }
         @keyframes observerTrailerCTALineIn {
             0% {
@@ -22908,15 +22909,19 @@
             transition: none !important;
         }
         .observer-trailer-step-5.is-visible::after {
-            opacity: 0.95;
-            transform: translateX(-50%) scaleX(1);
+            opacity: 0; /* Sentence 5: no line */
+            transform: translateX(-50%) scaleX(0);
         }
 
-        /* Stick the CTA underline once it has shown (no leaving animation). */
-        .observer-trailer-step-4.cta-shown::after,
+        /* If cta-shown lingers: sentence 4 should NOT override leaving animation. */
+        .observer-trailer-step-4.cta-shown::after {
+            transition: opacity var(--observer-trailer-speed) cubic-bezier(0.16, 0.9, 0.2, 1),
+                        transform var(--observer-trailer-speed) cubic-bezier(0.16, 0.9, 0.2, 1);
+        }
+        /* Sentence 5: always keep the line hidden. */
         .observer-trailer-step-5.cta-shown::after {
-            opacity: 0.95;
-            transform: translateX(-50%) scaleX(1);
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0);
             transition: none !important;
         }
 
@@ -25691,6 +25696,11 @@
                     step3.classList.remove('is-visible');
                     step4.classList.remove('is-visible');
                     step5.classList.remove('is-visible');
+                    step1.classList.remove('cta-shown');
+                    step2.classList.remove('cta-shown');
+                    step3.classList.remove('cta-shown');
+                    step4.classList.remove('cta-shown');
+                    step5.classList.remove('cta-shown');
 
                     // Freeze scroll for the entire black overlay sequence.
                     lockScrollY = window.scrollY;
@@ -25754,7 +25764,7 @@
                                     step4.classList.remove('is-visible');
                                     step4.classList.remove('is-leaving-45');
                                     step5.classList.add('is-visible');
-                                    step5.classList.add('cta-shown');
+                                    step5.classList.remove('cta-shown'); // sentence 5: no CTA underline line
                                 }, FIRST_STEP_HOLD_MS + OUT_12_MS + STEP2_HOLD_MS + OUT_23_MS + STEP3_HOLD_MS + OUT_34_MS + STEP4_HOLD_MS + OUT_45_MS);
 
                             // End
