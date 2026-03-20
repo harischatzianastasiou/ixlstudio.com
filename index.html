@@ -25621,6 +25621,11 @@
                     endTrailerNow();
                 });
 
+                /* Tap anywhere on the black screen retries radio — unrelated to FIRST_SENTENCE_DELAY / hold timers. */
+                overlay.addEventListener('pointerdown', function() {
+                    tryStartRadioForTrailer();
+                }, true);
+
                 // Lock scroll input while the current step hasn't been visible for 2 seconds.
                 // This prevents skipping by aggressive scrolling.
                 let scrollLockEnabled = false;
