@@ -20,11 +20,11 @@
 
     <title>IXLSTUDIO</title>
 
-    <!-- Apply saved background color before first paint to avoid flash of default -->
+    <!-- Apply saved background color before first paint to avoid flash of default (default rgb(177,0,255)) -->
     <script>
     (function(){
         var s = localStorage.getItem('index-bg');
-        if (s) document.documentElement.style.setProperty('--page-bg', s);
+        document.documentElement.style.setProperty('--page-bg', s || '#B100FF');
 
         var mode = localStorage.getItem('index-bg-mode') || 'gradient';
         document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
@@ -5420,14 +5420,14 @@
             bottom: 0;
             z-index: 0;
             /* Subtle "space" background: soft glows + dark gradient, driven by the picker color. */
-            background-color: var(--page-bg, #4BCE5A);
+            background-color: var(--page-bg, #B100FF); /* default rgb(177, 0, 255) */
             background-image:
                 /* Top-left glow: softened so it doesn't look "intense" or harsh. */
-                radial-gradient(950px circle at 18% 12%, color-mix(in srgb, var(--page-bg, #4BCE5A) 18%, black) 0%, rgba(0,0,0,0) 58%),
+                radial-gradient(950px circle at 18% 12%, color-mix(in srgb, var(--page-bg, #B100FF) 18%, black) 0%, rgba(0,0,0,0) 58%),
                 /* Lower-right glow: reduced so it doesn't form a visible "band" lower down. */
-                radial-gradient(780px circle at 78% 68%, color-mix(in srgb, var(--page-bg, #4BCE5A) 14%, black) 0%, rgba(0,0,0,0) 52%),
+                radial-gradient(780px circle at 78% 68%, color-mix(in srgb, var(--page-bg, #B100FF) 14%, black) 0%, rgba(0,0,0,0) 52%),
                 /* Vertical fade: two-stop only (no mid-stop), so there is no harsh step/band. */
-                linear-gradient(180deg, color-mix(in srgb, var(--page-bg, #4BCE5A) 46%, black) 0%, #000000 100%),
+                linear-gradient(180deg, color-mix(in srgb, var(--page-bg, #B100FF) 46%, black) 0%, #000000 100%),
                 radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.16) 0 1px, rgba(255,255,255,0) 3px),
                 radial-gradient(1px 1px at 28% 61%, rgba(255,255,255,0.12) 0 1px, rgba(255,255,255,0) 3px),
                 radial-gradient(1px 1px at 44% 35%, rgba(255,255,255,0.14) 0 1px, rgba(255,255,255,0) 3px),
@@ -23646,7 +23646,7 @@
                 </a>
             </div>
             <div class="bg-bar" role="group" aria-label="Page background color">
-                <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#4BCE5A" title="Choose page background color" aria-label="Page background color">
+                <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#B100FF" title="Choose page background color" aria-label="Page background color">
                 <select id="indexBgStylePicker" class="bg-style-picker" aria-label="Background style">
                     <option value="gradient">Gradient</option>
                     <option value="plain">Plain</option>
@@ -25370,6 +25370,7 @@
                 var stylePicker = document.getElementById('indexBgStylePicker');
                 var saved = localStorage.getItem(key);
                 var savedMode = localStorage.getItem(modeKey) || 'gradient';
+                var defaultHex = '#B100FF'; /* rgb(177, 0, 255): new visitor + picker default */
                 function setBg(hex) {
                     document.documentElement.style.setProperty('--page-bg', hex);
                     picker.value = hex;
@@ -25381,7 +25382,7 @@
                     if (stylePicker) stylePicker.value = mode;
                     localStorage.setItem(modeKey, mode);
                 }
-                if (saved) setBg(saved);
+                setBg(saved || defaultHex);
                 setMode(savedMode);
                 picker.addEventListener('input', function() { setBg(picker.value); });
                 if (stylePicker) {
