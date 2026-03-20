@@ -24563,7 +24563,9 @@
             let currentState = 'idle';
             let isActive = false;
             
-            const fixedRotationY = -0.2;
+            const fixedRotationY = -0.2; /* Base facing in radians (set once in art direction). */
+            let lilithYawOffset = 0; /* Adds to Y when player holds A/D; persistent until you reload. */
+            const LILITH_YAW_SPEED = 1.35; /* Radians per second while A or D is held (tune feel). */
             
             const loader = new GLTFLoader();
             
@@ -24668,10 +24670,10 @@
             
             function updateControlHints() {
                 const stateText = {
-                    idle: 'Press W to walk Lilith',
-                    walk: 'SHIFT for run',
-                    run: 'SPACE for jump',
-                    jump: 'jumping...'
+                    idle: 'W walk · A / D turn',
+                    walk: 'SHIFT run · A / D turn',
+                    run: 'SPACE jump · A / D turn',
+                    jump: 'jumping…'
                 };
                 
                 const nextText = isActive ? stateText[currentState] : 'Click to walk Lilith';
@@ -24781,9 +24783,17 @@
                 updateControlHints();
             });
             
-            const keys = { w: false, shift: false, space: false };
+            const keys = { w: false, shift: false, space: false, a: false, d: false };
 
             // Use physical key codes first so controls work across keyboard layouts (EN, GR, etc.).
+            function isLeftTurnKey(e) {
+                return e.code === 'KeyA'
+                    || (e.key || '').toLowerCase() === 'a'; /* AZERTY etc.: code still KeyA on many layouts. */
+            }
+            function isRightTurnKey(e) {
+                return e.code === 'KeyD'
+                    || (e.key || '').toLowerCase() === 'd';
+            }
             function isWalkKey(e) {
                 return e.code === 'KeyW' || ((e.key || '').toLowerCase() === 'w');
             }
@@ -24797,6 +24807,12 @@
             function onLilithKeyDown(e) {
                 if (!isActive) return;
 
+                if (isLeftTurnKey(e)) {
+                    keys.a = true; /* Held flag: animate loop applies turn every frame. */
+                }
+                if (isRightTurnKey(e)) {
+                    keys.d = true;
+                }
                 if (isWalkKey(e) && !keys.w) {
                     keys.w = true;
                     if (keys.shift) {
@@ -24834,6 +24850,12 @@
             function onLilithKeyUp(e) {
                 if (!isActive) return;
 
+                if (isLeftTurnKey(e)) {
+                    keys.a = false; /* Stop accumulating yaw when key released. */
+                }
+                if (isRightTurnKey(e)) {
+                    keys.d = false;
+                }
                 if (isWalkKey(e)) {
                     keys.w = false;
                     if (currentState !== 'jump') {
@@ -24879,7 +24901,13 @@
                 }
                 
                 if (model) {
-                    model.rotation.y = fixedRotationY;
+                    if (keys.a) {
+                        lilithYawOffset += LILITH_YAW_SPEED * delta; /* Positive Y = CCW when viewed from above. */
+                    }
+                    if (keys.d) {
+                        lilithYawOffset -= LILITH_YAW_SPEED * delta; /* Opposite direction from A. */
+                    }
+                    model.rotation.y = fixedRotationY + lilithYawOffset; /* Y = orbit left/right (not pitch). */
                 }
                 
                 renderer.render(scene, camera);
