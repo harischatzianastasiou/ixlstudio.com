@@ -22738,7 +22738,8 @@
             position: fixed;
             inset: 0;
             background: #0a0a0a;
-            z-index: 60;
+            /* Above .header (z-index 999999999) so the black screen covers nav + logo */
+            z-index: 2147483646 !important;
             pointer-events: none;
             opacity: 0;
             will-change: opacity;
@@ -23348,6 +23349,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Slight nudge down so the observer art sits a bit below optical center */
+            transform: translateY(clamp(2.5rem, 6.5vh, 6.25rem));
         }
         .observer-image-wrapper--trailer {
             margin-top: 0; /* keep the centered layout clean */
@@ -25481,6 +25484,25 @@
                 const STEP5_HOLD_MS = 3000; // sentence 5 readable time before trailer ends
                 /* Must cover --observer-trailer-exit-45-speed (~0.88s) so sentence 4 finishes exiting before 5 appears. */
                 const OUT_45_MS = 960;
+                /* Black overlay dissolve: long enough + smooth ease so it never feels like a cut. */
+                const TRAILER_OVERLAY_FADE_OUT_SEC = 3.45;
+                const TRAILER_OVERLAY_FADE_OUT_EASE = 'sine.inOut';
+
+                /** Clears competing tweens, then fades overlay out and panel text in together. */
+                function fadeTrailerOverlayOut() {
+                    gsap.killTweensOf(overlay);
+                    gsap.killTweensOf(panelTextBlock);
+                    gsap.to(overlay, {
+                        opacity: 0,
+                        duration: TRAILER_OVERLAY_FADE_OUT_SEC,
+                        ease: TRAILER_OVERLAY_FADE_OUT_EASE
+                    });
+                    gsap.to(panelTextBlock, {
+                        opacity: 1,
+                        duration: TRAILER_OVERLAY_FADE_OUT_SEC,
+                        ease: TRAILER_OVERLAY_FADE_OUT_EASE
+                    });
+                }
 
                 let trailerCompleted = false; // once we reveal the perfect black panel, don't run again
                 const trailerTimeouts = [];
@@ -25590,8 +25612,7 @@
                     step4.classList.remove('is-leaving-45');
                     step5.classList.remove('is-visible');
 
-                    gsap.to(overlay, { opacity: 0, duration: 2.2, ease: 'power2.out' });
-                    gsap.to(panelTextBlock, { opacity: 1, duration: 2.2, ease: 'power2.out' });
+                    fadeTrailerOverlayOut();
                 }
 
                 skipBtn.addEventListener('click', function(e) {
@@ -25723,8 +25744,7 @@
                                 step4.classList.remove('is-leaving-45');
                                 step5.classList.remove('is-visible');
 
-                                gsap.to(overlay, { opacity: 0, duration: 2.2, ease: 'power2.out' });
-                                gsap.to(panelTextBlock, { opacity: 1, duration: 2.2, ease: 'power2.out' });
+                                fadeTrailerOverlayOut();
                             }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + OUT_45_MS + STEP5_HOLD_MS);
                         }, FIRST_SENTENCE_DELAY_MS);
                     }, OVERLAY_APPEAR_DELAY_MS);
@@ -25792,8 +25812,7 @@
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
                         disableStepScrollLock(); // restore normal scrolling
-                        gsap.to(overlay, { opacity: 0, duration: 2.2, ease: 'power2.out' }); // hide black screen
-                        gsap.to(panelTextBlock, { opacity: 1, duration: 2.2, ease: 'power2.out' }); // restore perfect panel text
+                        fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
                         step2.classList.remove('is-visible');
@@ -25833,8 +25852,7 @@
 
                         isActive = false;
                         disableStepScrollLock();
-                        gsap.to(overlay, { opacity: 0, duration: 2.2, ease: 'power2.out' }); // hide trailer
-                        gsap.to(panelTextBlock, { opacity: 1, duration: 2.2, ease: 'power2.out' }); // show panel text
+                        fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
                         step2.classList.remove('is-visible');
