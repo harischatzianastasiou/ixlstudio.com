@@ -22990,7 +22990,7 @@
 
         /* Steps 1–3 (and 3->4): instant hide on wrapper; 4 uses leaving phase before swap to 5. */
         :root {
-            --observer-trailer-speed: 2.9s;
+            --observer-trailer-speed: 4.8s;
             --observer-trailer-exit-45-speed: 0.88s;
             /* Shorter period = easier to notice during a ~1s hold after a 2.9s enter. */
             --observer-trailer-hold-breath-period: 2.35s;
@@ -25505,12 +25505,13 @@
                 let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
                 const OVERLAY_APPEAR_DELAY_MS = 0; // was a pre-start pause; removed per request
                 let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
-                // Hold = readable time per sentence. Exits: instant except 4->5 (animated out, then 5 fades in).
-                const FIRST_STEP_HOLD_MS = 4000; // sentence 1 readable time
-                const STEP2_HOLD_MS = 3750; // sentence 2 readable time
-                const STEP3_HOLD_MS = 4000; // sentence 3 readable time
-                const STEP4_HOLD_MS = 4250; // sentence 4 readable time
-                const STEP5_HOLD_MS = 3000; // sentence 5 readable time before trailer ends
+                // Continuous flow: next sentence starts as soon as current one fully fades in (no extra hold pause).
+                const SENTENCE_FADE_IN_MS = 4800; // must match --observer-trailer-speed (4.8s)
+                const FIRST_STEP_HOLD_MS = SENTENCE_FADE_IN_MS-250; // 1 reaches full opacity -> start 2
+                const STEP2_HOLD_MS = SENTENCE_FADE_IN_MS; // 2 reaches full opacity -> start 3
+                const STEP3_HOLD_MS = SENTENCE_FADE_IN_MS; // 3 reaches full opacity -> start 4
+                const STEP4_HOLD_MS = SENTENCE_FADE_IN_MS; // 4 reaches full opacity -> start 4->5 recede
+                const STEP5_HOLD_MS = SENTENCE_FADE_IN_MS; // let 5 complete its calm fade, then end overlay
                 /* Must cover --observer-trailer-exit-45-speed (~0.88s) so sentence 4 finishes exiting before 5 appears. */
                 const OUT_45_MS = 960;
                 /* Black overlay dissolve: long enough + smooth ease so it never feels like a cut. */
