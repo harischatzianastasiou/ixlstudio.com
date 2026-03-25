@@ -22750,23 +22750,32 @@
             pointer-events: auto;
             cursor: pointer;
         }
-        /* Single horizontal shake when sentence 1 locks (one offset, then ease back). */
-        .youtube-trailer-overlay.is-live.observer-trailer-tv-glitch-once {
-            animation: observerTrailerTvGlitchIntro 0.34s ease-out forwards;
+        /* Soft double “breathing” pulse when the trailer locks (no horizontal shake). */
+        .youtube-trailer-overlay.is-live.observer-trailer-enter-pulse-once {
+            animation: observerTrailerEnterPulse 0.58s cubic-bezier(0.4, 0.14, 0.2, 1) forwards;
         }
-        @keyframes observerTrailerTvGlitchIntro {
+        @keyframes observerTrailerEnterPulse {
             0% {
-                transform: translate3d(0, 0, 0);
                 filter: brightness(1) contrast(1);
-                box-shadow: none;
+                box-shadow: inset 0 0 0 0 transparent;
             }
-            11% {
-                transform: translate3d(-2.5px, 0, 0);
-                filter: brightness(1.015) contrast(1.025);
-                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            18% {
+                filter: brightness(1.1) contrast(1.05);
+                box-shadow:
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+                    inset 0 0 100px rgba(255, 255, 255, 0.07);
+            }
+            42% {
+                filter: brightness(0.94) contrast(1.02);
+                box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.22);
+            }
+            68% {
+                filter: brightness(1.06) contrast(1.04);
+                box-shadow:
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+                    inset 0 0 80px rgba(255, 255, 255, 0.05);
             }
             100% {
-                transform: translate3d(0, 0, 0);
                 filter: brightness(1) contrast(1);
                 box-shadow: none;
             }
@@ -22774,6 +22783,40 @@
         #observerTrailerPanel {
             position: relative;
             z-index: 41; /* above overlay */
+        }
+        /* sentence1.png sits in the black panel until the trailer has finished (same art as trailer step 1). */
+        .observer-trailer-panel-s1-preview {
+            display: none;
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            z-index: 0;
+            pointer-events: none;
+            padding: 2rem 1.5rem;
+            box-sizing: border-box;
+        }
+        #youtube-section.observer-trailer-section-bg-active .observer-trailer-panel-s1-preview {
+            display: flex;
+            opacity: 0;
+            will-change: opacity;
+        }
+        .observer-trailer-panel-s1-preview img {
+            width: auto;
+            height: auto;
+            max-width: min(1320px, 96vw);
+            max-height: 78vh;
+            object-fit: contain;
+            display: block;
+        }
+        #observerTrailerPanel .youtube-project-description {
+            position: relative;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .observer-trailer-panel-s1-preview {
+                display: none !important;
+            }
         }
         /* Manifesto / trailer block (#youtube-section): full-bleed black from page load until trailer ends (skip or complete). */
         #youtube-section.observer-trailer-section-bg-active {
@@ -22806,18 +22849,14 @@
             z-index: 1;
             opacity: 0;
             transform: none;
+            /* Step swap is instant; the long fade is on .observer-trailer-media (0.95s). */
             transition: opacity 0ms linear;
-            will-change: opacity;
             padding-top: 0;
             box-sizing: border-box;
         }
         .observer-trailer-step.is-visible {
             opacity: 1;
             transform: none;
-        }
-        /* No fade-out on the step layer: previous sentence disappears the same frame it’s swapped. */
-        .observer-trailer-step:not(.is-visible) {
-            transition: opacity 0ms linear !important;
         }
         .observer-trailer-skip {
             position: absolute;
@@ -22932,14 +22971,6 @@
             transition: none !important;
         }
 
-        /* Sentences 1–5: same in-animation as sentence 4 (instant snap, no fade). */
-        .observer-trailer-step-1,
-        .observer-trailer-step-2,
-        .observer-trailer-step-3,
-        .observer-trailer-step-4,
-        .observer-trailer-step-5 {
-            transition: opacity 0ms linear !important;
-        }
         .observer-trailer-step-1 .observer-trailer-media,
         .observer-trailer-step-2 .observer-trailer-media,
         .observer-trailer-step-3 .observer-trailer-media,
@@ -22947,9 +22978,9 @@
         .observer-trailer-step-5 .observer-trailer-media {
             opacity: 0;
             transform: scale(1.05);
-            transition: none !important;
             filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
-            will-change: opacity, transform;
+            transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform, filter;
         }
         .observer-trailer-step-5 .observer-trailer-media {
             max-width: min(980px, 84vw);
@@ -22963,8 +22994,7 @@
         .observer-trailer-step-5.is-visible .observer-trailer-media {
             transform: scale(1.05);
             opacity: 0.99;
-            transition: none !important;
-            /* Do not use animation: none !important — it blocked .is-live frame drift. */
+            filter: blur(0) brightness(1) contrast(1) sepia(0.08) saturate(1.08) drop-shadow(0 18px 44px rgba(0,0,0,0.75));
             animation: none;
         }
 
@@ -22982,9 +23012,6 @@
         :root {
             --observer-trailer-speed: 4.8s;
             --observer-trailer-exit-45-speed: 0.88s;
-        }
-        .observer-trailer-overlay .observer-trailer-media {
-            transition-duration: 0ms !important;
         }
         .observer-trailer-welcome {
             display: flex;
@@ -23903,6 +23930,9 @@
 
         <div class="youtube-section-panels">
         <div class="youtube-section-black-panel" id="observerTrailerPanel">
+        <div class="observer-trailer-panel-s1-preview" aria-hidden="true">
+            <img src="sentence1.png" alt="" role="presentation" decoding="async" />
+        </div>
         <!-- <h3 class="youtube-project-title">THE OBSERVER</h3> -->
   
         
@@ -25316,8 +25346,6 @@
                     trailerSectionEl.classList.toggle('observer-trailer-section-bg-active', !!active);
                 }
 
-                // NOTE: Trailer plays every time (no localStorage guard).
-
                 // We temporarily hide the panel text while the full-screen trailer is active.
                 const panelTextBlock =
                     panel.querySelector('.youtube-project-description') ||
@@ -25418,7 +25446,8 @@
                     gsap.set(panel, { opacity: 1 });
                     gsap.set(panelTextBlock, { opacity: 1 });
                 } else {
-                    gsap.set(panel, { opacity: 0 });
+                    /* Desktop first visit: panel shows sentence1.png in-section; copy stays hidden until trailer ends. */
+                    gsap.set(panel, { opacity: 1 });
                     gsap.set(panelTextBlock, { opacity: 0 });
                 }
 
@@ -25434,15 +25463,42 @@
                         if (st.animation) st.animation.kill();
                         st.kill(false);
                     }
+                    var stPreview = ScrollTrigger.getById('observerTrailerPanelS1PreviewScrub');
+                    if (stPreview) stPreview.kill(false);
+                    var panelS1PreviewEl = panel.querySelector('.observer-trailer-panel-s1-preview');
+                    if (panelS1PreviewEl) {
+                        gsap.killTweensOf(panelS1PreviewEl);
+                        gsap.set(panelS1PreviewEl, { opacity: 1 });
+                    }
                     gsap.killTweensOf(overlay);
                     gsap.killTweensOf(step1);
                     var s1El = step1.querySelector('.observer-trailer-media');
                     if (s1El) gsap.killTweensOf(s1El);
                 }
 
-                /* Sentence 1 + overlay ease in only while scrolling from panel entering view until center (scrub). */
+                /* In-panel sentence1.png: opacity 0→1 on scroll, finishes before the panel is centered (not tied to overlay timing). */
+                if (!trailerEverCompleted) {
+                    var panelS1Preview = panel.querySelector('.observer-trailer-panel-s1-preview');
+                    if (panelS1Preview) {
+                        gsap.set(panelS1Preview, { opacity: 0 });
+                        gsap.to(panelS1Preview, {
+                            opacity: 1,
+                            ease: 'none',
+                            scrollTrigger: {
+                                id: 'observerTrailerPanelS1PreviewScrub',
+                                trigger: panel,
+                                start: 'top bottom',
+                                end: 'top 42%',
+                                scrub: 0.65,
+                            },
+                        });
+                    }
+                }
+
+                /* Scroll-scrub: full-screen overlay + trailer step 1 appear together (same art as in-panel; ramps toward center). */
                 if (!trailerEverCompleted) {
                     var s1ImgForScrub = step1.querySelector('.observer-trailer-media');
+                    gsap.set(overlay, { opacity: 0, backgroundColor: '#0a0a0a' });
                     gsap.set(step1, { opacity: 0 });
                     if (s1ImgForScrub) gsap.set(s1ImgForScrub, { opacity: 0, scale: 1.05 });
                     var s1ScrubTl = gsap.timeline({
@@ -25482,17 +25538,17 @@
                 const TRAILER_OVERLAY_FADE_OUT_SEC = 1.15;
                 const TRAILER_OVERLAY_FADE_OUT_EASE = 'power2.out';
 
-                /** TV-style glitch burst on overlay when sentence 1 locks (class removed on animationend). */
-                function nudgeObserverTrailerTvGlitchIntro() {
+                /** Soft luminosity pulse on overlay when sentence 1 locks (class removed on animationend). */
+                function nudgeObserverTrailerEnterPulse() {
                     if (!overlay.classList.contains('is-live')) return;
-                    overlay.classList.remove('observer-trailer-tv-glitch-once');
+                    overlay.classList.remove('observer-trailer-enter-pulse-once');
                     void overlay.offsetWidth;
-                    overlay.classList.add('observer-trailer-tv-glitch-once');
+                    overlay.classList.add('observer-trailer-enter-pulse-once');
                 }
 
-                overlay.addEventListener('animationend', function observerTrailerTvGlitchIntroEnd(e) {
-                    if (e.target !== overlay || e.animationName !== 'observerTrailerTvGlitchIntro') return;
-                    overlay.classList.remove('observer-trailer-tv-glitch-once');
+                overlay.addEventListener('animationend', function observerTrailerEnterPulseEnd(e) {
+                    if (e.target !== overlay || e.animationName !== 'observerTrailerEnterPulse') return;
+                    overlay.classList.remove('observer-trailer-enter-pulse-once');
                 });
 
                 /** Clears competing tweens, then fades overlay out and reveals the black panel + copy (desktop was opacity 0 until now). */
@@ -25633,7 +25689,7 @@
                     trailerCompleted = true;
                     isActive = false;
                     overlay.classList.remove('is-live');
-                    overlay.classList.remove('observer-trailer-tv-glitch-once');
+                    overlay.classList.remove('observer-trailer-enter-pulse-once');
 
                     clearTrailerTimeouts();
                     if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
@@ -25733,17 +25789,16 @@
                     tryStartRadioForTrailer();
 
                     killObserverTrailerS1Scrub();
-                    gsap.set(overlay, { opacity: 1 });
-                    gsap.set(step1, { opacity: 1 });
+                    gsap.set(overlay, { opacity: 1, backgroundColor: '#0a0a0a' });
+                    gsap.set(step1, { clearProps: 'opacity' });
                     var s1ImgSnap = step1.querySelector('.observer-trailer-media');
-                    if (s1ImgSnap) gsap.set(s1ImgSnap, { opacity: 0.99 });
                     step1.classList.add('is-visible');
                     if (s1ImgSnap) gsap.set(s1ImgSnap, { clearProps: 'opacity,transform' });
 
                     isActive = true;
                     trailerCompleted = false;
                     overlay.classList.add('is-live');
-                    nudgeObserverTrailerTvGlitchIntro();
+                    nudgeObserverTrailerEnterPulse();
                     armTrailerNextGestureToStartRadio();
                     gsap.set(panelTextBlock, { opacity: 0 });
                     if (isDesktopObserverTrailer) gsap.set(panel, { opacity: 0 });
@@ -25797,8 +25852,9 @@
                         trailerCompleted = true;
                         isActive = false;
                         overlay.classList.remove('is-live');
-                        overlay.classList.remove('observer-trailer-tv-glitch-once');
+                        overlay.classList.remove('observer-trailer-enter-pulse-once');
                         disableStepScrollLock();
+                        killObserverTrailerS1Scrub();
                         setTrailerSectionBlackBg(false);
 
                         step1.classList.remove('is-visible');
@@ -25835,7 +25891,7 @@
                         killObserverTrailerS1Scrub();
                         setTrailerSectionBlackBg(false);
                         overlay.classList.remove('is-live');
-                        overlay.classList.remove('observer-trailer-tv-glitch-once');
+                        overlay.classList.remove('observer-trailer-enter-pulse-once');
                         fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
@@ -25861,7 +25917,7 @@
                             gsap.set(panelTextBlock, { opacity: 1 });
                             gsap.set(overlay, { opacity: 0 });
                             overlay.classList.remove('is-live');
-                            overlay.classList.remove('observer-trailer-tv-glitch-once');
+                            overlay.classList.remove('observer-trailer-enter-pulse-once');
                             step1.classList.remove('is-visible');
                             step2.classList.remove('is-visible');
                             step3.classList.remove('is-visible');
@@ -25881,7 +25937,7 @@
                         disableStepScrollLock();
                         setTrailerSectionBlackBg(false);
                         overlay.classList.remove('is-live');
-                        overlay.classList.remove('observer-trailer-tv-glitch-once');
+                        overlay.classList.remove('observer-trailer-enter-pulse-once');
                         fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
