@@ -22750,85 +22750,51 @@
             pointer-events: auto;
             cursor: pointer;
         }
-        /* Sentence 5 (end): purple-tinted full-screen static + roll; 5th line gets magenta/cyan-style split. */
-        .youtube-trailer-overlay.is-s5-purple-glitch::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 3;
-            opacity: 0.32;
-            mix-blend-mode: screen;
-            background:
-                repeating-linear-gradient(0deg, rgba(168, 117, 255, 0.11) 0 1px, rgba(0,0,0,0) 1px 4px),
-                repeating-linear-gradient(90deg, rgba(200, 80, 255, 0.08) 0 1px, rgba(120, 255, 220, 0.05) 1px 3px);
-            animation: observerS5PurpleStatic 0.085s steps(2) infinite;
+        /* Single horizontal shake when sentence 1 locks (one offset, then ease back). */
+        .youtube-trailer-overlay.is-live.observer-trailer-tv-glitch-once {
+            animation: observerTrailerTvGlitchIntro 0.34s ease-out forwards;
         }
-        .youtube-trailer-overlay.is-s5-purple-glitch::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 4;
-            opacity: 0.26;
-            mix-blend-mode: overlay;
-            background:
-                linear-gradient(180deg, rgba(168, 117, 255, 0) 35%, rgba(168, 117, 255, 0.12) 50%, rgba(168, 117, 255, 0) 65%),
-                repeating-linear-gradient(180deg, rgba(40, 0, 80, 0.35) 0 2px, rgba(255, 255, 255, 0.05) 2px 4px);
-            animation: observerS5PurpleRoll 0.45s linear 1, observerS5PurpleFlicker 0.45s steps(1) 1;
-        }
-        @keyframes observerS5PurpleStatic {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(-4px, 2px); }
-            100% { transform: translate(3px, -2px); }
-        }
-        @keyframes observerS5PurpleRoll {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        @keyframes observerS5PurpleFlicker {
-            0% { opacity: 0.18; }
-            20% { opacity: 0.32; }
-            45% { opacity: 0.14; }
-            70% { opacity: 0.28; }
-            100% { opacity: 0.22; }
-        }
-        .observer-trailer-step-5.is-visible.trailer-s5-purple-glitch .observer-trailer-media {
-            animation: observerTrailerS5PurpleGlitch 0.45s steps(1, end) forwards !important;
-            transition: none !important;
-        }
-        @keyframes observerTrailerS5PurpleGlitch {
+        @keyframes observerTrailerTvGlitchIntro {
             0% {
-                transform: translate(0, 0) scale(1.05);
-                opacity: 0.99;
-                filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
+                transform: translate3d(0, 0, 0);
+                filter: brightness(1) contrast(1);
+                box-shadow: none;
             }
-            20% {
-                transform: translate(-5px, 2px) scale(1.05);
-                filter: blur(0) brightness(1.08) contrast(1.22) saturate(1.35)
-                    drop-shadow(4px 0 0 rgba(200, 100, 255, 0.75)) drop-shadow(-5px 0 0 rgba(100, 255, 240, 0.55));
-            }
-            45% {
-                transform: translate(6px, -3px) scale(1.04);
-                filter: blur(0.4px) brightness(1.05) contrast(1.28) hue-rotate(-8deg)
-                    drop-shadow(-5px 0 1px rgba(255, 80, 200, 0.7)) drop-shadow(4px 0 1px rgba(140, 220, 255, 0.6));
-            }
-            72% {
-                transform: translate(-3px, 2px) scale(1.04);
-                opacity: 0.88;
-                filter: blur(1.2px) brightness(0.82) contrast(1.35)
-                    drop-shadow(3px 0 1px rgba(180, 60, 255, 0.55)) drop-shadow(-3px 0 1px rgba(80, 255, 230, 0.45));
+            11% {
+                transform: translate3d(-2.5px, 0, 0);
+                filter: brightness(1.015) contrast(1.025);
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
             }
             100% {
-                transform: translate(0, 0) scale(1.03);
-                opacity: 0.55;
-                filter: blur(2px) brightness(0.55) contrast(1.4) saturate(0.95)
-                    drop-shadow(2px 0 0 rgba(168, 117, 255, 0.45));
+                transform: translate3d(0, 0, 0);
+                filter: brightness(1) contrast(1);
+                box-shadow: none;
             }
         }
         #observerTrailerPanel {
             position: relative;
             z-index: 41; /* above overlay */
+        }
+        /* Manifesto / trailer block (#youtube-section): full-bleed black from page load until trailer ends (skip or complete). */
+        #youtube-section.observer-trailer-section-bg-active {
+            position: relative;
+            z-index: 2;
+        }
+        #youtube-section.observer-trailer-section-bg-active::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 100vw;
+            transform: translateX(-50%);
+            background-color: #0a0a0a;
+            z-index: -1;
+            pointer-events: none;
+        }
+        #youtube-section.observer-trailer-section-bg-active .youtube-section-panels {
+            position: relative;
+            z-index: 1;
         }
         /* Big scroll trailer steps (different from the “perfect” black panel text) */
         .observer-trailer-step {
@@ -22840,16 +22806,10 @@
             z-index: 1;
             opacity: 0;
             transform: none;
-            /* Long fade + soft ease so each sentence rises in calmly (duration finalized via --observer-trailer-speed). */
-            transition: opacity 2.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: opacity 0ms linear;
             will-change: opacity;
             padding-top: 0;
             box-sizing: border-box;
-        }
-        /* Make the first image fade in slightly slower (less “pop”). */
-        .observer-trailer-step-1 {
-            /* Match other steps; easing is gentle deceleration, not a snappy snap. */
-            transition: opacity 2.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .observer-trailer-step.is-visible {
             opacity: 1;
@@ -22901,7 +22861,7 @@
             opacity: 0.02;
             transform: scale(0.985);
             filter: blur(2.2px) brightness(0.84) contrast(0.96) sepia(0.12) saturate(1.05) drop-shadow(0 16px 40px rgba(0,0,0,0.72));
-            /* Easing matches steps; actual duration comes from --observer-trailer-speed below. */
+            /* Trailer overlay steps use per-step rules (1–5 match sentence 4: instant). */
             transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.95s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: opacity, transform, filter;
         }
@@ -22939,7 +22899,7 @@
             }
         }
 
-        /* 5th sentence CTA line (same purple as the page) */
+        /* 5th sentence CTA line (hidden; kept white if ever shown) */
         .observer-trailer-step-5::after {
             content: '';
             position: absolute;
@@ -22947,7 +22907,7 @@
             top: 64%;
             width: min(560px, 70vw);
             height: 2px;
-            background: #a875ff;
+            background: rgba(255, 255, 255, 0.88);
             transform: translateX(-50%) scaleX(0);
             transform-origin: center;
             opacity: 0;
@@ -22972,29 +22932,17 @@
             transition: none !important;
         }
 
-        /* Sentence 1-3: slow fades (duration = --observer-trailer-speed). */
+        /* Sentences 1–5: same in-animation as sentence 4 (instant snap, no fade). */
         .observer-trailer-step-1,
         .observer-trailer-step-2,
-        .observer-trailer-step-3 {
-            transform: none;
-            transition: opacity var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: opacity;
-        }
-        .observer-trailer-step-1 .observer-trailer-media,
-        .observer-trailer-step-2 .observer-trailer-media,
-        .observer-trailer-step-3 .observer-trailer-media {
-            opacity: 0;
-            transform: scale(0.93);
-            transition: opacity var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1), transform var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1), filter var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1);
-            filter: brightness(0.72) contrast(0.9) sepia(0.16) saturate(1.02) blur(0.35px) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
-            will-change: opacity, transform, filter;
-        }
-
-        /* Sentences 4 & 5: no fade-in — wrapper and image snap on instantly. */
+        .observer-trailer-step-3,
         .observer-trailer-step-4,
         .observer-trailer-step-5 {
             transition: opacity 0ms linear !important;
         }
+        .observer-trailer-step-1 .observer-trailer-media,
+        .observer-trailer-step-2 .observer-trailer-media,
+        .observer-trailer-step-3 .observer-trailer-media,
         .observer-trailer-step-4 .observer-trailer-media,
         .observer-trailer-step-5 .observer-trailer-media {
             opacity: 0;
@@ -23007,27 +22955,17 @@
             max-width: min(980px, 84vw);
             max-height: 72vh;
         }
-        /*
-         * Enter: only opacity + transform may use the long transition.
-         * Do NOT transition filter — if filter transitions over 2.9s, the hold-breath keyframes never visibly move.
-         */
-        .observer-trailer-step.is-visible .observer-trailer-media {
-            opacity: 0.92;
-            transform: scale(1);
-            filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
-            transition: opacity var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1),
-                transform var(--observer-trailer-speed) cubic-bezier(0.22, 1, 0.36, 1) !important;
-            /* Breath starts after entrance (delay); filter is animation-only so it can pulse. */
-            animation: observerTrailerHoldBreath var(--observer-trailer-hold-breath-period) ease-in-out var(--observer-trailer-speed) infinite;
-        }
 
-        /* Sentences 4 & 5: visible state is instant (overrides generic long transition). */
+        .observer-trailer-step-1.is-visible .observer-trailer-media,
+        .observer-trailer-step-2.is-visible .observer-trailer-media,
+        .observer-trailer-step-3.is-visible .observer-trailer-media,
         .observer-trailer-step-4.is-visible .observer-trailer-media,
         .observer-trailer-step-5.is-visible .observer-trailer-media {
             transform: scale(1.05);
             opacity: 0.99;
             transition: none !important;
-            animation: none !important;
+            /* Do not use animation: none !important — it blocked .is-live frame drift. */
+            animation: none;
         }
 
         /* Only 4 -> 5: soft “recede” (depth + blur + ease), not the same curve as the long fade-in. */
@@ -23041,31 +22979,12 @@
                 filter var(--observer-trailer-exit-45-speed) cubic-bezier(0.4, 0.15, 0.22, 1) !important;
         }
 
-        /* Steps 1–3 (and 3->4): instant hide on wrapper; 4 uses leaving phase before swap to 5. */
         :root {
-            --observer-trailer-speed: 3.2s;
+            --observer-trailer-speed: 4.8s;
             --observer-trailer-exit-45-speed: 0.88s;
-            /* Shorter period = easier to notice during a ~1s hold after a 2.9s enter. */
-            --observer-trailer-hold-breath-period: 2.35s;
         }
-        /* Default enter timing for trailer images (opacity/transform). Visible state overrides filter off transitions. */
-        .observer-trailer-media {
-            transition-duration: var(--observer-trailer-speed) !important;
-        }
-        .observer-trailer-step-4 .observer-trailer-media,
-        .observer-trailer-step-5 .observer-trailer-media {
+        .observer-trailer-overlay .observer-trailer-media {
             transition-duration: 0ms !important;
-        }
-
-        /* Hold-phase only (starts after enter via animation-delay). Visible now that filter isn’t transition-smoothed. */
-        @keyframes observerTrailerHoldBreath {
-            0%,
-            100% {
-                filter: blur(0.35px) brightness(0.74) contrast(0.91) sepia(0.16) saturate(1.02) drop-shadow(0 18px 44px rgba(0,0,0,0.8));
-            }
-            50% {
-                filter: blur(0.35px) brightness(0.82) contrast(0.89) sepia(0.16) saturate(1.06) drop-shadow(0 22px 50px rgba(0,0,0,0.86));
-            }
         }
         .observer-trailer-welcome {
             display: flex;
@@ -23370,55 +23289,6 @@
         }
         @media (max-width: 768px) {
             .youtube-section-links-center { margin-top: 3rem; }
-        }
-
-        /* Observer image: responsive and centered on all screens */
-        .observer-image-wrapper {
-            max-width: 800px;
-            margin: 0.5rem auto 0; /* small gap under logo region */
-            width: 100%;
-        }
-        .observer-image-wrapper img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        @media (max-width: 768px) {
-            .observer-image-wrapper {
-                margin-top: 4rem; /* push observer.png further down on mobile */
-            }
-        }
-
-        /* Observer trailer trigger: centered section that starts the black screen trailer */
-        .observer-trailer-trigger-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem 1rem;
-            position: relative;
-            z-index: 2;
-        }
-        .observer-trailer-trigger-inner {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Slight nudge down so the observer art sits a bit below optical center */
-            transform: translateY(clamp(2.5rem, 6.5vh, 6.25rem));
-        }
-        .observer-image-wrapper--trailer {
-            margin-top: 0; /* keep the centered layout clean */
-            max-width: 700px;
-        }
-
-        /* Mobile: prevent the centered observer trigger from visually overlapping the radio */
-        @media (max-width: 768px) {
-            .observer-trailer-trigger-section {
-                margin-top: 66vh; /* push observer section further down on mobile */
-            }
         }
 
         /* Books Section */
@@ -23833,15 +23703,6 @@
 
             </div>
 
-        </section>
-
-        <!-- Observer trigger section: when centered, scroll starts the black screen trailer -->
-        <section id="observerTrailerTriggerSection" class="observer-trailer-trigger-section">
-            <div class="observer-trailer-trigger-inner">
-                <div class="observer-image-wrapper observer-image-wrapper--trailer">
-                    <img src="theobserver.png" alt="The Observer" />
-                </div>
-            </div>
         </section>
 
         <!-- Welcome / about this place – intro to personal work (same style as previous “Project In Between” block) -->
@@ -25445,11 +25306,15 @@
 
             // Observer black panel trailer animation (full-screen overlay + sequential reveal)
             (function initObserverTrailer() {
-                const panel = document.getElementById('observerTrailerPanel'); // the perfect “black panel” container
+                const panel = document.getElementById('observerTrailerPanel'); // black panel: trailer when vertically centered; after exit we re-center this block
                 if (!panel) return; // stop if panel doesn't exist
 
-                // New trigger: start the trailer when this section is centered.
-                const trailerTrigger = document.getElementById('observerTrailerTriggerSection');
+                const trailerSectionEl = document.getElementById('youtube-section'); // manifesto block: full-bleed black from load until trailer ends
+
+                function setTrailerSectionBlackBg(active) {
+                    if (!trailerSectionEl) return;
+                    trailerSectionEl.classList.toggle('observer-trailer-section-bg-active', !!active);
+                }
 
                 // NOTE: Trailer plays every time (no localStorage guard).
 
@@ -25519,21 +25384,10 @@
                 skipBtn.textContent = 'Skip';
                 overlay.appendChild(skipBtn);
 
-                // Start in “panel mode” (overlay hidden, panel text visible).
+                // Overlay starts hidden; sentence steps use CSS opacity 0 until the sequence runs.
                 gsap.set(overlay, { opacity: 0 });
-                // Steps start hidden via CSS (.observer-trailer-step { opacity: 0; ... })
-                gsap.set(panelTextBlock, { opacity: 1 });
 
-                // Respect reduced-motion.
-                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReduced) {
-                    // No trailer overlay: keep perfect panel always visible.
-                    overlay.remove();
-                    return;
-                }
-
-                // Only play once per tab-session (navigation away/back doesn't reset),
-                // but allow again on a real page reload/refresh.
+                // Session + viewport: needed before we decide initial panel visibility.
                 const trailerPlayedKey = 'observerTrailerPlayedOnce';
                 try {
                     const navEntries =
@@ -25545,35 +25399,113 @@
                 try {
                     hasPlayedOnce = sessionStorage.getItem(trailerPlayedKey) === '1';
                 } catch (e) {}
-                let isActive = false; // true only while the scroll window is active
+
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduced) {
+                    overlay.remove();
+                    gsap.set(panel, { opacity: 1 });
+                    gsap.set(panelTextBlock, { opacity: 1 });
+                    return;
+                }
+
+                // Desktop: hide the whole black panel until trailer completes or Skip (mobile keeps it visible while scrolling).
+                const isDesktopObserverTrailer =
+                    window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
+                const showObserverPanelBeforeTrailer =
+                    !isDesktopObserverTrailer || hasPlayedOnce;
+                if (showObserverPanelBeforeTrailer) {
+                    gsap.set(panel, { opacity: 1 });
+                    gsap.set(panelTextBlock, { opacity: 1 });
+                } else {
+                    gsap.set(panel, { opacity: 0 });
+                    gsap.set(panelTextBlock, { opacity: 0 });
+                }
+
+                /* Section black from first paint (before scroll/center); cleared when trailer finishes or Skip. */
+                if (!hasPlayedOnce) {
+                    setTrailerSectionBlackBg(true);
+                }
+
+                /** Kill scroll-scrub intro for sentence 1 (overlay + step1) so locked trailer can own styles. */
+                function killObserverTrailerS1Scrub() {
+                    var st = ScrollTrigger.getById('observerTrailerS1Scrub');
+                    if (st) {
+                        if (st.animation) st.animation.kill();
+                        st.kill(false);
+                    }
+                    gsap.killTweensOf(overlay);
+                    gsap.killTweensOf(step1);
+                    var s1El = step1.querySelector('.observer-trailer-media');
+                    if (s1El) gsap.killTweensOf(s1El);
+                }
+
+                /* Sentence 1 + overlay ease in only while scrolling from panel entering view until center (scrub). */
+                if (!hasPlayedOnce) {
+                    var s1ImgForScrub = step1.querySelector('.observer-trailer-media');
+                    gsap.set(step1, { opacity: 0 });
+                    if (s1ImgForScrub) gsap.set(s1ImgForScrub, { opacity: 0, scale: 1.05 });
+                    var s1ScrubTl = gsap.timeline({
+                        scrollTrigger: {
+                            id: 'observerTrailerS1Scrub',
+                            trigger: panel,
+                            start: 'top bottom',
+                            end: 'center center',
+                            scrub: 0.55,
+                        },
+                    });
+                    s1ScrubTl.to(overlay, { opacity: 1, ease: 'none', duration: 1 }, 0);
+                    s1ScrubTl.to(step1, { opacity: 1, ease: 'none', duration: 1 }, 0);
+                    if (s1ImgForScrub) {
+                        s1ScrubTl.to(s1ImgForScrub, { opacity: 0.99, ease: 'none', duration: 1 }, 0);
+                    }
+                }
+
+                let isActive = false; // true while the full-screen trailer sequence is running
                 let currentStep = 1; // 1..4: which image is currently shown
                 let stepShownAt = 0; // performance.now() when current step became visible; 0 = still in "delay before first sentence"
-                let lockScrollY = 0; // keep scroll position stable while locking forward scroll
+                let lockScrollY = 0; // frozen scroll position while trailer is active
                 // No idle wait: overlay + first sentence start as soon as the sequence runs (GSAP still eases the fade).
-                const FIRST_SENTENCE_DELAY_MS = 2000;
-                let firstSentenceDelayId = null; // setTimeout id so we can clear it if user leaves during delay
-                const OVERLAY_APPEAR_DELAY_MS = 0; // was a pre-start pause; removed per request
-                let overlayAppearDelayId = null; // setTimeout id for overlay fade-in
-                // Next step fires when the previous line’s fade-in completes (same ms as --observer-trailer-speed); no extra dwell.
-                const SENTENCE_FADE_IN_MS = 3000; // must match --observer-trailer-speed (3.2s)
-                const FIRST_STEP_HOLD_MS = SENTENCE_FADE_IN_MS; // 1 fade done -> start 2
-                const STEP2_HOLD_MS = SENTENCE_FADE_IN_MS; // 2 fade done -> start 3
-                const STEP3_HOLD_MS = SENTENCE_FADE_IN_MS + 450; /* sentence 3 stays a bit longer before 4 */
-                /* Sentences 4 & 5: no fade-in; sentence 5 ends with purple glitch then overlay fade. */
-                const STEP4_HOLD_MS = 2000; /* dwell before sentence 5 */
-                const TRAILER_S5_PURPLE_GLITCH_MS = 450; /* must match observerTrailerS5PurpleGlitch / S5 overlay (0.45s) */
-                const STEP5_HOLD_MS = 2000; /* sentence 5 visible duration before trailer end */
+                const FIRST_SENTENCE_DELAY_MS = 0; /* unused: sentence 1 is scroll-scrubbed then held */
+                let firstSentenceDelayId = null; // kept for cleanup paths that clear pending ids
+                const OVERLAY_APPEAR_DELAY_MS = 0;
+                let overlayAppearDelayId = null;
+                /* After trailer locks: sentence 1 only briefly, then 2–5 use longer holds. */
+                const STEP123_HOLD_MS = 3200;
+                const FIRST_STEP_HOLD_MS = 2000; /* sentence 1 on screen once locked before sentence 2 */
+                const STEP2_HOLD_MS = 2600;
+                const STEP3_HOLD_MS = 2600; /* sentence 3 slightly longer before 4 */
+                const STEP4_HOLD_MS = 3200; /* dwell before sentence 5 */
+                const STEP5_HOLD_MS = 2600; /* sentence 5 visible before trailer end */
                 const OUT_45_MS = 960; /* unused by timeline when 4->5 is instant; kept for CSS if needed */
                 /* Black overlay clears quickly so the page reads through sooner. */
                 const TRAILER_OVERLAY_FADE_OUT_SEC = 1.15;
                 const TRAILER_OVERLAY_FADE_OUT_EASE = 'power2.out';
 
-                /** Clears competing tweens, then fades overlay out and panel text in together. */
+                /** TV-style glitch burst on overlay when sentence 1 locks (class removed on animationend). */
+                function nudgeObserverTrailerTvGlitchIntro() {
+                    if (!overlay.classList.contains('is-live')) return;
+                    overlay.classList.remove('observer-trailer-tv-glitch-once');
+                    void overlay.offsetWidth;
+                    overlay.classList.add('observer-trailer-tv-glitch-once');
+                }
+
+                overlay.addEventListener('animationend', function observerTrailerTvGlitchIntroEnd(e) {
+                    if (e.target !== overlay || e.animationName !== 'observerTrailerTvGlitchIntro') return;
+                    overlay.classList.remove('observer-trailer-tv-glitch-once');
+                });
+
+                /** Clears competing tweens, then fades overlay out and reveals the black panel + copy (desktop was opacity 0 until now). */
                 function fadeTrailerOverlayOut() {
                     gsap.killTweensOf(overlay);
+                    gsap.killTweensOf(panel);
                     gsap.killTweensOf(panelTextBlock);
                     gsap.to(overlay, {
                         opacity: 0,
+                        duration: TRAILER_OVERLAY_FADE_OUT_SEC,
+                        ease: TRAILER_OVERLAY_FADE_OUT_EASE
+                    });
+                    gsap.to(panel, {
+                        opacity: 1,
                         duration: TRAILER_OVERLAY_FADE_OUT_SEC,
                         ease: TRAILER_OVERLAY_FADE_OUT_EASE
                     });
@@ -25584,17 +25516,24 @@
                     });
                 }
 
+                /** After skip or natural end: scroll so the black panel is vertically centered (matches how the trailer was armed). */
+                function scrollObserverPanelToViewportCenter() {
+                    try {
+                        panel.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
+                    } catch (err) {
+                        var r = panel.getBoundingClientRect();
+                        var delta = r.top + r.height / 2 - window.innerHeight / 2;
+                        window.scrollTo(0, window.scrollY + delta);
+                    }
+                    try {
+                        ScrollTrigger.refresh();
+                    } catch (e2) {}
+                }
+
                 let trailerCompleted = false; // once we reveal the perfect black panel, don't run again
                 const trailerTimeouts = [];
                 let radioFallbackArmed = false;
                 let trailerAudioGestureArmed = false;
-
-                /** Sentence 5: purple TV glitch on screen + chroma on the 5th line graphic. */
-                function runTrailerSentence5PurpleGlitch() {
-                    if (!isActive) return;
-                    overlay.classList.add('is-s5-purple-glitch');
-                    step5.classList.add('trailer-s5-purple-glitch');
-                }
 
                 function tryStartRadioForTrailer() {
                     const radioAudio = document.getElementById('agencyAudioPlayer');
@@ -25685,12 +25624,15 @@
                     trailerCompleted = true;
                     isActive = false;
                     overlay.classList.remove('is-live');
+                    overlay.classList.remove('observer-trailer-tv-glitch-once');
 
                     clearTrailerTimeouts();
                     if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                     if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
 
                     disableStepScrollLock();
+                    killObserverTrailerS1Scrub();
+                    setTrailerSectionBlackBg(false);
 
                     step1.classList.remove('is-visible');
                     step2.classList.remove('is-visible');
@@ -25699,9 +25641,8 @@
                     step4.classList.remove('is-leaving-45');
                     step5.classList.remove('is-visible');
 
-                    overlay.classList.remove('is-s5-purple-glitch');
-                    step5.classList.remove('trailer-s5-purple-glitch');
                     fadeTrailerOverlayOut();
+                    requestAnimationFrame(scrollObserverPanelToViewportCenter);
                 }
 
                 skipBtn.addEventListener('click', function(e) {
@@ -25715,14 +25656,11 @@
                     tryStartRadioForTrailer();
                 }, true);
 
-                // Lock scroll input while the current step hasn't been visible for 2 seconds.
-                // This prevents skipping by aggressive scrolling.
                 let scrollLockEnabled = false;
 
                 function enableStepScrollLock() {
                     if (scrollLockEnabled) return;
                     scrollLockEnabled = true;
-
                     window.addEventListener('wheel', onWheelLock, { passive: false });
                     window.addEventListener('touchstart', onTouchStartLock, { passive: true });
                     window.addEventListener('touchmove', onTouchMoveLock, { passive: false });
@@ -25732,141 +25670,25 @@
                 function disableStepScrollLock() {
                     if (!scrollLockEnabled) return;
                     scrollLockEnabled = false;
-
                     window.removeEventListener('wheel', onWheelLock);
                     window.removeEventListener('touchstart', onTouchStartLock);
                     window.removeEventListener('touchmove', onTouchMoveLock);
                     window.removeEventListener('keydown', onKeyDownLock);
                 }
 
-                // Start the full-screen “welcome to the observer” sequence immediately.
-                // This is triggered by the first user scroll (before the trailer was ever played),
-                // and is also safe to call multiple times because it guards with `hasPlayedOnce`.
-                function startObserverTrailerSequence() {
-                    if (hasPlayedOnce) return;
-                    hasPlayedOnce = true;
-                    try { sessionStorage.setItem(trailerPlayedKey, '1'); } catch (e) {}
-
-                    // Start radio when trailer starts.
-                    tryStartRadioForTrailer();
-
-                    isActive = true;
-                    trailerCompleted = false;
-                    overlay.classList.add('is-live');
-                    // Start radio on the next trusted gesture (tap) during the trailer.
-                    // This avoids relying on wheel/scroll which some browsers reject for audio.
-                    armTrailerNextGestureToStartRadio();
-                    gsap.set(panelTextBlock, { opacity: 0 }); // hide perfect panel text under overlay
-
-                    // Hide all steps before starting the trailer.
-                    step1.classList.remove('is-visible');
-                    step2.classList.remove('is-visible');
-                    step3.classList.remove('is-visible');
-                    step4.classList.remove('is-visible');
-                    step4.classList.remove('is-leaving-45');
-                    overlay.classList.remove('is-s5-purple-glitch');
-                    step5.classList.remove('trailer-s5-purple-glitch');
-                    step5.classList.remove('is-visible');
-                    step1.classList.remove('cta-shown');
-                    step2.classList.remove('cta-shown');
-                    step3.classList.remove('cta-shown');
-                    step4.classList.remove('cta-shown');
-                    step5.classList.remove('cta-shown');
-
-                    // Freeze scroll for the entire black overlay sequence.
-                    lockScrollY = window.scrollY;
-                    enableStepScrollLock();
-
-                    // Clear any pending timers (safe re-entry during fast scroll).
-                    clearTrailerTimeouts();
-                    if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
-                    firstSentenceDelayId = null;
-                    if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
-                    overlayAppearDelayId = null;
-
-                    // Begin overlay fade and step timers immediately (no extra setTimeout padding).
-                    overlayAppearDelayId = setTimeout(function() {
-                        overlayAppearDelayId = null;
-                        gsap.set(panelTextBlock, { opacity: 0 });
-                        gsap.to(overlay, { opacity: 1, duration: 2.5, ease: 'power3.out' });
-
-                        firstSentenceDelayId = setTimeout(function() {
-                            firstSentenceDelayId = null;
-                            step1.classList.add('is-visible');
-
-                                // Timeline is relative to: when step1 becomes visible.
-
-                                // 1 -> 2 (hide previous step instantly, then next fades in via CSS enter only)
-                                schedule(function() {
-                                    step1.classList.remove('is-visible');
-                                    step2.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS);
-
-                                // 2 -> 3
-                                schedule(function() {
-                                    step2.classList.remove('is-visible');
-                                    step3.classList.add('is-visible');
-                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS);
-
-                                // 3 -> 4
-                                schedule(function() {
-                                    step3.classList.remove('is-visible');
-                                    step4.classList.add('is-visible');
-                                    step4.classList.add('cta-shown');
-                                }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS);
-
-                                (function() {
-                                    var t4to5 = FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS;
-                                    var t5End = t4to5 + STEP5_HOLD_MS;
-                                    schedule(function() {
-                                        runTrailerSentence5PurpleGlitch();
-                                    }, Math.max(0, t5End - TRAILER_S5_PURPLE_GLITCH_MS));
-                                    // 4 -> 5: instant swap after STEP4_HOLD_MS (sentence 4 has no fade-in).
-                                    schedule(function() {
-                                        step4.classList.remove('is-visible');
-                                        step4.classList.remove('is-leaving-45');
-                                        step5.classList.add('is-visible');
-                                        step5.classList.remove('cta-shown'); // sentence 5: no CTA underline line
-                                    }, t4to5);
-                                })();
-
-                            // End
-                            schedule(function() {
-                                trailerCompleted = true;
-                                isActive = false;
-                                overlay.classList.remove('is-live');
-                                disableStepScrollLock();
-
-                                step1.classList.remove('is-visible');
-                                step2.classList.remove('is-visible');
-                                step3.classList.remove('is-visible');
-                                step4.classList.remove('is-visible');
-                                step4.classList.remove('is-leaving-45');
-                                step5.classList.remove('is-visible');
-
-                                overlay.classList.remove('is-s5-purple-glitch');
-                                step5.classList.remove('trailer-s5-purple-glitch');
-                                fadeTrailerOverlayOut();
-                            }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS);
-                        }, FIRST_SENTENCE_DELAY_MS);
-                    }, OVERLAY_APPEAR_DELAY_MS);
-                }
-
                 function shouldLockForwardScroll() {
-                    // While the black overlay/trailer is running, freeze scrolling completely.
                     return isActive;
                 }
 
                 function onWheelLock(e) {
                     if (!shouldLockForwardScroll()) return;
-                    // Retry radio start on wheel input while trailer is active.
                     tryStartRadioForTrailer();
                     e.preventDefault();
                     e.stopPropagation();
                     window.scrollTo({ top: lockScrollY });
                 }
 
-                let lastTouchY = 0; // used to detect swipe direction
+                var lastTouchY = 0;
                 function onTouchStartLock(e) {
                     if (!e.touches || !e.touches[0]) return;
                     lastTouchY = e.touches[0].clientY;
@@ -25875,8 +25697,7 @@
                 function onTouchMoveLock(e) {
                     if (!shouldLockForwardScroll()) return;
                     if (!e.touches || !e.touches[0]) return;
-                    const y = e.touches[0].clientY;
-                    const dy = lastTouchY - y; // swipe up (dy>0) => scroll down (forward)
+                    var y = e.touches[0].clientY;
                     lastTouchY = y;
                     e.preventDefault();
                     e.stopPropagation();
@@ -25885,37 +25706,127 @@
 
                 function onKeyDownLock(e) {
                     if (!shouldLockForwardScroll()) return;
-                    const k = e.key;
-                    // Block common scroll keys while the trailer is active.
-                    const blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
+                    var k = e.key;
+                    var blocks = (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp' || k === ' ' || k === 'Spacebar');
                     if (!blocks) return;
                     e.preventDefault();
                     e.stopPropagation();
                     window.scrollTo({ top: lockScrollY });
                 }
 
-                // Trailer start is now controlled only by ScrollTrigger
-                // (when #observerTrailerTriggerSection reaches the center).
+                // Full-screen trailer when the black panel is vertically centered (ScrollTrigger).
+                // Safe to call multiple times because it guards with `hasPlayedOnce`.
+                function startObserverTrailerSequence() {
+                    if (hasPlayedOnce) return;
+                    hasPlayedOnce = true;
+                    try { sessionStorage.setItem(trailerPlayedKey, '1'); } catch (e) {}
+
+                    // Start radio when trailer starts.
+                    tryStartRadioForTrailer();
+
+                    killObserverTrailerS1Scrub();
+                    gsap.set(overlay, { opacity: 1 });
+                    gsap.set(step1, { opacity: 1 });
+                    var s1ImgSnap = step1.querySelector('.observer-trailer-media');
+                    if (s1ImgSnap) gsap.set(s1ImgSnap, { opacity: 0.99 });
+                    step1.classList.add('is-visible');
+                    if (s1ImgSnap) gsap.set(s1ImgSnap, { clearProps: 'opacity,transform' });
+
+                    isActive = true;
+                    trailerCompleted = false;
+                    overlay.classList.add('is-live');
+                    nudgeObserverTrailerTvGlitchIntro();
+                    armTrailerNextGestureToStartRadio();
+                    gsap.set(panelTextBlock, { opacity: 0 });
+                    if (isDesktopObserverTrailer) gsap.set(panel, { opacity: 0 });
+
+                    step2.classList.remove('is-visible');
+                    step3.classList.remove('is-visible');
+                    step4.classList.remove('is-visible');
+                    step4.classList.remove('is-leaving-45');
+                    step5.classList.remove('is-visible');
+                    step1.classList.remove('cta-shown');
+                    step2.classList.remove('cta-shown');
+                    step3.classList.remove('cta-shown');
+                    step4.classList.remove('cta-shown');
+                    step5.classList.remove('cta-shown');
+
+                    lockScrollY = window.scrollY;
+                    enableStepScrollLock();
+
+                    clearTrailerTimeouts();
+                    if (firstSentenceDelayId) clearTimeout(firstSentenceDelayId);
+                    firstSentenceDelayId = null;
+                    if (overlayAppearDelayId) clearTimeout(overlayAppearDelayId);
+                    overlayAppearDelayId = null;
+
+                    // Sentence 1 already visible (scroll-scrubbed to center, then snapped). Hold, then 2–5.
+                    schedule(function() {
+                        step1.classList.remove('is-visible');
+                        step2.classList.add('is-visible');
+                    }, FIRST_STEP_HOLD_MS);
+
+                    schedule(function() {
+                        step2.classList.remove('is-visible');
+                        step3.classList.add('is-visible');
+                    }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS);
+
+                    schedule(function() {
+                        step3.classList.remove('is-visible');
+                        step4.classList.add('is-visible');
+                        step4.classList.add('cta-shown');
+                    }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS);
+
+                    schedule(function() {
+                        step4.classList.remove('is-visible');
+                        step4.classList.remove('is-leaving-45');
+                        step5.classList.add('is-visible');
+                        step5.classList.remove('cta-shown');
+                    }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS);
+
+                    schedule(function() {
+                        trailerCompleted = true;
+                        isActive = false;
+                        overlay.classList.remove('is-live');
+                        overlay.classList.remove('observer-trailer-tv-glitch-once');
+                        disableStepScrollLock();
+                        setTrailerSectionBlackBg(false);
+
+                        step1.classList.remove('is-visible');
+                        step2.classList.remove('is-visible');
+                        step3.classList.remove('is-visible');
+                        step4.classList.remove('is-visible');
+                        step4.classList.remove('is-leaving-45');
+                        step5.classList.remove('is-visible');
+
+                        fadeTrailerOverlayOut();
+                        requestAnimationFrame(scrollObserverPanelToViewportCenter);
+                    }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS + STEP5_HOLD_MS);
+                }
+
+                // Trailer when the panel’s vertical center meets the viewport center (not on first edge enter).
 
                 ScrollTrigger.create({
-                    trigger: trailerTrigger || panel,
-                    start: 'center center', // start when the observer trigger section is centered
+                    id: 'observerTrailer',
+                    trigger: panel,
+                    start: 'center center',
                     end: 'bottom center',
                     onEnter: () => {
                         startObserverTrailerSequence();
                     },
                     onLeave: () => {
                         // If the user scrolled out of the ScrollTrigger window too fast,
-                        // we still keep the trailer running until we've satisfied the
-                        // per-sentence time gate. Only release scroll when we're done.
+                        // we still keep the trailer running until timers finish.
                         if (!trailerCompleted) return;
 
                         isActive = false;
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
-                        disableStepScrollLock(); // restore normal scrolling
-                        overlay.classList.remove('is-s5-purple-glitch');
-                        step5.classList.remove('trailer-s5-purple-glitch');
+                        disableStepScrollLock();
+                        killObserverTrailerS1Scrub();
+                        setTrailerSectionBlackBg(false);
+                        overlay.classList.remove('is-live');
+                        overlay.classList.remove('observer-trailer-tv-glitch-once');
                         fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
@@ -25937,10 +25848,11 @@
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
                         if (hasPlayedOnce) {
                             // After the first play, do not show the trailer again.
+                            gsap.set(panel, { opacity: 1 });
                             gsap.set(panelTextBlock, { opacity: 1 });
                             gsap.set(overlay, { opacity: 0 });
-                            overlay.classList.remove('is-s5-purple-glitch');
-                            step5.classList.remove('trailer-s5-purple-glitch');
+                            overlay.classList.remove('is-live');
+                            overlay.classList.remove('observer-trailer-tv-glitch-once');
                             step1.classList.remove('is-visible');
                             step2.classList.remove('is-visible');
                             step3.classList.remove('is-visible');
@@ -25950,16 +25862,17 @@
                             currentStep = 1;
                             stepShownAt = 0;
                             disableStepScrollLock();
+                            setTrailerSectionBlackBg(false);
                             return;
                         }
-                        // Same idea as onLeave: only release scrolling once the trailer
-                        // finished its timed reveal sequence.
+                        // Same idea as onLeave: only clean up once the trailer finished.
                         if (!trailerCompleted) return;
 
                         isActive = false;
                         disableStepScrollLock();
-                        overlay.classList.remove('is-s5-purple-glitch');
-                        step5.classList.remove('trailer-s5-purple-glitch');
+                        setTrailerSectionBlackBg(false);
+                        overlay.classList.remove('is-live');
+                        overlay.classList.remove('observer-trailer-tv-glitch-once');
                         fadeTrailerOverlayOut();
 
                         step1.classList.remove('is-visible');
@@ -25976,6 +25889,31 @@
                     onUpdate: () => {
                         return;
                     }
+                });
+
+                // If the page loads already scrolled into the “centered panel” band, onEnter may not fire — run once after layout.
+                requestAnimationFrame(function trailerIfStartAlreadySatisfied() {
+                    requestAnimationFrame(function() {
+                        try {
+                            ScrollTrigger.refresh();
+                        } catch (e) {}
+                        var st = ScrollTrigger.getById('observerTrailer');
+                        var y = window.scrollY || document.documentElement.scrollTop || 0;
+                        var inBand = false;
+                        if (st && typeof st.start === 'number' && typeof st.end === 'number') {
+                            var lo = Math.min(st.start, st.end);
+                            var hi = Math.max(st.start, st.end);
+                            inBand = y >= lo && y <= hi;
+                        } else {
+                            var r = panel.getBoundingClientRect();
+                            if (r.height > 0) {
+                                var mid = r.top + r.height / 2;
+                                var vm = window.innerHeight / 2;
+                                inBand = Math.abs(mid - vm) <= 16;
+                            }
+                        }
+                        if (inBand) startObserverTrailerSequence();
+                    });
                 });
             })();
 
