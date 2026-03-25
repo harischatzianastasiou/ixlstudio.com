@@ -25387,18 +25387,19 @@
                 // Overlay starts hidden; sentence steps use CSS opacity 0 until the sequence runs.
                 gsap.set(overlay, { opacity: 0 });
 
-                // Session + viewport: needed before we decide initial panel visibility.
+                // First visit only: persist when trailer finishes or user skips (localStorage survives sessions).
                 const trailerPlayedKey = 'observerTrailerPlayedOnce';
+                let trailerEverCompleted = false;
                 try {
-                    const navEntries =
-                        (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
-                    const navType = navEntries[0] && navEntries[0].type;
-                    if (navType === 'reload') sessionStorage.removeItem(trailerPlayedKey);
+                    trailerEverCompleted = localStorage.getItem(trailerPlayedKey) === '1';
                 } catch (e) {}
-                let hasPlayedOnce = false;
                 try {
-                    hasPlayedOnce = sessionStorage.getItem(trailerPlayedKey) === '1';
+                    if (!trailerEverCompleted && sessionStorage.getItem(trailerPlayedKey) === '1') {
+                        localStorage.setItem(trailerPlayedKey, '1');
+                        trailerEverCompleted = true;
+                    }
                 } catch (e) {}
+                let trailerSessionStarted = false;
 
                 const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 if (prefersReduced) {
@@ -25412,7 +25413,7 @@
                 const isDesktopObserverTrailer =
                     window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
                 const showObserverPanelBeforeTrailer =
-                    !isDesktopObserverTrailer || hasPlayedOnce;
+                    !isDesktopObserverTrailer || trailerEverCompleted;
                 if (showObserverPanelBeforeTrailer) {
                     gsap.set(panel, { opacity: 1 });
                     gsap.set(panelTextBlock, { opacity: 1 });
@@ -25422,7 +25423,7 @@
                 }
 
                 /* Section black from first paint (before scroll/center); cleared when trailer finishes or Skip. */
-                if (!hasPlayedOnce) {
+                if (!trailerEverCompleted) {
                     setTrailerSectionBlackBg(true);
                 }
 
@@ -25440,7 +25441,7 @@
                 }
 
                 /* Sentence 1 + overlay ease in only while scrolling from panel entering view until center (scrub). */
-                if (!hasPlayedOnce) {
+                if (!trailerEverCompleted) {
                     var s1ImgForScrub = step1.querySelector('.observer-trailer-media');
                     gsap.set(step1, { opacity: 0 });
                     if (s1ImgForScrub) gsap.set(s1ImgForScrub, { opacity: 0, scale: 1.05 });
@@ -25620,7 +25621,15 @@
                     return id;
                 }
 
+                function persistObserverTrailerComplete() {
+                    trailerEverCompleted = true;
+                    try {
+                        localStorage.setItem(trailerPlayedKey, '1');
+                    } catch (e) {}
+                }
+
                 function endTrailerNow() {
+                    persistObserverTrailerComplete();
                     trailerCompleted = true;
                     isActive = false;
                     overlay.classList.remove('is-live');
@@ -25715,11 +25724,10 @@
                 }
 
                 // Full-screen trailer when the black panel is vertically centered (ScrollTrigger).
-                // Safe to call multiple times because it guards with `hasPlayedOnce`.
                 function startObserverTrailerSequence() {
-                    if (hasPlayedOnce) return;
-                    hasPlayedOnce = true;
-                    try { sessionStorage.setItem(trailerPlayedKey, '1'); } catch (e) {}
+                    if (trailerEverCompleted) return;
+                    if (trailerSessionStarted) return;
+                    trailerSessionStarted = true;
 
                     // Start radio when trailer starts.
                     tryStartRadioForTrailer();
@@ -25785,6 +25793,7 @@
                     }, FIRST_STEP_HOLD_MS + STEP2_HOLD_MS + STEP3_HOLD_MS + STEP4_HOLD_MS);
 
                     schedule(function() {
+                        persistObserverTrailerComplete();
                         trailerCompleted = true;
                         isActive = false;
                         overlay.classList.remove('is-live');
@@ -25846,8 +25855,8 @@
                         if (!trailerCompleted) return;
                         if (firstSentenceDelayId) { clearTimeout(firstSentenceDelayId); firstSentenceDelayId = null; }
                         if (overlayAppearDelayId) { clearTimeout(overlayAppearDelayId); overlayAppearDelayId = null; }
-                        if (hasPlayedOnce) {
-                            // After the first play, do not show the trailer again.
+                        if (trailerEverCompleted || trailerSessionStarted) {
+                            // After starting or finishing the trailer this session (or ever), keep overlay hidden.
                             gsap.set(panel, { opacity: 1 });
                             gsap.set(panelTextBlock, { opacity: 1 });
                             gsap.set(overlay, { opacity: 0 });
