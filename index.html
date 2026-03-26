@@ -25330,11 +25330,6 @@
 
                 const trailerSectionEl = document.getElementById('youtube-section'); // manifesto block: full-bleed black from load until trailer ends
 
-                function setTrailerSectionBlackBg(active) {
-                    if (!trailerSectionEl) return;
-                    trailerSectionEl.classList.toggle('observer-trailer-section-bg-active', !!active);
-                }
-
                 // We temporarily hide the panel text while the full-screen trailer is active.
                 const panelTextBlock =
                     panel.querySelector('.youtube-project-description') ||
@@ -25429,6 +25424,13 @@
                 // Desktop: hide the whole black panel until trailer completes or Skip (mobile keeps it visible while scrolling).
                 const isDesktopObserverTrailer =
                     window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
+
+                function setTrailerSectionBlackBg(active) {
+                    // Desktop only: mobile should not force the whole section to black.
+                    if (!isDesktopObserverTrailer) return;
+                    if (!trailerSectionEl) return;
+                    trailerSectionEl.classList.toggle('observer-trailer-section-bg-active', !!active);
+                }
                 const showObserverPanelBeforeTrailer =
                     !isDesktopObserverTrailer || trailerEverCompleted;
                 if (showObserverPanelBeforeTrailer) {
@@ -25520,8 +25522,8 @@
                 /** Must match `animation` duration on `.observer-trailer-step-1.is-visible .observer-trailer-media` (0.78s). */
                 const SENTENCE1_LETTER_PULSE_MS = 780;
                 const FIRST_STEP_HOLD_MS = SENTENCE1_LETTER_PULSE_MS; /* go to sentence 2 when pulse ends */
-                const STEP2_HOLD_MS = 3200;
-                const STEP3_HOLD_MS = 3200; /* sentence 3 slightly longer before 4 */
+                const STEP2_HOLD_MS = 2600;
+                const STEP3_HOLD_MS = 2600; /* sentence 3 slightly longer before 4 */
                 const STEP4_HOLD_MS = 3200; /* dwell before sentence 5 */
                 const STEP5_HOLD_MS = 2600; /* sentence 5 visible before trailer end */
                 const OUT_45_MS = 960; /* unused by timeline when 4->5 is instant; kept for CSS if needed */
