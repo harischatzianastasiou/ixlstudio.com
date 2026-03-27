@@ -22969,7 +22969,7 @@
         }
         .observer-trailer-step-1.is-visible .observer-trailer-media {
             /* Pulse only on sentence 1; duration must match SENTENCE1_LETTER_PULSE_MS in initObserverTrailer. */
-            animation: observerSentenceLetterPulse 0.78s cubic-bezier(0.45, 0, 0.25, 1) 0s 1 forwards;
+            animation: observerSentenceLetterPulse 0.78s cubic-bezier(0.45, 0, 0.25, 1) 1s 1 forwards;
         }
         @keyframes observerSentenceLetterPulse {
             0%,
@@ -25515,13 +25515,14 @@
                 // No idle wait: overlay + first sentence start as soon as the sequence runs (GSAP still eases the fade).
                 const FIRST_SENTENCE_DELAY_MS = 0; /* unused: sentence 1 is scroll-scrubbed then held */
                 let firstSentenceDelayId = null; // kept for cleanup paths that clear pending ids
-                const OVERLAY_APPEAR_DELAY_MS = 0;
+                const OVERLAY_APPEAR_DELAY_MS = 0; /* no trailer-start delay; sentence pulse itself is delayed in CSS */
                 let overlayAppearDelayId = null;
                 /* After trailer locks: sentence 1 shows only for the letter pulse, then 2–5 use longer holds. */
                 const STEP123_HOLD_MS = 3200;
                 /** Must match `animation` duration on `.observer-trailer-step-1.is-visible .observer-trailer-media` (0.78s). */
                 const SENTENCE1_LETTER_PULSE_MS = 780;
-                const FIRST_STEP_HOLD_MS = SENTENCE1_LETTER_PULSE_MS; /* go to sentence 2 when pulse ends */
+                const SENTENCE1_PULSE_DELAY_MS = 1000; /* pulse starts 1s after trailer start */
+                const FIRST_STEP_HOLD_MS = SENTENCE1_PULSE_DELAY_MS + SENTENCE1_LETTER_PULSE_MS; /* go to sentence 2 when pulse ends */
                 const STEP2_HOLD_MS = 2600;
                 const STEP3_HOLD_MS = 2600; /* sentence 3 slightly longer before 4 */
                 const STEP4_HOLD_MS = 3200; /* dwell before sentence 5 */
