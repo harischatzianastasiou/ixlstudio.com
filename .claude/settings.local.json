@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command '$src = Get-ChildItem | Where-Object { $_.Name -like '\\\\''*Odd*'\\\\'' }; Copy-Item -LiteralPath $src.FullName -Destination '\\\\''odd-behavior-cest-la-vie.mp3'\\\\''')"
+    ]
+  }
+}
