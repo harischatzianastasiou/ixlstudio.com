@@ -203,6 +203,15 @@ h1, h2, h3, h4,
 .page-loader[data-hidden] { display: none; pointer-events: none; }
 .loader-logo { display: flex; align-items: center; justify-content: center; }
 .loader-logo img { width: clamp(200px, 30vw, 400px); opacity: 0; will-change: transform, opacity; }
+.loader-text {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    font-weight: 900;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0;
+    will-change: transform, opacity;
+}
 
 /* ============================================================
    HEADER
@@ -377,6 +386,14 @@ h1, h2, h3, h4,
     background: linear-gradient(to bottom, rgba(177,0,255,.5), transparent);
     transform: scaleY(0);
     transform-origin: top;
+}
+
+/* Hero portal — reality distortion lens */
+.hero-portal {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Hero ambient bg */
@@ -1102,28 +1119,88 @@ h1, h2, h3, h4,
    PREVIOUSLY / ARTICLES  (#devlog)
    ============================================================ */
 .articles-section {
-    padding: 7rem 7vw;
+    padding: 10rem 7vw;
     border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
 }
-.articles-section-header { margin-bottom: 3.5rem; }
+.articles-section-header {
+    margin-bottom: 5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.articles-section-header .section-title {
+    font-size: clamp(3rem, 7vw, 8rem);
+    line-height: .85;
+}
+.articles-section-intro {
+    max-width: 320px;
+    font-size: .85rem;
+    color: rgba(255,255,255,.3);
+    line-height: 1.7;
+    text-align: right;
+}
 .articles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
 }
 .article-card {
     border: 1px solid var(--border);
-    transition: border-color .3s;
+    transition: border-color .4s, transform .4s, box-shadow .4s;
     overflow: hidden;
+    position: relative;
+    cursor: none;
 }
-.article-card:hover { border-color: rgba(255,255,255,.2); }
-.article-image-wrap { overflow: hidden; }
-/* .article-video defined above with GPU promotion */
-.article-content { padding: 1.5rem; }
-.article-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .65rem; color: #fff; }
-.article-excerpt { font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.6; margin-bottom: 1rem; }
-.article-meta { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.pagination-container { margin-top: 2.5rem; }
+.article-card:hover {
+    border-color: rgba(255,255,255,.15);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0,0,0,.4);
+}
+.article-image-wrap {
+    overflow: hidden;
+    position: relative;
+}
+.article-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(9,9,9,1) 0%, transparent 50%);
+    pointer-events: none;
+}
+.article-card video,
+.article-card img { transition: transform .6s ease; }
+.article-card:hover video,
+.article-card:hover img { transform: scale(1.04); }
+.article-content { padding: 2rem; position: relative; }
+.article-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -.03em;
+    margin-bottom: .75rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+.article-excerpt { font-size: .85rem; color: rgba(255,255,255,.35); line-height: 1.7; margin-bottom: 1.2rem; }
+.article-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.article-meta::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+}
+.pagination-container { margin-top: 3rem; }
 .pagination-controls { display: flex; align-items: center; gap: 1rem; }
 .pagination-btn {
     display: flex; align-items: center; gap: .5rem;
@@ -1137,50 +1214,98 @@ h1, h2, h3, h4,
 .pagination-btn:disabled { opacity: .25; cursor: default; }
 
 @media (max-width: 768px) {
-    .articles-section { padding: 5rem 5vw; }
+    .articles-section { padding: 6rem 5vw; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .articles-section-header { flex-direction: column; align-items: flex-start; }
+    .articles-section-intro { text-align: left; }
 }
 
 /* ============================================================
    RESEARCH SECTION  (#research)
    ============================================================ */
 .research-section {
-    padding: 7rem 7vw;
+    padding: 10rem 7vw;
     border-top: 1px solid var(--border);
+    position: relative;
 }
-.research-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 6vw; align-items: start; }
+.research-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8vw;
+    align-items: start;
+}
 .research-text-col {}
-.section-title { font-size: clamp(2rem, 4vw, 5rem); font-weight: 900; letter-spacing: -.04em; text-transform: uppercase; color: #fff; margin-bottom: 2.5rem; }
-.research-list { list-style: none; }
+.section-title {
+    font-size: clamp(3rem, 7vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 3rem;
+    line-height: .85;
+}
+.research-list { list-style: none; counter-reset: reading; }
 .research-list-item {
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     border-bottom: 1px solid var(--border);
-    font-size: .95rem;
-    color: rgba(255,255,255,.5);
+    font-size: 1.1rem;
+    color: rgba(255,255,255,.4);
     line-height: 1.5;
-    transition: color .3s;
+    transition: color .4s, padding-left .4s;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    counter-increment: reading;
+}
+.research-list-item::before {
+    content: counter(reading, decimal-leading-zero);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--accent);
+    opacity: .6;
+    flex-shrink: 0;
 }
 .research-list-item:first-child { border-top: 1px solid var(--border); }
-.research-list-item:hover { color: rgba(255,255,255,.8); }
+.research-list-item:hover { color: rgba(255,255,255,.9); padding-left: .5rem; }
 .moodboard-link {
     display: inline-flex;
     align-items: center;
-    gap: .6rem;
-    margin-top: 2.5rem;
+    gap: .8rem;
+    margin-top: 3.5rem;
     font-size: .72rem;
     font-weight: 700;
     letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--accent);
-    transition: opacity .3s;
+    border: 1px solid var(--accent);
+    padding: .9rem 1.8rem;
+    transition: background .3s, color .3s;
     cursor: none;
 }
-.moodboard-link:hover { opacity: .7; }
+.moodboard-link:hover { background: var(--accent); color: #000; }
 .arrow { font-style: normal; }
-.research-media-col { display: none; }
+.research-media-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: calc(var(--header-h) + 3rem);
+}
+.research-media-col .research-quote {
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,.2);
+    line-height: 1.6;
+    border-left: 2px solid var(--accent);
+    padding-left: 2rem;
+}
 
 @media (max-width: 768px) {
-    .research-section { padding: 5rem 5vw; }
+    .research-section { padding: 6rem 5vw; }
     .research-layout { grid-template-columns: 1fr; }
+    .research-media-col { display: none; }
 }
 
 /* ============================================================
@@ -1423,7 +1548,7 @@ h1, h2, h3, h4,
 <!-- Loader -->
 <div class="page-loader" id="pageLoaderNew">
     <div class="loader-logo">
-        <img src="hc2.png" alt="IXL Studio" id="loaderLogoNew" />
+        <span class="loader-text" id="loaderLogoNew">IXLSTUDIO</span>
     </div>
 </div>
 
@@ -1470,6 +1595,7 @@ h1, h2, h3, h4,
 ═══════════════════════════════════════════════ -->
 <section id="hero" class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
+    <canvas class="hero-portal" id="heroPortal" aria-hidden="true"></canvas>
     <div class="hero-inner">
         <div class="hero-label">Creative Studio &amp; Game Development</div>
         <h1 class="hero-title">
@@ -1477,7 +1603,7 @@ h1, h2, h3, h4,
             <span class="title-line"><span>STUDIO</span></span>
         </h1>
         <div class="hero-bottom">
-            <p class="hero-desc">Crafting games and interactive experiences that explore ideas worth exploring.</p>
+            <p class="hero-desc">Ideas worth exploring.</p>
             <div class="hero-scroll-hint" aria-hidden="true">
                 <span>Scroll</span>
                 <div class="hero-scroll-line"></div>
@@ -1529,8 +1655,8 @@ h1, h2, h3, h4,
                         </p>
                     </div>
                     <div class="panel-1-links">
-                        <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener">YouTube ↗</a>
-                        <a href="inbetween.html">Journal ↗</a>
+                        <!-- <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener">YouTube ↗</a>
+                        <a href="inbetween.html">Journal ↗</a> -->
                     </div>
                 </div>
                 <img class="panel-1-observer-logo" src="theobserver.png" alt="" aria-hidden="true">
@@ -1543,8 +1669,8 @@ h1, h2, h3, h4,
                 <div class="panel-2-text agency-center">
                     <h2>Explore<br>what's real.</h2>
                     <p>
-                        Live inside a human brain and<br>
-                        rewrite the narrative.
+                        <!-- Live inside a human brain and<br>
+                        rewrite the narrative. -->
                     </p>
 
                     <!-- Music Player -->
@@ -1557,7 +1683,7 @@ h1, h2, h3, h4,
                             <span class="agency-track-title" id="agencyTrackTitle">Radio</span>
                             <a href="https://arcologies.bandcamp.com/album/vapor-drive" target="_blank" rel="noopener" class="agency-track-artist" id="agencyTrackArtist">☀️</a>
                         </div>
-                        <div class="agency-player-controls">
+                        <div class="agency-player-controls" style="display:none;">
                             <button class="agency-nav-btn" id="agencyPrevBtn" aria-label="Previous">
                                 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
                             </button>
@@ -1626,8 +1752,11 @@ h1, h2, h3, h4,
 ═══════════════════════════════════════════════ -->
 <section id="devlog" class="articles-section">
     <div class="articles-section-header" data-reveal>
-        <div class="section-tag">03 — Previously</div>
-        <h2 class="section-title">Past<br>Work</h2>
+        <div>
+            <div class="section-tag">03 — Previously</div>
+            <h2 class="section-title">Past<br>Work.</h2>
+        </div>
+        <p class="articles-section-intro">Back in time.</p>
     </div>
     <div class="articles-grid" id="articlesGrid">
         <!-- loaded by JS -->
@@ -1653,23 +1782,28 @@ h1, h2, h3, h4,
 <section id="research" class="research-section">
     <div class="research-container">
         <div class="research-layout">
-            <div class="research-media-col"></div>
             <div class="research-text-col">
                 <div class="section-header" data-reveal>
                     <div class="section-tag">04 — Research</div>
-                    <h2 class="section-title">Reading &amp;<br>Thinking</h2>
+                    <h2 class="section-title">Reading &amp;<br>Thinking.</h2>
                 </div>
                 <div class="research-grid">
                     <div class="research-col">
                         <ul class="research-list">
-                            <li class="research-list-item">The Theory of Fun for Game Design</li>
-                            <li class="research-list-item">History of Art</li>
+                            <li class="research-list-item">The Theory of Fun for Game Design — Raph Koster</li>
+                            <li class="research-list-item">The Story of Art — E.H. Gombrich</li>
+                            <li class="research-list-item">7 1/2 Lessons About the Brain - Lisa Feldman Barrett</li>
+                            <li class="research-list-item">History of Philosophy A.C. Grayling</li>
+                            <li class="research-list-item">The Art of Game Design — Jesse Schell</li>
                         </ul>
                     </div>
                 </div>
                 <div id="moodboard">
                     <a href="moodboard.html" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
                 </div>
+            </div>
+            <div class="research-media-col" data-reveal>
+                <p class="research-quote">A list.</p>
             </div>
         </div>
     </div>
@@ -1930,9 +2064,9 @@ function initAgencyMusicPlayer() {
     if (!audio || !playBtn) return;
     audio.volume = 0.4;
     const playlist = [
-        { title: 'Radio', artist: '☀️', src: 'odd-behavior-cest-la-vie.mp3' },
-        { title: 'Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
-        { title: 'Radio', artist: '☀️', src: 'Citizen Kane - Blackrain (Instrumental).mp3' }
+        // { title: 'Radio', artist: '☀️', src: 'odd-behavior-cest-la-vie.mp3' },
+        // { title: 'Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
+        { title: 'Radio', artist: '☀️', src: 'AUTOANOSO.mp3' }
     ];
     let currentTrack = 0, isPlaying = false;
     function setPlayerUi(playing) {
@@ -2431,6 +2565,84 @@ window.scrollToSection = function(sectionId) {
     smoothScrollTo(absoluteTop, 400);
 };
 
+// ─── Hero Portal — Reality Distortion Lens ─────
+function initHeroPortal() {
+    var hero = document.querySelector('.hero');
+    var canvas = document.getElementById('heroPortal');
+    if (!hero || !canvas) return;
+    var ctx = canvas.getContext('2d');
+    var mx = -999, my = -999;
+    var tmx = -999, tmy = -999;
+    var RADIUS = 100;
+    var ready = false;
+
+    // Load hidden image to reveal
+    var img = new Image();
+    img.onload = function() { ready = true; };
+    img.src = 'priest.png';
+
+    function resize() {
+        canvas.width = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    hero.addEventListener('mousemove', function(e) {
+        var rect = hero.getBoundingClientRect();
+        mx = e.clientX - rect.left;
+        my = e.clientY - rect.top;
+    });
+    hero.addEventListener('mouseleave', function() { mx = -999; my = -999; });
+
+    // Cover the full hero area with the image (like background-size: cover)
+    function getCoverDims() {
+        var cw = canvas.width, ch = canvas.height;
+        var iw = img.naturalWidth, ih = img.naturalHeight;
+        var scale = Math.max(cw / iw, ch / ih);
+        var dw = iw * scale, dh = ih * scale;
+        return { x: (cw - dw) / 2, y: (ch - dh) / 2, w: dw, h: dh };
+    }
+
+    var tick = 0;
+    function draw() {
+        requestAnimationFrame(draw);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (!ready || mx < -100) { tmx = -999; tmy = -999; return; }
+
+        if (tmx < -100) { tmx = mx; tmy = my; }
+        tmx += (mx - tmx) * 0.1;
+        tmy += (my - tmy) * 0.1;
+        tick++;
+
+        var R = RADIUS;
+        // Subtle breathing
+        var breathe = Math.sin(tick * 0.02) * 4;
+        var r = R + breathe;
+
+        // Draw the hidden image clipped to a circle
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(tmx, tmy, r, 0, Math.PI * 2);
+        ctx.clip();
+
+        var d = getCoverDims();
+        ctx.drawImage(img, d.x, d.y + d.h * 0.05, d.w, d.h);
+
+        // Slight chromatic shift — draw again offset in red channel
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = 0.06;
+        ctx.drawImage(img, d.x + 2, d.y + 1, d.w, d.h);
+        ctx.restore();
+
+        // Thin subtle edge ring only
+
+
+
+    }
+    draw();
+}
+
 // ─── Custom Cursor (magnetic) ──────────────────
 function initCursor() {
     const dot = document.getElementById('cursor-dot');
@@ -2678,6 +2890,7 @@ function initHeader() {
 // ─── INIT ALL ──────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
     initCursor();
+    initHeroPortal();
     initProgressBar();
     initLoader();
     initHorizontalScroll();
