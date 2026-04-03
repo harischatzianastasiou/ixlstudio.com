@@ -7,7 +7,8 @@
 
 <script>
 (function(){
-    document.documentElement.style.setProperty('--accent', '#22C232');
+    var s = localStorage.getItem('index-bg');
+    document.documentElement.style.setProperty('--accent', s || '#D8DB24');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -31,7 +32,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #22C232;
+    --accent: #D8DB24;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -680,14 +681,12 @@ h1, h2, h3, h4,
     overflow: visible;
 }
 .lilith-inline-comic {
-    position: absolute;
-    top: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1001;
+    position: fixed;
+    z-index: 99999;
     pointer-events: none;
     width: max-content;
     max-width: 220px;
+    display: none;
 }
 .live-indicator {
     position: absolute;
@@ -1567,7 +1566,7 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#22C232" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#D8DB24" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
@@ -1609,7 +1608,7 @@ h1, h2, h3, h4,
             <span class="title-line"><span>STUDIO</span></span>
         </h1>
         <div class="hero-bottom">
-            <p class="hero-desc">Ideas worth exploring.</p>
+            <p class="hero-desc">Exploring ideas.</p>
             <div class="hero-scroll-hint" aria-hidden="true">
                 <span>Scroll</span>
                 <div class="hero-scroll-line"></div>
@@ -1727,11 +1726,6 @@ h1, h2, h3, h4,
                 <div class="panel-3-lilith">
                     <div class="panel-3-lilith-inner">
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(200px,28vw,380px);aspect-ratio:3/5;">
-                            <div class="lilith-inline-comic" aria-hidden="true">
-                                <div class="lilith-modal-comic-bubble">
-                                    <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
-                                </div>
-                            </div>
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
                         <span class="live-indicator">
@@ -2163,11 +2157,12 @@ document.addEventListener('DOMContentLoaded', function() {
         var picker = document.getElementById('indexBgColorPicker');
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
-        var defaultHex = '#22C232';
-        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; }
-        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; }
+        var defaultHex = '#D8DB24';
+        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; localStorage.setItem(key, hex); }
+        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; localStorage.setItem(modeKey, mode); }
+        var saved = localStorage.getItem(key);
         var savedMode = localStorage.getItem(modeKey) || 'gradient';
-        setBg(defaultHex);
+        setBg(saved || defaultHex);
         setMode(savedMode);
         picker.addEventListener('input', function() { setBg(picker.value); });
         if (stylePicker) stylePicker.addEventListener('change', function() { setMode(stylePicker.value); });
@@ -2880,9 +2875,10 @@ function initSectionReveals() {
             start: 'top bottom',
             end: 'bottom top',
             onUpdate: function(self) {
-                var speed = 1 + self.getVelocity() / 500;
-                speed = Math.max(0.5, Math.min(4, speed));
-                gsap.to(marqueeTrack, { animationDuration: (22 / speed) + 's', overwrite: true, ease: 'none', duration: 0.4 });
+                var vel = Math.abs(self.getVelocity());
+                var speed = 1 + vel / 200;
+                speed = Math.max(0.5, Math.min(8, speed));
+                gsap.to(marqueeTrack, { animationDuration: (22 / speed) + 's', overwrite: true, ease: 'power1.out', duration: 0.15 });
             }
         });
     }
@@ -2932,5 +2928,30 @@ window.addEventListener('pageshow', function(event) {
 });
 </script>
 
+<div class="lilith-inline-comic" id="lilithBubble" aria-hidden="true">
+    <div class="lilith-modal-comic-bubble">
+        <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
+    </div>
+</div>
+<script>
+(function() {
+    var bubble = document.getElementById('lilithBubble');
+    var container = document.getElementById('agencyPriestModelContainer');
+    if (!bubble || !container) return;
+    function pos() {
+        var r = container.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight || r.right < 0 || r.left > window.innerWidth) {
+            bubble.style.display = 'none';
+            return;
+        }
+        bubble.style.display = 'block';
+        bubble.style.left = (r.left + r.width / 2) + 'px';
+        bubble.style.top = (r.top + 12) + 'px';
+        bubble.style.transform = 'translateX(-50%)';
+    }
+    function loop() { pos(); requestAnimationFrame(loop); }
+    loop();
+})();
+</script>
 </body>
 </html>
