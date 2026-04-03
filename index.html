@@ -8,7 +8,7 @@
 <script>
 (function(){
     var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#B100FF');
+    document.documentElement.style.setProperty('--accent', s || '#133A22');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -17,8 +17,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="hc.png">
 <link rel="icon" type="image/png" sizes="16x16" href="hc.png">
 <link rel="apple-touch-icon" href="hc.png">
-<link rel="preload" as="image" href="hc.png" fetchpriority="high">
-<link rel="preload" as="image" href="theobserver.png" fetchpriority="low">
+<link rel="preload" as="image" href="hc2.png" fetchpriority="high">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +32,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #B100FF;
+    --accent: #133A22;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -203,7 +202,7 @@ h1, h2, h3, h4,
 }
 .page-loader[data-hidden] { display: none; pointer-events: none; }
 .loader-logo { display: flex; align-items: center; justify-content: center; }
-.loader-logo img { width: 160px; opacity: 0; will-change: transform, opacity; }
+.loader-logo img { width: clamp(200px, 30vw, 400px); opacity: 0; will-change: transform, opacity; }
 
 /* ============================================================
    HEADER
@@ -243,11 +242,22 @@ h1, h2, h3, h4,
     cursor: none;
 }
 .nav-menu a:hover { color: #fff; }
-.header-logo-and-picker { display: flex; align-items: center; gap: 1rem; }
-.bg-bar { display: flex; align-items: center; gap: .5rem; opacity: 0.35; transition: opacity .3s; }
-.bg-bar:hover { opacity: 1; }
-.bg-color-picker { width: 22px; height: 22px; border: none; padding: 0; background: none; cursor: pointer; border-radius: 3px; overflow: hidden; }
-.bg-style-picker { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); font-size: .65rem; letter-spacing: .1em; padding: .2rem .4rem; cursor: pointer; }
+.header-logo-and-picker { display: flex; align-items: center; gap: .75rem; }
+.bg-bar { display: flex; align-items: center; gap: .5rem; }
+.bg-color-picker {
+    width: 44px; height: 18px;
+    border: 2px solid rgba(255,255,255,.25);
+    padding: 0; background: none;
+    cursor: none; border-radius: 3px;
+    overflow: hidden;
+    transition: border-color .3s;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.bg-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+.bg-color-picker::-webkit-color-swatch { border: none; border-radius: 1px; }
+.bg-color-picker::-moz-color-swatch { border: none; border-radius: 1px; }
+.bg-color-picker:hover { border-color: rgba(255,255,255,.6); }
 
 /* Mobile menu button */
 .mobile-menu-btn {
@@ -369,34 +379,17 @@ h1, h2, h3, h4,
     transform-origin: top;
 }
 
-/* Hero ambient glow — absolute so it stays in hero only */
+/* Hero ambient bg */
 .hero-bg {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 120% 90% at 95% 50%, rgba(177,0,255,.06) 0%, rgba(177,0,255,.03) 40%, rgba(177,0,255,.008) 70%, transparent 100%);
+        radial-gradient(ellipse 60% 60% at 75% 50%, rgba(177,0,255,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(80,0,180,.05) 0%, transparent 60%);
     pointer-events: none;
-    z-index: 0;
-}
-
-/* Hero 3D model */
-.hero-model {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 52vw;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-.hero-model canvas {
-    width: 100% !important;
-    height: 100% !important;
-    opacity: 0.85;
 }
 
 @media (max-width: 768px) {
-    .hero-model { display: none; }
     .hero { padding: 0 5vw; }
     .hero-title { font-size: clamp(3.5rem, 17vw, 7rem); }
     .hero-bottom { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
@@ -658,7 +651,7 @@ h1, h2, h3, h4,
 .panel-follow-link:hover { color: #fff; border-color: rgba(255,255,255,.35); }
 .panel-3-lilith {
     flex: 0 0 auto;
-    width: clamp(140px, 18vw, 240px);
+    width: clamp(200px, 28vw, 380px);
     overflow: visible;
 }
 .panel-3-lilith-inner {
@@ -1430,7 +1423,7 @@ h1, h2, h3, h4,
 <!-- Loader -->
 <div class="page-loader" id="pageLoaderNew">
     <div class="loader-logo">
-        <img src="hc.png" alt="IXL Studio" id="loaderLogoNew" />
+        <img src="hc2.png" alt="IXL Studio" id="loaderLogoNew" />
     </div>
 </div>
 
@@ -1443,19 +1436,13 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#B100FF" title="Choose accent color" aria-label="Page accent color">
-            <select id="indexBgStylePicker" class="bg-style-picker" aria-label="Background style">
-                <option value="gradient">Gradient</option>
-                <option value="plain">Plain</option>
-            </select>
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#133A22" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
         <ul class="nav-menu">
             <li><a href="#agency" onclick="scrollToSection('agency');return false;">THE OBSERVER</a></li>
-            <li><a href="inbetween.html">JOURNAL</a></li>
             <li><a href="skgchess.html">SKGCHESS</a></li>
-            <li><a href="#contact" onclick="scrollToSection('contact');return false;">CONTACT</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
             <span></span><span></span><span></span>
@@ -1483,9 +1470,6 @@ h1, h2, h3, h4,
 ═══════════════════════════════════════════════ -->
 <section id="hero" class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
-    <div class="hero-model" id="heroModelContainer" aria-hidden="true">
-        <canvas id="heroHumanoidCanvas"></canvas>
-    </div>
     <div class="hero-inner">
         <div class="hero-label">Creative Studio &amp; Game Development</div>
         <h1 class="hero-title">
@@ -1559,8 +1543,8 @@ h1, h2, h3, h4,
                 <div class="panel-2-text agency-center">
                     <h2>Explore<br>what's real.</h2>
                     <p>
-                        An immersive experience exploring consciousness,<br>
-                        reality, and identity. Rewrite the narrative.
+                        Live inside a human brain and<br>
+                        rewrite the narrative.
                     </p>
 
                     <!-- Music Player -->
@@ -1570,7 +1554,7 @@ h1, h2, h3, h4,
                             <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
                         <div class="agency-player-info">
-                            <span class="agency-track-title" id="agencyTrackTitle">Play Radio</span>
+                            <span class="agency-track-title" id="agencyTrackTitle">Radio</span>
                             <a href="https://arcologies.bandcamp.com/album/vapor-drive" target="_blank" rel="noopener" class="agency-track-artist" id="agencyTrackArtist">☀️</a>
                         </div>
                         <div class="agency-player-controls">
@@ -1582,7 +1566,6 @@ h1, h2, h3, h4,
                             </button>
                         </div>
                     </div>
-                    <a href="https://www.youtube.com/@mementomori947" target="_blank" rel="noopener" class="journal-follow-vertical" style="margin-top:1.5rem;writing-mode:horizontal-tb;transform:none;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.25);">Follow on YouTube ↗</a>
                 </div>
 
                 <!-- 3D Humanoid Model -->
@@ -1599,7 +1582,7 @@ h1, h2, h3, h4,
             <div class="h-panel h-panel-3">
                 <span class="panel-label">Follow — 03 / 03</span>
                 <div class="panel-3-text">
-                    <h2>Join the<br>journey.</h2>
+                    <h2>BE THE<br>OBSERVER.</h2>
                     <p>
                         Follow the making-of in the Journal.<br>
                         Watch the YouTube channel.
@@ -1616,7 +1599,7 @@ h1, h2, h3, h4,
                                 <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
                             </div>
                         </div>
-                        <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(140px,18vw,240px);aspect-ratio:3/5;">
+                        <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(200px,28vw,380px);aspect-ratio:3/5;">
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
                         <span class="live-indicator">
@@ -1699,7 +1682,7 @@ h1, h2, h3, h4,
     <div class="contact-container">
         <div class="section-header" data-reveal>
             <div class="section-tag">05 — Contact</div>
-            <h2 class="section-title">Let's<br>Connect.</h2>
+            <h2 class="section-title">Contact.</h2>
         </div>
         <div class="contact-info">
             <a href="mailto:harischatzi@tutanota.com" class="contact-item">
@@ -1829,57 +1812,6 @@ function init3DModel() {
     });
 }
 
-function initHeroHumanoid() {
-    const container = document.getElementById('heroModelContainer');
-    const canvas = document.getElementById('heroHumanoidCanvas');
-    if (!container || !canvas) return;
-    const w = container.clientWidth || 600;
-    const h = container.clientHeight || 800;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 1000);
-    camera.position.set(0, 1.4, 4.2);
-    camera.lookAt(0, 1.1, 0);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const dLight = new THREE.DirectionalLight(0xffffff, 0.9);
-    dLight.position.set(2, 4, 2); scene.add(dLight);
-    const pLight = new THREE.PointLight(0x8a53f7, 1.0, 12);
-    pLight.position.set(-2, 1, 2); scene.add(pLight);
-    const loader = new GLTFLoader();
-    let model = null, rotY = 0;
-    loader.load('HUMANOID_02_Linux.glb', function(gltf) {
-        model = gltf.scene;
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        model.position.set(-center.x, -box.min.y, -center.z);
-        model.scale.setScalar(2.4 / Math.max(size.x, size.y, size.z));
-        scene.add(model);
-    }, undefined, function(e) { console.error('Hero humanoid error:', e); });
-    let rafId = 0;
-    function animate() {
-        rafId = requestAnimationFrame(animate);
-        if (model) { rotY += 0.004; model.rotation.y = rotY; }
-        renderer.render(scene, camera);
-    }
-    if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function(entries, obs) {
-            entries.forEach(function(e) {
-                if (e.isIntersecting) { if (!rafId) animate(); }
-                else { cancelAnimationFrame(rafId); rafId = 0; }
-            });
-        }, { threshold: 0.01 }).observe(container);
-    }
-    animate();
-    window.addEventListener('resize', function() {
-        const nw = container.clientWidth || 600, nh = container.clientHeight || 800;
-        camera.aspect = nw / nh; camera.updateProjectionMatrix(); renderer.setSize(nw, nh);
-    });
-}
-
 function initLilithController() {
     const container = document.getElementById('agencyPriestModelContainer');
     const canvas = document.getElementById('agencyPriestCanvas');
@@ -1998,9 +1930,9 @@ function initAgencyMusicPlayer() {
     if (!audio || !playBtn) return;
     audio.volume = 0.4;
     const playlist = [
-        { title: 'Play Radio', artist: '☀️', src: 'odd-behavior-cest-la-vie.mp3' },
-        { title: 'Play Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
-        { title: 'Play Radio', artist: '☀️', src: 'Citizen Kane - Blackrain (Instrumental).mp3' }
+        { title: 'Radio', artist: '☀️', src: 'odd-behavior-cest-la-vie.mp3' },
+        { title: 'Radio', artist: '☀️', src: 'Maternal Heart.mp3' },
+        { title: 'Radio', artist: '☀️', src: 'Citizen Kane - Blackrain (Instrumental).mp3' }
     ];
     let currentTrack = 0, isPlaying = false;
     function setPlayerUi(playing) {
@@ -2061,12 +1993,10 @@ function initAgencyMusicPlayer() {
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroHumanoid);
     document.addEventListener('DOMContentLoaded', init3DModel);
     document.addEventListener('DOMContentLoaded', initLilithController);
     document.addEventListener('DOMContentLoaded', initAgencyMusicPlayer);
 } else {
-    initHeroHumanoid();
     init3DModel();
     initLilithController();
     initAgencyMusicPlayer();
@@ -2393,14 +2323,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ─────────────────────────────────────────────
 // SCROLL TO SECTION
 // ─────────────────────────────────────────────
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
-    const header = document.querySelector('.header');
-    const headerHeight = header ? header.offsetHeight : 0;
-    const absoluteTop = section.getBoundingClientRect().top + getScrollY() - headerHeight;
-    smoothScrollTo(absoluteTop, 900);
-}
+// scrollToSection moved to IIFE script block where smoothScrollTo lives
 
 // ─────────────────────────────────────────────
 // NAVIGATION + MOBILE MENU
@@ -2498,6 +2421,15 @@ function smoothScrollTo(target, duration) {
     }
     requestAnimationFrame(step);
 }
+
+window.scrollToSection = function(sectionId) {
+    var section = document.getElementById(sectionId);
+    if (!section) return;
+    var header = document.querySelector('.header');
+    var headerHeight = header ? header.offsetHeight : 0;
+    var absoluteTop = section.getBoundingClientRect().top + window.scrollY - headerHeight;
+    smoothScrollTo(absoluteTop, 400);
+};
 
 // ─── Custom Cursor (magnetic) ──────────────────
 function initCursor() {
