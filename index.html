@@ -1894,9 +1894,8 @@ function init3DModel() {
     const aLight = new THREE.PointLight(0xa875ff, 0.4, 8);
     aLight.position.set(1.5, -1, 1.5); scene.add(aLight);
     let model = null;
-    let autoRotationY = 0;
+    let rotationY = 0, rotationX = 0.2;
     let isDragging = false, previousMouseX = 0, previousMouseY = 0;
-    let dragOffsetX = 0, dragOffsetY = 0;
     const loader = new GLTFLoader();
     loader.load('HUMANOID_02_Linux.glb', function(gltf) {
         model = gltf.scene;
@@ -1913,18 +1912,18 @@ function init3DModel() {
     document.addEventListener('mouseup', function() { isDragging = false; canvas.style.cursor = 'grab'; });
     document.addEventListener('mousemove', function(e) {
         if (!isDragging) return;
-        dragOffsetY += (e.clientX - previousMouseX) * 0.01;
-        dragOffsetX += (e.clientY - previousMouseY) * 0.01;
-        dragOffsetX = Math.max(-0.5, Math.min(0.5, dragOffsetX));
+        rotationY += (e.clientX - previousMouseX) * 0.01;
+        rotationX += (e.clientY - previousMouseY) * 0.01;
+        rotationX = Math.max(-0.5, Math.min(0.5, rotationX));
         previousMouseX = e.clientX; previousMouseY = e.clientY;
     });
     canvas.addEventListener('touchstart', function(e) { if (e.touches.length === 1) { isDragging = true; previousMouseX = e.touches[0].clientX; previousMouseY = e.touches[0].clientY; } }, { passive: true });
     document.addEventListener('touchend', function() { isDragging = false; });
     document.addEventListener('touchmove', function(e) {
         if (!isDragging || e.touches.length !== 1) return;
-        dragOffsetY += (e.touches[0].clientX - previousMouseX) * 0.01;
-        dragOffsetX += (e.touches[0].clientY - previousMouseY) * 0.01;
-        dragOffsetX = Math.max(-0.5, Math.min(0.5, dragOffsetX));
+        rotationY += (e.touches[0].clientX - previousMouseX) * 0.01;
+        rotationX += (e.touches[0].clientY - previousMouseY) * 0.01;
+        rotationX = Math.max(-0.5, Math.min(0.5, rotationX));
         previousMouseX = e.touches[0].clientX; previousMouseY = e.touches[0].clientY;
     }, { passive: true });
     let rafId = 0, isVisible = false;
@@ -1932,10 +1931,9 @@ function init3DModel() {
     function stopLoop() { if (!rafId) return; cancelAnimationFrame(rafId); rafId = 0; }
     function animate() {
         rafId = requestAnimationFrame(animate);
-        autoRotationY += 0.003;
-        if (!isDragging) { dragOffsetY *= 0.95; dragOffsetX *= 0.95; }
+        if (!isDragging) rotationY += 0.003;
         if (model) {
-            model.rotation.x = 0.2 + dragOffsetX; model.rotation.y = autoRotationY + dragOffsetY;
+            model.rotation.x = rotationX; model.rotation.y = rotationY;
         }
         if (isVisible) renderer.render(scene, camera);
     }
