@@ -2777,9 +2777,8 @@ function initHorizontalScroll() {
             start: 'top top',
             end: function() { return '+=' + (numPanels - 1) * window.innerWidth; },
             pin: true,
-            scrub: true,
+            scrub: 0.8,
             anticipatePin: 1,
-            fastScrollEnd: true,
             invalidateOnRefresh: true,
             onUpdate: function(self) {
                 if (progressBar) progressBar.style.width = (self.progress * 100) + '%';
