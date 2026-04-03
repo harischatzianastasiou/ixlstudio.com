@@ -1934,9 +1934,10 @@ function init3DModel() {
     function animate() {
         rafId = requestAnimationFrame(animate);
         if (model) {
-            if (!hasInteracted) { autoRotationY += 0.003; currentRotationY = autoRotationY; }
-            else { currentRotationY += (dragRotationY - currentRotationY) * 0.1; currentRotationX += (dragRotationX - currentRotationX) * 0.1; }
-            model.rotation.x = currentRotationX; model.rotation.y = currentRotationY;
+            autoRotationY += 0.003;
+            currentRotationY += (dragRotationY - currentRotationY) * 0.1;
+            currentRotationX += (dragRotationX - currentRotationX) * 0.1;
+            model.rotation.x = currentRotationX; model.rotation.y = autoRotationY + currentRotationY;
         }
         renderer.render(scene, camera);
     }
