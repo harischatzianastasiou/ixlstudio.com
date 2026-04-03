@@ -1926,25 +1926,15 @@ function init3DModel() {
         rotationX = Math.max(-0.5, Math.min(0.5, rotationX));
         previousMouseX = e.touches[0].clientX; previousMouseY = e.touches[0].clientY;
     }, { passive: true });
-    let rafId = 0, isVisible = false;
-    function startLoop() { if (rafId) return; rafId = requestAnimationFrame(animate); }
-    function stopLoop() { if (!rafId) return; cancelAnimationFrame(rafId); rafId = 0; }
     function animate() {
-        rafId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
         if (!isDragging) rotationY += 0.003;
         if (model) {
             model.rotation.x = rotationX; model.rotation.y = rotationY;
         }
-        if (isVisible) renderer.render(scene, camera);
+        renderer.render(scene, camera);
     }
-    // Observe the whole h-panel-2 so the loop warms up before the model scrolls into view
-    const warmTarget = document.querySelector('.h-panel-1') || container;
-    if ('IntersectionObserver' in window) {
-        new IntersectionObserver((entries) => {
-            entries.forEach((e) => { isVisible = !!e.isIntersecting; });
-        }, { threshold: 0.01 }).observe(warmTarget);
-    }
-    startLoop();
+    animate();
     window.addEventListener('resize', function() {
         const w = container.clientWidth || 350, h = container.clientHeight || 450;
         camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h);
