@@ -228,12 +228,12 @@ h1, h2, h3, h4,
 }
 .logo-container { display: flex; align-items: center; }
 .logo-text {
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: .35em;
-    text-transform: uppercase;
-    color: #fff;
-    white-space: nowrap;
+    display: none;
+}
+.logo-img {
+    display: block;
+    height: 70px;
+    width: auto;
 }
 .nav-menu {
     list-style: none;
@@ -321,6 +321,8 @@ h1, h2, h3, h4,
     .mobile-menu-btn { display: flex; }
     .bg-bar { display: none; }
     .logo-text { color: #fff; }
+    .research-list-item { font-size: .82rem; padding: 1rem 0; gap: .8rem; }
+    .research-list-item::before { font-size: .55rem; }
 }
 
 /* ============================================================
@@ -1561,6 +1563,7 @@ h1, h2, h3, h4,
         <div class="logo-container">
             <a href="/" class="logo" style="cursor:none;">
                 <span class="logo-text">IXLSTUDIO</span>
+                <img class="logo-img" src="IXLIMAGE.png" alt="IXLSTUDIO">
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
