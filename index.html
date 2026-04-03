@@ -7,8 +7,7 @@
 
 <script>
 (function(){
-    var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#22C343');
+    document.documentElement.style.setProperty('--accent', '#22C232');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -32,7 +31,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #22C343;
+    --accent: #22C232;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -634,6 +633,7 @@ h1, h2, h3, h4,
     align-items: center;
     flex-direction: row;
     overflow: visible;
+    z-index: 1001;
 }
 .panel-3-text { flex: 1 1 auto; max-width: 400px; }
 .panel-3-text h2 {
@@ -1564,7 +1564,7 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#22C343" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#22C232" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
@@ -2160,12 +2160,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var picker = document.getElementById('indexBgColorPicker');
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
-        var defaultHex = '#B100FF';
-        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; localStorage.setItem(key, hex); }
-        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; localStorage.setItem(modeKey, mode); }
-        var saved = localStorage.getItem(key);
+        var defaultHex = '#22C232';
+        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; }
+        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; }
         var savedMode = localStorage.getItem(modeKey) || 'gradient';
-        setBg(saved || defaultHex);
+        setBg(defaultHex);
         setMode(savedMode);
         picker.addEventListener('input', function() { setBg(picker.value); });
         if (stylePicker) stylePicker.addEventListener('change', function() { setMode(stylePicker.value); });
