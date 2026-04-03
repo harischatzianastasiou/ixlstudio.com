@@ -8,7 +8,7 @@
 <script>
 (function(){
     var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#133A22');
+    document.documentElement.style.setProperty('--accent', s || '#22C343');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -32,7 +32,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #133A22;
+    --accent: #22C343;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -1562,7 +1562,7 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#133A22" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#22C343" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
@@ -1979,7 +1979,7 @@ function initLilithController() {
         model = gltf.scene;
         const box = new THREE.Box3().setFromObject(model);
         const size = box.getSize(new THREE.Vector3());
-        const scale = 0.38 / Math.max(size.x, size.y, size.z);
+        const scale = 0.32 / Math.max(size.x, size.y, size.z);
         model.scale.setScalar(scale);
         const scaledBox = new THREE.Box3().setFromObject(model);
         const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
