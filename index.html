@@ -1877,6 +1877,7 @@ function init3DModel() {
         model.scale.setScalar(scale);
         model.rotation.x = 0.2;
         scene.add(model);
+        renderer.compile(scene, camera);
     }, undefined, function(e) { console.error('Humanoid load error:', e); });
     canvas.addEventListener('mousedown', function(e) { isDragging = true; previousMouseX = e.clientX; previousMouseY = e.clientY; canvas.style.cursor = 'grabbing'; });
     document.addEventListener('mouseup', function() { isDragging = false; canvas.style.cursor = 'grab'; });
@@ -1962,24 +1963,33 @@ function initLilithController() {
         const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
         model.position.x = -scaledCenter.x; model.position.y = -scaledBox.min.y; model.position.z = -scaledCenter.z;
         scene.add(model);
+        // Pre-compile shaders so first render doesn't stall
+        renderer.compile(scene, camera);
         mixer = new THREE.AnimationMixer(model);
         if (gltf.animations && gltf.animations.length > 0) {
             animations.idle = mixer.clipAction(gltf.animations[0]);
             animations.idle.play(); currentAction = animations.idle;
         }
-        loadAnimations();
+        // Defer extra animations to avoid blocking scroll
+        setTimeout(loadAnimations, 500);
     }, undefined, function(e) { console.error('Lilith load error:', e); });
     function loadAnimations() {
-        Object.keys(animationFiles).forEach(function(name) {
+        var names = ['walk', 'run', 'jump'];
+        var i = 0;
+        function loadNext() {
+            if (i >= names.length) return;
+            var name = names[i++];
             loader.load(animationFiles[name], function(gltf) {
                 if (gltf.animations && gltf.animations.length > 0) {
                     animations[name] = mixer.clipAction(gltf.animations[0]);
                     if (name === 'jump') { animations[name].setLoop(THREE.LoopOnce); animations[name].clampWhenFinished = true; }
-                    if (name === 'idle') { animations.idle.play(); currentAction = animations.idle; }
                 }
                 loadedCount++;
+                // Stagger each load to avoid main thread blocking
+                setTimeout(loadNext, 200);
             });
-        });
+        }
+        loadNext();
     }
     } // end loadLilithModel
     function switchAnimation(newState) {
