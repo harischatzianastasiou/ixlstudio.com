@@ -50,7 +50,7 @@ html {
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
     scroll-padding-top: var(--header-h);
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: auto;
 }
 
 body {
@@ -218,7 +218,7 @@ h1, h2, h3, h4,
 .header {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 1000;
+    z-index: 990;
     height: var(--header-h);
     padding: 0 5vw;
     display: flex;
@@ -317,7 +317,7 @@ h1, h2, h3, h4,
 
 @media (max-width: 768px) {
     .header { mix-blend-mode: normal; }
-    .nav-menu { display: none; }
+    .header .nav-menu { display: none; }
     .mobile-menu-btn { display: flex; }
     .bg-bar { display: none; }
     .logo-text { color: #fff; }
@@ -327,7 +327,7 @@ h1, h2, h3, h4,
    HERO SECTION
    ============================================================ */
 .hero {
-    height: 100svh;
+    height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -451,7 +451,7 @@ h1, h2, h3, h4,
 .h-scroll-outer {
     position: sticky;
     top: 0;
-    height: 100svh;
+    height: 100dvh;
     overflow: hidden;
     will-change: transform;
     pointer-events: auto;
@@ -464,7 +464,7 @@ h1, h2, h3, h4,
 }
 .h-panel {
     flex: 0 0 100vw;
-    height: 100svh;
+    height: 100dvh;
     display: flex;
     align-items: center;
     padding: 0 8vw;
@@ -745,7 +745,7 @@ h1, h2, h3, h4,
     .h-scroll-section { height: auto !important; }
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
-    .h-panel { flex: none; width: 100%; height: auto; min-height: 100svh; padding: 8rem 5vw 5rem; }
+    .h-panel { flex: none; width: 100%; height: auto; min-height: 100dvh; padding: 8rem 5vw 5rem; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 3rem; }
     .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 2rem; overflow: hidden; }
     .panel-1-observer-logo { display: none; }
@@ -777,7 +777,7 @@ h1, h2, h3, h4,
     border: 1px solid var(--border);
 }
 .observer-section {
-    min-height: 100svh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
