@@ -749,7 +749,7 @@ h1, h2, h3, h4,
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 3rem; }
     .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 2rem; overflow: hidden; }
     .panel-1-observer-logo { display: none; }
-    .panel-2-model { width: 100%; max-width: 280px; margin: 0 auto; }
+    .panel-2-model { width: 100%; max-width: 140px; margin: 0 auto; }
     .panel-3-lilith { width: 60%; max-width: 200px; margin: 0 auto; order: 2; }
     .panel-3-lilith .agency-model-container { width: 100% !important; }
     .panel-3-text { order: 1; width: 100%; }
@@ -1152,14 +1152,13 @@ h1, h2, h3, h4,
     gap: 2rem;
 }
 .article-card {
-    border: 1px solid var(--border);
-    transition: border-color .4s, transform .4s, box-shadow .4s;
+    border: none;
+    transition: transform .4s, box-shadow .4s;
     overflow: hidden;
     position: relative;
     cursor: none;
 }
 .article-card:hover {
-    border-color: rgba(255,255,255,.15);
     transform: translateY(-4px);
     box-shadow: 0 24px 48px rgba(0,0,0,.4);
 }
