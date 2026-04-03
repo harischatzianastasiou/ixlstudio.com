@@ -53,9 +53,6 @@ html {
     scroll-padding-top: var(--header-h);
     overscroll-behavior: none;
 }
-html, body {
-    -webkit-overflow-scrolling: touch;
-}
 
 body {
     background: var(--bg);
@@ -320,7 +317,7 @@ h1, h2, h3, h4,
 .mobile-menu-overlay .nav-menu a:hover { color: #fff; }
 
 @media (max-width: 768px) {
-    .header { mix-blend-mode: normal; }
+    .header { mix-blend-mode: normal; background: #000; }
     .header .nav-menu { display: none; }
     .mobile-menu-btn { display: flex; }
     .bg-bar { display: flex; }
@@ -2407,7 +2404,7 @@ class ArticlesPagination {
         card.className = 'article-card';
         if (article.projectLink) { card.dataset.projectLink = article.projectLink; card.style.cursor = 'pointer'; }
         const videoBlock = article.video
-            ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" poster="${article.image || ''}" muted loop playsinline preload="none" aria-label="${article.alt || ''}"></video></div>`
+            ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" poster="${article.image || ''}" muted loop playsinline autoplay preload="auto" aria-label="${article.alt || ''}"></video></div>`
             : (article.image ? `<div class="article-image-wrap"><img src="${article.image}" alt="${article.alt || ''}"></div>` : '');
         card.innerHTML = `${videoBlock}<div class="article-content"><h3 class="article-title">${article.title}</h3><p class="article-excerpt">${article.excerpt}</p><div class="article-meta"><span class="article-read-time">${article.readTime}</span></div></div>`;
         return card;
