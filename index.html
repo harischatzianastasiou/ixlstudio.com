@@ -616,6 +616,7 @@ h1, h2, h3, h4,
 /* 3D model container (panel 2) */
 .panel-2-model { flex: 0 0 auto; width: clamp(180px, 22vw, 280px); }
 .agency-model-container {
+    position: relative;
     background: transparent !important;
     box-shadow: none !important;
     aspect-ratio: 3/7 !important;
@@ -627,7 +628,7 @@ h1, h2, h3, h4,
 .agency-collage-card.agency-collage-base img { filter: none; opacity: .45; }
 
 /* Panel 3 – Lilith + follow */
-.h-panel-3 {
+.h-panel.h-panel-3 {
     gap: 6vw;
     justify-content: center;
     align-items: center;
@@ -678,7 +679,7 @@ h1, h2, h3, h4,
 }
 .lilith-inline-comic {
     position: absolute;
-    bottom: calc(100% + .5rem);
+    top: 3rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -1556,7 +1557,7 @@ h1, h2, h3, h4,
 <header class="header">
     <div class="header-logo-and-picker">
         <div class="logo-container">
-            <a href="index.html" class="logo" style="cursor:none;">
+            <a href="/" class="logo" style="cursor:none;">
                 <span class="logo-text">IXLSTUDIO</span>
             </a>
         </div>
@@ -1567,7 +1568,7 @@ h1, h2, h3, h4,
     <nav>
         <ul class="nav-menu">
             <li><a href="#agency" onclick="scrollToSection('agency');return false;">THE OBSERVER</a></li>
-            <li><a href="skgchess.html">SKGCHESS</a></li>
+            <li><a href="skgchess">SKGCHESS</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
             <span></span><span></span><span></span>
@@ -1582,8 +1583,8 @@ h1, h2, h3, h4,
     </div>
     <ul class="nav-menu">
         <li><a href="#agency" onclick="scrollToSection('agency');return false;">THE OBSERVER</a></li>
-        <li><a href="inbetween.html">JOURNAL</a></li>
-        <li><a href="skgchess.html">SKGCHESS</a></li>
+        <li><a href="inbetween">JOURNAL</a></li>
+        <li><a href="skgchess">SKGCHESS</a></li>
         <li><a href="#contact" onclick="scrollToSection('contact');return false;">CONTACT</a></li>
     </ul>
 </div>
@@ -1656,7 +1657,7 @@ h1, h2, h3, h4,
                     </div>
                     <div class="panel-1-links">
                         <!-- <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener">YouTube ↗</a>
-                        <a href="inbetween.html">Journal ↗</a> -->
+                        <a href="inbetween">Journal ↗</a> -->
                     </div>
                 </div>
                 <img class="panel-1-observer-logo" src="theobserver.png" alt="" aria-hidden="true">
@@ -1714,18 +1715,18 @@ h1, h2, h3, h4,
                         Watch the YouTube channel.
                     </p>
                     <div class="panel-follow-links">
-                        <a href="inbetween.html" class="panel-follow-link">Journal — Making of The Observer →</a>
+                        <a href="inbetween" class="panel-follow-link">Journal — Making of The Observer →</a>
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-follow-link">YouTube Channel →</a>
                     </div>
                 </div>
                 <div class="panel-3-lilith">
                     <div class="panel-3-lilith-inner">
-                        <div class="lilith-inline-comic" aria-hidden="true">
-                            <div class="lilith-modal-comic-bubble">
-                                <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
-                            </div>
-                        </div>
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(200px,28vw,380px);aspect-ratio:3/5;">
+                            <div class="lilith-inline-comic" aria-hidden="true">
+                                <div class="lilith-modal-comic-bubble">
+                                    <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
+                                </div>
+                            </div>
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
                         <span class="live-indicator">
@@ -1799,7 +1800,7 @@ h1, h2, h3, h4,
                     </div>
                 </div>
                 <div id="moodboard">
-                    <a href="moodboard.html" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
+                    <a href="moodboard" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
                 </div>
             </div>
             <div class="research-media-col" data-reveal>
@@ -1978,7 +1979,7 @@ function initLilithController() {
         model = gltf.scene;
         const box = new THREE.Box3().setFromObject(model);
         const size = box.getSize(new THREE.Vector3());
-        const scale = 0.42 / Math.max(size.x, size.y, size.z);
+        const scale = 0.38 / Math.max(size.x, size.y, size.z);
         model.scale.setScalar(scale);
         const scaledBox = new THREE.Box3().setFromObject(model);
         const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
