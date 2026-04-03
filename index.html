@@ -2716,6 +2716,7 @@ function initLoader() {
         loader.setAttribute('data-hidden', '1');
         loader.style.display = 'none';
         revealHero();
+        requestAnimationFrame(function() { ScrollTrigger.refresh(true); });
         return;
     }
 
@@ -2729,6 +2730,7 @@ function initLoader() {
                     loader.style.display = 'none';
                     sessionStorage.setItem('ixl-intro-seen', 'true');
                     revealHero();
+                    ScrollTrigger.refresh(true);
                 }
             });
         }
@@ -2903,7 +2905,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeader();
 
     window.addEventListener('load', function() {
-        ScrollTrigger.refresh();
+        ScrollTrigger.refresh(true);
+        // Second refresh after fonts/images fully painted
+        setTimeout(function() { ScrollTrigger.refresh(true); }, 300);
     });
 });
 
