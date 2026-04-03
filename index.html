@@ -549,9 +549,9 @@ h1, h2, h3, h4,
     margin-bottom: 1.5rem;
 }
 .panel-2-text p {
-    font-size: clamp(.88rem, 1.3vw, 1rem);
+    font-size: 1.1rem;
     color: rgba(255,255,255,.4);
-    line-height: 1.7;
+    line-height: 1.5;
     margin-bottom: 2rem;
 }
 
@@ -650,9 +650,9 @@ h1, h2, h3, h4,
     margin-bottom: 1.5rem;
 }
 .panel-3-text p {
-    font-size: clamp(.88rem, 1.3vw, 1rem);
+    font-size: 1.1rem;
     color: rgba(255,255,255,.4);
-    line-height: 1.7;
+    line-height: 1.5;
     margin-bottom: 2.5rem;
 }
 .panel-follow-links { display: flex; flex-direction: column; gap: 1rem; }
@@ -682,12 +682,14 @@ h1, h2, h3, h4,
     overflow: visible;
 }
 .lilith-inline-comic {
-    position: fixed;
-    z-index: 99999;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
     pointer-events: none;
     width: max-content;
     max-width: 220px;
-    display: none;
 }
 .live-indicator {
     position: absolute;
@@ -1090,8 +1092,9 @@ h1, h2, h3, h4,
     background: rgba(255,255,255,.96);
     border: 3px solid rgba(0,0,0,.9);
     border-radius: 999px;
-    box-shadow: 0 14px 30px rgba(0,0,0,.45);
+    box-shadow: 0 8px 16px rgba(0,0,0,.3);
     animation: lilithBubbleFloat 3.2s ease-in-out infinite;
+    will-change: transform;
     max-width: min(620px,92%); text-align: center;
 }
 .lilith-modal-comic-bubble::before, .lilith-modal-comic-bubble::after {
@@ -1161,8 +1164,7 @@ h1, h2, h3, h4,
     cursor: none;
 }
 .article-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 48px rgba(0,0,0,.4);
+    opacity: .85;
 }
 .article-image-wrap {
     overflow: hidden;
@@ -1181,14 +1183,14 @@ h1, h2, h3, h4,
 .article-card:hover img { transform: scale(1.04); }
 .article-content { padding: 2rem; position: relative; }
 .article-title {
-    font-size: 1.6rem;
+    font-size: clamp(1rem, 2vw, 1.3rem);
     font-weight: 900;
     letter-spacing: -.03em;
     margin-bottom: .75rem;
     color: #fff;
     text-transform: uppercase;
 }
-.article-excerpt { font-size: .85rem; color: rgba(255,255,255,.35); line-height: 1.7; margin-bottom: 1.2rem; }
+.article-excerpt { font-size: clamp(.78rem, 1.2vw, .9rem); color: rgba(255,255,255,.35); line-height: 1.7; margin-bottom: 1.2rem; }
 .article-meta {
     display: inline-flex;
     align-items: center;
@@ -1253,9 +1255,9 @@ h1, h2, h3, h4,
 .research-list-item {
     padding: 1.5rem 0;
     border-bottom: 1px solid var(--border);
-    font-size: 1.1rem;
+    font-size: clamp(.88rem, 1.3vw, 1rem);
     color: rgba(255,255,255,.4);
-    line-height: 1.5;
+    line-height: 1.7;
     transition: color .4s, padding-left .4s;
     display: flex;
     align-items: center;
@@ -1727,6 +1729,11 @@ h1, h2, h3, h4,
                 <div class="panel-3-lilith">
                     <div class="panel-3-lilith-inner">
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(200px,28vw,380px);aspect-ratio:3/5;">
+                            <div class="lilith-inline-comic" aria-hidden="true">
+                                <div class="lilith-modal-comic-bubble">
+                                    <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
+                                </div>
+                            </div>
                             <canvas id="agencyPriestCanvas"></canvas>
                         </div>
                         <span class="live-indicator">
@@ -2035,8 +2042,13 @@ function initLilithController() {
         if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') keys.d = false;
         if (e.key === 'Shift') { keys.shift = false; if (currentState === 'run') switchAnimation('walk'); }
     });
+    var lilithVisible = false;
+    new IntersectionObserver(function(entries) {
+        lilithVisible = entries[0].isIntersecting;
+    }, { threshold: 0 }).observe(container);
     function animate() {
         requestAnimationFrame(animate);
+        if (!lilithVisible) return;
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
         if (model) {
@@ -2929,30 +2941,5 @@ window.addEventListener('pageshow', function(event) {
 });
 </script>
 
-<div class="lilith-inline-comic" id="lilithBubble" aria-hidden="true">
-    <div class="lilith-modal-comic-bubble">
-        <div class="lilith-modal-comic-sub" id="lilithInlineSub">Click to walk Lilith</div>
-    </div>
-</div>
-<script>
-(function() {
-    var bubble = document.getElementById('lilithBubble');
-    var container = document.getElementById('agencyPriestModelContainer');
-    if (!bubble || !container) return;
-    function pos() {
-        var r = container.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight || r.right < 0 || r.left > window.innerWidth) {
-            bubble.style.display = 'none';
-            return;
-        }
-        bubble.style.display = 'block';
-        bubble.style.left = (r.left + r.width / 2) + 'px';
-        bubble.style.top = (r.top + 12) + 'px';
-        bubble.style.transform = 'translateX(-50%)';
-    }
-    function loop() { pos(); requestAnimationFrame(loop); }
-    loop();
-})();
-</script>
 </body>
 </html>
