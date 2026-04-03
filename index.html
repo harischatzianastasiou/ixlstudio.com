@@ -331,7 +331,7 @@ h1, h2, h3, h4,
    HERO SECTION
    ============================================================ */
 .hero {
-    height: 100dvh;
+    height: 100svh;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -458,7 +458,7 @@ h1, h2, h3, h4,
 .h-scroll-outer {
     position: sticky;
     top: 0;
-    height: 100dvh;
+    height: 100svh;
     overflow: hidden;
     will-change: transform;
     pointer-events: auto;
@@ -471,7 +471,7 @@ h1, h2, h3, h4,
 }
 .h-panel {
     flex: 0 0 100vw;
-    height: 100dvh;
+    height: 100svh;
     display: flex;
     align-items: center;
     padding: 0 8vw;
@@ -752,7 +752,7 @@ h1, h2, h3, h4,
     .h-scroll-section { height: auto !important; }
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
-    .h-panel { flex: none; width: 100%; height: auto; min-height: 100dvh; padding: 8rem 5vw 5rem; }
+    .h-panel { flex: none; width: 100%; height: auto; min-height: 100svh; padding: 8rem 5vw 5rem; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 3rem; }
     .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 2rem; overflow: hidden; }
     .panel-1-observer-logo { display: none; }
@@ -784,7 +784,7 @@ h1, h2, h3, h4,
     border: 1px solid var(--border);
 }
 .observer-section {
-    min-height: 100dvh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2875,12 +2875,19 @@ function initSectionReveals() {
 function initHeader() {
     const header = document.querySelector('.header');
     if (!header) return;
+    var isMobile = window.matchMedia('(max-width: 768px)');
     ScrollTrigger.create({
         start: 'top -80',
         onUpdate: function(self) {
-            header.style.background = self.progress > 0 ? 'rgba(9,9,9,0.88)' : 'transparent';
-            header.style.backdropFilter = self.progress > 0 ? 'blur(18px)' : 'none';
-            header.style.mixBlendMode = self.progress > 0 ? 'normal' : 'difference';
+            if (isMobile.matches) {
+                header.style.background = '#000';
+                header.style.backdropFilter = 'none';
+                header.style.mixBlendMode = 'normal';
+            } else {
+                header.style.background = self.progress > 0 ? 'rgba(9,9,9,0.88)' : 'transparent';
+                header.style.backdropFilter = self.progress > 0 ? 'blur(18px)' : 'none';
+                header.style.mixBlendMode = self.progress > 0 ? 'normal' : 'difference';
+            }
         }
     });
 }
