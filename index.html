@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>IXLSTUDIO</title>
 
 <script>
@@ -849,10 +849,10 @@ h1, h2, h3, h4,
     height: 100%;
     object-fit: cover;
     opacity: .1;
-    mix-blend-mode: luminosity;
-    filter: grayscale(1) contrast(1.2);
+    filter: grayscale(1);
     pointer-events: none;
     z-index: 0;
+    transform: translateZ(0);
     -webkit-mask-image:
         repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 3px, transparent 3px, transparent 6px),
         linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
@@ -873,6 +873,7 @@ h1, h2, h3, h4,
     flex-direction: row;
     overflow: visible;
     z-index: 1001;
+    contain: layout style;
 }
 .panel-3-text { flex: 1 1 auto; max-width: 400px; }
 .panel-3-text h2 {
