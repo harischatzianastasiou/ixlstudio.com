@@ -8,7 +8,7 @@
 <script>
 (function(){
     var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#24DB42');
+    document.documentElement.style.setProperty('--accent', s || '#30711E');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -32,7 +32,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #24DB42;
+    --accent: #30711E;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -508,19 +508,23 @@ h1, h2, h3, h4,
     display: flex;
     gap: 1.5rem;
     margin-top: 2.5rem;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
 }
 .panel-1-links a {
     font-size: .72rem;
     font-weight: 700;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.35);
-    border-bottom: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,.4);
     padding-bottom: .2rem;
     transition: color .3s, border-color .3s;
     cursor: none;
+    pointer-events: auto;
 }
-.panel-1-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+.panel-1-links a:hover { color: var(--accent); border-color: var(--accent); }
 .panel-1-observer-logo {
     position: absolute;
     right: 8vw;
@@ -1867,7 +1871,7 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#24DB42" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#30711E" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
@@ -2487,7 +2491,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var picker = document.getElementById('indexBgColorPicker');
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
-        var defaultHex = '#24DB42';
+        var defaultHex = '#30711E';
         function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; localStorage.setItem(key, hex); }
         function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; localStorage.setItem(modeKey, mode); }
         var saved = localStorage.getItem(key);
@@ -3091,7 +3095,7 @@ function initHeroPortal() {
         slashSpots.forEach(function(s) {
             var sy = s.y + yOff;
             // On mobile, skip top-left portion of the slash — keep center to bottom-right
-            if (isMobile && (s.x < w * 0.28 || sy < h * 0.42)) return;
+            if (isMobile && (s.x < w * 0.28 || sy < h * 0.42 || sy > h * 0.62)) return;
             var r = s.r * slashScale;
             var grad = umctx.createRadialGradient(s.x, sy, 0, s.x, sy, r);
             grad.addColorStop(0, 'rgba(255,255,255,1)');
@@ -3109,7 +3113,14 @@ function initHeroPortal() {
     var mx = -999, my = -999, smx = -999, smy = -999;
     var portalDirty = false, lastPaintX = -999, lastPaintY = -999;
 
+    var paintBlocked = false;
+    // Stop painting when hovering over links
+    hero.querySelectorAll('.panel-1-links a').forEach(function(link) {
+        link.addEventListener('mouseenter', function() { paintBlocked = true; });
+        link.addEventListener('mouseleave', function() { paintBlocked = false; });
+    });
     hero.addEventListener('mousemove', function(e) {
+        if (paintBlocked) return;
         var rect = hero.getBoundingClientRect();
         mx = e.clientX - rect.left;
         my = e.clientY - rect.top;
@@ -3180,7 +3191,7 @@ function initHeroPortal() {
         tctx.drawImage(userMask, 0, 0);
         tctx.globalCompositeOperation = 'source-in';
         tctx.drawImage(img, d.x, d.y + d.h * 0.05, d.w, d.h);
-        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#B100FF';
+        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#30711E';
         tctx.globalCompositeOperation = 'source-atop';
         tctx.globalAlpha = 0.45;
         tctx.fillStyle = accent;
