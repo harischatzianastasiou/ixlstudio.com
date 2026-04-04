@@ -8,7 +8,7 @@
 <script>
 (function(){
     var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#D8DB24');
+    document.documentElement.style.setProperty('--accent', s || '#24DB42');
     var mode = localStorage.getItem('index-bg-mode') || 'gradient';
     document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
 })();
@@ -32,7 +32,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #D8DB24;
+    --accent: #24DB42;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -1843,7 +1843,7 @@ h1, h2, h3, h4,
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#D8DB24" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#24DB42" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
@@ -2308,9 +2308,19 @@ function initLilithController() {
         if (prev) prev.fadeOut(0.2);
         currentAction.reset(); currentAction.fadeIn(0.2); currentAction.play();
         currentState = newState; updateControlHints();
+        // Return to idle after jump finishes
+        if (newState === 'jump') {
+            currentAction.setLoop(THREE.LoopOnce);
+            currentAction.clampWhenFinished = true;
+            mixer.addEventListener('finished', function onJumpDone() {
+                mixer.removeEventListener('finished', onJumpDone);
+                if (keys.w) { switchAnimation(keys.shift ? 'run' : 'walk'); }
+                else { switchAnimation('idle'); }
+            });
+        }
     }
     function updateControlHints() {
-        const stateText = { idle: 'W walk · A / D turn', walk: 'SHIFT run · A / D turn', run: 'SPACE jump · A / D turn', jump: 'jumping…' };
+        const stateText = { idle: 'W walk · A / D turn', walk: 'SHIFT run · A / D turn', run: 'SPACE jump · A / D turn', jump: 'Jumping! Hold W to keep going' };
         const nextText = isActive ? stateText[currentState] : 'Click to walk Lilith';
         const inlineSub = document.getElementById('lilithInlineSub');
         if (inlineSub) inlineSub.textContent = nextText;
@@ -2461,7 +2471,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var picker = document.getElementById('indexBgColorPicker');
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
-        var defaultHex = '#D8DB24';
+        var defaultHex = '#24DB42';
         function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; localStorage.setItem(key, hex); }
         function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; localStorage.setItem(modeKey, mode); }
         var saved = localStorage.getItem(key);
