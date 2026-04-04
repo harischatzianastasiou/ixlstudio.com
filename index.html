@@ -3550,7 +3550,11 @@ function initTrailerTV() {
           .to(replayHint, { opacity: 1, duration: .6 })
           .set(playOverlay, { opacity: 1, pointerEvents: 'auto' });
 
-        tl.eventCallback('onComplete', function() { trailerPlayed = true; });
+        tl.eventCallback('onComplete', function() {
+            trailerPlayed = true;
+            var audio = document.getElementById('agencyAudioPlayer');
+            if (audio) { audio.pause(); audio.currentTime = 0; }
+        });
         trailerTl = tl;
         return tl;
     }
