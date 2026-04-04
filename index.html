@@ -1871,8 +1871,7 @@ h1, h2, h3, h4,
     </div>
     <nav>
         <ul class="nav-menu">
-            <li><a href="#agency" onclick="scrollToSection('agency');return false;">THE OBSERVER</a></li>
-            <li><a href="skgchess">SKGCHESS</a></li>
+            <li><a href="#agency" data-panel3="true">SUPPORT</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
             <span></span><span></span><span></span>
@@ -1886,10 +1885,7 @@ h1, h2, h3, h4,
         <div class="deco-shape deco-shape--diamond deco-shape--center"></div>
     </div>
     <ul class="nav-menu">
-        <li><a href="#agency" onclick="scrollToSection('agency');return false;">THE OBSERVER</a></li>
-        <li><a href="/journal">JOURNAL</a></li>
-        <li><a href="skgchess">SKGCHESS</a></li>
-        <li><a href="#contact" onclick="scrollToSection('contact');return false;">CONTACT</a></li>
+        <li><a href="#agency" data-panel3="true">Support</a></li>
     </ul>
 </div>
 
@@ -2805,17 +2801,17 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.onclick = function(e) {
             e.preventDefault(); e.stopPropagation();
-            const targetId = this.getAttribute('href').substring(1);
-            scrollToSection(targetId);
-            const navMenu = document.querySelector('.nav-menu');
+            if (this.dataset.panel3) {
+                scrollToPanel3();
+            } else {
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            }
             const mobileBtn = document.getElementById('mobileMenuBtn');
             const overlay = document.getElementById('mobileMenuOverlay');
-            if (navMenu && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                if (mobileBtn) mobileBtn.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            if (mobileBtn) mobileBtn.classList.remove('active');
+            if (overlay) { overlay.classList.remove('active'); overlay.setAttribute('aria-hidden', 'true'); }
+            document.body.style.overflow = '';
             return false;
         };
     });
@@ -2912,6 +2908,25 @@ window.scrollToSection = function(sectionId) {
     var headerHeight = header ? header.offsetHeight : 0;
     var absoluteTop = section.getBoundingClientRect().top + window.scrollY - headerHeight;
     smoothScrollTo(absoluteTop, 400);
+};
+
+window.scrollToPanel3 = function() {
+    // On mobile, no horizontal scroll — just scroll to panel 3 element
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        var panel3 = document.querySelector('.h-panel-3');
+        if (panel3) {
+            var header = document.querySelector('.header');
+            var hh = header ? header.offsetHeight : 0;
+            smoothScrollTo(panel3.getBoundingClientRect().top + window.scrollY - hh, 400);
+        }
+        return;
+    }
+    // On desktop, use offsetTop (not getBoundingClientRect) for stable position
+    var section = document.getElementById('agency');
+    if (!section) return;
+    var panels = document.querySelectorAll('.h-panel');
+    var target = section.offsetTop + (panels.length - 1) * window.innerWidth;
+    smoothScrollTo(target, 600);
 };
 
 // ─── Hero Portal — Reality Distortion Lens ─────
