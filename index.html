@@ -129,10 +129,10 @@ h1, h2, h3, h4,
     inset: -50%;
     width: 200%; height: 200%;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.05;
+    opacity: 0.043;
     pointer-events: none;
     z-index: 9998;
-    animation: grain-anim 0.4s steps(2) infinite;
+    animation: grain-anim 0.5s steps(2) infinite;
     will-change: transform;
 }
 @keyframes grain-anim {
@@ -485,7 +485,7 @@ h1, h2, h3, h4,
     color: var(--accent);
 }
 /* Panel 1 – title text */
-.h-panel-1 { flex-direction: column; justify-content: center; padding-top: calc(var(--header-h) + 2rem); }
+.h-panel-1 { flex-direction: column; justify-content: center; }
 .panel-1-title {
     font-size: clamp(3.5rem, 9vw, 12rem);
     font-weight: 900;
@@ -500,7 +500,7 @@ h1, h2, h3, h4,
 }
 .panel-1-tagline p {
     font-size: clamp(1rem, 1.8vw, 1.25rem);
-    color: rgba(255,255,255,.42);
+    color: rgba(255,255,255,.75);
     font-style: italic;
     line-height: 1.7;
 }
@@ -854,12 +854,12 @@ h1, h2, h3, h4,
     pointer-events: none;
     z-index: 0;
     -webkit-mask-image:
-        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 3px, transparent 3px, transparent 6px),
         linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
         linear-gradient(to bottom, transparent 20%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 65%, transparent 80%);
     -webkit-mask-composite: source-in;
     mask-image:
-        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 3px, transparent 3px, transparent 6px),
         linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
         linear-gradient(to bottom, transparent 20%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 65%, transparent 80%);
     mask-composite: intersect;
@@ -987,12 +987,16 @@ h1, h2, h3, h4,
     .trailer-tv { width: 100%; }
     .tv-frame { width: clamp(260px, 80vw, 360px); margin: 0 auto; }
     .panel-2-right { align-items: center; width: 100%; }
-    .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 2rem; overflow: hidden; }
+    .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: center; gap: 1.5rem; overflow: hidden; text-align: center; }
+    .h-panel.h-panel-3 .panel-label { align-self: center; }
     .panel-1-observer-logo { display: none; }
     .panel-2-model { width: 100%; max-width: 140px; margin: 0 auto; }
-    .panel-3-lilith { width: 60%; max-width: 200px; margin: 0 auto; order: 2; }
+    .panel-3-lilith { width: 50%; max-width: 180px; margin: 0 auto; order: 2; }
     .panel-3-lilith .agency-model-container { width: 100% !important; }
     .panel-3-text { order: 1; width: 100%; }
+    .panel-3-text p { margin-top: 4rem; }
+    .panel-3-text .panel-follow-links { display: flex; flex-direction: column; width: 100%; gap: 0.75rem; }
+    .panel-3-text .panel-follow-link { width: 100%; text-align: center; justify-content: center; padding: 1rem 1.5rem; font-size: .7rem; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.5); }
     .panel-3-lilith .lilith-inline-comic { display: none; }
     .h-panel-counter { display: none; }
 }
@@ -2957,6 +2961,10 @@ function initHeroPortal() {
     function preReveal() {
         var w = canvas.width, h = canvas.height;
         if (w < 10 || h < 10) return;
+        var isMobile = window.innerWidth <= 768;
+        var rScale = isMobile ? 0.35 : 1;
+        var slashScale = isMobile ? 0.55 : 1;
+        var yOff = h * 0.08; // match image offset from getCoverDims
 
         // B&W pre-reveal — original image, no tint (on mask/mctx)
         var bwSpots = [
@@ -2985,17 +2993,33 @@ function initHeroPortal() {
             { x: w * 0.48, y: h * 0.55, r: RADIUS * 1.0 },
         ];
         bwSpots.forEach(function(s) {
-            var grad = mctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
-            grad.addColorStop(0, 'rgba(255,255,255,1)');
-            grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
-            grad.addColorStop(0.8, 'rgba(255,255,255,0.3)');
+            var sy = s.y + yOff;
+            // On mobile, skip spots near top (<30% h) and bottom (>65% h)
+            if (isMobile && (sy < h * 0.36 || sy > h * 0.65)) return;
+            // On mobile, skip leftmost spots near the top
+            if (isMobile && sy < h * 0.45 && s.x < w * 0.38) return;
+            var r = s.r * rScale;
+            var grad = mctx.createRadialGradient(s.x, sy, 0, s.x, sy, r);
+            grad.addColorStop(0, 'rgba(255,255,255,0.7)');
+            grad.addColorStop(0.5, 'rgba(255,255,255,0.5)');
+            grad.addColorStop(0.8, 'rgba(255,255,255,0.2)');
             grad.addColorStop(1, 'rgba(255,255,255,0)');
             mctx.fillStyle = grad;
-            mctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2);
+            mctx.fillRect(s.x - r, sy - r, r * 2, r * 2);
         });
 
         // Colored diagonal slash — tinted with accent (on userMask/umctx)
         var slashSpots = [
+            // Head area — up and right from "H" in "THE"
+            { x: w * 0.44, y: h * 0.04, r: RADIUS * 0.55 },
+            { x: w * 0.46, y: h * 0.06, r: RADIUS * 0.6 },
+            { x: w * 0.48, y: h * 0.03, r: RADIUS * 0.7 },
+            { x: w * 0.52, y: h * 0.05, r: RADIUS * 0.8 },
+            { x: w * 0.55, y: h * 0.04, r: RADIUS * 0.75 },
+            { x: w * 0.50, y: h * 0.07, r: RADIUS * 0.7 },
+            { x: w * 0.56, y: h * 0.08, r: RADIUS * 0.65 },
+            { x: w * 0.53, y: h * 0.10, r: RADIUS * 0.6 },
+            { x: w * 0.58, y: h * 0.06, r: RADIUS * 0.55 },
             // Extended up
             { x: w * 0.08, y: h * 0.26, r: RADIUS * 0.45 },
             { x: w * 0.12, y: h * 0.29, r: RADIUS * 0.5 },
@@ -3019,13 +3043,17 @@ function initHeroPortal() {
             { x: w * 0.76, y: h * 0.77, r: RADIUS * 0.4 },
         ];
         slashSpots.forEach(function(s) {
-            var grad = umctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+            var sy = s.y + yOff;
+            // On mobile, skip top-left portion of the slash — keep center to bottom-right
+            if (isMobile && (s.x < w * 0.28 || sy < h * 0.42)) return;
+            var r = s.r * slashScale;
+            var grad = umctx.createRadialGradient(s.x, sy, 0, s.x, sy, r);
             grad.addColorStop(0, 'rgba(255,255,255,1)');
             grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
             grad.addColorStop(0.8, 'rgba(255,255,255,0.3)');
             grad.addColorStop(1, 'rgba(255,255,255,0)');
             umctx.fillStyle = grad;
-            umctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2);
+            umctx.fillRect(s.x - r, sy - r, r * 2, r * 2);
         });
 
         portalDirty = true;
@@ -3048,7 +3076,7 @@ function initHeroPortal() {
         var iw = img.naturalWidth, ih = img.naturalHeight;
         var scale = Math.max(cw / iw, ch / ih);
         var dw = iw * scale, dh = ih * scale;
-        return { x: (cw - dw) / 2, y: (ch - dh) / 2, w: dw, h: dh };
+        return { x: (cw - dw) / 2, y: (ch - dh) / 2 + ch * 0.08, w: dw, h: dh };
     }
 
     var portalVisible = false;
