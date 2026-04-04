@@ -437,7 +437,7 @@ h1, h2, h3, h4,
     font-weight: 700;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.18);
+    color: rgba(255,255,255,.35);
 }
 .marquee-track span.m-accent { color: var(--accent); }
 @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -633,6 +633,25 @@ h1, h2, h3, h4,
     box-shadow: inset 0 1px 2px rgba(255,255,255,.1), 0 2px 4px rgba(0,0,0,.4);
 }
 .tv-knob-small { width: 20px; height: 20px; }
+.tv-vol-knob {
+    position: relative;
+    cursor: grab;
+    transition: transform 0.05s;
+}
+.tv-vol-knob:active { cursor: grabbing; }
+.tv-power-btn { cursor: pointer; transition: box-shadow .2s; }
+.tv-power-btn:hover { box-shadow: inset 0 1px 2px rgba(255,255,255,.15), 0 0 6px rgba(255,255,255,.1); }
+.tv-power-btn.is-off { opacity: .4; }
+.tv-knob-indicator {
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    width: 2px;
+    height: 8px;
+    background: rgba(255,255,255,.4);
+    border-radius: 1px;
+    transform: translateX(-50%);
+}
 .tv-replay-hint {
     font-size: .6rem;
     letter-spacing: .15em;
@@ -837,12 +856,12 @@ h1, h2, h3, h4,
     -webkit-mask-image:
         repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
         linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
-        linear-gradient(to bottom, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+        linear-gradient(to bottom, transparent 20%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 65%, transparent 80%);
     -webkit-mask-composite: source-in;
     mask-image:
         repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
         linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
-        linear-gradient(to bottom, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+        linear-gradient(to bottom, transparent 20%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 65%, transparent 80%);
     mask-composite: intersect;
 }
 
@@ -1895,7 +1914,7 @@ h1, h2, h3, h4,
                     <div class="panel-1-tagline">
                         <p>
                             A society sunk in numbness.<br>
-                            A command from the far future.<br>
+                            A command from the future.<br>
                             A simulation inside the mind.
                         </p>
                     </div>
@@ -1947,8 +1966,10 @@ h1, h2, h3, h4,
                                 </div>
                             </div>
                             <div class="tv-controls">
-                                <div class="tv-knob"></div>
-                                <div class="tv-knob tv-knob-small"></div>
+                                <div class="tv-knob tv-vol-knob" id="tvVolKnob" title="Volume">
+                                    <div class="tv-knob-indicator"></div>
+                                </div>
+                                <div class="tv-knob tv-knob-small tv-power-btn" id="tvPowerBtn" title="Stop / Start"></div>
                             </div>
                         </div>
                     </div>
@@ -2084,16 +2105,16 @@ h1, h2, h3, h4,
     <div class="marquee-track">
         <span>THE OBSERVER</span><span class="m-accent">·</span>
         <span>IXLSTUDIO</span><span class="m-accent">·</span>
-        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
-        <span>INTERACTIVE</span><span class="m-accent">·</span>
-        <span>SKGCHESS</span><span class="m-accent">·</span>
-        <span>THINK</span><span class="m-accent">·</span>
         <span>THE OBSERVER</span><span class="m-accent">·</span>
         <span>IXLSTUDIO</span><span class="m-accent">·</span>
-        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
-        <span>INTERACTIVE</span><span class="m-accent">·</span>
-        <span>SKGCHESS</span><span class="m-accent">·</span>
-        <span>THINK HARDER</span><span class="m-accent">·</span>
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
     </div>
 </div>
 
@@ -3361,6 +3382,103 @@ function initTrailerTV() {
     var trailerPlayed = false;
     var trailerTl = null;
 
+    // Volume knob
+    (function initVolKnob() {
+        var knob = document.getElementById('tvVolKnob');
+        var audio = document.getElementById('agencyAudioPlayer');
+        if (!knob || !audio) return;
+        var vol = audio.volume || 0.4;
+        var angle = vol * 270 - 135; // map 0-1 to -135 to 135 degrees
+        knob.style.transform = 'rotate(' + angle + 'deg)';
+        var dragging = false, startY = 0, startVol = 0;
+
+        knob.addEventListener('mousedown', function(e) {
+            dragging = true; startY = e.clientY; startVol = audio.volume;
+            e.preventDefault(); e.stopPropagation();
+        });
+        document.addEventListener('mousemove', function(e) {
+            if (!dragging) return;
+            var delta = (startY - e.clientY) / 100;
+            var newVol = Math.max(0, Math.min(1, startVol + delta));
+            audio.volume = newVol;
+            var a = newVol * 270 - 135;
+            knob.style.transform = 'rotate(' + a + 'deg)';
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+
+        // Scroll wheel on knob
+        knob.addEventListener('wheel', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            var newVol = Math.max(0, Math.min(1, audio.volume + (e.deltaY < 0 ? 0.05 : -0.05)));
+            audio.volume = newVol;
+            var a = newVol * 270 - 135;
+            knob.style.transform = 'rotate(' + a + 'deg)';
+        });
+    })();
+
+    // TV state
+    var tvIsOn = true;
+    var tvIsPaused = false;
+
+    // Power button (small knob) — turns TV off/on (snow)
+    (function initPowerBtn() {
+        var btn = document.getElementById('tvPowerBtn');
+        if (!btn) return;
+
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var audio = document.getElementById('agencyAudioPlayer');
+            if (tvIsOn) {
+                // Power off — glitch, snow burst, then shrink to line and fade
+                if (trailerTl && trailerTl.isActive()) trailerTl.pause();
+                if (audio && !audio.paused) audio.pause();
+                gsap.set(playOverlay, { opacity: 0, pointerEvents: 'none' });
+                gsap.set(replayHint, { opacity: 0 });
+                btn.classList.add('is-off');
+                tvIsOn = false;
+
+                var offTl = gsap.timeline();
+                // Flash glitch
+                offTl.call(function() { screen.classList.add('tv-glitch'); })
+                     .to(staticEl, { opacity: .9, duration: .08 })
+                     .to(staticEl, { opacity: .5, duration: .06 });
+                // Hide all scenes
+                scenes.forEach(function(s) { offTl.set(s, { opacity: 0 }, '<'); });
+                // Snow on screen
+                offTl.call(function() { screen.classList.remove('tv-glitch'); })
+                     .to(staticEl, { opacity: .6, duration: .15 })
+                     // Shrink to horizontal line
+                     .to(screen, { scaleY: 0.005, duration: .35, ease: 'power3.in' })
+                     // Brief white flash line
+                     .to(staticEl, { opacity: 1, duration: .08 })
+                     // Fade out
+                     .to(screen, { opacity: 0, duration: .4, ease: 'power2.out' })
+                     .to(staticEl, { opacity: 0, duration: .1 }, '<');
+
+            } else {
+                // Power on — reverse the shutdown
+                btn.classList.remove('is-off');
+                tvIsOn = true;
+                trailerPlayed = false;
+                tvIsPaused = false;
+
+                var onTl = gsap.timeline();
+                // Reset screen transform
+                onTl.set(screen, { opacity: 1, scaleY: 0.005 })
+                    .set(staticEl, { opacity: .8 })
+                    // Expand from line
+                    .to(screen, { scaleY: 1, duration: .4, ease: 'power2.out' })
+                    // Static flicker
+                    .to(staticEl, { opacity: .5, duration: .1 })
+                    .to(staticEl, { opacity: .8, duration: .08 })
+                    .to(staticEl, { opacity: .3, duration: .15 })
+                    .to(staticEl, { opacity: .05, duration: .3, ease: 'power2.out' })
+                    // Show play button
+                    .set(playOverlay, { opacity: 1, pointerEvents: 'auto' });
+            }
+        });
+    })();
+
     function startRadio() {
         var ra = document.getElementById('agencyAudioPlayer');
         var rb = document.getElementById('agencyPlayBtn');
@@ -3440,19 +3558,39 @@ function initTrailerTV() {
     // Click play button to start
     playOverlay.addEventListener('click', function(e) {
         e.stopPropagation();
+        if (!tvIsOn) return;
         startRadio();
         trailerPlayed = false;
+        tvIsPaused = false;
         var tl = buildTrailer();
         tl.play();
     });
 
-    // Click TV to replay after finished
-    tv.addEventListener('click', function() {
-        if (!trailerPlayed) return;
-        startRadio();
-        trailerPlayed = false;
-        var tl = buildTrailer();
-        tl.play();
+    // Click screen to pause/resume
+    screen.addEventListener('click', function(e) {
+        if (!tvIsOn) return;
+        if (e.target.closest('.tv-play-overlay')) return; // let play button handle it
+        var audio = document.getElementById('agencyAudioPlayer');
+        if (trailerPlayed) {
+            // Replay
+            startRadio();
+            trailerPlayed = false;
+            tvIsPaused = false;
+            var tl = buildTrailer();
+            tl.play();
+        } else if (trailerTl) {
+            if (tvIsPaused) {
+                // Resume
+                trailerTl.resume();
+                if (audio && audio.paused && audio.src) audio.play().catch(function(){});
+                tvIsPaused = false;
+            } else if (trailerTl.isActive()) {
+                // Pause
+                trailerTl.pause();
+                if (audio && !audio.paused) audio.pause();
+                tvIsPaused = true;
+            }
+        }
     });
 }
 
