@@ -385,8 +385,12 @@ h1, h2, h3, h4,
 .hero-portal {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
+}
+.h-panel-1 > *:not(.hero-portal):not(.hero-bg) {
+    position: relative;
+    z-index: 2;
 }
 
 /* Hero ambient bg */
@@ -394,8 +398,8 @@ h1, h2, h3, h4,
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 60% 60% at 25% 50%, rgba(177,0,255,.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 10% 70%, rgba(80,0,180,.05) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 60% at 25% 50%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 10% 70%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 60%);
     pointer-events: none;
 }
 
@@ -481,7 +485,7 @@ h1, h2, h3, h4,
     color: var(--accent);
 }
 /* Panel 1 – title text */
-.h-panel-1 { justify-content: flex-start; flex-direction: column; justify-content: center; }
+.h-panel-1 { flex-direction: column; justify-content: center; padding-top: calc(var(--header-h) + 2rem); }
 .panel-1-title {
     font-size: clamp(3.5rem, 9vw, 12rem);
     font-weight: 900;
@@ -525,11 +529,17 @@ h1, h2, h3, h4,
     width: clamp(180px, 28vw, 420px);
     filter: invert(1);
 }
-/* Panel 2 – 3D model + music */
+/* Panel 2 – Trailer TV + model + music */
 .h-panel-2 {
-    gap: 6vw;
+    gap: 4vw;
     justify-content: center;
     align-items: center;
+}
+.panel-2-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
 }
 .panel-2-text { flex: 1 1 auto; max-width: 380px; }
 .panel-2-text h2 {
@@ -540,6 +550,195 @@ h1, h2, h3, h4,
     text-transform: uppercase;
     color: #fff;
     margin-bottom: 1.5rem;
+}
+
+/* ── Vintage TV Trailer ── */
+.trailer-tv {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+}
+.tv-frame {
+    position: relative;
+    width: clamp(320px, 32vw, 520px);
+}
+.tv-bezel {
+    position: relative;
+    background: linear-gradient(145deg, #5c4a3a 0%, #3d2e22 40%, #2a1f17 100%);
+    border-radius: 18px;
+    padding: 24px 24px 24px 24px;
+    box-shadow:
+        inset 0 2px 6px rgba(255,255,255,.08),
+        0 8px 40px rgba(0,0,0,.7),
+        0 2px 8px rgba(0,0,0,.5);
+    display: flex;
+    gap: 16px;
+}
+.tv-screen {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 4/3;
+    background: #0a0a0a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #1a1510;
+    box-shadow: inset 0 0 30px rgba(0,0,0,.8), 0 0 2px rgba(200,180,140,.15);
+}
+.tv-static {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,.03) 2px,
+        rgba(255,255,255,.03) 4px
+    );
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+.tv-scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 1px,
+        rgba(0,0,0,.15) 1px,
+        rgba(0,0,0,.15) 2px
+    );
+    z-index: 4;
+    pointer-events: none;
+}
+.tv-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 50%, rgba(0,0,0,.6) 100%);
+    z-index: 4;
+    pointer-events: none;
+}
+.tv-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-bottom: 8px;
+    flex: 0 0 32px;
+}
+.tv-knob {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #6b5a48, #3d2e22);
+    border: 2px solid #2a1f17;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,.1), 0 2px 4px rgba(0,0,0,.4);
+}
+.tv-knob-small { width: 20px; height: 20px; }
+.tv-replay-hint {
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.25);
+}
+.tv-play-overlay {
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+    cursor: pointer;
+}
+.tv-play-icon {
+    width: clamp(50px, 8vw, 80px);
+    height: auto;
+    opacity: .7;
+    transition: opacity .3s, transform .3s;
+    filter: drop-shadow(0 0 12px rgba(0,0,0,.5));
+}
+.tv-play-overlay:hover .tv-play-icon {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+/* TV scenes */
+.tv-scene {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    padding: 12%;
+    text-align: center;
+}
+.tv-scene-text {
+    display: block;
+    font-family: var(--font);
+    font-size: clamp(.9rem, 1.4vw, 1.2rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(220,215,200,.85);
+    text-shadow: 0 0 8px rgba(200,180,140,.15);
+}
+.tv-text-small {
+    font-size: clamp(.6rem, .9vw, .8rem);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(200,195,180,.5);
+}
+.tv-text-quote {
+    font-style: italic;
+    font-size: clamp(.85rem, 1.2vw, 1.05rem);
+    color: rgba(220,215,200,.7);
+}
+.tv-text-emphasis {
+    font-weight: 700;
+    font-size: clamp(.95rem, 1.3vw, 1.15rem);
+    color: rgba(240,235,220,.9);
+    margin-top: .5rem;
+}
+.tv-text-final {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -.02em;
+    line-height: .9;
+    color: #fff;
+}
+.tv-scene-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    position: absolute; inset: 0;
+    opacity: .7;
+    filter: sepia(.3) contrast(.9) brightness(.8);
+}
+.tv-scene-img-contain {
+    object-fit: contain;
+    background: #0a0a0a;
+}
+.tv-scene-img-closeup {
+    object-fit: cover;
+    object-position: center 15%;
+    transform: scale(2.2);
+    transform-origin: center 20%;
+}
+.tv-scene-logo {
+    width: 55%;
+    height: auto;
+    opacity: .8;
+}
+.tv-glitch {
+    animation: tvGlitch .15s steps(2) infinite;
+}
+@keyframes tvGlitch {
+    0% { transform: translate(0,0) skewX(0); }
+    25% { transform: translate(-3px, 1px) skewX(1deg); }
+    50% { transform: translate(2px, -1px) skewX(-0.5deg); }
+    75% { transform: translate(-1px, 2px) skewX(0.8deg); }
+    100% { transform: translate(0,0) skewX(0); }
+}
+@keyframes tvStaticNoise {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 -200px; }
 }
 .panel-2-text p {
     font-size: 1.1rem;
@@ -622,6 +821,30 @@ h1, h2, h3, h4,
 .agency-collage-card { display: block; }
 .agency-collage-base { background: transparent !important; box-shadow: none !important; }
 .agency-collage-card.agency-collage-base img { filter: none; opacity: .45; }
+
+/* sir.png as panel 3 background */
+.panel-3-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .1;
+    mix-blend-mode: luminosity;
+    filter: grayscale(1) contrast(1.2);
+    pointer-events: none;
+    z-index: 0;
+    -webkit-mask-image:
+        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
+        linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
+        linear-gradient(to bottom, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        repeating-linear-gradient(0deg, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 2px, transparent 2px, transparent 5px),
+        linear-gradient(to right, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent),
+        linear-gradient(to bottom, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+    mask-composite: intersect;
+}
 
 /* Panel 3 – Lilith + follow */
 .h-panel.h-panel-3 {
@@ -711,21 +934,19 @@ h1, h2, h3, h4,
 }
 
 /* H-scroll progress bar */
-.h-scroll-progress {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 1px;
-    background: rgba(255,255,255,.1);
-    pointer-events: none;
+/* Section divider between horizontal scroll and past work */
+.section-divider {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    z-index: 2;
 }
-.h-scroll-progress-bar {
-    height: 100%;
-    width: 0%;
+.section-divider-bar {
+    width: 60px;
+    height: 1px;
     background: var(--accent);
-    transition: width .05s linear;
+    opacity: .5;
 }
 /* Panel counter (e.g. 01 / 03) */
 .h-panel-counter {
@@ -743,7 +964,10 @@ h1, h2, h3, h4,
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
     .h-panel { flex: none; width: 100%; height: auto; min-height: 100svh; padding: 8rem 5vw 5rem; }
-    .h-panel-2 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 3rem; }
+    .h-panel-2 { flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
+    .trailer-tv { width: 100%; }
+    .tv-frame { width: clamp(260px, 80vw, 360px); margin: 0 auto; }
+    .panel-2-right { align-items: center; width: 100%; }
     .h-panel.h-panel-3 { flex-direction: column; justify-content: center; align-items: flex-start; gap: 2rem; overflow: hidden; }
     .panel-1-observer-logo { display: none; }
     .panel-2-model { width: 100%; max-width: 140px; margin: 0 auto; }
@@ -751,7 +975,7 @@ h1, h2, h3, h4,
     .panel-3-lilith .agency-model-container { width: 100% !important; }
     .panel-3-text { order: 1; width: 100%; }
     .panel-3-lilith .lilith-inline-comic { display: none; }
-    .h-scroll-progress, .h-panel-counter { display: none; }
+    .h-panel-counter { display: none; }
 }
 
 /* ============================================================
@@ -946,12 +1170,13 @@ h1, h2, h3, h4,
     background: rgba(255,255,255,.015);
 }
 .section-tag {
-    font-size: .62rem;
+    font-size: .58rem;
     font-weight: 700;
-    letter-spacing: .22em;
+    letter-spacing: .3em;
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 1.5rem;
+    opacity: .7;
 }
 .section-h2 {
     font-size: clamp(2.5rem, 5.5vw, 7rem);
@@ -1120,9 +1345,42 @@ h1, h2, h3, h4,
    ============================================================ */
 .combined-section {
     padding: 10rem 7vw;
-    border-top: 1px solid var(--border);
+    border-top: none;
     position: relative;
     overflow: visible;
+}
+/* Vintage ornamental divider */
+.section-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 3rem 7vw;
+}
+.section-ornament::before,
+.section-ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), transparent, rgba(255,255,255,.12) 20%, rgba(255,255,255,.12) 80%, transparent);
+}
+.section-ornament::before { --dir: right; }
+.section-ornament::after { --dir: left; }
+.section-ornament-symbol {
+    font-size: .7rem;
+    letter-spacing: .3em;
+    color: rgba(255,255,255,.15);
+    white-space: nowrap;
+}
+.section-ornament-vintage {
+    padding: 4rem 7vw;
+}
+.section-ornament-vintage .section-ornament-symbol {
+    font-size: .65rem;
+    font-weight: 900;
+    letter-spacing: .5em;
+    color: rgba(255,255,255,.1);
+    font-style: italic;
 }
 .combined-layout {
     display: grid;
@@ -1130,13 +1388,17 @@ h1, h2, h3, h4,
     gap: 8vw;
     align-items: end;
 }
-.combined-left {
-    align-self: start;
-    margin-top: 80vh;
-}
 .combined-right {
     text-align: right;
     align-self: start;
+}
+/* Research section (standalone after marquee) */
+.research-section {
+    padding: 8rem 7vw;
+    position: relative;
+}
+.research-section-inner {
+    max-width: 640px;
 }
 .articles-section {
     padding: 10rem 7vw;
@@ -1154,7 +1416,7 @@ h1, h2, h3, h4,
 }
 .articles-section-header .section-title {
     font-size: clamp(3rem, 7vw, 8rem);
-    line-height: .85;
+    line-height: .9;
 }
 .articles-section-intro {
     max-width: 320px;
@@ -1264,11 +1526,13 @@ h1, h2, h3, h4,
 .section-title {
     font-size: clamp(3rem, 7vw, 8rem);
     font-weight: 900;
-    letter-spacing: -.04em;
+    letter-spacing: -.06em;
     text-transform: uppercase;
-    color: #fff;
+    color: rgba(255,255,255,.85);
     margin-bottom: 3rem;
-    line-height: .85;
+    line-height: .82;
+    font-style: italic;
+    -webkit-text-stroke: 1px rgba(255,255,255,.15);
 }
 .research-list { list-style: none; counter-reset: reading; }
 .research-list-item {
@@ -1611,23 +1875,6 @@ h1, h2, h3, h4,
 <!-- ═══════════════════════════════════════════════
      MARQUEE
 ═══════════════════════════════════════════════ -->
-<div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-        <span>THE OBSERVER</span><span class="m-accent">·</span>
-        <span>IXLSTUDIO</span><span class="m-accent">·</span>
-        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
-        <span>INTERACTIVE</span><span class="m-accent">·</span>
-        <span>SKGCHESS</span><span class="m-accent">·</span>
-        <span>THINK</span><span class="m-accent">·</span>
-        <span>THE OBSERVER</span><span class="m-accent">·</span>
-        <span>IXLSTUDIO</span><span class="m-accent">·</span>
-        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
-        <span>INTERACTIVE</span><span class="m-accent">·</span>
-        <span>SKGCHESS</span><span class="m-accent">·</span>
-        <span>THINK HARDER</span><span class="m-accent">·</span>
-    </div>
-</div>
-
 <!-- ═══════════════════════════════════════════════
      02 THE OBSERVER — HORIZONTAL SCROLL SHOWCASE
      (section #agency used by existing JS)
@@ -1661,25 +1908,63 @@ h1, h2, h3, h4,
                 <div class="h-panel-counter">01 / 03</div>
             </div>
 
-            <!-- Panel 2 ─ 3D Model + Music -->
+            <!-- Panel 2 ─ Trailer TV + 3D Model + Music -->
             <div class="h-panel h-panel-2">
                 <span class="panel-label">Explore — 02 / 03</span>
-                <div class="panel-2-text agency-center">
-                    <h2>Explore<br>what's real.</h2>
-                    <p>
-                        <!-- Live inside a human brain and<br>
-                        rewrite the narrative. -->
-                    </p>
 
-                    <!-- Music Player -->
-                    <div class="agency-music-player" id="agencyMusicPlayer" style="margin-top:1.5rem;">
+                <!-- Vintage TV Trailer -->
+                <div class="trailer-tv" id="trailerTv">
+                    <div class="tv-frame">
+                        <div class="tv-bezel">
+                            <div class="tv-screen" id="tvScreen">
+                                <div class="tv-static" id="tvStatic"></div>
+                                <div class="tv-scanlines"></div>
+                                <div class="tv-vignette"></div>
+
+                                <!-- Play button overlay -->
+                                <div class="tv-play-overlay" id="tvPlayOverlay">
+                                    <svg class="tv-play-icon" viewBox="0 0 80 80">
+                                        <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                                        <polygon points="32,22 32,58 62,40" fill="rgba(255,255,255,.6)"/>
+                                    </svg>
+                                </div>
+
+                                <!-- Trailer scenes -->
+                                <div class="tv-scene" id="tvScene0" style="opacity:0;">
+                                    <img src="sentence1.png" class="tv-scene-img" alt="">
+                                </div>
+                                <div class="tv-scene" id="tvScene1" style="opacity:0;">
+                                    <img src="sentence2.png" class="tv-scene-img" alt="">
+                                </div>
+                                <div class="tv-scene" id="tvScene2" style="opacity:0;">
+                                    <img src="sentence3.png" class="tv-scene-img" alt="">
+                                </div>
+                                <div class="tv-scene" id="tvScene3" style="opacity:0;">
+                                    <img src="priest.png" class="tv-scene-img tv-scene-img-closeup" alt="">
+                                </div>
+                                <div class="tv-scene" id="tvScene4" style="opacity:0;">
+                                    <img src="theobserver.png" class="tv-scene-logo" alt="" style="filter:invert(1);">
+                                </div>
+                            </div>
+                            <div class="tv-controls">
+                                <div class="tv-knob"></div>
+                                <div class="tv-knob tv-knob-small"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tv-replay-hint" id="tvReplayHint" style="opacity:0;">click to replay</div>
+                </div>
+
+                <div class="panel-2-right">
+                    <!-- Music Player (hidden UI, audio controlled by TV) -->
+                    <div class="agency-music-player" id="agencyMusicPlayer" style="display:none;">
                         <button class="agency-play-btn" id="agencyPlayBtn" aria-label="Play/Pause">
                             <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                             <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
                         <div class="agency-player-info">
                             <span class="agency-track-title" id="agencyTrackTitle">Radio</span>
-                            <a href="https://arcologies.bandcamp.com/album/vapor-drive" target="_blank" rel="noopener" class="agency-track-artist" id="agencyTrackArtist">☀️</a>
+                            <a href="https://arcologies.bandcamp.com/album/vapor-drive" target="_blank" rel="noopener" class="agency-track-artist" id="agencyTrackArtist"></a>
                         </div>
                         <div class="agency-player-controls" style="display:none;">
                             <button class="agency-nav-btn" id="agencyPrevBtn" aria-label="Previous">
@@ -1690,12 +1975,12 @@ h1, h2, h3, h4,
                             </button>
                         </div>
                     </div>
-                </div>
 
-                <!-- 3D Humanoid Model -->
-                <div class="panel-2-model">
-                    <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
-                        <canvas id="agencyHumanoidCanvas"></canvas>
+                    <!-- 3D Humanoid Model -->
+                    <div class="panel-2-model">
+                        <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
+                            <canvas id="agencyHumanoidCanvas"></canvas>
+                        </div>
                     </div>
                 </div>
 
@@ -1704,9 +1989,10 @@ h1, h2, h3, h4,
 
             <!-- Panel 3 ─ Lilith / Journal -->
             <div class="h-panel h-panel-3">
+                <img src="sir.png" alt="" class="panel-3-bg-img" aria-hidden="true">
                 <span class="panel-label">Follow — 03 / 03</span>
                 <div class="panel-3-text">
-                    <h2>BE THE<br>OBSERVER.</h2>
+                    <!-- <h2>BE THE<br>OBSERVER.</h2> -->
                     <p>
                         Follow the making-of in the Journal.<br>
                         Watch the YouTube channel.
@@ -1737,47 +2023,23 @@ h1, h2, h3, h4,
 
         </div><!-- /h-scroll-track -->
 
-        <!-- Progress bar -->
-        <div class="h-scroll-progress" aria-hidden="true">
-            <div class="h-scroll-progress-bar"></div>
-        </div>
-
     </div><!-- /h-scroll-outer -->
 </section>
 
+<div class="section-ornament" aria-hidden="true">
+    <span class="section-ornament-symbol">✦ ✦ ✦</span>
+</div>
 
 <!-- ═══════════════════════════════════════════════
-     03 PAST WORK + 04 RESEARCH
+     03 PAST WORK
 ═══════════════════════════════════════════════ -->
 <section id="devlog" class="combined-section">
     <div class="combined-layout">
-        <!-- LEFT: Reading & Thinking -->
-        <div class="combined-left" id="research">
-            <div class="section-header" data-reveal>
-                <div class="section-tag">04 — Research</div>
-                <h2 class="section-title">&amp; Thinking.</h2>
-            </div>
-            <div class="research-grid">
-                <div class="research-col">
-                    <ul class="research-list">
-                        <li class="research-list-item">The Theory of Fun for Game Design — Raph Koster</li>
-                        <li class="research-list-item">The Story of Art — E.H. Gombrich</li>
-                        <li class="research-list-item">7 1/2 Lessons About the Brain - Lisa Feldman Barrett</li>
-                        <li class="research-list-item">History of Philosophy A.C. Grayling</li>
-                        <li class="research-list-item">The Art of Game Design — Jesse Schell</li>
-                    </ul>
-                </div>
-            </div>
-            <div id="moodboard">
-                <a href="moodboard" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
-            </div>
-        </div>
-        <!-- RIGHT: Past Work -->
         <div class="combined-right">
             <div class="articles-section-header" data-reveal>
                 <div>
                     <div class="section-tag">03 — Previously</div>
-                    <h2 class="section-title">Past<br>Work.</h2>
+                    <h2 class="section-title">SKGCHESS.</h2>
                 </div>
             </div>
             <div class="articles-grid" id="articlesGrid">
@@ -1787,6 +2049,54 @@ h1, h2, h3, h4,
     </div>
 </section>
 
+<div class="section-ornament section-ornament-vintage" aria-hidden="true">
+    <span class="section-ornament-symbol">— IXL —</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     04 RESEARCH & THINKING
+═══════════════════════════════════════════════ -->
+<section id="research" class="research-section">
+    <div class="research-section-inner">
+        <div class="section-header" data-reveal>
+            <div class="section-tag">04 — Research</div>
+            <h2 class="section-title">&amp; Thinking.</h2>
+        </div>
+        <div class="research-grid">
+            <div class="research-col">
+                <ul class="research-list">
+                    <li class="research-list-item">The Theory of Fun for Game Design — Raph Koster</li>
+                    <li class="research-list-item">The Story of Art — E.H. Gombrich</li>
+                    <li class="research-list-item">7 1/2 Lessons About the Brain - Lisa Feldman Barrett</li>
+                    <li class="research-list-item">History of Philosophy A.C. Grayling</li>
+                    <li class="research-list-item">The Art of Game Design — Jesse Schell</li>
+                </ul>
+            </div>
+        </div>
+        <div id="moodboard">
+            <a href="moodboard" class="moodboard-link">View Moodboard <span class="arrow">→</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- Marquee bar -->
+<div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
+        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
+        <span>INTERACTIVE</span><span class="m-accent">·</span>
+        <span>SKGCHESS</span><span class="m-accent">·</span>
+        <span>THINK</span><span class="m-accent">·</span>
+        <span>THE OBSERVER</span><span class="m-accent">·</span>
+        <span>IXLSTUDIO</span><span class="m-accent">·</span>
+        <span>GAME DEVELOPMENT</span><span class="m-accent">·</span>
+        <span>INTERACTIVE</span><span class="m-accent">·</span>
+        <span>SKGCHESS</span><span class="m-accent">·</span>
+        <span>THINK HARDER</span><span class="m-accent">·</span>
+    </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════
      05 CONTACT  (#contact)
 ═══════════════════════════════════════════════ -->
@@ -1794,7 +2104,7 @@ h1, h2, h3, h4,
     <div class="contact-container">
         <div class="section-header" data-reveal>
             <div class="section-tag">05 — Contact</div>
-            <h2 class="section-title">Contact</h2>
+            <h2 class="section-title">Find me<br>here.</h2>
         </div>
         <div class="contact-info">
             <a href="mailto:harischatzi@tutanota.com" class="contact-item">
@@ -2158,7 +2468,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var savedMode = localStorage.getItem(modeKey) || 'gradient';
         setBg(saved || defaultHex);
         setMode(savedMode);
-        picker.addEventListener('input', function() { setBg(picker.value); });
+        picker.addEventListener('input', function() { setBg(picker.value); window._portalColorChanged = true; });
         if (stylePicker) stylePicker.addEventListener('change', function() { setMode(stylePicker.value); });
     })();
 });
@@ -2371,8 +2681,8 @@ const articlesData = [
             alt: "SKGCHESS",
             category: "Software Development",
             secondaryTag: "Java, Spring Boot",
-            title: "SKGCHESS",
-            excerpt: "A full chess application.",
+            title: "Multiplayer",
+            excerpt: "chess application.",
             date: "February 24, 2026",
             readTime: "Click to read",
             projectLink: "skgchess"
@@ -2578,28 +2888,117 @@ function initHeroPortal() {
     var RADIUS = 100;
     var ready = false;
 
-    // Offscreen mask canvas — accumulates scratched areas
+    // Offscreen mask canvas — accumulates pre-reveal areas (no tint)
     var mask = document.createElement('canvas');
     var mctx = mask.getContext('2d');
 
+    // Second mask for user scratches (tinted with accent)
+    var userMask = document.createElement('canvas');
+    var umctx = userMask.getContext('2d');
+
+    // Temp canvas for compositing tinted layer
+    var tmp = document.createElement('canvas');
+    var tctx = tmp.getContext('2d');
+
     // Load hidden image to reveal
     var img = new Image();
-    img.onload = function() { ready = true; };
+    img.onload = function() { ready = true; preReveal(); };
     img.src = 'priest.png';
 
     function resize() {
         var w = hero.offsetWidth, h = hero.offsetHeight;
-        // Preserve existing mask on resize
-        var oldData = null;
+        // Preserve existing masks on resize
+        var oldData = null, oldUserData = null;
         if (mask.width > 0 && mask.height > 0) {
             try { oldData = mctx.getImageData(0, 0, mask.width, mask.height); } catch(e) {}
+            try { oldUserData = umctx.getImageData(0, 0, userMask.width, userMask.height); } catch(e) {}
         }
         canvas.width = w; canvas.height = h;
         mask.width = w; mask.height = h;
+        userMask.width = w; userMask.height = h;
+        tmp.width = w; tmp.height = h;
         if (oldData) mctx.putImageData(oldData, 0, 0);
+        if (oldUserData) umctx.putImageData(oldUserData, 0, 0);
     }
     resize();
     window.addEventListener('resize', resize);
+
+    function preReveal() {
+        var w = canvas.width, h = canvas.height;
+        if (w < 10 || h < 10) return;
+
+        // B&W pre-reveal — original image, no tint (on mask/mctx)
+        var bwSpots = [
+            { x: w * 0.38, y: h * 0.22, r: RADIUS * 1.4 },
+            { x: w * 0.42, y: h * 0.30, r: RADIUS * 1.3 },
+            { x: w * 0.35, y: h * 0.32, r: RADIUS * 1.1 },
+            { x: w * 0.45, y: h * 0.18, r: RADIUS * 1.0 },
+            { x: w * 0.40, y: h * 0.26, r: RADIUS * 1.5 },
+            { x: w * 0.33, y: h * 0.25, r: RADIUS * 0.9 },
+            { x: w * 0.48, y: h * 0.25, r: RADIUS * 0.8 },
+            { x: w * 0.36, y: h * 0.16, r: RADIUS * 1.2 },
+            { x: w * 0.44, y: h * 0.35, r: RADIUS * 1.1 },
+            { x: w * 0.30, y: h * 0.28, r: RADIUS * 1.0 },
+            { x: w * 0.50, y: h * 0.20, r: RADIUS * 0.9 },
+            { x: w * 0.39, y: h * 0.38, r: RADIUS * 1.0 },
+            { x: w * 0.46, y: h * 0.28, r: RADIUS * 1.2 },
+            { x: w * 0.36, y: h * 0.45, r: RADIUS * 1.3 },
+            { x: w * 0.42, y: h * 0.52, r: RADIUS * 1.4 },
+            { x: w * 0.38, y: h * 0.60, r: RADIUS * 1.2 },
+            { x: w * 0.34, y: h * 0.55, r: RADIUS * 1.1 },
+            { x: w * 0.45, y: h * 0.62, r: RADIUS * 1.0 },
+            { x: w * 0.40, y: h * 0.70, r: RADIUS * 1.3 },
+            { x: w * 0.36, y: h * 0.75, r: RADIUS * 1.1 },
+            { x: w * 0.43, y: h * 0.68, r: RADIUS * 1.2 },
+            { x: w * 0.30, y: h * 0.65, r: RADIUS * 0.9 },
+            { x: w * 0.48, y: h * 0.55, r: RADIUS * 1.0 },
+        ];
+        bwSpots.forEach(function(s) {
+            var grad = mctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+            grad.addColorStop(0.8, 'rgba(255,255,255,0.3)');
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+            mctx.fillStyle = grad;
+            mctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2);
+        });
+
+        // Colored diagonal slash — tinted with accent (on userMask/umctx)
+        var slashSpots = [
+            // Extended up
+            { x: w * 0.08, y: h * 0.26, r: RADIUS * 0.45 },
+            { x: w * 0.12, y: h * 0.29, r: RADIUS * 0.5 },
+            { x: w * 0.16, y: h * 0.32, r: RADIUS * 0.55 },
+            // Original slash
+            { x: w * 0.20, y: h * 0.35, r: RADIUS * 0.6 },
+            { x: w * 0.24, y: h * 0.38, r: RADIUS * 0.65 },
+            { x: w * 0.28, y: h * 0.41, r: RADIUS * 0.7 },
+            { x: w * 0.32, y: h * 0.44, r: RADIUS * 0.75 },
+            { x: w * 0.36, y: h * 0.47, r: RADIUS * 0.8 },
+            { x: w * 0.40, y: h * 0.50, r: RADIUS * 0.8 },
+            { x: w * 0.44, y: h * 0.53, r: RADIUS * 0.8 },
+            { x: w * 0.48, y: h * 0.56, r: RADIUS * 0.75 },
+            { x: w * 0.52, y: h * 0.59, r: RADIUS * 0.7 },
+            { x: w * 0.56, y: h * 0.62, r: RADIUS * 0.65 },
+            { x: w * 0.60, y: h * 0.65, r: RADIUS * 0.6 },
+            { x: w * 0.64, y: h * 0.68, r: RADIUS * 0.55 },
+            // Extended down
+            { x: w * 0.68, y: h * 0.71, r: RADIUS * 0.5 },
+            { x: w * 0.72, y: h * 0.74, r: RADIUS * 0.45 },
+            { x: w * 0.76, y: h * 0.77, r: RADIUS * 0.4 },
+        ];
+        slashSpots.forEach(function(s) {
+            var grad = umctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+            grad.addColorStop(0.8, 'rgba(255,255,255,0.3)');
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+            umctx.fillStyle = grad;
+            umctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2);
+        });
+
+        portalDirty = true;
+    }
 
     // Smoothed cursor position
     var mx = -999, my = -999, smx = -999, smy = -999;
@@ -2626,9 +3025,15 @@ function initHeroPortal() {
         portalVisible = entries[0].isIntersecting;
     }, { threshold: 0 }).observe(hero);
 
+    var needsInitialDraw = true;
+
     function draw() {
         requestAnimationFrame(draw);
-        if (!ready || !portalVisible || !portalDirty) return;
+        if (window._portalColorChanged) { portalDirty = true; window._portalColorChanged = false; }
+        if (!ready || !portalDirty) return;
+        // Allow initial pre-reveal draw even if not yet visible
+        if (!portalVisible && !needsInitialDraw) return;
+        if (needsInitialDraw) needsInitialDraw = false;
 
         // Paint scratch onto mask when cursor is active
         if (mx > -100) {
@@ -2643,25 +3048,40 @@ function initHeroPortal() {
             }
             lastPaintX = smx; lastPaintY = smy;
 
-            // Soft radial scratch brush
-            var grad = mctx.createRadialGradient(smx, smy, 0, smx, smy, RADIUS);
+            // Soft radial scratch brush — paint on user mask (tinted)
+            var grad = umctx.createRadialGradient(smx, smy, 0, smx, smy, RADIUS);
             grad.addColorStop(0, 'rgba(255,255,255,1)');
             grad.addColorStop(0.7, 'rgba(255,255,255,0.6)');
             grad.addColorStop(1, 'rgba(255,255,255,0)');
-            mctx.fillStyle = grad;
-            mctx.fillRect(smx - RADIUS, smy - RADIUS, RADIUS * 2, RADIUS * 2);
+            umctx.fillStyle = grad;
+            umctx.fillRect(smx - RADIUS, smy - RADIUS, RADIUS * 2, RADIUS * 2);
         }
 
-        // Draw image masked by scratched areas
+        // Layer 1: pre-reveal — original image, no tint
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         var d = getCoverDims();
 
         ctx.save();
-        ctx.globalCompositeOperation = 'source-over';
         ctx.drawImage(mask, 0, 0);
         ctx.globalCompositeOperation = 'source-in';
         ctx.drawImage(img, d.x, d.y + d.h * 0.05, d.w, d.h);
         ctx.restore();
+
+        // Layer 2: user cursor strokes — tinted with accent color
+        tctx.save();
+        tctx.globalCompositeOperation = 'source-over';
+        tctx.globalAlpha = 1;
+        tctx.clearRect(0, 0, tmp.width, tmp.height);
+        tctx.drawImage(userMask, 0, 0);
+        tctx.globalCompositeOperation = 'source-in';
+        tctx.drawImage(img, d.x, d.y + d.h * 0.05, d.w, d.h);
+        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#B100FF';
+        tctx.globalCompositeOperation = 'source-atop';
+        tctx.globalAlpha = 0.45;
+        tctx.fillStyle = accent;
+        tctx.fillRect(0, 0, tmp.width, tmp.height);
+        tctx.restore();
+        ctx.drawImage(tmp, 0, 0);
     }
     draw();
 }
@@ -2778,7 +3198,6 @@ function initHorizontalScroll() {
     const section = document.querySelector('.h-scroll-section');
     const outer = document.querySelector('.h-scroll-outer');
     const track = document.querySelector('.h-scroll-track');
-    const progressBar = document.querySelector('.h-scroll-progress-bar');
     if (!section || !track) return;
 
     const panels = gsap.utils.toArray('.h-panel');
@@ -2796,9 +3215,6 @@ function initHorizontalScroll() {
             scrub: 0.8,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-            onUpdate: function(self) {
-                if (progressBar) progressBar.style.width = (self.progress * 100) + '%';
-            }
         }
     });
 }
@@ -2917,6 +3333,119 @@ function initHeader() {
     });
 }
 
+// ─── Vintage TV Trailer ──────────────────────
+function initTrailerTV() {
+    var tv = document.getElementById('trailerTv');
+    var screen = document.getElementById('tvScreen');
+    var staticEl = document.getElementById('tvStatic');
+    var replayHint = document.getElementById('tvReplayHint');
+    var playOverlay = document.getElementById('tvPlayOverlay');
+    if (!tv || !screen || !playOverlay) return;
+
+    var scenes = [];
+    for (var i = 0; i < 5; i++) {
+        var el = document.getElementById('tvScene' + i);
+        if (el) scenes.push(el);
+    }
+
+    var trailerPlayed = false;
+    var trailerTl = null;
+
+    function startRadio() {
+        var ra = document.getElementById('agencyAudioPlayer');
+        var rb = document.getElementById('agencyPlayBtn');
+        if (!ra || !rb || !ra.paused) return;
+        try {
+            if (typeof window.forceStartAgencyRadio === 'function') window.forceStartAgencyRadio();
+            else if (typeof window.startAgencyRadio === 'function') window.startAgencyRadio();
+            else rb.click();
+        } catch(e) {}
+    }
+
+    function addGlitch(tl) {
+        tl.call(function() { screen.classList.add('tv-glitch'); })
+          .to(staticEl, { opacity: .6, duration: .06 })
+          .to(staticEl, { opacity: .25, duration: .1 })
+          .to(staticEl, { opacity: .02, duration: .25, ease: 'power2.out' })
+          .call(function() { screen.classList.remove('tv-glitch'); });
+    }
+
+    function buildTrailer() {
+        if (trailerTl) { trailerTl.kill(); }
+        scenes.forEach(function(s) { gsap.set(s, { opacity: 0 }); });
+        gsap.set(staticEl, { opacity: 0 });
+        gsap.set(replayHint, { opacity: 0 });
+        gsap.set(playOverlay, { opacity: 0, pointerEvents: 'none' });
+        screen.classList.remove('tv-glitch');
+
+        var tl = gsap.timeline({ paused: true });
+
+        // TV turns on — static burst
+        tl.to(staticEl, { opacity: .7, duration: .08 })
+          .to(staticEl, { opacity: .15, duration: .12 }, '+=.05')
+          .to(staticEl, { opacity: .6, duration: .06 })
+          .to(staticEl, { opacity: .03, duration: .4, ease: 'power2.out' });
+
+        // 0: sentence1
+        tl.to(scenes[0], { opacity: 1, duration: 1.5, ease: 'power1.out' })
+          .to(scenes[0], { opacity: 0, duration: 1 }, '+=3');
+
+        // 1: sentence2
+        tl.to(scenes[1], { opacity: 1, duration: 1.5, ease: 'power1.out' })
+          .to(scenes[1], { opacity: 0, duration: 1 }, '+=3');
+
+        // 2: sentence3
+        tl.to(scenes[2], { opacity: 1, duration: 1.5, ease: 'power1.out' })
+          .to(scenes[2], { opacity: 0, duration: 1 }, '+=3');
+
+        // Glitch transition
+        addGlitch(tl);
+
+        // 3: priest — ultra close face
+        tl.to(scenes[3], { opacity: 1, duration: 2.5, ease: 'power1.out' })
+          .to(scenes[3], { opacity: 0, duration: 1.5 }, '+=4');
+
+        // Heavy glitch into logo
+        tl.call(function() { screen.classList.add('tv-glitch'); })
+          .to(staticEl, { opacity: .9, duration: .05 })
+          .to(staticEl, { opacity: .5, duration: .08 })
+          .to(staticEl, { opacity: .02, duration: .4, ease: 'power2.out' })
+          .call(function() { screen.classList.remove('tv-glitch'); });
+
+        // 4: The Observer logo — final hold
+        tl.to(scenes[4], { opacity: 1, duration: 2, ease: 'power1.out' })
+          .to({}, { duration: 4 })
+          .to(scenes[4], { opacity: .5, duration: 2 });
+
+        // Fade to static + replay
+        tl.to(staticEl, { opacity: .04, duration: 1.5 })
+          .to(replayHint, { opacity: 1, duration: .6 })
+          .set(playOverlay, { opacity: 1, pointerEvents: 'auto' });
+
+        tl.eventCallback('onComplete', function() { trailerPlayed = true; });
+        trailerTl = tl;
+        return tl;
+    }
+
+    // Click play button to start
+    playOverlay.addEventListener('click', function(e) {
+        e.stopPropagation();
+        startRadio();
+        trailerPlayed = false;
+        var tl = buildTrailer();
+        tl.play();
+    });
+
+    // Click TV to replay after finished
+    tv.addEventListener('click', function() {
+        if (!trailerPlayed) return;
+        startRadio();
+        trailerPlayed = false;
+        var tl = buildTrailer();
+        tl.play();
+    });
+}
+
 // ─── INIT ALL ──────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
     initCursor();
@@ -2925,6 +3454,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initLoader();
     initHorizontalScroll();
     initSectionReveals();
+    initTrailerTV();
     initHeader();
 
     window.addEventListener('load', function() {
