@@ -2235,11 +2235,11 @@ function init3DModel() {
     }, { threshold: 0 }).observe(container);
     function animate() {
         requestAnimationFrame(animate);
+        if (!humanoidVisible) return;
         if (!isDragging) rotationY += 0.003;
         if (model) {
             model.rotation.x = rotationX; model.rotation.y = rotationY;
         }
-        if (!humanoidVisible) return;
         renderer.render(scene, camera);
     }
     animate();
@@ -2277,14 +2277,8 @@ function initLilithController() {
     const loader = new GLTFLoader();
     const animationFiles = { idle: 'Untitled2_idle.glb', walk: 'Untitled2_walk.glb', run: 'Untitled2_run.glb', jump: 'Untitled2_jump.glb' };
     let loadedCount = 0;
-    // Defer loading until container is near viewport
-    var lilithLoadObserver = new IntersectionObserver(function(entries) {
-        if (!entries[0].isIntersecting) return;
-        lilithLoadObserver.disconnect();
-        loadLilithModel();
-    }, { rootMargin: '800px' });
-    lilithLoadObserver.observe(container);
-    function loadLilithModel() {
+    // Load immediately so models are ready before panel 3 scrolls into view
+    (function loadLilithModel() {
     loader.load('Untitled2_idle.glb', function(gltf) {
         model = gltf.scene;
         const box = new THREE.Box3().setFromObject(model);
@@ -2323,7 +2317,7 @@ function initLilithController() {
         }
         loadNext();
     }
-    } // end loadLilithModel
+    })(); // end loadLilithModel
     function switchAnimation(newState) {
         if (currentState === newState || !animations[newState]) return;
         const prev = currentAction; currentAction = animations[newState];
