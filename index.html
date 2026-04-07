@@ -2214,6 +2214,8 @@ function init3DModel() {
         model.rotation.x = 0.2;
         scene.add(model);
         renderer.compile(scene, camera);
+        // Warm up GPU with one offscreen render so first visible frame doesn't stutter
+        renderer.render(scene, camera);
     }, undefined, function(e) { console.error('Humanoid load error:', e); });
     canvas.addEventListener('mousedown', function(e) { isDragging = true; previousMouseX = e.clientX; previousMouseY = e.clientY; canvas.style.cursor = 'grabbing'; });
     document.addEventListener('mouseup', function() { isDragging = false; canvas.style.cursor = 'grab'; });
@@ -2293,33 +2295,27 @@ function initLilithController() {
         const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
         model.position.x = -scaledCenter.x; model.position.y = -scaledBox.min.y; model.position.z = -scaledCenter.z;
         scene.add(model);
-        // Pre-compile shaders so first render doesn't stall
+        // Pre-compile shaders and warm up GPU so first visible frame doesn't stutter
         renderer.compile(scene, camera);
+        renderer.render(scene, camera);
         mixer = new THREE.AnimationMixer(model);
         if (gltf.animations && gltf.animations.length > 0) {
             animations.idle = mixer.clipAction(gltf.animations[0]);
             animations.idle.play(); currentAction = animations.idle;
         }
-        // Defer extra animations to avoid blocking scroll
-        setTimeout(loadAnimations, 500);
+        // Load all animations immediately so everything is ready
+        loadAnimations();
     }, undefined, function(e) { console.error('Lilith load error:', e); });
     function loadAnimations() {
-        var names = ['walk', 'run', 'jump'];
-        var i = 0;
-        function loadNext() {
-            if (i >= names.length) return;
-            var name = names[i++];
+        ['walk', 'run', 'jump'].forEach(function(name) {
             loader.load(animationFiles[name], function(gltf) {
                 if (gltf.animations && gltf.animations.length > 0) {
                     animations[name] = mixer.clipAction(gltf.animations[0]);
                     if (name === 'jump') { animations[name].setLoop(THREE.LoopOnce); animations[name].clampWhenFinished = true; }
                 }
                 loadedCount++;
-                // Stagger each load to avoid main thread blocking
-                setTimeout(loadNext, 200);
             });
-        }
-        loadNext();
+        });
     }
     })(); // end loadLilithModel
     function switchAnimation(newState) {
@@ -2443,21 +2439,10 @@ function initAgencyMusicPlayer() {
     audio.addEventListener('ended', nextTrack);
     audio.addEventListener('pause', function() { setPlayerUi(false); });
     audio.addEventListener('play', function() { setPlayerUi(true); });
-    // Set preload=none initially; switch to auto when panel 2 is visible so audio
-    // is buffered before the user clicks — avoids gesture-window expiry on play()
-    audio.preload = 'none';
+    audio.preload = 'auto';
     loadTrack(0);
     audio.muted = false;
     setPlayerUi(false);
-    const panel2 = document.querySelector('.h-panel-2');
-    if (panel2 && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function(entries, obs) {
-            if (entries[0].isIntersecting) {
-                audio.preload = 'auto';
-                obs.disconnect();
-            }
-        }, { threshold: 0.1 }).observe(panel2);
-    }
 }
 
 if (document.readyState === 'loading') {
@@ -2740,7 +2725,7 @@ class ArticlesPagination {
         card.className = 'article-card';
         if (article.projectLink) { card.dataset.projectLink = article.projectLink; card.style.cursor = 'pointer'; }
         const videoBlock = article.video
-            ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" poster="${article.image || ''}" muted loop playsinline preload="none" aria-label="${article.alt || ''}"></video></div>`
+            ? `<div class="article-image-wrap"><video class="article-video" src="${article.video}" poster="${article.image || ''}" muted loop playsinline preload="auto" aria-label="${article.alt || ''}"></video></div>`
             : (article.image ? `<div class="article-image-wrap"><img src="${article.image}" alt="${article.alt || ''}" loading="lazy"></div>` : '');
         card.innerHTML = `${videoBlock}<div class="article-content"><h3 class="article-title">${article.title}</h3><p class="article-excerpt">${article.excerpt}</p><div class="article-meta"><span class="article-read-time">${article.readTime}</span></div></div>`;
         return card;
@@ -2760,13 +2745,7 @@ class ArticlesPagination {
     }
     lazyVideos() {
         const videos = this.articlesGrid.querySelectorAll('video');
-        if (!('IntersectionObserver' in window)) { videos.forEach(v => v.play()); return; }
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.play(); io.unobserve(e.target); }
-            });
-        }, { threshold: 0.1 });
-        videos.forEach(v => io.observe(v));
+        videos.forEach(v => v.play());
     }
 }
 
