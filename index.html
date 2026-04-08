@@ -7,10 +7,9 @@
 
 <script>
 (function(){
-    var s = localStorage.getItem('index-bg');
-    document.documentElement.style.setProperty('--accent', s || '#30711E');
-    var mode = localStorage.getItem('index-bg-mode') || 'gradient';
-    document.documentElement.classList.toggle('page-bg-plain', mode === 'plain');
+    localStorage.removeItem('index-bg');
+    localStorage.removeItem('index-bg-mode');
+    document.documentElement.style.setProperty('--accent', '#FF0000');
 })();
 </script>
 
@@ -21,7 +20,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,700;9..40,900&family=Bangers&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,700;9..40,900&family=Bangers&family=Michroma&family=Marcellus&family=Megrim&family=Josefin+Sans:ital,wght@0,100;0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -32,7 +31,7 @@
    VARIABLES & RESET
    ============================================================ */
 :root {
-    --accent: #30711E;
+    --accent: #FF0000;
     --accent-dim: rgba(177,0,255,0.12);
     --bg: #090909;
     --surface: #111;
@@ -223,7 +222,7 @@ h1, h2, h3, h4,
 }
 .logo-img {
     display: block;
-    height: 70px;
+    height: 110px;
     width: auto;
 }
 .nav-menu {
@@ -448,7 +447,7 @@ h1, h2, h3, h4,
 .h-scroll-section {
     position: relative;
     pointer-events: auto;
-    background: url('theobserver.png') no-repeat center / 800px;
+    background: url('IXLNEW.png') no-repeat center / 800px;
 }
 .h-scroll-section::before {
     content: '';
@@ -545,52 +544,28 @@ h1, h2, h3, h4,
 .comic-narration {
     position: absolute;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.55);
-    color: rgba(255,255,255,.65);
-    padding: 1.2rem 1.8rem 1.2rem 2rem;
-    max-width: 380px;
-    border-left: 2px solid var(--accent);
-    backdrop-filter: blur(8px);
-}
-.comic-narration::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,.015) 2px,
-        rgba(255,255,255,.015) 4px
-    );
-    pointer-events: none;
-}
-.comic-narration::after {
-    content: '>';
-    position: absolute;
-    top: 1.2rem;
-    left: .7rem;
-    color: var(--accent);
-    font-size: .7rem;
-    font-family: monospace;
-    opacity: .6;
+    background: transparent;
+    color: rgba(255,255,255,.8);
+    padding: 1.4rem 0 1.4rem 1.6rem;
+    max-width: 420px;
+    border-left: 1px solid rgba(255,255,255,.15);
 }
 .comic-narration p {
-    font-family: 'Courier New', 'Courier', monospace;
-    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-family: 'Megrim', sans-serif;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
     font-weight: 400;
-    letter-spacing: .08em;
+    letter-spacing: .15em;
     line-height: 1.8;
     text-transform: uppercase;
 }
 .comic-narration .narration-id {
     display: block;
-    font-family: monospace;
-    font-size: .55rem;
-    letter-spacing: .2em;
-    color: var(--accent);
-    opacity: .5;
-    margin-bottom: .4rem;
+    font-family: 'Megrim', sans-serif;
+    font-size: .5rem;
+    letter-spacing: .3em;
+    color: rgba(255,255,255,.2);
+    text-transform: uppercase;
+    margin-bottom: .6rem;
 }
 .comic-narration-tl {
     top: 3rem;
@@ -600,27 +575,9 @@ h1, h2, h3, h4,
     top: 3rem;
     right: 3rem;
     border-left: none;
-    border-right: 2px solid var(--accent);
-}
-.comic-narration-tr::after {
-    left: auto;
-    right: .7rem;
-    content: '<';
-}
-/* CRT flicker on panels */
-.h-panel-comic::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(0,0,0,.08) 3px,
-        rgba(0,0,0,.08) 6px
-    );
+    border-right: 1px solid rgba(255,255,255,.15);
+    padding-left: 0;
+    padding-right: 1.6rem;
 }
 @media (max-width: 768px) {
     .comic-narration { max-width: 220px; padding: .8rem 1.2rem; }
@@ -1078,6 +1035,12 @@ h1, h2, h3, h4,
     align-items: center;
     justify-content: center;
     min-height: 80vh;
+}
+.tv-section .section-title,
+.skgchess-section .section-title,
+.research-section .section-title,
+.contact-section .section-title {
+    font-size: clamp(1.6rem, 4vw, 4.5rem);
 }
 .tv-section-inner {
     display: flex;
@@ -1579,11 +1542,11 @@ h1, h2, h3, h4,
 }
 .skgchess-bg-video {
     position: absolute;
-    top: -5%;
-    right: -10%;
-    width: 90%;
-    height: 110%;
-    object-fit: contain;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center right;
     z-index: 0;
     filter: grayscale(1) brightness(.7);
@@ -1807,20 +1770,17 @@ h1, h2, h3, h4,
 }
 .research-text-col {}
 .section-title {
-    font-family: 'Courier New', 'Courier', monospace;
-    font-size: clamp(2.85rem, 6.65vw, 7.6rem);
-    font-weight: 700;
-    letter-spacing: -.02em;
+    font-family: 'Megrim', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 7rem);
+    font-weight: 400;
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: rgba(255,255,255,.85);
     margin-bottom: 3rem;
-    line-height: .82;
+    line-height: .88;
     font-style: normal;
+    transform: skewX(-5deg);
     -webkit-text-stroke: 1px rgba(255,255,255,.08);
-    background: linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.55) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 .research-list { list-style: none; counter-reset: reading; position: relative; background: var(--bg); padding: 0 2rem; margin: 0 -2rem; }
 .research-list-item {
@@ -2145,17 +2105,16 @@ h1, h2, h3, h4,
     <div class="header-logo-and-picker">
         <div class="logo-container">
             <a href="/" class="logo" style="cursor:none;">
-                <span class="logo-text">IXLSTUDIO</span>
-                <img class="logo-img" src="IXLIMAGE.png" alt="IXLSTUDIO">
+                <img class="logo-img" src="IXLNEW.png" alt="IXLSTUDIO">
             </a>
         </div>
         <div class="bg-bar" role="group" aria-label="Page background color">
-            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#30711E" title="Choose accent color" aria-label="Page accent color">
+            <input type="color" id="indexBgColorPicker" class="bg-color-picker" value="#FF0000" title="Choose accent color" aria-label="Page accent color">
         </div>
     </div>
     <nav>
         <ul class="nav-menu">
-            <li><a href="#agency" data-panel3="true">SUPPORT</a></li>
+            <li><a href="#agency">Follow</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
             <span></span><span></span><span></span>
@@ -2169,7 +2128,7 @@ h1, h2, h3, h4,
         <div class="deco-shape deco-shape--diamond deco-shape--center"></div>
     </div>
     <ul class="nav-menu">
-        <li><a href="#agency" data-panel3="true">Support</a></li>
+        <li><a href="#agency">Follow</a></li>
     </ul>
 </div>
 
@@ -2190,12 +2149,12 @@ h1, h2, h3, h4,
             <div class="h-panel h-panel-3" style="justify-content:center;">
                 <canvas class="hero-portal" id="heroPortal2" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none;"></canvas>
                 <div class="panel-3-text" style="z-index:4; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                    <h2 class="section-title" style="margin-bottom:1.5rem; font-size:clamp(3rem, 7vw, 8rem); font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; font-weight:900; font-style:italic; letter-spacing:-.06em; -webkit-text-fill-color:#fff; background:none; color:#fff; opacity:1;">THE OBSERVER.</h2>
+                    <h2 class="section-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; -webkit-text-fill-color:#fff; background:none; color:#fff; opacity:1; white-space:nowrap;">THE OBSERVER.</h2>
                     <div class="panel-follow-links" style="margin-top:2rem; display:flex; flex-direction:row; gap:1rem; justify-content:center;">
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
                         <a href="/journal" class="panel-bubble-btn">Journal</a>
                     </div>
-                    <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">01 / 04</div>
+                    <div class="h-panel-counter" style="position:absolute; bottom:5rem; left:8vw;">01 / 04</div>
                 </div>
             </div>
 
@@ -2203,7 +2162,7 @@ h1, h2, h3, h4,
             <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center; gap:4vw;">
                 <div class="comic-narration" style="position:relative; top:auto; left:auto;">
                     <span class="narration-id">REC_01 // ARCHIVED</span>
-                    <p>A society sunk in numbness.</p>
+                    <p>A society sunk in numbness...</p>
                 </div>
                 <div class="panel-2-model" style="position:relative; z-index:1;">
                     <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
@@ -2217,7 +2176,7 @@ h1, h2, h3, h4,
             <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center; gap:4vw;">
                 <div class="comic-narration" style="position:relative; top:auto; left:auto;">
                     <span class="narration-id">REC_02 // SIGNAL</span>
-                    <p>A command from the future.</p>
+                    <p>A command from the future...</p>
                 </div>
                 <div class="panel-3-lilith" style="z-index:3; position:relative;">
                     <div class="panel-3-lilith-inner">
@@ -2241,7 +2200,7 @@ h1, h2, h3, h4,
                 </div>
                 <div class="comic-narration" style="top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;">
                     <span class="narration-id">REC_03 // NEURAL</span>
-                    <p>A simulation inside the mind.</p>
+                    <p>A simulation inside the mind...</p>
                 </div>
                 <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 04</div>
             </div>
@@ -2256,8 +2215,11 @@ h1, h2, h3, h4,
 ═══════════════════════════════════════════════ -->
 <section class="godot-section" data-reveal>
     <div class="godot-section-inner">
+        <h2 class="section-title" style="margin-bottom:1.5rem; font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em;">THE OBSERVER</h2>
+        <span style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
         <span class="godot-label">made with</span>
         <img src="godot.png" alt="Godot Engine" class="godot-logo">
+        <span style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
         <span class="godot-sub">Solo</span>
     </div>
 </section>
@@ -2311,8 +2273,8 @@ h1, h2, h3, h4,
     <div class="skgchess-overlay"></div>
     <div class="skgchess-content" data-reveal>
         <div class="section-tag">03 — Previously</div>
-        <h2 class="section-title">MY <br>OTHER <br>PROJECT.</h2>
-        <p class="skgchess-desc">SKGCHESS.</p>
+        <h2 class="section-title">SKGCHESS.</h2>
+        <p class="skgchess-desc">Previous Project.</p>
         <a href="skgchess" class="skgchess-link">View Project →</a>
     </div>
 </section>
@@ -2328,7 +2290,7 @@ h1, h2, h3, h4,
     <div class="research-section-inner">
         <div class="section-header" data-reveal>
             <div class="section-tag">04 — Research</div>
-            <h2 class="section-title">MY</h2>
+            <h2 class="section-title">Research.</h2>
         </div>
         <div class="research-layout">
             <div class="research-text-col">
@@ -2788,13 +2750,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var picker = document.getElementById('indexBgColorPicker');
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
-        var defaultHex = '#30711E';
-        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; localStorage.setItem(key, hex); }
-        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; localStorage.setItem(modeKey, mode); }
-        var saved = localStorage.getItem(key);
-        var savedMode = localStorage.getItem(modeKey) || 'gradient';
-        setBg(saved || defaultHex);
-        setMode(savedMode);
+        var defaultHex = '#FF0000';
+        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; }
+        function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; }
+        setBg(defaultHex);
         picker.addEventListener('input', function() { setBg(picker.value); window._portalColorChanged = true; });
         if (stylePicker) stylePicker.addEventListener('change', function() { setMode(stylePicker.value); });
     })();
@@ -3091,10 +3050,11 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.onclick = function(e) {
             e.preventDefault(); e.stopPropagation();
-            if (this.dataset.panel3) {
-                scrollToPanel3();
+            const targetId = this.getAttribute('href').substring(1);
+            if (targetId === 'agency') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return false;
             } else {
-                const targetId = this.getAttribute('href').substring(1);
                 scrollToSection(targetId);
             }
             const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -3244,7 +3204,7 @@ function initHeroPortal(heroSelector, canvasId) {
 
     // Load hidden image to reveal
     var img = new Image();
-    img.onload = function() { ready = true; preReveal(); };
+    img.onload = function() { ready = true; };
     img.src = 'priest.png';
 
     function resize() {
@@ -3471,7 +3431,7 @@ function initHeroPortal(heroSelector, canvasId) {
         tctx.drawImage(userMask, 0, 0);
         tctx.globalCompositeOperation = 'source-in';
         tctx.drawImage(img, d.x, d.y + d.h * 0.05, d.w, d.h);
-        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#30711E';
+        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF0000';
         tctx.globalCompositeOperation = 'source-atop';
         tctx.globalAlpha = 0.25;
         tctx.fillStyle = accent;

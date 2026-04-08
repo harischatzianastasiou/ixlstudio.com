@@ -13,7 +13,9 @@
       "Bash(ls \"c:/Users/tchatzia/git/ixlstudio.com/\"Sentence*)",
       "Bash(ls \"c:/Users/tchatzia/git/ixlstudio.com/\"*sentence*)",
       "Bash(ls \"c:/Users/tchatzia/git/ixlstudio.com/\"*Sentence*)",
-      "Bash(ls c:/Users/tchatzia/git/ixlstudio.com/*.png c:/Users/tchatzia/git/ixlstudio.com/*.svg)"
+      "Bash(ls c:/Users/tchatzia/git/ixlstudio.com/*.png c:/Users/tchatzia/git/ixlstudio.com/*.svg)",
+      "Bash(ls -la ixlnew*.png)",
+      "Bash(ls -la IXL*.png)"
     ]
   }
 }
