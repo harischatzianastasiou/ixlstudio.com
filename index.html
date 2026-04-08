@@ -34,7 +34,7 @@
 :root {
     --accent: #FF0000;
     --accent-dim: rgba(177,0,255,0.12);
-    --bg: #090909;
+    --bg: #0e0e0e;
     --surface: #111;
     --text: #edece9;
     --muted: #555;
@@ -92,7 +92,6 @@ h1, h2, h3, h4,
 .research-section,
 .contact-section,
 .marquee-track,
-.godot-section,
 .tv-section,
 .skgchess-section,
 .comic-narration,
@@ -163,7 +162,6 @@ h1, h2, h3, h4,
     pointer-events: none;
     z-index: 99999;
     transform: translate(-50%,-50%);
-    transition: width .25s var(--ease-out), height .25s var(--ease-out), background .25s;
     will-change: transform;
 }
 #cursor-ring {
@@ -427,6 +425,9 @@ h1, h2, h3, h4,
     border-bottom: 1px solid var(--border);
     padding: .9rem 0;
     margin-top: var(--header-h);
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
     pointer-events: none;
 }
 .marquee-track {
@@ -456,6 +457,7 @@ h1, h2, h3, h4,
     position: relative;
     pointer-events: auto;
     background: url('IXLNEW.png') no-repeat center / 800px;
+    contain: layout style;
 }
 .h-scroll-section::before {
     content: '';
@@ -477,9 +479,8 @@ h1, h2, h3, h4,
     pointer-events: none;
 }
 .h-scroll-outer {
-    position: sticky;
-    top: 0;
-    height: 100svh;
+    position: relative;
+    height: 100vh;
     overflow: hidden;
     will-change: transform;
     pointer-events: auto;
@@ -553,18 +554,19 @@ h1, h2, h3, h4,
     position: absolute;
     z-index: 2;
     background: transparent;
-    color: rgba(255,255,255,.8);
+    color: rgba(255,255,255,.9);
     padding: 1.4rem 0 1.4rem 1.6rem;
     max-width: 420px;
     border-left: 1px solid rgba(255,255,255,.15);
 }
 .comic-narration p {
     font-family: 'Megrim', sans-serif;
-    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.2rem, 2.8vw, 2.2rem);
     font-weight: 400;
     letter-spacing: .15em;
     line-height: 1.8;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 .comic-narration .narration-id {
     display: block;
@@ -574,6 +576,14 @@ h1, h2, h3, h4,
     color: rgba(255,255,255,.2);
     text-transform: uppercase;
     margin-bottom: .6rem;
+}
+.comic-narration p .char {
+    display: inline-block;
+    opacity: 0.1;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translate3d(0,0,0);
+    -webkit-font-smoothing: antialiased;
 }
 .comic-narration-tl {
     top: 3rem;
@@ -1018,20 +1028,20 @@ h1, h2, h3, h4,
 }
 
 /* Godot Section */
-.godot-section {
-    position: relative;
-    padding: 24rem 5vw 12rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 60vh;
+.section-particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 .godot-section-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    z-index: 1;
 }
 .godot-label {
     font-size: clamp(.9rem, 1.8vw, 1.2rem);
@@ -1047,14 +1057,16 @@ h1, h2, h3, h4,
     transform: translateZ(0);
     will-change: filter;
 }
-/* TV Section (vertical) */
+/* TV Section (vertical) — scrolls over godot (curtain effect) */
 .tv-section {
     position: relative;
-    padding: 8rem 5vw;
+    z-index: 2;
+    padding: 28rem 5vw 8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 80vh;
+    background: var(--bg);
     contain: layout style paint;
 }
 .tv-section .section-title,
@@ -1065,6 +1077,7 @@ h1, h2, h3, h4,
 }
 .tv-section-inner {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -1599,12 +1612,14 @@ h1, h2, h3, h4,
 }
 .skgchess-section {
     position: relative;
+    z-index: 2;
     min-height: 80vh;
     display: flex;
     align-items: flex-end;
     padding: 6rem 7vw;
     margin-top: 6rem;
     overflow: hidden;
+    background: var(--bg);
     contain: layout style paint;
 }
 .skgchess-bg-video {
@@ -1628,6 +1643,17 @@ h1, h2, h3, h4,
         radial-gradient(ellipse 40% 12% at 55% 12%, var(--bg) 0%, transparent 100%),
         linear-gradient(to bottom, var(--bg) 0%, rgba(0,0,0,.6) 30%, transparent 55%),
         linear-gradient(to top, var(--bg) 0%, rgba(0,0,0,.6) 30%, transparent 55%);
+}
+.skgchess-center-title {
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+}
+.skgchess-center-title .section-tag {
+    margin-bottom: 0.5rem;
 }
 .skgchess-content {
     position: relative;
@@ -1658,6 +1684,31 @@ h1, h2, h3, h4,
     border-color: var(--accent);
     color: #000;
 }
+.support-section {
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+    padding: 14rem 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+}
+.support-inner {
+    max-width: 700px;
+}
+.support-text {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    color: rgba(255,255,255,.5);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+.support-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
 .combined-section {
     padding: 10rem 7vw;
     border-top: none;
@@ -1671,6 +1722,9 @@ h1, h2, h3, h4,
     justify-content: center;
     gap: 1.5rem;
     padding: 3rem 7vw;
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
 }
 .section-ornament::before,
 .section-ornament::after {
@@ -1827,9 +1881,12 @@ h1, h2, h3, h4,
    RESEARCH SECTION  (#research)
    ============================================================ */
 .research-section {
-    padding: 18rem 7vw 10rem;
+    padding: 16rem 7vw 10rem;
     border-top: none;
     position: relative;
+    z-index: 2;
+    background: var(--bg);
+    overflow: hidden;
     contain: layout style paint;
 }
 .research-layout {
@@ -1929,6 +1986,8 @@ h1, h2, h3, h4,
     padding: 4rem 7vw 4rem;
     border-top: 1px solid var(--border);
     position: relative;
+    z-index: 2;
+    background: var(--bg);
     overflow: hidden;
     min-height: 70svh;
     display: flex;
@@ -2018,10 +2077,7 @@ h1, h2, h3, h4,
    SCROLL REVEAL (data-reveal elements)
    ============================================================ */
 [data-reveal] { opacity: 0; transform: translateY(40px); will-change: opacity, transform; backface-visibility: hidden; }
-[data-reveal].is-revealed { opacity: 1; transform: translateY(0); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
-[data-reveal][data-delay="1"] { transition-delay: .1s !important; }
-[data-reveal][data-delay="2"] { transition-delay: .2s !important; }
-[data-reveal][data-delay="3"] { transition-delay: .3s !important; }
+[data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
 
 /* ============================================================
    SCROLL PROGRESS BAR
@@ -2218,6 +2274,7 @@ h1, h2, h3, h4,
      (section #agency used by existing JS)
 ═══════════════════════════════════════════════ -->
 <section id="agency" class="h-scroll-section agency-promo-section">
+    <canvas id="tunnelCanvas" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
     <div class="h-scroll-outer">
         <div class="h-scroll-track">
 
@@ -2225,17 +2282,17 @@ h1, h2, h3, h4,
             <div class="h-panel h-panel-3" style="justify-content:center;">
                 <canvas class="hero-portal" id="heroPortal2" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none;"></canvas>
                 <div class="panel-3-text" style="z-index:4; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                    <h2 class="section-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; -webkit-text-fill-color:#fff; background:none; color:#fff; opacity:1; white-space:nowrap;">THE OBSERVER.</h2>
+                    <h2 class="section-title observer-hero-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; color:var(--accent); opacity:1; white-space:nowrap; -webkit-text-fill-color:var(--accent);">THE OBSERVER.</h2>
                     <div class="panel-follow-links" style="margin-top:2rem; display:flex; flex-direction:row; gap:1rem; justify-content:center;">
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
                         <a href="/journal" class="panel-bubble-btn">Journal</a>
                     </div>
-                    <div class="h-panel-counter" style="position:absolute; bottom:5rem; left:8vw;">01 / 04</div>
+                    <div class="h-panel-counter" style="position:absolute; bottom:5rem; left:8vw;">01 / 05</div>
                 </div>
             </div>
 
             <!-- Panel 2 ─ Sentence 1 + humanoid model (centered side by side) -->
-            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center; gap:4vw;">
+            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:flex-start; gap:4vw; padding-left:12vw;">
                 <div class="comic-narration" style="position:relative; top:auto; left:auto;">
                     <span class="narration-id">REC_01 // ARCHIVED</span>
                     <p>A society sunk in numbness...</p>
@@ -2245,11 +2302,11 @@ h1, h2, h3, h4,
                         <canvas id="agencyHumanoidCanvas"></canvas>
                     </div>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">02 / 04</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">02 / 05</div>
             </div>
 
             <!-- Panel 3 ─ Sentence 2 + Lilith model -->
-            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center; gap:4vw;">
+            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:flex-start; gap:4vw; padding-left:12vw;">
                 <div class="comic-narration" style="position:relative; top:auto; left:auto;">
                     <span class="narration-id">REC_02 // SIGNAL</span>
                     <p>A command from the future...</p>
@@ -2271,11 +2328,11 @@ h1, h2, h3, h4,
                     <div class="wasd-row"><span class="wasd-key">A</span><span class="wasd-key">S</span><span class="wasd-key">D</span></div>
                     <span class="wasd-click-hint">click model</span>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">03 / 04</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">03 / 05</div>
             </div>
 
             <!-- Panel 4 ─ Sentence 3 (centered) + brain model -->
-            <div class="h-panel h-panel-comic">
+            <div class="h-panel h-panel-comic" style="padding-left:28vw;">
                 <div id="brainModelContainer" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:400px; height:400px; z-index:2;">
                     <canvas id="brainCanvas" width="400" height="400" style="width:400px; height:400px;"></canvas>
                 </div>
@@ -2283,7 +2340,20 @@ h1, h2, h3, h4,
                     <span class="narration-id">REC_03 // NEURAL</span>
                     <p>A simulation inside the mind...</p>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 04</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 05</div>
+            </div>
+
+            <!-- Panel 5 ─ Made with Godot -->
+            <div class="h-panel h-panel-godot" style="justify-content:center; text-align:center;">
+                <canvas class="section-particles" id="godotParticles" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+                <div class="godot-section-inner" style="z-index:2; position:relative;">
+                    <span class="godot-reveal" style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
+                    <span class="godot-label godot-reveal">made with</span>
+                    <img src="godot.png" alt="Godot Engine" class="godot-logo godot-reveal">
+                    <span class="godot-reveal" style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
+                    <span class="godot-sub godot-reveal">Solo</span>
+                </div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">05 / 05</div>
             </div>
 
         </div><!-- /h-scroll-track -->
@@ -2292,25 +2362,15 @@ h1, h2, h3, h4,
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     MADE WITH GODOT
-═══════════════════════════════════════════════ -->
-<section class="godot-section" data-reveal>
-    <div class="godot-section-inner">
-        <h2 class="section-title" style="margin-bottom:1.5rem; font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(2rem, 5vw, 5.5rem); white-space:nowrap;">THE OBSERVER</h2>
-        <span style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
-        <span class="godot-label">made with</span>
-        <img src="godot.png" alt="Godot Engine" class="godot-logo">
-        <span style="color:rgba(255,255,255,.2); font-size:1.5rem; line-height:1;">—</span>
-        <span class="godot-sub">Solo</span>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
      TV TRAILER
 ═══════════════════════════════════════════════ -->
 <section class="tv-section">
     <div class="tv-section-inner">
-        <div class="trailer-tv" id="trailerTv">
+        <div class="tv-header" data-reveal style="text-align:center; margin-bottom:28rem;">
+            <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(2rem, 5vw, 5.5rem); margin-bottom:6rem;">THE OBSERVER</h2>
+            <p style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.15em; font-size:clamp(1rem, 2vw, 1.6rem); color:rgba(255,255,255,.4);">Watch the Trailer</p>
+        </div>
+        <div class="trailer-tv" id="trailerTv" data-reveal>
             <div class="tv-frame">
                 <div class="tv-bezel">
                     <div class="tv-screen" id="tvScreen">
@@ -2347,30 +2407,13 @@ h1, h2, h3, h4,
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     03 PAST WORK
-═══════════════════════════════════════════════ -->
-<section id="devlog" class="skgchess-section">
-    <video class="skgchess-bg-video" src="show12.mp4" muted loop playsinline preload="auto" autoplay></video>
-    <div class="skgchess-overlay"></div>
-    <div class="skgchess-content">
-        <div class="section-tag">03 — Previously</div>
-        <h2 class="section-title">SKGCHESS.</h2>
-        <p class="skgchess-desc">Previous Project.</p>
-        <a href="skgchess" class="skgchess-link">View Project →</a>
-    </div>
-</section>
-
-<div class="section-ornament section-ornament-vintage" aria-hidden="true">
-    <span class="section-ornament-symbol">— IXL —</span>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     04 RESEARCH & THINKING
+     03 RESEARCH & THINKING
 ═══════════════════════════════════════════════ -->
 <section id="research" class="research-section post-horizontal-pattern">
-    <div class="research-section-inner">
+    <canvas class="section-particles" id="researchParticles"></canvas>
+    <div class="research-section-inner" style="position:relative; z-index:1;">
         <div class="section-header" data-reveal>
-            <div class="section-tag">04 — Research</div>
+            <div class="section-tag">03 — Research</div>
             <h2 class="section-title">Research.</h2>
         </div>
         <div class="research-layout">
@@ -2389,6 +2432,40 @@ h1, h2, h3, h4,
         </div>
         <div id="moodboard">
             <a href="moodboard" class="moodboard-link">Moodboard <span class="arrow">→</span></a>
+        </div>
+    </div>
+</section>
+
+<div class="section-ornament section-ornament-vintage" aria-hidden="true">
+    <span class="section-ornament-symbol">— IXL —</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     04 PAST WORK
+═══════════════════════════════════════════════ -->
+<section id="devlog" class="skgchess-section">
+    <video class="skgchess-bg-video" src="show12.mp4" muted loop playsinline preload="auto" autoplay></video>
+    <div class="skgchess-overlay"></div>
+    <div class="skgchess-center-title">
+        <div class="section-tag">04 — Previously</div>
+        <h2 class="section-title">SKGCHESS.</h2>
+    </div>
+    <div class="skgchess-content">
+        <p class="skgchess-desc">Previous Project.</p>
+        <a href="skgchess" class="skgchess-link">View Project →</a>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     05 SUPPORT
+═══════════════════════════════════════════════ -->
+<section class="support-section">
+    <div class="support-inner" data-reveal>
+        <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">A Solo Attempt.</h2>
+        <p class="support-text">Help the project grow by following on YouTube or contact me below.</p>
+        <div class="support-links">
+            <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
+            <a href="#contact" class="panel-bubble-btn">Contact</a>
         </div>
     </div>
 </section>
@@ -2524,12 +2601,14 @@ function init3DModel() {
         previousMouseX = e.touches[0].clientX; previousMouseY = e.touches[0].clientY;
     }, { passive: true });
     var humanoidVisible = false;
+    var humanoidRAF = null;
     new IntersectionObserver(function(entries) {
         humanoidVisible = entries[0].isIntersecting;
+        if (humanoidVisible && !humanoidRAF) animate();
     }, { threshold: 0 }).observe(container);
     function animate() {
-        requestAnimationFrame(animate);
-        if (!humanoidVisible) return;
+        if (!humanoidVisible) { humanoidRAF = null; return; }
+        humanoidRAF = requestAnimationFrame(animate);
         if (!isDragging) rotationY += 0.003;
         if (model) {
             model.rotation.x = rotationX; model.rotation.y = rotationY;
@@ -2591,12 +2670,14 @@ function initBrainModel() {
         console.log('Brain loading: ' + (xhr.loaded / xhr.total * 100).toFixed(0) + '%');
     }, function(e) { console.error('Brain load error:', e); });
     var brainVisible = false;
+    var brainRAF = null;
     new IntersectionObserver(function(entries) {
         brainVisible = entries[0].isIntersecting;
+        if (brainVisible && !brainRAF) animate();
     }, { threshold: 0 }).observe(container);
     function animate() {
-        requestAnimationFrame(animate);
-        if (!brainVisible) return;
+        if (!brainVisible) { brainRAF = null; return; }
+        brainRAF = requestAnimationFrame(animate);
         rotationY += 0.004;
         if (model) { model.rotation.y = rotationY; }
         renderer.render(scene, camera);
@@ -2713,12 +2794,14 @@ function initLilithController() {
         if (e.key === 'Shift') { keys.shift = false; if (currentState === 'run') switchAnimation('walk'); }
     });
     var lilithVisible = false;
+    var lilithRAF = null;
     new IntersectionObserver(function(entries) {
         lilithVisible = entries[0].isIntersecting;
+        if (lilithVisible && !lilithRAF) animate();
     }, { threshold: 0 }).observe(container);
     function animate() {
-        requestAnimationFrame(animate);
-        if (!lilithVisible) return;
+        if (!lilithVisible) { lilithRAF = null; return; }
+        lilithRAF = requestAnimationFrame(animate);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
         if (model) {
@@ -3647,6 +3730,44 @@ function initHorizontalScroll() {
     const panels = gsap.utils.toArray('.h-panel');
     const numPanels = panels.length;
 
+    // Split sentence chars first
+    document.querySelectorAll('.h-panel-comic .comic-narration p').forEach(function(p) {
+        var text = p.textContent;
+        p.innerHTML = text.split('').map(function(c) {
+            return c === ' ' ? '<span class="char">&nbsp;</span>' : '<span class="char">' + c + '</span>';
+        }).join('');
+    });
+
+    // Collect all panel char groups with their panel index
+    var charGroups = [];
+    var allPanels = gsap.utils.toArray('.h-panel');
+    allPanels.forEach(function(panel, panelIdx) {
+        var chars = panel.querySelectorAll('.comic-narration .char');
+        if (!chars.length) return;
+        gsap.set(chars, { opacity: 0.15, y: 8 });
+        charGroups.push({ chars: chars, panelIdx: panelIdx });
+    });
+
+    // Main horizontal tween with onUpdate for chars + shapes
+    var hProgress = 0;
+    var lastProgress = -1;
+
+    // Pre-compute per-group constants (avoid recalculating every frame)
+    var panelWidth = 1 / (numPanels - 1);
+    charGroups.forEach(function(group) {
+        group.panelCenter = group.panelIdx * panelWidth;
+        group.fadeInStart = group.panelCenter - panelWidth * 0.8;
+        group.fadeInEnd = group.panelCenter - panelWidth * 0.1;
+        group.fadeOutStart = group.panelCenter + panelWidth * 0.1;
+        group.fadeOutEnd = group.panelCenter + panelWidth * 0.7;
+        group.fadeInRange = group.fadeInEnd - group.fadeInStart;
+        group.fadeOutRange = group.fadeOutEnd - group.fadeOutStart;
+        group.charCount = group.chars.length;
+        // Cache previous values to skip unchanged chars
+        group.prevOpacity = new Float32Array(group.charCount);
+        group.prevOpacity.fill(-1);
+    });
+
     gsap.to(track, {
         x: function() { return -(track.scrollWidth - window.innerWidth); },
         ease: 'none',
@@ -3656,11 +3777,311 @@ function initHorizontalScroll() {
             start: 'top top',
             end: function() { return '+=' + (numPanels - 1) * window.innerWidth; },
             pin: true,
-            scrub: 0.8,
+            scrub: 0.4,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            onUpdate: function(self) {
+                hProgress = self.progress;
+                // Skip if progress barely changed (< 0.1% movement)
+                if (Math.abs(hProgress - lastProgress) < 0.001) return;
+                lastProgress = hProgress;
+
+                for (var g = 0; g < charGroups.length; g++) {
+                    var group = charGroups[g];
+                    // Quick check: is this panel anywhere near visible?
+                    if (hProgress < group.fadeInStart - 0.05 || hProgress > group.fadeOutEnd + 0.05) {
+                        // Panel far away — set all chars to hidden if not already
+                        if (group.prevOpacity[0] !== 0) {
+                            for (var k = 0; k < group.charCount; k++) {
+                                group.chars[k].style.cssText = 'display:inline-block;opacity:0.1;transform:translate3d(0,10px,0)';
+                                group.prevOpacity[k] = 0;
+                            }
+                        }
+                        continue;
+                    }
+
+                    for (var i = 0; i < group.charCount; i++) {
+                        var delay = i / group.charCount * 0.5;
+                        var inP = (hProgress - group.fadeInStart - delay * panelWidth) / group.fadeInRange;
+                        if (inP < 0) inP = 0; else if (inP > 1) inP = 1;
+                        var outP = (hProgress - group.fadeOutStart) / group.fadeOutRange;
+                        if (outP < 0) outP = 0; else if (outP > 1) outP = 1;
+
+                        var opacity = inP * (1 - outP);
+                        // Round to 2 decimals to reduce repaints
+                        var opRounded = ((0.1 + opacity * 0.9) * 100 + 0.5 | 0) / 100;
+
+                        // Skip if value barely changed
+                        if (Math.abs(opRounded - group.prevOpacity[i]) < 0.02) continue;
+                        group.prevOpacity[i] = opRounded;
+
+                        var yOff = (1 - inP) * 12 + outP * -20;
+                        var xOff = outP * -40;
+                        group.chars[i].style.opacity = opRounded;
+                        group.chars[i].style.transform = 'translate3d(' + (xOff | 0) + 'px,' + (yOff | 0) + 'px,0)';
+                    }
+                }
+            }
         }
     });
+
+    // ─── Floating geometric shapes + tunnel canvas ───
+    (function initTunnel() {
+        var canvas = document.getElementById('tunnelCanvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var w, h;
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        var tunnelVisible = false;
+        new IntersectionObserver(function(entries) {
+            tunnelVisible = entries[0].isIntersecting;
+        }, { threshold: 0 }).observe(section);
+
+        // Floating shapes definition
+        var shapes = [
+            // Planets — spheres with atmosphere and rings
+            { type: 'planet', x: 0.12, y: 0.25, r: 45, speed: 0.2, drift: 20, phase: 0, ring: true, moons: 1 },
+            { type: 'planet', x: 0.55, y: 0.82, r: 70, speed: 0.15, drift: 30, phase: 2.5, ring: false, moons: 2 },
+            { type: 'planet', x: 0.85, y: 0.18, r: 35, speed: 0.35, drift: 15, phase: 1.2, ring: true, moons: 0 },
+            { type: 'planet', x: 0.38, y: 0.7, r: 25, speed: 0.5, drift: 18, phase: 3.8, ring: false, moons: 1 },
+            { type: 'planet', x: 0.72, y: 0.55, r: 55, speed: 0.25, drift: 25, phase: 4.5, ring: true, moons: 1 },
+            // Stars — just a few static twinkles
+            { type: 'star', x: 0.22, y: 0.12, r: 1.5, speed: 0.1, drift: 3, phase: 1.1 },
+            { type: 'star', x: 0.78, y: 0.38, r: 1.5, speed: 0.13, drift: 3, phase: 1.8 },
+            { type: 'star', x: 0.48, y: 0.85, r: 1.5, speed: 0.09, drift: 4, phase: 3.2 },
+            // Lines — orbit trails
+            { type: 'line', x: 0.2, y: 0.3, len: 120, speed: 1.2, drift: 10, phase: 0.5 },
+            { type: 'line', x: 0.6, y: 0.75, len: 80, speed: 0.9, drift: 15, phase: 2.5 },
+            { type: 'line', x: 0.9, y: 0.5, len: 100, speed: 1.0, drift: 8, phase: 3.5 },
+            // Diamonds — debris
+            { type: 'diamond', x: 0.3, y: 0.5, size: 12, speed: 0.7, drift: 20, phase: 2 },
+            { type: 'diamond', x: 0.75, y: 0.35, size: 8, speed: 0.9, drift: 14, phase: 4 },
+            { type: 'diamond', x: 0.1, y: 0.65, size: 10, speed: 1.1, drift: 10, phase: 1 },
+        ];
+
+        function drawShape(s, time, accent) {
+            var sx = s.x * w - hProgress * s.speed * w * 0.5;
+            // Wrap horizontally
+            sx = ((sx % w) + w) % w;
+            var sy = s.y * h + Math.sin(time * 0.5 + s.phase) * s.drift;
+            var alpha = 0.12 + Math.sin(time * 0.3 + s.phase) * 0.04;
+
+            ctx.strokeStyle = 'rgba(255,255,255,' + alpha + ')';
+            ctx.lineWidth = 1.5;
+
+            if (s.type === 'planet') {
+                // Planet body — gradient sphere
+                var grad = ctx.createRadialGradient(sx - s.r * 0.3, sy - s.r * 0.3, s.r * 0.1, sx, sy, s.r);
+                grad.addColorStop(0, 'rgba(255,255,255,' + (alpha * 0.5) + ')');
+                grad.addColorStop(0.5, 'rgba(255,255,255,' + (alpha * 0.15) + ')');
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+                ctx.fill();
+                // Planet outline
+                ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.8) + ')';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+                ctx.stroke();
+                // Atmosphere glow
+                ctx.strokeStyle = 'rgba(' + accent + ',' + (alpha * 0.3) + ')';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(sx, sy, s.r + 4, 0, Math.PI * 2);
+                ctx.stroke();
+                // Surface detail — craters
+                ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.2) + ')';
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.arc(sx + s.r * 0.2, sy - s.r * 0.1, s.r * 0.15, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(sx - s.r * 0.3, sy + s.r * 0.3, s.r * 0.1, 0, Math.PI * 2);
+                ctx.stroke();
+                // Ring
+                if (s.ring) {
+                    var ringRot = 0.35 + Math.sin(time * 0.1 + s.phase) * 0.1;
+                    ctx.save();
+                    ctx.translate(sx, sy);
+                    ctx.scale(1, ringRot);
+                    ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.6) + ')';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, s.r * 1.6, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.strokeStyle = 'rgba(' + accent + ',' + (alpha * 0.25) + ')';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, s.r * 1.8, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+                // Moons
+                for (var m = 0; m < (s.moons || 0); m++) {
+                    var moonAngle = time * (0.3 + m * 0.2) + s.phase + m * 2.1;
+                    var moonDist = s.r * (2.2 + m * 0.8);
+                    var moonX = sx + Math.cos(moonAngle) * moonDist;
+                    var moonY = sy + Math.sin(moonAngle) * moonDist * 0.4;
+                    var moonR = 3 + m * 1.5;
+                    ctx.fillStyle = 'rgba(255,255,255,' + (alpha * 0.7) + ')';
+                    ctx.beginPath();
+                    ctx.arc(moonX, moonY, moonR, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Moon orbit trail
+                    ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.15) + ')';
+                    ctx.lineWidth = 0.5;
+                    ctx.save();
+                    ctx.translate(sx, sy);
+                    ctx.scale(1, 0.4);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, moonDist, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            } else if (s.type === 'star') {
+                // Twinkling star
+                var twinkle = 0.4 + Math.sin(time * 2 + s.phase * 5) * 0.4;
+                var starAlpha = alpha * twinkle * 3;
+                // Cross flare
+                ctx.strokeStyle = 'rgba(255,255,255,' + starAlpha + ')';
+                ctx.lineWidth = 0.8;
+                var flareLen = s.r * 4;
+                ctx.beginPath();
+                ctx.moveTo(sx - flareLen, sy); ctx.lineTo(sx + flareLen, sy);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(sx, sy - flareLen); ctx.lineTo(sx, sy + flareLen);
+                ctx.stroke();
+                // Core dot
+                ctx.fillStyle = 'rgba(255,255,255,' + (starAlpha * 1.5) + ')';
+                ctx.beginPath();
+                ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (s.type === 'diamond') {
+                var sz = s.size;
+                var rot = time * 0.2 + s.phase;
+                ctx.save();
+                ctx.translate(sx, sy);
+                ctx.rotate(rot);
+                ctx.beginPath();
+                ctx.moveTo(0, -sz); ctx.lineTo(sz, 0); ctx.lineTo(0, sz); ctx.lineTo(-sz, 0);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+            } else if (s.type === 'line') {
+                var extend = s.len * (0.5 + hProgress * 0.5);
+                ctx.beginPath();
+                ctx.moveTo(sx - extend / 2, sy);
+                ctx.lineTo(sx + extend / 2, sy);
+                ctx.stroke();
+                // Accent dot at end
+                ctx.fillStyle = 'rgba(' + accent + ',' + (alpha * 3) + ')';
+                ctx.beginPath();
+                ctx.arc(sx + extend / 2, sy, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function drawTunnel() {
+            requestAnimationFrame(drawTunnel);
+            if (!tunnelVisible) return;
+
+            ctx.clearRect(0, 0, w, h);
+            var time = hProgress * Math.PI * 6;
+            var accentHex = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF0000';
+            var ar = parseInt(accentHex.slice(1,3), 16) || 255;
+            var ag = parseInt(accentHex.slice(3,5), 16) || 0;
+            var ab = parseInt(accentHex.slice(5,7), 16) || 0;
+            var accentRGB = ar + ',' + ag + ',' + ab;
+
+            // Tunnel rectangles
+            var cx = w / 2;
+            var cy = h / 2;
+            var layers = 14;
+            for (var i = layers; i >= 4; i--) {
+                var t = i / layers;
+                var scale = 0.08 + t * 0.92;
+                var depth = (1 - t) * 0.8;
+                var ox = Math.sin(time + i * 0.5) * 80 * t;
+                var oy = Math.cos(time * 0.7 + i * 0.4) * 50 * t;
+                var rectW = w * scale;
+                var rectH = h * scale;
+                var rx = cx - rectW / 2 + ox;
+                var ry = cy - rectH / 2 + oy;
+                ctx.strokeStyle = 'rgba(255,255,255,' + (0.04 + depth * 0.08) + ')';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(rx, ry, rectW, rectH);
+                if (i < 7) {
+                    ctx.strokeStyle = 'rgba(' + accentRGB + ',' + (0.06 * (1 - t)) + ')';
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeRect(rx, ry, rectW, rectH);
+                }
+            }
+
+            // Parallax horizontal scan lines (behind shapes)
+            ctx.lineWidth = 0.5;
+            for (var j = 0; j < 5; j++) {
+                var ly = h * (0.18 + j * 0.16) + Math.sin(time * 0.8 + j * 1.3) * 25;
+                ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+                ctx.beginPath();
+                ctx.moveTo(0, ly);
+                ctx.lineTo(w, ly);
+                ctx.stroke();
+            }
+
+            // Vertical progress line (behind shapes)
+            var progX = hProgress * w * 0.8 + w * 0.1;
+            ctx.strokeStyle = 'rgba(' + accentRGB + ',0.15)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(progX, 0);
+            ctx.lineTo(progX, h);
+            ctx.stroke();
+
+            // Shooting stars — subtle, each at different scroll points
+            var shooters = [
+                { trigger: 0.12, startX: 0.7,  startY: 0.05, len: 100 },
+                { trigger: 0.38, startX: 0.2,  startY: 0.1,  len: 70 },
+                { trigger: 0.65, startX: 0.85, startY: 0.15, len: 90 },
+                { trigger: 0.82, startX: 0.45, startY: 0.02, len: 80 },
+            ];
+            for (var si = 0; si < shooters.length; si++) {
+                var sh = shooters[si];
+                var life = (hProgress - sh.trigger) / 0.08;
+                if (life < 0 || life > 1) continue;
+                var fadeIn = Math.min(1, life * 5);
+                var fadeOut = Math.max(0, 1 - (life - 0.5) / 0.5);
+                var sAlpha = fadeIn * fadeOut * 0.2;
+                if (sAlpha < 0.005) continue;
+                var headX = sh.startX * w + life * w * 0.15;
+                var headY = sh.startY * h + life * h * 0.2;
+                var tailX = headX - sh.len * 0.75;
+                var tailY = headY - sh.len * 0.5;
+                var sGrad = ctx.createLinearGradient(tailX, tailY, headX, headY);
+                sGrad.addColorStop(0, 'rgba(255,255,255,0)');
+                sGrad.addColorStop(1, 'rgba(255,255,255,' + sAlpha + ')');
+                ctx.strokeStyle = sGrad;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(tailX, tailY);
+                ctx.lineTo(headX, headY);
+                ctx.stroke();
+            }
+
+            // Floating shapes — always on top
+            shapes.forEach(function(s) { drawShape(s, time, accentRGB); });
+        }
+        drawTunnel();
+    })();
 }
 
 // ─── Section Reveals ──────────────────────────
@@ -3669,29 +4090,80 @@ function initSectionReveals() {
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+            { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', force3D: true,
               scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } }
         );
     });
 
-    // Section headings — mask wipe
+    // ─── Godot section: each element reveals individually with stagger ───
+    var godotEls = document.querySelectorAll('.godot-reveal');
+    if (godotEls.length) {
+        gsap.set(godotEls, { opacity: 0, y: 35, scale: 0.95 });
+        godotEls.forEach(function(el, i) {
+            gsap.to(el, {
+                opacity: 1, y: 0, scale: 1,
+                duration: 1.2,
+                delay: i * 0.18,
+                ease: 'power2.out',
+                force3D: true,
+                scrollTrigger: { trigger: '.h-panel-godot', start: 'top 75%', toggleActions: 'play none none none' }
+            });
+        });
+        // Subtle parallax float on the logo
+        var godotLogo = document.querySelector('.godot-logo');
+        if (godotLogo) {
+            gsap.to(godotLogo, {
+                y: -20, ease: 'none',
+                scrollTrigger: { trigger: '.h-panel-godot', start: 'top bottom', end: 'bottom top', scrub: true }
+            });
+        }
+    }
+
+    // ─── SKGChess section reveal ───
+    var skgContent = document.querySelector('.skgchess-content');
+    if (skgContent) {
+        var skgEls = skgContent.children;
+        gsap.set(skgEls, { opacity: 0, y: 30 });
+        gsap.to(skgEls, {
+            opacity: 1, y: 0, duration: 1.0, stagger: 0.12, ease: 'power2.out', force3D: true,
+            scrollTrigger: { trigger: '.skgchess-section', start: 'top 70%', toggleActions: 'play none none none' }
+        });
+    }
+
+    // ─── Research section: items orbit in ───
+    const researchItems = document.querySelectorAll('.research-list-item');
+    if (researchItems.length) {
+        gsap.set(researchItems, { opacity: 0, x: -20, y: 10 });
+        researchItems.forEach(function(item, i) {
+            gsap.to(item, {
+                opacity: 1, x: 0, y: 0,
+                duration: 0.8,
+                delay: i * 0.08,
+                ease: 'power2.out',
+                force3D: true,
+                scrollTrigger: { trigger: '.research-list', start: 'top 82%', toggleActions: 'play none none none' }
+            });
+        });
+    }
+
+    // Research heading
+    document.querySelectorAll('.research-section .section-title').forEach(function(title) {
+        gsap.fromTo(title,
+            { opacity: 0, y: 60, scale: 0.9 },
+            { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power4.out',
+              scrollTrigger: { trigger: title, start: 'top 85%', toggleActions: 'play none none none' } }
+        );
+    });
+
+    // Section headings (non-research, non-godot)
     document.querySelectorAll('.section-title, .section-h2').forEach(function(title) {
+        if (title.closest('.h-panel-godot') || title.closest('.research-section')) return;
         gsap.fromTo(title,
             { opacity: 0, y: 60 },
             { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out',
               scrollTrigger: { trigger: title, start: 'top 88%', toggleActions: 'play none none none' } }
         );
     });
-
-    // Research list stagger — slide from left
-    const researchItems = document.querySelectorAll('.research-list-item');
-    if (researchItems.length) {
-        gsap.fromTo(researchItems,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: 'power2.out',
-              scrollTrigger: { trigger: '.research-list', start: 'top 85%', toggleActions: 'play none none none' } }
-        );
-    }
 
     // Project echo section
     const echoContent = document.querySelector('.project-echo-content');
@@ -3741,11 +4213,121 @@ function initSectionReveals() {
         });
     }
 
+    // ─── Floating particles canvases (planet theme) ───
+    initSectionParticles('godotParticles', '.h-panel-godot');
+    initSectionParticles('researchParticles', '.research-section');
+
     // Marquee — constant speed, no scroll interaction
     const marqueeTrack = document.querySelector('.marquee-track');
     if (marqueeTrack) {
         marqueeTrack.style.animationDuration = '14s';
     }
+}
+
+// ─── Floating planet particles for sections ──────
+function initSectionParticles(canvasId, sectionSel) {
+    var canvas = document.getElementById(canvasId);
+    var sectionEl = document.querySelector(sectionSel);
+    if (!canvas || !sectionEl) return;
+    var ctx = canvas.getContext('2d');
+    var w, h;
+    var particles = [];
+    var isVisible = false;
+    var rafId = null;
+
+    function resize() {
+        w = sectionEl.offsetWidth;
+        h = sectionEl.offsetHeight;
+        canvas.width = w;
+        canvas.height = h;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Generate floating objects: small planets, stars, orbit rings
+    var count = 18;
+    for (var i = 0; i < count; i++) {
+        var type = i < 4 ? 'planet' : (i < 10 ? 'star' : 'ring');
+        particles.push({
+            type: type,
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: type === 'planet' ? 3 + Math.random() * 8 : (type === 'ring' ? 10 + Math.random() * 15 : 1 + Math.random() * 1.5),
+            vx: (Math.random() - 0.5) * 0.15,
+            vy: (Math.random() - 0.5) * 0.1,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.3 + Math.random() * 0.5,
+            hue: Math.random() > 0.5 ? '255,60,60' : '180,180,255',
+            alpha: 0.08 + Math.random() * 0.12
+        });
+    }
+
+    function draw(time) {
+        if (!isVisible) return;
+        ctx.clearRect(0, 0, w, h);
+        var t = time * 0.001;
+
+        for (var i = 0; i < particles.length; i++) {
+            var p = particles[i];
+            p.x += p.vx + Math.sin(t * p.speed + p.phase) * 0.2;
+            p.y += p.vy + Math.cos(t * p.speed * 0.7 + p.phase) * 0.15;
+
+            // Wrap around
+            if (p.x < -20) p.x = w + 20;
+            if (p.x > w + 20) p.x = -20;
+            if (p.y < -20) p.y = h + 20;
+            if (p.y > h + 20) p.y = -20;
+
+            if (p.type === 'planet') {
+                // Small planet with glow
+                var grd = ctx.createRadialGradient(p.x - p.r * 0.3, p.y - p.r * 0.3, p.r * 0.1, p.x, p.y, p.r);
+                grd.addColorStop(0, 'rgba(' + p.hue + ',' + (p.alpha * 2.5) + ')');
+                grd.addColorStop(0.7, 'rgba(' + p.hue + ',' + (p.alpha * 1.2) + ')');
+                grd.addColorStop(1, 'rgba(' + p.hue + ',0)');
+                ctx.fillStyle = grd;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * 2, 0, Math.PI * 2);
+                ctx.fill();
+                // Core
+                ctx.fillStyle = 'rgba(255,255,255,' + (p.alpha * 1.5) + ')';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (p.type === 'star') {
+                // Twinkling dot
+                var twinkle = 0.5 + 0.5 * Math.sin(t * 2 + p.phase);
+                ctx.fillStyle = 'rgba(255,255,255,' + (p.alpha * twinkle) + ')';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                // Orbit ring
+                var tilt = Math.sin(t * 0.3 + p.phase) * 0.4;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.scale(1, 0.3 + tilt * 0.2);
+                ctx.rotate(t * 0.2 + p.phase);
+                ctx.strokeStyle = 'rgba(' + p.hue + ',' + (p.alpha * 0.6) + ')';
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        rafId = requestAnimationFrame(draw);
+    }
+
+    // Only animate when visible
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            isVisible = e.isIntersecting;
+            if (isVisible && !rafId) rafId = requestAnimationFrame(draw);
+            if (!isVisible && rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        });
+    }, { threshold: 0.05 });
+    obs.observe(sectionEl);
 }
 
 // ─── Header scroll behavior ───────────────────
