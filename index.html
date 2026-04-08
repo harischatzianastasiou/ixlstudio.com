@@ -1070,6 +1070,21 @@ h1, h2, h3, h4,
     opacity: 0.85;
     filter: brightness(0.9) invert(1);
 }
+/* TV Section (vertical) */
+.tv-section {
+    position: relative;
+    padding: 8rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+.tv-section-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .godot-sub {
     font-size: clamp(.85rem, 1.5vw, 1.1rem);
     letter-spacing: .4em;
@@ -1793,7 +1808,7 @@ h1, h2, h3, h4,
 .research-text-col {}
 .section-title {
     font-family: 'Courier New', 'Courier', monospace;
-    font-size: clamp(3rem, 7vw, 8rem);
+    font-size: clamp(2.85rem, 6.65vw, 7.6rem);
     font-weight: 700;
     letter-spacing: -.02em;
     text-transform: uppercase;
@@ -2180,7 +2195,7 @@ h1, h2, h3, h4,
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
                         <a href="/journal" class="panel-bubble-btn">Journal</a>
                     </div>
-                    <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">01 / 05</div>
+                    <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">01 / 04</div>
                 </div>
             </div>
 
@@ -2195,7 +2210,7 @@ h1, h2, h3, h4,
                         <canvas id="agencyHumanoidCanvas"></canvas>
                     </div>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">02 / 05</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">02 / 04</div>
             </div>
 
             <!-- Panel 3 ─ Sentence 2 + Lilith model -->
@@ -2216,57 +2231,19 @@ h1, h2, h3, h4,
                         </div>
                     </div>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">03 / 05</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">03 / 04</div>
             </div>
 
             <!-- Panel 4 ─ Sentence 3 (centered) + brain model -->
             <div class="h-panel h-panel-comic">
-                <div id="brainModelContainer" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:clamp(300px,40vw,500px); height:clamp(300px,40vw,500px); z-index:1;">
-                    <canvas id="brainCanvas" style="width:100%; height:100%;"></canvas>
+                <div id="brainModelContainer" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:400px; height:400px; z-index:2;">
+                    <canvas id="brainCanvas" width="400" height="400" style="width:400px; height:400px;"></canvas>
                 </div>
                 <div class="comic-narration" style="top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;">
                     <span class="narration-id">REC_03 // NEURAL</span>
                     <p>A simulation inside the mind.</p>
                 </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 05</div>
-            </div>
-
-            <!-- Panel 5 ─ TV Trailer -->
-            <div class="h-panel h-panel-2">
-                <div class="trailer-tv" id="trailerTv">
-                    <div class="tv-frame">
-                        <div class="tv-bezel">
-                            <div class="tv-screen" id="tvScreen">
-                                <div class="tv-static" id="tvStatic"></div>
-                                <div class="tv-scanlines"></div>
-                                <div class="tv-vignette"></div>
-                                <div class="tv-play-overlay" id="tvPlayOverlay">
-                                    <svg class="tv-play-icon" viewBox="0 0 80 80">
-                                        <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
-                                        <polygon points="32,22 32,58 62,40" fill="rgba(255,255,255,.6)"/>
-                                    </svg>
-                                </div>
-                                <div class="tv-scene" id="tvScene0" style="opacity:0;">
-                                    <img src="sir.png" class="tv-scene-img" alt="">
-                                </div>
-                                <div class="tv-scene" id="tvScene1" style="opacity:0;">
-                                    <img src="bnwthess1.jpg" class="tv-scene-img" alt="">
-                                </div>
-                                <div class="tv-scene" id="tvScene2" style="opacity:0;">
-                                    <img src="theobserver.png" class="tv-scene-logo" alt="" style="filter:invert(1);">
-                                </div>
-                            </div>
-                            <div class="tv-controls">
-                                <div class="tv-knob tv-vol-knob" id="tvVolKnob" title="Volume">
-                                    <div class="tv-knob-indicator"></div>
-                                </div>
-                                <div class="tv-knob tv-knob-small tv-power-btn" id="tvPowerBtn" title="Stop / Start"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tv-replay-hint" id="tvReplayHint" style="opacity:0;">click to replay</div>
-                </div>
-                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">05 / 05</div>
+                <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 04</div>
             </div>
 
         </div><!-- /h-scroll-track -->
@@ -2282,6 +2259,47 @@ h1, h2, h3, h4,
         <span class="godot-label">made with</span>
         <img src="godot.png" alt="Godot Engine" class="godot-logo">
         <span class="godot-sub">Solo</span>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TV TRAILER
+═══════════════════════════════════════════════ -->
+<section class="tv-section" data-reveal>
+    <div class="tv-section-inner">
+        <div class="trailer-tv" id="trailerTv">
+            <div class="tv-frame">
+                <div class="tv-bezel">
+                    <div class="tv-screen" id="tvScreen">
+                        <div class="tv-static" id="tvStatic"></div>
+                        <div class="tv-scanlines"></div>
+                        <div class="tv-vignette"></div>
+                        <div class="tv-play-overlay" id="tvPlayOverlay">
+                            <svg class="tv-play-icon" viewBox="0 0 80 80">
+                                <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                                <polygon points="32,22 32,58 62,40" fill="rgba(255,255,255,.6)"/>
+                            </svg>
+                        </div>
+                        <div class="tv-scene" id="tvScene0" style="opacity:1;">
+                            <img src="sir.png" class="tv-scene-img" alt="">
+                        </div>
+                        <div class="tv-scene" id="tvScene1" style="opacity:0;">
+                            <img src="bnwthess1.jpg" class="tv-scene-img" alt="">
+                        </div>
+                        <div class="tv-scene" id="tvScene2" style="opacity:0;">
+                            <img src="theobserver.png" class="tv-scene-logo" alt="" style="filter:invert(1);">
+                        </div>
+                    </div>
+                    <div class="tv-controls">
+                        <div class="tv-knob tv-vol-knob" id="tvVolKnob" title="Volume">
+                            <div class="tv-knob-indicator"></div>
+                        </div>
+                        <div class="tv-knob tv-knob-small tv-power-btn" id="tvPowerBtn" title="Stop / Start"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tv-replay-hint" id="tvReplayHint" style="opacity:0;">click to replay</div>
+        </div>
     </div>
 </section>
 
@@ -2485,11 +2503,9 @@ function init3DModel() {
 function initBrainModel() {
     const container = document.getElementById('brainModelContainer');
     const canvas = document.getElementById('brainCanvas');
-    if (!container || !canvas) return;
-    let width = container.clientWidth;
-    let height = container.clientHeight;
-    if (width < 10) width = 400;
-    if (height < 10) height = 400;
+    if (!container || !canvas) { console.warn('Brain: container or canvas not found'); return; }
+    const width = 400;
+    const height = 400;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
     camera.position.set(0, 0, 3.5);
@@ -2513,13 +2529,24 @@ function initBrainModel() {
         const box = new THREE.Box3().setFromObject(model);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
+        console.log('Brain loaded, size:', size, 'center:', center);
         model.position.x = -center.x; model.position.y = -center.y; model.position.z = -center.z;
-        const scale = 2.0 / Math.max(size.x, size.y, size.z);
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = maxDim > 0 ? 2.0 / maxDim : 1;
         model.scale.setScalar(scale);
+        // Ensure material is visible
+        model.traverse(function(child) {
+            if (child.isMesh) {
+                child.material.side = THREE.DoubleSide;
+                if (!child.material.color) child.material.color = new THREE.Color(0xcccccc);
+            }
+        });
         scene.add(model);
-        renderer.compile(scene, camera);
         renderer.render(scene, camera);
-    }, undefined, function(e) { console.error('Brain load error:', e); });
+        console.log('Brain rendered');
+    }, function(xhr) {
+        console.log('Brain loading: ' + (xhr.loaded / xhr.total * 100).toFixed(0) + '%');
+    }, function(e) { console.error('Brain load error:', e); });
     var brainVisible = false;
     new IntersectionObserver(function(entries) {
         brainVisible = entries[0].isIntersecting;
