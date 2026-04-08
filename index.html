@@ -1020,7 +1020,7 @@ h1, h2, h3, h4,
 /* Godot Section */
 .godot-section {
     position: relative;
-    padding: 12rem 5vw;
+    padding: 20rem 5vw 12rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1595,6 +1595,7 @@ h1, h2, h3, h4,
     display: flex;
     align-items: flex-end;
     padding: 6rem 7vw;
+    margin-top: 6rem;
     overflow: hidden;
     contain: layout style paint;
 }
@@ -1818,9 +1819,10 @@ h1, h2, h3, h4,
    RESEARCH SECTION  (#research)
    ============================================================ */
 .research-section {
-    padding: 10rem 7vw;
+    padding: 14rem 7vw 10rem;
     border-top: none;
     position: relative;
+    contain: layout style paint;
 }
 .research-layout {
     display: grid;
@@ -1924,6 +1926,7 @@ h1, h2, h3, h4,
     display: flex;
     flex-direction: column;
     justify-content: center;
+    contain: layout style paint;
 }
 .contact-container { position: relative; z-index: 1; }
 .contact-info { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
@@ -1966,6 +1969,8 @@ h1, h2, h3, h4,
     white-space: nowrap;
     background: var(--bg);
     padding: 2rem 4rem;
+    transform: translateZ(0);
+    will-change: transform;
 }
 @media (max-width: 768px) {
     .contact-section { padding: 5rem 5vw 3rem; }
@@ -3778,6 +3783,16 @@ function initHeader() {
             });
         }, { threshold: 0.05 });
         vidObs.observe(vid);
+    }
+    // Pause marquee when not visible
+    var marquee = document.querySelector('.marquee-track');
+    if (marquee) {
+        var mqObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                marquee.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+            });
+        }, { threshold: 0 });
+        mqObs.observe(marquee);
     }
 })();
 
