@@ -1152,6 +1152,9 @@ h1, h2, h3, h4,
     .panel-3-text .panel-follow-link { width: 100%; text-align: center; justify-content: center; padding: 1rem 1.5rem; font-size: .7rem; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.5); }
     .panel-3-lilith .lilith-inline-comic { display: none; }
     .h-panel-counter { display: none; }
+    .h-panel.h-panel-3 .panel-3-text { margin-top: 25vh; }
+    .h-panel-comic .comic-narration[style*="top:3rem"] { top: 15vh !important; }
+    .comic-narration p { font-size: .85rem !important; }
 }
 
 /* ============================================================
@@ -1844,6 +1847,7 @@ h1, h2, h3, h4,
 }
 
 @media (max-width: 768px) {
+    .skgchess-bg-video { object-fit: cover; object-position: center; transform: scale(1.15); }
     .research-section { padding: 6rem 5vw; }
     .research-layout { grid-template-columns: 1fr; }
     .research-media-col { position: relative; top: 0; }
