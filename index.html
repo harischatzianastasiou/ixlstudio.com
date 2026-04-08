@@ -1232,6 +1232,7 @@ h1, h2, h3, h4,
     .comic-narration p { font-size: .85rem !important; }
     .h-panel-comic { padding-left: 5vw !important; padding-right: 5vw !important; justify-content: center !important; }
     .comic-narration { text-align: left; }
+    .h-panel-comic:has(.panel-3-lilith) .comic-narration { margin-left: 3vw; }
     .tv-section { padding-top: 8rem !important; }
     .tv-header { margin-bottom: 3rem !important; }
     .tv-header h2 { margin-bottom: 2rem !important; }
@@ -4102,25 +4103,28 @@ function initSectionReveals() {
 
     // ─── Godot section: each element reveals individually with stagger ───
     var godotEls = document.querySelectorAll('.godot-reveal');
+    var isMobileGodot = window.matchMedia('(max-width: 768px)').matches;
     if (godotEls.length) {
-        gsap.set(godotEls, { opacity: 0, y: 35, scale: 0.95 });
+        gsap.set(godotEls, { opacity: 0, y: isMobileGodot ? 20 : 35, scale: isMobileGodot ? 1 : 0.95 });
         godotEls.forEach(function(el, i) {
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
-                duration: 1.2,
-                delay: i * 0.18,
+                duration: isMobileGodot ? 0.8 : 1.2,
+                delay: i * (isMobileGodot ? 0.1 : 0.18),
                 ease: 'power2.out',
                 force3D: true,
                 scrollTrigger: { trigger: '.h-panel-godot', start: 'top 75%', toggleActions: 'play none none none' }
             });
         });
-        // Subtle parallax float on the logo
-        var godotLogo = document.querySelector('.godot-logo');
-        if (godotLogo) {
-            gsap.to(godotLogo, {
-                y: -20, ease: 'none',
-                scrollTrigger: { trigger: '.h-panel-godot', start: 'top bottom', end: 'bottom top', scrub: true }
-            });
+        // Subtle parallax float on the logo (desktop only)
+        if (!window.matchMedia('(max-width: 768px)').matches) {
+            var godotLogo = document.querySelector('.godot-logo');
+            if (godotLogo) {
+                gsap.to(godotLogo, {
+                    y: -20, ease: 'none',
+                    scrollTrigger: { trigger: '.h-panel-godot', start: 'top bottom', end: 'bottom top', scrub: true }
+                });
+            }
         }
     }
 
