@@ -2316,9 +2316,6 @@ h1, h2, h3, h4,
                             <img src="sir.png" class="tv-scene-img" alt="" decoding="async">
                         </div>
                         <div class="tv-scene" id="tvScene2" style="opacity:0;">
-                            <img src="bnwthess1.jpg" class="tv-scene-img" alt="">
-                        </div>
-                        <div class="tv-scene" id="tvScene3" style="opacity:0;">
                             <img src="theobserver.png" class="tv-scene-logo" alt="" style="filter:invert(1); transform:translateZ(0);">
                         </div>
                     </div>
@@ -3583,7 +3580,7 @@ function initLoader() {
     }
 
     // Preload all key assets during intro
-    var preloadImages = ['priest.png', 'sir.png', 'bnwthess1.jpg', 'theobserver.png', 'IXLNEW.png', 'godot.png', 'hc2.png'];
+    var preloadImages = ['priest.png', 'sir.png', 'theobserver.png', 'IXLNEW.png', 'godot.png', 'hc2.png'];
     preloadImages.forEach(function(src) {
         var img = new Image();
         img.src = src;
@@ -3794,7 +3791,7 @@ function initTrailerTV() {
     if (!tv || !screen || !playOverlay) return;
 
     var scenes = [];
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 3; i++) {
         var el = document.getElementById('tvScene' + i);
         if (el) scenes.push(el);
     }
