@@ -18,6 +18,7 @@
 <link rel="apple-touch-icon" href="hc.png">
 <link rel="preload" as="image" href="hc2.png" fetchpriority="high">
 
+<link rel="preload" as="image" href="sir.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,700;9..40,900&family=Bangers&family=Michroma&family=Marcellus&family=Megrim&family=Josefin+Sans:ital,wght@0,100;0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
@@ -90,7 +91,13 @@ h1, h2, h3, h4,
 .articles-section,
 .research-section,
 .contact-section,
-.marquee-track {
+.marquee-track,
+.godot-section,
+.tv-section,
+.skgchess-section,
+.comic-narration,
+.panel-2-model,
+.panel-3-lilith {
     transform: translateZ(0);
     backface-visibility: hidden;
 }
@@ -643,6 +650,8 @@ h1, h2, h3, h4,
     flex-direction: column;
     align-items: center;
     gap: .6rem;
+    transform: translateZ(0);
+    will-change: transform;
 }
 .tv-frame {
     position: relative;
@@ -813,6 +822,8 @@ h1, h2, h3, h4,
     position: absolute; inset: 0;
     opacity: .7;
     filter: sepia(.3) contrast(.9) brightness(.8);
+    transform: translateZ(0);
+    will-change: opacity;
 }
 .tv-scene-img-contain {
     object-fit: contain;
@@ -1553,7 +1564,9 @@ h1, h2, h3, h4,
     object-fit: cover;
     object-position: center right;
     z-index: 0;
-    filter: grayscale(1) brightness(.7);
+    opacity: .5;
+    transform: translateZ(0);
+    will-change: transform;
 }
 .skgchess-overlay {
     position: absolute;
@@ -1785,6 +1798,7 @@ h1, h2, h3, h4,
     font-style: normal;
     transform: skewX(-5deg);
     -webkit-text-stroke: 1px rgba(255,255,255,.08);
+    will-change: opacity, transform;
 }
 .research-list { list-style: none; counter-reset: reading; position: relative; background: var(--bg); padding: 0 2rem; margin: 0 -2rem; }
 .research-list-item {
@@ -1946,7 +1960,7 @@ h1, h2, h3, h4,
 /* ============================================================
    SCROLL REVEAL (data-reveal elements)
    ============================================================ */
-[data-reveal] { opacity: 0; transform: translateY(40px); }
+[data-reveal] { opacity: 0; transform: translateY(40px); will-change: opacity, transform; }
 [data-reveal].is-revealed { opacity: 1; transform: none; transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
 [data-reveal][data-delay="1"] { transition-delay: .1s !important; }
 [data-reveal][data-delay="2"] { transition-delay: .2s !important; }
@@ -2232,7 +2246,7 @@ h1, h2, h3, h4,
 <!-- ═══════════════════════════════════════════════
      TV TRAILER
 ═══════════════════════════════════════════════ -->
-<section class="tv-section" data-reveal>
+<section class="tv-section">
     <div class="tv-section-inner">
         <div class="trailer-tv" id="trailerTv">
             <div class="tv-frame">
@@ -2248,7 +2262,7 @@ h1, h2, h3, h4,
                             </svg>
                         </div>
                         <div class="tv-scene" id="tvScene0" style="opacity:1;">
-                            <img src="sir.png" class="tv-scene-img" alt="">
+                            <img src="sir.png" class="tv-scene-img" alt="" decoding="async" loading="eager">
                         </div>
                         <div class="tv-scene" id="tvScene1" style="opacity:0;">
                             <img src="bnwthess1.jpg" class="tv-scene-img" alt="">
@@ -2276,7 +2290,7 @@ h1, h2, h3, h4,
 <section id="devlog" class="skgchess-section post-horizontal-pattern">
     <video class="skgchess-bg-video" src="show12.mp4" poster="bnwthess1.jpg" muted loop playsinline preload="auto" autoplay></video>
     <div class="skgchess-overlay"></div>
-    <div class="skgchess-content" data-reveal>
+    <div class="skgchess-content">
         <div class="section-tag">03 — Previously</div>
         <h2 class="section-title">SKGCHESS.</h2>
         <p class="skgchess-desc">Previous Project.</p>
@@ -3516,6 +3530,13 @@ function initLoader() {
         requestAnimationFrame(function() { ScrollTrigger.refresh(true); });
         return;
     }
+
+    // Preload all key assets during intro
+    var preloadImages = ['priest.png', 'sir.png', 'bnwthess1.jpg', 'theobserver.png', 'IXLNEW.png', 'godot.png', 'hc2.png'];
+    preloadImages.forEach(function(src) {
+        var img = new Image();
+        img.src = src;
+    });
 
     const tl = gsap.timeline({
         onComplete: function() {
