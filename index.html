@@ -1334,8 +1334,6 @@ h1, h2, h3, h4,
     .h-panel-comic #brainModelContainer { opacity: 0.08 !important; }
     .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
-    .support-ticket { background: var(--accent) !important; padding: .9rem 1.8rem !important; }
-    .support-ticket::before, .support-ticket::after, .support-ticket .ticket-dash-right { display: none !important; }
     .panel-cta-secondary { font-size: .6rem !important; }
     .panel-follow-links { margin-top: 2rem !important; }
     .tv-section { padding-top: 8rem !important; margin-top: 0 !important; }
@@ -3073,6 +3071,24 @@ if (document.readyState === 'loading') {
 <script>
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
+// On mobile, scroll happens inside .page-wrapper, not window
+if (window.matchMedia('(max-width: 768px)').matches) {
+    var pw = document.querySelector('.page-wrapper');
+    if (pw) {
+        ScrollTrigger.defaults({ scroller: pw });
+        ScrollTrigger.scrollerProxy(pw, {
+            scrollTop: function(value) {
+                if (arguments.length) pw.scrollTop = value;
+                return pw.scrollTop;
+            },
+            getBoundingClientRect: function() {
+                return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+            }
+        });
+        pw.addEventListener('scroll', function() { ScrollTrigger.update(); }, { passive: true });
+    }
+}
+
 // Scroll helpers
 function getScrollRoot() { return null; }
 function getScrollY() { return window.scrollY; }
@@ -4295,11 +4311,12 @@ function initHorizontalScroll() {
 // ─── Section Reveals ──────────────────────────
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
+    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 40%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
             { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', force3D: true,
-              scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } }
+              scrollTrigger: { trigger: el, start: revealStart, toggleActions: 'play none none none' } }
         );
     });
 
@@ -4378,7 +4395,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = 'top 75%';
+                stOpts.start = isMobileH ? 'top 40%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
