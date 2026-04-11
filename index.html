@@ -1050,6 +1050,52 @@ h1, h2, h3, h4,
     color: #000;
 }
 
+/* Support ticket button */
+.support-ticket {
+    position: relative;
+    padding: 1.1rem 3rem !important;
+    background:
+        radial-gradient(circle at 0% 50%, var(--bg) 8px, transparent 8px),
+        radial-gradient(circle at 100% 50%, var(--bg) 8px, transparent 8px),
+        var(--accent) !important;
+    border: none !important;
+    overflow: hidden;
+}
+.support-ticket::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 15%;
+    height: 70%;
+    border-left: 1px dashed rgba(0,0,0,.2);
+    box-shadow: calc(100% - 36px) 0 0 0 transparent;
+    border-right: none;
+    z-index: 1;
+}
+.support-ticket .ticket-dash-right {
+    position: absolute;
+    right: 18px;
+    top: 15%;
+    height: 70%;
+    border-left: 1px dashed rgba(0,0,0,.2);
+    z-index: 1;
+}
+.support-ticket::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 40%, #fff) 35%, rgba(255,255,255,.08) 50%, transparent 100%);
+    animation: ticket-glow 4s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+@keyframes ticket-glow {
+    0%   { left: 100%; }
+    100% { left: -60%; }
+}
+
 /* Godot Section */
 .section-particles {
     position: absolute;
@@ -1290,9 +1336,9 @@ h1, h2, h3, h4,
     .panel-follow-links { margin-top: 2rem !important; }
     .tv-section { padding-top: 8rem !important; margin-top: 0 !important; }
     .tv-header { margin-bottom: 3rem !important; }
-    .contact-socials { gap: 2rem !important; }
-    .contact-section { min-height: auto !important; padding: 5rem 5vw !important; }
-    .contact-big-letter { display: none !important; }
+    .contact-socials { gap: 2rem !important; justify-content: center !important; width: 100% !important; }
+    .contact-section { min-height: auto !important; padding: 5rem 5vw !important; align-items: center !important; text-align: center !important; }
+    .contact-big-letter { font-size: clamp(4rem, 15vw, 8rem) !important; bottom: auto !important; top: 45% !important; right: 50% !important; transform: translateX(50%) !important; }
     .support-section { padding: 6rem 5vw !important; }
     .support-text { font-size: .85rem !important; }
     .godot-section-inner { transform: scale(0.85); }
@@ -2388,7 +2434,7 @@ h1, h2, h3, h4,
                 <div class="panel-3-text" style="z-index:4; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center;">
                     <h2 class="section-title observer-hero-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; color:var(--accent); opacity:1; white-space:nowrap; -webkit-text-fill-color:var(--accent);">THE OBSERVER.</h2>
                     <div class="panel-follow-links" style="margin-top:4rem; display:flex; flex-direction:column; align-items:center; gap:.8rem;">
-                        <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
+                        <a href="#" class="panel-bubble-btn panel-cta-primary support-ticket">Wishlist on Steam<span class="ticket-dash-right"></span></a>
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
                     </div>
                     <div class="h-panel-counter" style="position:absolute; bottom:8rem; left:8vw;">01 / 05</div>
@@ -2525,7 +2571,7 @@ h1, h2, h3, h4,
         <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
         <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
         <div class="support-links" style="display:flex; flex-direction:column; align-items:center; gap:.8rem; margin-top:1.5rem;">
-            <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
+            <a href="#" class="panel-bubble-btn panel-cta-primary support-ticket">Travel back in time<span class="ticket-dash-right"></span></a>
             <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
         </div>
     </div>
