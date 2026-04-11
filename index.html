@@ -1025,7 +1025,20 @@ h1, h2, h3, h4,
     border: 1px solid var(--accent);
     color: #000;
     filter: brightness(1.2);
+    position: relative;
+    overflow: hidden;
     transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+.panel-cta-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 40%, #fff) 35%, rgba(255,255,255,.08) 50%, transparent 100%);
+    animation: ticket-glow 4s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 .panel-cta-secondary {
     font-size: .65rem;
@@ -1304,7 +1317,7 @@ h1, h2, h3, h4,
     .h-scroll-track { flex-direction: column; height: auto; }
     .h-panel { flex: none; width: 100%; height: auto; min-height: 60svh; padding: 0 8vw; display: flex; align-items: center; justify-content: center; }
     .h-panel-comic { min-height: 40svh !important; }
-    .h-panel-3 + .h-panel-comic { margin-top: 15vh !important; }
+    .h-panel-3 + .h-panel-comic { margin-top: 22vh !important; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
     .trailer-tv { width: 100%; }
     .tv-frame { width: clamp(260px, 80vw, 360px); margin: 0 auto; }
@@ -4298,7 +4311,7 @@ function initHorizontalScroll() {
 // ─── Section Reveals ──────────────────────────
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
-    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 85%' : 'top 88%';
+    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 40%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
@@ -4317,8 +4330,8 @@ function initSectionReveals() {
 
         function checkNarrations() {
             var vh = window.innerHeight;
-            var center = vh * 0.5;
-            var zone = vh * 0.5;
+            var center = vh * 0.4;
+            var zone = vh * 0.4;
             narrations.forEach(function(n) {
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
@@ -4379,7 +4392,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = isMobileH ? 'top 85%' : 'top 75%';
+                stOpts.start = isMobileH ? 'top 40%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
