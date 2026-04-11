@@ -1334,6 +1334,8 @@ h1, h2, h3, h4,
     .h-panel-comic #brainModelContainer { opacity: 0.08 !important; }
     .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
+    .support-ticket { background: var(--accent) !important; padding: .9rem 1.8rem !important; }
+    .support-ticket::before, .support-ticket::after, .support-ticket .ticket-dash-right { display: none !important; }
     .panel-cta-secondary { font-size: .6rem !important; }
     .panel-follow-links { margin-top: 2rem !important; }
     .tv-section { padding-top: 8rem !important; margin-top: 0 !important; }
@@ -4304,26 +4306,37 @@ function initSectionReveals() {
     if (isMobileH) {
         // Mobile: chars fade in when narration hits viewport center
         var narrations = document.querySelectorAll('.h-panel-comic .comic-narration');
-        var wrapper = document.querySelector('.page-wrapper');
-        var halfVh = Math.round(window.innerHeight * 0.35);
-        var obsOpts = { root: wrapper, rootMargin: '-' + halfVh + 'px 0px -' + halfVh + 'px 0px', threshold: 0 };
-        var narrationObs = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    // stagger each char
-                    var chars = entry.target.querySelectorAll('.char');
-                    chars.forEach(function(ch, i) {
-                        ch.style.transitionDelay = (i * 0.03) + 's';
-                    });
+        var wrapper = document.querySelector('.page-wrapper') || window;
+        var scrollEl = wrapper === window ? document.documentElement : wrapper;
+
+        function checkNarrations() {
+            var vh = window.innerHeight;
+            var center = vh / 2;
+            var zone = vh * 0.3; // trigger zone: center ± 30%
+            narrations.forEach(function(n) {
+                var rect = n.getBoundingClientRect();
+                var mid = rect.top + rect.height / 2;
+                if (mid > center - zone && mid < center + zone) {
+                    if (!n.classList.contains('in-view')) {
+                        n.classList.add('in-view');
+                        var chars = n.querySelectorAll('.char');
+                        chars.forEach(function(ch, i) {
+                            ch.style.transitionDelay = (i * 0.03) + 's';
+                        });
+                    }
                 } else {
-                    entry.target.classList.remove('in-view');
-                    var chars = entry.target.querySelectorAll('.char');
-                    chars.forEach(function(ch) { ch.style.transitionDelay = '0s'; });
+                    if (n.classList.contains('in-view')) {
+                        n.classList.remove('in-view');
+                        var chars = n.querySelectorAll('.char');
+                        chars.forEach(function(ch) { ch.style.transitionDelay = '0s'; });
+                    }
                 }
             });
-        }, obsOpts);
-        narrations.forEach(function(n) { narrationObs.observe(n); });
+        }
+
+        var scrollTarget = wrapper === window ? window : wrapper;
+        scrollTarget.addEventListener('scroll', checkNarrations, { passive: true });
+        checkNarrations();
     }
     if (!isMobileH && window.hScrollTween) {
         var comicPanels = document.querySelectorAll('.h-panel-comic');
