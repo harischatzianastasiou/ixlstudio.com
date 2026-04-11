@@ -1322,7 +1322,7 @@ h1, h2, h3, h4,
     .panel-3-text .panel-follow-link { width: 100%; text-align: center; justify-content: center; padding: 1rem 1.5rem; font-size: .7rem; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.5); }
     .panel-3-lilith .lilith-inline-comic { display: none; }
     .h-panel-counter { display: none; }
-    .h-panel.h-panel-3 .panel-3-text { margin-top: 25vh; }
+    .h-panel.h-panel-3 .panel-3-text { margin-top: 40vh; }
     .h-panel-comic .comic-narration[style*="top:3rem"] { top: 15vh !important; }
     .comic-narration p { font-size: clamp(.85rem, 4vw, 1.2rem) !important; white-space: normal !important; }
     .comic-narration { text-align: center; max-width: 90vw; }
@@ -4315,7 +4315,7 @@ function initHorizontalScroll() {
 // ─── Section Reveals ──────────────────────────
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
-    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 40%' : 'top 88%';
+    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 95%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
@@ -4336,8 +4336,8 @@ function initSectionReveals() {
 
         function checkNarrations() {
             var vh = window.innerHeight;
-            var center = vh * 0.4; // slightly above middle
-            var zone = vh * 0.3;
+            var center = vh * 0.5;
+            var zone = vh * 0.5; // full viewport
             narrations.forEach(function(n) {
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
@@ -4399,7 +4399,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = isMobileH ? 'top 40%' : 'top 75%';
+                stOpts.start = isMobileH ? 'top 95%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
