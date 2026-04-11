@@ -2460,7 +2460,7 @@ h1, h2, h3, h4,
             <!-- Panel 3 ─ Sentence 2 + Lilith model (background) -->
             <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center;">
                 <div class="comic-narration">
-                    <p>From the edges, a signal is sent back in time.</p>
+                    <p>From the edges of the system,<br>a signal is sent back in time.</p>
                 </div>
                 <div class="panel-3-lilith" style="position:absolute; right:10vw; top:50%; transform:translateY(-50%); z-index:1; opacity:0.15;">
                     <div class="panel-3-lilith-inner">
@@ -3928,14 +3928,18 @@ function revealHero() {
 function initHorizontalScroll() {
     // Split sentence chars first (needed for both desktop and mobile)
     document.querySelectorAll('.h-panel-comic .comic-narration p').forEach(function(p) {
-        var text = p.textContent;
-        var words = text.split(' ');
-        p.innerHTML = words.map(function(word) {
-            var chars = word.split('').map(function(c) {
-                return '<span class="char">' + c + '</span>';
-            }).join('');
-            return '<span style="white-space:nowrap;display:inline-block">' + chars + '</span>';
-        }).join('<span class="char">&nbsp;</span>');
+        var html = p.innerHTML;
+        var parts = html.split(/<br\s*\/?>/i);
+        p.innerHTML = parts.map(function(part) {
+            var text = part.replace(/<[^>]+>/g, '').trim();
+            var words = text.split(' ');
+            return words.map(function(word) {
+                var chars = word.split('').map(function(c) {
+                    return '<span class="char">' + c + '</span>';
+                }).join('');
+                return '<span style="white-space:nowrap;display:inline-block">' + chars + '</span>';
+            }).join('<span class="char">&nbsp;</span>');
+        }).join('<br>');
     });
 
     if (window.matchMedia('(max-width: 768px)').matches) return;
