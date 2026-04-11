@@ -2582,7 +2582,7 @@ h1, h2, h3, h4,
 ═══════════════════════════════════════════════ -->
 <section id="wishlist" class="support-section">
     <div class="support-inner" data-reveal>
-        <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">Join the signal.</h2>
+        <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:900; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">Join the signal.</h2>
         <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
         <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
         <div class="support-links" style="display:flex; flex-direction:column; align-items:center; gap:.8rem; margin-top:1.5rem;">
@@ -4311,7 +4311,8 @@ function initHorizontalScroll() {
 // ─── Section Reveals ──────────────────────────
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
-    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 40%' : 'top 88%';
+    var isMob = window.matchMedia('(max-width: 768px)').matches;
+    var revealStart = isMob ? 'top 10%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
@@ -4319,6 +4320,9 @@ function initSectionReveals() {
               scrollTrigger: { trigger: el, start: revealStart, toggleActions: 'play none none none' } }
         );
     });
+    if (isMob) {
+        setTimeout(function() { ScrollTrigger.refresh(true); }, 500);
+    }
 
     // ─── Horizontal panel reveals (sentences + godot) — triggered when panel is centered ───
     var isMobileH = window.matchMedia('(max-width: 768px)').matches;
@@ -4330,8 +4334,8 @@ function initSectionReveals() {
 
         function checkNarrations() {
             var vh = window.innerHeight;
-            var center = vh * 0.4;
-            var zone = vh * 0.4;
+            var center = vh * 0.1;
+            var zone = vh * 0.15;
             narrations.forEach(function(n) {
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
@@ -4392,7 +4396,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = isMobileH ? 'top 40%' : 'top 75%';
+                stOpts.start = isMobileH ? 'top 10%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
