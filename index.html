@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>The Observer - ixlstudio.com</title>
 
 <script>
@@ -1013,7 +1013,7 @@ h1, h2, h3, h4,
     color: #000;
     background: var(--accent);
     border: 1px solid var(--accent);
-    border-radius: 0;
+    border-radius: 999px;
     cursor: none;
     transition: background .3s, color .3s, border-color .3s;
 }
@@ -1021,6 +1021,10 @@ h1, h2, h3, h4,
     border-radius: 0;
     padding: 1.1rem 2.4rem;
     font-size: .82rem;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #000;
+    transition: background .3s ease, color .3s ease, border-color .3s ease;
 }
 .panel-cta-secondary {
     font-size: .65rem;
@@ -1038,6 +1042,11 @@ h1, h2, h3, h4,
 .panel-bubble-btn:hover {
     background: color-mix(in srgb, var(--accent) 70%, #000);
     border-color: color-mix(in srgb, var(--accent) 70%, #000);
+    color: #000;
+}
+.panel-cta-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
     color: #000;
 }
 
@@ -1249,6 +1258,7 @@ h1, h2, h3, h4,
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
     .h-panel { flex: none; width: 100%; height: auto; min-height: 60svh; padding: 0 8vw; display: flex; align-items: center; justify-content: center; }
+    .h-panel-comic { min-height: 40svh !important; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
     .trailer-tv { width: 100%; }
     .tv-frame { width: clamp(260px, 80vw, 360px); margin: 0 auto; }
@@ -1273,7 +1283,7 @@ h1, h2, h3, h4,
     .h-panel-comic .panel-2-model,
     .h-panel-comic .panel-3-lilith { position: absolute !important; top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%,-50%) !important; opacity: 0.08 !important; width: 60vw !important; max-width: 300px !important; }
     .h-panel-comic #brainModelContainer { opacity: 0.08 !important; }
-    .observer-hero-title { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+    .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; }
     .panel-cta-secondary { font-size: .6rem !important; }
     .panel-follow-links { margin-top: 2rem !important; }
