@@ -1318,7 +1318,7 @@ h1, h2, h3, h4,
     .h-panel { flex: none; width: 100%; height: auto; min-height: 60svh; padding: 0 8vw; display: flex; align-items: center; justify-content: center; }
     .h-panel-comic { min-height: 30svh !important; }
     .h-panel-comic + .h-panel-comic { margin-top: 10vh !important; }
-    .h-panel-comic + .h-panel-comic + .h-panel-comic { margin-top: 15vh !important; }
+    .h-panel-comic + .h-panel-comic + .h-panel-comic { margin-top: 3vh !important; }
     .h-panel-godot { min-height: 30svh !important; margin-top: -10vh !important; }
     .h-panel-3 + .h-panel-comic { margin-top: 22vh !important; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
@@ -4316,7 +4316,7 @@ function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
     var isMob = window.matchMedia('(max-width: 768px)').matches;
     var revealStart = isMob ? 'top 25%' : 'top 88%';
-    var revealMid = isMob ? 'top 50%' : 'top 88%';
+    var revealMid = isMob ? 'top 65%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         var start = (isMob && el.hasAttribute('data-reveal-mid')) ? revealMid : revealStart;
         gsap.fromTo(el,
