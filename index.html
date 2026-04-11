@@ -2581,7 +2581,7 @@ h1, h2, h3, h4,
      SUPPORT
 ═══════════════════════════════════════════════ -->
 <section id="wishlist" class="support-section">
-    <div class="support-inner" data-reveal>
+    <div class="support-inner" data-reveal data-reveal-mid>
         <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:900; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">Join the signal.</h2>
         <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
         <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
@@ -4312,8 +4312,8 @@ function initHorizontalScroll() {
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
     var isMob = window.matchMedia('(max-width: 768px)').matches;
-    var revealStart = isMob ? 'top 20%' : 'top 88%';
-    var revealMid = isMob ? 'top 50%' : 'top 88%';
+    var revealStart = isMob ? 'top 25%' : 'top 88%';
+    var revealMid = isMob ? 'top 60%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         var start = (isMob && el.hasAttribute('data-reveal-mid')) ? revealMid : revealStart;
         gsap.fromTo(el,
@@ -4336,9 +4336,10 @@ function initSectionReveals() {
 
         function checkNarrations() {
             var vh = window.innerHeight;
-            var center = vh * 0.2;
-            var zone = vh * 0.2;
-            narrations.forEach(function(n) {
+            narrations.forEach(function(n, idx) {
+                var triggerPct = (idx === 1) ? 0.3 : 0.25;
+                var center = vh * triggerPct;
+                var zone = vh * 0.2;
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
                 if (mid > center - zone && mid < center + zone) {
@@ -4398,7 +4399,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = isMobileH ? 'top 20%' : 'top 75%';
+                stOpts.start = isMobileH ? 'top 25%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
