@@ -2584,7 +2584,7 @@ h1, h2, h3, h4,
      SUPPORT
 ═══════════════════════════════════════════════ -->
 <section id="wishlist" class="support-section">
-    <div class="support-inner" data-reveal data-reveal-mid>
+    <div class="support-inner" data-reveal data-reveal-now>
         <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:900; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">Join the signal.</h2>
         <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
         <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
@@ -4318,7 +4318,10 @@ function initSectionReveals() {
     var revealStart = isMob ? 'top 25%' : 'top 88%';
     var revealMid = isMob ? 'top 65%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
-        var start = (isMob && el.hasAttribute('data-reveal-mid')) ? revealMid : revealStart;
+        var start;
+        if (isMob && el.hasAttribute('data-reveal-now')) { start = 'top 100%'; }
+        else if (isMob && el.hasAttribute('data-reveal-mid')) { start = revealMid; }
+        else { start = revealStart; }
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
             { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', force3D: true,
@@ -4340,7 +4343,7 @@ function initSectionReveals() {
         function checkNarrations() {
             var vh = window.innerHeight;
             narrations.forEach(function(n, idx) {
-                var triggerPct = 0.3;
+                var triggerPct = (idx === 0) ? 0.35 : 0.4;
                 var center = vh * triggerPct;
                 var zone = vh * 0.2;
                 var rect = n.getBoundingClientRect();
