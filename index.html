@@ -2538,10 +2538,10 @@ h1, h2, h3, h4,
         <div class="tv-planet" style="width:16px; height:16px; top:50%; left:5%; border:1px solid rgba(255,255,255,.1); background:transparent;"></div>
     </div>
     <div class="tv-section-inner">
-        <div class="tv-header" data-reveal style="text-align:center; margin-bottom:28rem;">
+        <div class="tv-header" data-reveal data-reveal-mid style="text-align:center; margin-bottom:28rem;">
             <p style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.15em; font-size:clamp(1rem, 2vw, 1.6rem); color:var(--accent);">Observe</p>
         </div>
-        <div class="trailer-tv" id="trailerTv" data-reveal>
+        <div class="trailer-tv" id="trailerTv" data-reveal data-reveal-mid>
             <div class="tv-frame">
                 <div class="tv-bezel">
                     <div class="tv-screen" id="tvScreen">
@@ -4313,11 +4313,13 @@ function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
     var isMob = window.matchMedia('(max-width: 768px)').matches;
     var revealStart = isMob ? 'top 20%' : 'top 88%';
+    var revealMid = isMob ? 'top 50%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
+        var start = (isMob && el.hasAttribute('data-reveal-mid')) ? revealMid : revealStart;
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
             { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', force3D: true,
-              scrollTrigger: { trigger: el, start: revealStart, toggleActions: 'play none none none' } }
+              scrollTrigger: { trigger: el, start: start, toggleActions: 'play none none none' } }
         );
     });
     if (isMob) {
