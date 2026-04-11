@@ -1316,7 +1316,8 @@ h1, h2, h3, h4,
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
     .h-panel { flex: none; width: 100%; height: auto; min-height: 60svh; padding: 0 8vw; display: flex; align-items: center; justify-content: center; }
-    .h-panel-comic { min-height: 40svh !important; }
+    .h-panel-comic { min-height: 30svh !important; }
+    .h-panel-godot { min-height: 30svh !important; margin-top: -10vh !important; }
     .h-panel-3 + .h-panel-comic { margin-top: 22vh !important; }
     .h-panel-2 { flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
     .trailer-tv { width: 100%; }
@@ -1348,12 +1349,12 @@ h1, h2, h3, h4,
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
     .panel-cta-secondary { font-size: .6rem !important; }
     .panel-follow-links { margin-top: 2rem !important; }
-    .tv-section { padding-top: 8rem !important; margin-top: 0 !important; }
+    .tv-section { padding-top: 4rem !important; margin-top: -5vh !important; }
     .tv-header { margin-bottom: 3rem !important; }
     .contact-socials { gap: 2rem !important; justify-content: center !important; width: 100% !important; }
     .contact-section { min-height: auto !important; padding: 5rem 5vw !important; align-items: center !important; text-align: center !important; }
     .contact-big-letter { display: none !important; }
-    .support-section { padding: 6rem 5vw !important; }
+    .support-section { padding: 3rem 5vw !important; margin-top: -5vh !important; }
     .support-text { font-size: .85rem !important; }
     .godot-section-inner { transform: scale(0.85); }
 }
@@ -4313,7 +4314,7 @@ function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
     var isMob = window.matchMedia('(max-width: 768px)').matches;
     var revealStart = isMob ? 'top 25%' : 'top 88%';
-    var revealMid = isMob ? 'top 60%' : 'top 88%';
+    var revealMid = isMob ? 'top 50%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         var start = (isMob && el.hasAttribute('data-reveal-mid')) ? revealMid : revealStart;
         gsap.fromTo(el,
@@ -4337,7 +4338,7 @@ function initSectionReveals() {
         function checkNarrations() {
             var vh = window.innerHeight;
             narrations.forEach(function(n, idx) {
-                var triggerPct = (idx === 1) ? 0.3 : 0.25;
+                var triggerPct = 0.3;
                 var center = vh * triggerPct;
                 var zone = vh * 0.2;
                 var rect = n.getBoundingClientRect();
