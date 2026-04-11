@@ -580,7 +580,7 @@ h1, h2, h3, h4,
 }
 .comic-narration p .char {
     display: inline-block;
-    opacity: 0.1;
+    opacity: 0.25;
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
@@ -1019,11 +1019,12 @@ h1, h2, h3, h4,
 }
 .panel-cta-primary {
     border-radius: 0;
-    padding: 1.1rem 2.4rem;
-    font-size: .82rem;
+    padding: 1.2rem 2.8rem;
+    font-size: 1rem;
     background: var(--accent);
     border: 1px solid var(--accent);
     color: #000;
+    filter: brightness(1.2);
     transition: background .3s ease, color .3s ease, border-color .3s ease;
 }
 .panel-cta-secondary {
@@ -1053,7 +1054,7 @@ h1, h2, h3, h4,
 /* Support ticket button */
 .support-ticket {
     position: relative;
-    padding: 1.1rem 3rem !important;
+    padding: 1.2rem 3.2rem !important;
     background:
         radial-gradient(circle at 0% 50%, var(--bg) 8px, transparent 8px),
         radial-gradient(circle at 100% 50%, var(--bg) 8px, transparent 8px),
@@ -1065,19 +1066,17 @@ h1, h2, h3, h4,
     content: '';
     position: absolute;
     left: 18px;
-    top: 15%;
-    height: 70%;
-    border-left: 1px dashed rgba(0,0,0,.2);
-    box-shadow: calc(100% - 36px) 0 0 0 transparent;
-    border-right: none;
+    top: 10%;
+    height: 80%;
+    border-left: 2px dashed rgba(0,0,0,.45);
     z-index: 1;
 }
 .support-ticket .ticket-dash-right {
     position: absolute;
     right: 18px;
-    top: 15%;
-    height: 70%;
-    border-left: 1px dashed rgba(0,0,0,.2);
+    top: 10%;
+    height: 80%;
+    border-left: 2px dashed rgba(0,0,0,.45);
     z-index: 1;
 }
 .support-ticket::after {
@@ -1300,7 +1299,6 @@ h1, h2, h3, h4,
 }
 
 @media (max-width: 768px) {
-    html { overflow-y: scroll; }
     .h-scroll-section { height: auto !important; }
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
@@ -2437,7 +2435,7 @@ h1, h2, h3, h4,
                 <div class="panel-3-text" style="z-index:4; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center;">
                     <h2 class="section-title observer-hero-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; color:var(--accent); opacity:1; white-space:nowrap; -webkit-text-fill-color:var(--accent);">THE OBSERVER.</h2>
                     <div class="panel-follow-links" style="margin-top:4rem; display:flex; flex-direction:column; align-items:center; gap:.8rem;">
-                        <a href="#" class="panel-bubble-btn panel-cta-primary support-ticket">Wishlist on Steam<span class="ticket-dash-right"></span></a>
+                        <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
                         <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
                     </div>
                     <div class="h-panel-counter" style="position:absolute; bottom:8rem; left:8vw;">01 / 05</div>
@@ -2574,7 +2572,7 @@ h1, h2, h3, h4,
         <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
         <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
         <div class="support-links" style="display:flex; flex-direction:column; align-items:center; gap:.8rem; margin-top:1.5rem;">
-            <a href="#" class="panel-bubble-btn panel-cta-primary support-ticket">Travel back in time<span class="ticket-dash-right"></span></a>
+            <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
             <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
         </div>
     </div>
@@ -3071,23 +3069,7 @@ if (document.readyState === 'loading') {
 <script>
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-// On mobile, scroll happens inside .page-wrapper, not window
-if (window.matchMedia('(max-width: 768px)').matches) {
-    var pw = document.querySelector('.page-wrapper');
-    if (pw) {
-        ScrollTrigger.defaults({ scroller: pw });
-        ScrollTrigger.scrollerProxy(pw, {
-            scrollTop: function(value) {
-                if (arguments.length) pw.scrollTop = value;
-                return pw.scrollTop;
-            },
-            getBoundingClientRect: function() {
-                return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-            }
-        });
-        pw.addEventListener('scroll', function() { ScrollTrigger.update(); }, { passive: true });
-    }
-}
+
 
 // Scroll helpers
 function getScrollRoot() { return null; }
@@ -3958,7 +3940,7 @@ function initHorizontalScroll() {
     allPanels.forEach(function(panel, panelIdx) {
         var chars = panel.querySelectorAll('.comic-narration .char');
         if (!chars.length) return;
-        gsap.set(chars, { opacity: 0.15, y: 8 });
+        gsap.set(chars, { opacity: 0.25, y: 8 });
         charGroups.push({ chars: chars, panelIdx: panelIdx });
     });
 
@@ -4024,7 +4006,7 @@ function initHorizontalScroll() {
 
                         var opacity = inP * (1 - outP);
                         // Round to 2 decimals to reduce repaints
-                        var opRounded = ((0.1 + opacity * 0.9) * 100 + 0.5 | 0) / 100;
+                        var opRounded = ((0.25 + opacity * 0.75) * 100 + 0.5 | 0) / 100;
 
                         // Skip if value barely changed
                         if (Math.abs(opRounded - group.prevOpacity[i]) < 0.02) continue;
@@ -4315,7 +4297,7 @@ function initHorizontalScroll() {
 // ─── Section Reveals ──────────────────────────
 function initSectionReveals() {
     // data-reveal: simple fade+translate (GPU-friendly, no clip-path)
-    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 95%' : 'top 88%';
+    var revealStart = window.matchMedia('(max-width: 768px)').matches ? 'top 85%' : 'top 88%';
     document.querySelectorAll('[data-reveal]').forEach(function(el) {
         gsap.fromTo(el,
             { opacity: 0, y: 40 },
@@ -4331,13 +4313,11 @@ function initSectionReveals() {
     if (isMobileH) {
         // Mobile: chars fade in when narration hits viewport center
         var narrations = document.querySelectorAll('.h-panel-comic .comic-narration');
-        var wrapper = document.querySelector('.page-wrapper') || window;
-        var scrollEl = wrapper === window ? document.documentElement : wrapper;
 
         function checkNarrations() {
             var vh = window.innerHeight;
             var center = vh * 0.5;
-            var zone = vh * 0.5; // full viewport
+            var zone = vh * 0.5;
             narrations.forEach(function(n) {
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
@@ -4359,8 +4339,7 @@ function initSectionReveals() {
             });
         }
 
-        var scrollTarget = wrapper === window ? window : wrapper;
-        scrollTarget.addEventListener('scroll', checkNarrations, { passive: true });
+        window.addEventListener('scroll', checkNarrations, { passive: true });
         checkNarrations();
     }
     if (!isMobileH && window.hScrollTween) {
@@ -4399,7 +4378,7 @@ function initSectionReveals() {
             if (!isMobileH && window.hScrollTween) {
                 stOpts.containerAnimation = window.hScrollTween;
             } else {
-                stOpts.start = isMobileH ? 'top 95%' : 'top 75%';
+                stOpts.start = isMobileH ? 'top 85%' : 'top 75%';
             }
             gsap.to(el, {
                 opacity: 1, y: 0, scale: 1,
