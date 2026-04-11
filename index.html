@@ -1342,7 +1342,7 @@ h1, h2, h3, h4,
     .tv-header { margin-bottom: 3rem !important; }
     .contact-socials { gap: 2rem !important; justify-content: center !important; width: 100% !important; }
     .contact-section { min-height: auto !important; padding: 5rem 5vw !important; align-items: center !important; text-align: center !important; }
-    .contact-big-letter { font-size: clamp(4rem, 15vw, 8rem) !important; bottom: auto !important; top: 60% !important; right: 50% !important; transform: translateX(50%) !important; }
+    .contact-big-letter { display: none !important; }
     .support-section { padding: 6rem 5vw !important; }
     .support-text { font-size: .85rem !important; }
     .godot-section-inner { transform: scale(0.85); }
@@ -3910,6 +3910,14 @@ function revealHero() {
 
 // ─── Horizontal Scroll ────────────────────────
 function initHorizontalScroll() {
+    // Split sentence chars first (needed for both desktop and mobile)
+    document.querySelectorAll('.h-panel-comic .comic-narration p').forEach(function(p) {
+        var text = p.textContent;
+        p.innerHTML = text.split('').map(function(c) {
+            return c === ' ' ? '<span class="char">&nbsp;</span>' : '<span class="char">' + c + '</span>';
+        }).join('');
+    });
+
     if (window.matchMedia('(max-width: 768px)').matches) return;
 
     const section = document.querySelector('.h-scroll-section');
@@ -3919,14 +3927,6 @@ function initHorizontalScroll() {
 
     const panels = gsap.utils.toArray('.h-panel');
     const numPanels = panels.length;
-
-    // Split sentence chars first
-    document.querySelectorAll('.h-panel-comic .comic-narration p').forEach(function(p) {
-        var text = p.textContent;
-        p.innerHTML = text.split('').map(function(c) {
-            return c === ' ' ? '<span class="char">&nbsp;</span>' : '<span class="char">' + c + '</span>';
-        }).join('');
-    });
 
     // Collect all panel char groups with their panel index
     var charGroups = [];
