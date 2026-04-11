@@ -475,6 +475,7 @@ h1, h2, h3, h4,
     transform: translate(-50%, -50%);
     width: 600px; height: 600px;
     background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+    filter: brightness(0.7);
     z-index: 0;
     pointer-events: none;
 }
@@ -551,25 +552,25 @@ h1, h2, h3, h4,
     filter: brightness(0.35) grayscale(0.3);
 }
 .comic-narration {
-    position: absolute;
-    z-index: 2;
+    position: relative;
+    z-index: 3;
     background: transparent;
     color: rgba(255,255,255,.9);
-    padding: 1.4rem 0 1.4rem 1.6rem;
-    max-width: 420px;
-    border-left: 1px solid rgba(255,255,255,.15);
+    padding: 1.4rem 0;
+    max-width: 700px;
+    text-align: center;
 }
 .comic-narration p {
     font-family: 'Megrim', sans-serif;
-    font-size: clamp(1.2rem, 2.8vw, 2.2rem);
+    font-size: clamp(1.4rem, 2.8vw, 2.6rem);
     font-weight: 400;
     letter-spacing: .15em;
-    line-height: 1.8;
+    line-height: 1.6;
     text-transform: uppercase;
     white-space: nowrap;
 }
 .comic-narration .narration-id {
-    display: block;
+    display: none;
     font-family: 'Megrim', sans-serif;
     font-size: .5rem;
     letter-spacing: .3em;
@@ -670,7 +671,7 @@ h1, h2, h3, h4,
 }
 .tv-bezel {
     position: relative;
-    background: linear-gradient(145deg, #6a6a6a 0%, #4a4a4a 40%, #2a2a2a 100%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 5%, #7a7a7a) 0%, color-mix(in srgb, var(--accent) 3%, #555) 40%, color-mix(in srgb, var(--accent) 2%, #333) 100%);
     border-radius: 18px;
     padding: 24px 24px 24px 24px;
     box-shadow:
@@ -689,7 +690,7 @@ h1, h2, h3, h4,
     background: #0a0a0a;
     border-radius: 12px;
     overflow: hidden;
-    border: 3px solid #1a1510;
+    border: 3px solid #2a2a2a;
     box-shadow: inset 0 0 30px rgba(0,0,0,.8), 0 0 2px rgba(200,180,140,.15);
     transform: translateZ(0);
     will-change: transform;
@@ -738,8 +739,8 @@ h1, h2, h3, h4,
 .tv-knob {
     width: 28px; height: 28px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #6b5a48, #3d2e22);
-    border: 2px solid #2a1f17;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 8%, #666), color-mix(in srgb, var(--accent) 4%, #3a3a3a));
+    border: 2px solid color-mix(in srgb, var(--accent) 5%, #2a2a2a);
     box-shadow: inset 0 1px 2px rgba(255,255,255,.1), 0 2px 4px rgba(0,0,0,.4);
 }
 .tv-knob-small { width: 20px; height: 20px; }
@@ -1017,9 +1018,27 @@ h1, h2, h3, h4,
     color: #000;
     background: var(--accent);
     border: 1px solid var(--accent);
-    border-radius: 999px;
+    border-radius: 0;
     cursor: none;
     transition: background .3s, color .3s, border-color .3s;
+}
+.panel-cta-primary {
+    border-radius: 0;
+    padding: 1.1rem 2.4rem;
+    font-size: .82rem;
+}
+.panel-cta-secondary {
+    font-size: .65rem;
+    font-weight: 400;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    text-decoration: none;
+    cursor: none;
+    transition: color .3s;
+}
+.panel-cta-secondary:hover {
+    color: rgba(255,255,255,.8);
 }
 .panel-bubble-btn:hover {
     background: color-mix(in srgb, var(--accent) 70%, #000);
@@ -1051,23 +1070,26 @@ h1, h2, h3, h4,
     font-weight: 700;
 }
 .godot-logo {
-    width: clamp(280px, 30vw, 460px);
-    opacity: 0.85;
-    filter: brightness(0.9) invert(1);
-    transform: translateZ(0);
-    will-change: filter;
+    width: clamp(180px, 20vw, 320px);
+    filter: invert(1) brightness(0.5) sepia(1) hue-rotate(calc(var(--accent-hue, 0deg) - 45deg)) saturate(8) brightness(0.85);
 }
 /* TV Section (vertical) — scrolls over godot (curtain effect) */
 .tv-section {
     position: relative;
     z-index: 2;
-    padding: 28rem 5vw 8rem;
+    padding: 34rem 5vw 8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 80vh;
     background: var(--bg);
     contain: layout style paint;
+}
+.tv-header {
+    position: relative;
+}
+.tv-header::after {
+    display: none;
 }
 .tv-section .section-title,
 .skgchess-section .section-title,
@@ -1080,6 +1102,27 @@ h1, h2, h3, h4,
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+.tv-planets {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.tv-planet {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+}
+.contact-planets {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
 }
 
 .godot-sub {
@@ -1573,7 +1616,7 @@ h1, h2, h3, h4,
     padding: .85rem 1.1rem;
     background: rgba(255,255,255,.96);
     border: 3px solid rgba(0,0,0,.9);
-    border-radius: 999px;
+    border-radius: 0;
     box-shadow: 0 8px 16px rgba(0,0,0,.3);
     animation: lilithBubbleFloat 3.2s ease-in-out infinite;
     will-change: transform;
@@ -1609,6 +1652,43 @@ h1, h2, h3, h4,
 /* ============================================================
    PREVIOUSLY / ARTICLES  (#devlog)
    ============================================================ */
+.godot-section,
+.tv-section,
+.support-section,
+.contact-section,
+.research-section,
+.skgchess-section {
+    position: relative;
+}
+.godot-section::before,
+.skgchess-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,.03) 0%, transparent 70%);
+}
+.support-section::before,
+.contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 120px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 120px);
+}
+.research-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 120px);
+}
 .post-horizontal-pattern {
     background:
         radial-gradient(ellipse 80% 50% at 0% 50%, color-mix(in srgb, var(--accent) 3%, transparent), transparent),
@@ -1695,6 +1775,7 @@ h1, h2, h3, h4,
     position: relative;
     z-index: 2;
     background: var(--bg);
+    margin-top: -1px;
     padding: 14rem 7vw;
     display: flex;
     align-items: center;
@@ -2253,7 +2334,7 @@ h1, h2, h3, h4,
     </div>
     <nav>
         <ul class="nav-menu">
-            <li><a href="#agency">Follow</a></li>
+            <li><a href="#wishlist">Wishlist</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
             <span></span><span></span><span></span>
@@ -2267,7 +2348,7 @@ h1, h2, h3, h4,
         <div class="deco-shape deco-shape--diamond deco-shape--center"></div>
     </div>
     <ul class="nav-menu">
-        <li><a href="#agency">Follow</a></li>
+        <li><a href="#wishlist">Wishlist</a></li>
     </ul>
 </div>
 
@@ -2290,21 +2371,20 @@ h1, h2, h3, h4,
                 <canvas class="hero-portal" id="heroPortal2" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none;"></canvas>
                 <div class="panel-3-text" style="z-index:4; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center;">
                     <h2 class="section-title observer-hero-title" style="margin-bottom:1.5rem; font-size:clamp(2rem, 5vw, 5.5rem); font-family:'Megrim',sans-serif; font-weight:400; font-style:normal; letter-spacing:.12em; color:var(--accent); opacity:1; white-space:nowrap; -webkit-text-fill-color:var(--accent);">THE OBSERVER.</h2>
-                    <div class="panel-follow-links" style="margin-top:2rem; display:flex; flex-direction:row; gap:1rem; justify-content:center;">
-                        <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
-                        <a href="/journal" class="panel-bubble-btn">Journal</a>
+                    <div class="panel-follow-links" style="margin-top:4rem; display:flex; flex-direction:column; align-items:center; gap:.8rem;">
+                        <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
+                        <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
                     </div>
-                    <div class="h-panel-counter" style="position:absolute; bottom:5rem; left:8vw;">01 / 05</div>
+                    <div class="h-panel-counter" style="position:absolute; bottom:8rem; left:8vw;">01 / 05</div>
                 </div>
             </div>
 
-            <!-- Panel 2 ─ Sentence 1 + humanoid model (centered side by side) -->
-            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:flex-start; gap:4vw; padding-left:12vw;">
-                <div class="comic-narration" style="position:relative; top:auto; left:auto;">
-                    <span class="narration-id">REC_01 // ARCHIVED</span>
-                    <p>A society sunk in numbness...</p>
+            <!-- Panel 2 ─ Sentence 1 + humanoid model (background) -->
+            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center;">
+                <div class="comic-narration">
+                    <p>In the far future, humanity has forgotten itself.</p>
                 </div>
-                <div class="panel-2-model" style="position:relative; z-index:1;">
+                <div class="panel-2-model" style="position:absolute; right:12vw; top:50%; transform:translateY(-50%); z-index:1; opacity:0.15;">
                     <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyModelContainer">
                         <canvas id="agencyHumanoidCanvas"></canvas>
                     </div>
@@ -2312,13 +2392,12 @@ h1, h2, h3, h4,
                 <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">02 / 05</div>
             </div>
 
-            <!-- Panel 3 ─ Sentence 2 + Lilith model -->
-            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:flex-start; gap:4vw; padding-left:12vw;">
-                <div class="comic-narration" style="position:relative; top:auto; left:auto;">
-                    <span class="narration-id">REC_02 // SIGNAL</span>
-                    <p>A command from the future...</p>
+            <!-- Panel 3 ─ Sentence 2 + Lilith model (background) -->
+            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center;">
+                <div class="comic-narration">
+                    <p>From the edges, a signal is sent back in time.</p>
                 </div>
-                <div class="panel-3-lilith" style="z-index:3; position:relative;">
+                <div class="panel-3-lilith" style="position:absolute; right:10vw; top:50%; transform:translateY(-50%); z-index:1; opacity:0.15;">
                     <div class="panel-3-lilith-inner">
                         <div class="agency-collage-card agency-collage-base agency-model-container" id="agencyPriestModelContainer" style="width:clamp(200px,28vw,380px);aspect-ratio:3/5;">
                             <div class="lilith-inline-comic" aria-hidden="true">
@@ -2330,7 +2409,7 @@ h1, h2, h3, h4,
                         </div>
                     </div>
                 </div>
-                <div class="wasd-hint" aria-hidden="true">
+                <div class="wasd-hint" aria-hidden="true" style="position:absolute; bottom:4rem; right:8vw;">
                     <div class="wasd-row"><span class="wasd-key">W</span></div>
                     <div class="wasd-row"><span class="wasd-key">A</span><span class="wasd-key">S</span><span class="wasd-key">D</span></div>
                     <span class="wasd-click-hint">click model</span>
@@ -2338,14 +2417,13 @@ h1, h2, h3, h4,
                 <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">03 / 05</div>
             </div>
 
-            <!-- Panel 4 ─ Sentence 3 (centered) + brain model -->
-            <div class="h-panel h-panel-comic" style="padding-left:28vw;">
-                <div id="brainModelContainer" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:400px; height:400px; z-index:2;">
+            <!-- Panel 4 ─ Sentence 3 (centered) + brain model (background) -->
+            <div class="h-panel h-panel-comic" style="display:flex; align-items:center; justify-content:center;">
+                <div id="brainModelContainer" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:400px; height:400px; z-index:1; opacity:0.15;">
                     <canvas id="brainCanvas" width="400" height="400" style="width:400px; height:400px;"></canvas>
                 </div>
-                <div class="comic-narration" style="top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;">
-                    <span class="narration-id">REC_03 // NEURAL</span>
-                    <p>A simulation inside the mind...</p>
+                <div class="comic-narration" style="z-index:3;">
+                    <p>Enter one mind. Rewrite everything.</p>
                 </div>
                 <div class="h-panel-counter" style="position:absolute; bottom:2.5rem; left:8vw;">04 / 05</div>
             </div>
@@ -2372,10 +2450,20 @@ h1, h2, h3, h4,
      TV TRAILER
 ═══════════════════════════════════════════════ -->
 <section class="tv-section">
+    <canvas id="matrixCanvasTV" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+    <div class="tv-planets" aria-hidden="true">
+        <div class="tv-planet" style="width:8px; height:8px; top:12%; left:8%; background:var(--accent); opacity:.3;"></div>
+        <div class="tv-planet" style="width:14px; height:14px; top:25%; right:12%; border:1px solid rgba(255,255,255,.15); background:transparent;"></div>
+        <div class="tv-planet" style="width:5px; height:5px; top:40%; left:15%; background:rgba(255,255,255,.2);"></div>
+        <div class="tv-planet" style="width:20px; height:20px; top:60%; right:8%; border:1px solid color-mix(in srgb, var(--accent) 20%, transparent); background:transparent;"></div>
+        <div class="tv-planet" style="width:6px; height:6px; top:70%; left:25%; background:var(--accent); opacity:.2;"></div>
+        <div class="tv-planet" style="width:10px; height:10px; top:85%; right:20%; border:1px solid rgba(255,255,255,.1); background:transparent;"></div>
+        <div class="tv-planet" style="width:4px; height:4px; top:15%; left:50%; background:rgba(255,255,255,.15);"></div>
+        <div class="tv-planet" style="width:16px; height:16px; top:50%; left:5%; border:1px solid rgba(255,255,255,.1); background:transparent;"></div>
+    </div>
     <div class="tv-section-inner">
         <div class="tv-header" data-reveal style="text-align:center; margin-bottom:28rem;">
-            <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(2rem, 5vw, 5.5rem); margin-bottom:6rem;">THE OBSERVER</h2>
-            <p style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.15em; font-size:clamp(1rem, 2vw, 1.6rem); color:rgba(255,255,255,.4);">Watch the Trailer</p>
+            <p style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.15em; font-size:clamp(1rem, 2vw, 1.6rem); color:var(--accent);">Observe</p>
         </div>
         <div class="trailer-tv" id="trailerTv" data-reveal>
             <div class="tv-frame">
@@ -2414,9 +2502,24 @@ h1, h2, h3, h4,
 </section>
 
 <!-- ═══════════════════════════════════════════════
+     SUPPORT
+═══════════════════════════════════════════════ -->
+<section id="wishlist" class="support-section">
+    <div class="support-inner" data-reveal>
+        <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">Join the signal.</h2>
+        <p class="support-text">The Observer is built by one person. Wishlist on Steam or subscribe on YouTube to help the project grow.</p>
+        <img src="theobserver.png" alt="The Observer" style="height:1em; width:auto; filter:invert(1); vertical-align:middle; margin:1rem 0;">
+        <div class="support-links" style="display:flex; flex-direction:column; align-items:center; gap:.8rem; margin-top:1.5rem;">
+            <a href="#" class="panel-bubble-btn panel-cta-primary">Wishlist on Steam</a>
+            <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-cta-secondary">YouTube</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
      03 RESEARCH & THINKING
 ═══════════════════════════════════════════════ -->
-<section id="research" class="research-section post-horizontal-pattern">
+<section id="research" class="research-section post-horizontal-pattern" style="display:none;">
     <canvas class="section-particles" id="researchParticles"></canvas>
     <div class="research-section-inner" style="position:relative; z-index:1;">
         <div class="section-header" data-reveal>
@@ -2443,14 +2546,11 @@ h1, h2, h3, h4,
     </div>
 </section>
 
-<div class="section-ornament section-ornament-vintage" aria-hidden="true">
-    <span class="section-ornament-symbol">— IXL —</span>
-</div>
 
 <!-- ═══════════════════════════════════════════════
      04 PAST WORK
 ═══════════════════════════════════════════════ -->
-<section id="devlog" class="skgchess-section">
+<section id="devlog" class="skgchess-section" style="display:none;">
     <video class="skgchess-bg-video" src="show12.mp4" muted loop playsinline preload="auto" autoplay></video>
     <div class="skgchess-overlay"></div>
     <div class="skgchess-center-title">
@@ -2460,20 +2560,6 @@ h1, h2, h3, h4,
     <div class="skgchess-content">
         <p class="skgchess-desc">Previous Project.</p>
         <a href="skgchess" class="skgchess-link">View Project →</a>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     05 SUPPORT
-═══════════════════════════════════════════════ -->
-<section class="support-section">
-    <div class="support-inner" data-reveal>
-        <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem); margin-bottom:2rem;">A Solo Attempt.</h2>
-        <p class="support-text">The Observer is a solo attempt. Help the project grow by following on YouTube or contact me below.</p>
-        <div class="support-links">
-            <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" class="panel-bubble-btn">YouTube</a>
-            <a href="#contact" class="panel-bubble-btn">Contact</a>
-        </div>
     </div>
 </section>
 
@@ -2499,15 +2585,32 @@ h1, h2, h3, h4,
      05 CONTACT  (#contact)
 ═══════════════════════════════════════════════ -->
 <section id="contact" class="contact-section post-horizontal-pattern">
-    <div class="contact-container">
+    <div class="contact-planets" aria-hidden="true">
+        <div class="tv-planet" style="width:10px; height:10px; top:15%; left:10%; background:var(--accent); opacity:.25;"></div>
+        <div class="tv-planet" style="width:18px; height:18px; top:30%; right:15%; border:1px solid rgba(255,255,255,.12); background:transparent;"></div>
+        <div class="tv-planet" style="width:6px; height:6px; top:55%; left:20%; background:rgba(255,255,255,.15);"></div>
+        <div class="tv-planet" style="width:22px; height:22px; top:70%; right:10%; border:1px solid color-mix(in srgb, var(--accent) 15%, transparent); background:transparent;"></div>
+        <div class="tv-planet" style="width:5px; height:5px; top:20%; left:60%; background:var(--accent); opacity:.2;"></div>
+        <div class="tv-planet" style="width:12px; height:12px; top:80%; left:8%; border:1px solid rgba(255,255,255,.1); background:transparent;"></div>
+        <div class="tv-planet" style="width:4px; height:4px; top:45%; right:30%; background:rgba(255,255,255,.12);"></div>
+        <div class="tv-planet" style="width:14px; height:14px; top:10%; right:40%; border:1px solid rgba(255,255,255,.08); background:transparent;"></div>
+    </div>
+    <div class="contact-container" style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-start;">
         <div class="section-header" data-reveal>
-            <div class="section-tag">05 — Contact</div>
-            <h2 class="section-title">Collaboration.</h2>
+            <h2 class="section-title" style="font-family:'Megrim',sans-serif; font-weight:400; letter-spacing:.12em; font-size:clamp(1.8rem, 4vw, 4rem);">Follow.</h2>
         </div>
-        <div class="contact-info">
-            <a href="mailto:harischatzi@tutanota.com" class="contact-item">
-                <span class="contact-label">Email</span>
-                <span class="contact-value">harischatzi@tutanota.com</span>
+        <div class="contact-socials" style="display:flex; gap:2.5rem; align-items:center; margin-top:2rem;">
+            <a href="#" target="_blank" rel="noopener" title="Steam" style="color:rgba(255,255,255,.5); transition:color .3s; cursor:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,.5)'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.15 9.43 7.6 11.21l3.48-4.97c-.17-.01-.34-.02-.52-.02-2.59 0-4.69-2.1-4.69-4.69 0-2.59 2.1-4.69 4.69-4.69.43 0 .85.06 1.24.17l2.89-2.06C14.18 4.39 12 2.24 12 2.24S12 0 12 0zm-.44 9.27c-1.78 0-3.22 1.44-3.22 3.22s1.44 3.22 3.22 3.22 3.22-1.44 3.22-3.22-1.44-3.22-3.22-3.22zm5.95-2.6c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5zm0 1.4a2.1 2.1 0 110 4.2 2.1 2.1 0 010-4.2z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@ixlstudio" target="_blank" rel="noopener" title="YouTube" style="color:rgba(255,255,255,.5); transition:color .3s; cursor:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,.5)'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/ixlstudio" target="_blank" rel="noopener" title="Instagram" style="color:rgba(255,255,255,.5); transition:color .3s; cursor:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,.5)'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.44.41a4.08 4.08 0 011.51.98c.47.47.78.9.98 1.51.17.47.36 1.27.41 2.44.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.41 2.44a4.08 4.08 0 01-.98 1.51 4.08 4.08 0 01-1.51.98c-.47.17-1.27.36-2.44.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.44-.41a4.08 4.08 0 01-1.51-.98 4.08 4.08 0 01-.98-1.51c-.17-.47-.36-1.27-.41-2.44C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.24-1.97.41-2.44a4.08 4.08 0 01.98-1.51 4.08 4.08 0 011.51-.98c.47-.17 1.27-.36 2.44-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.84 5.84 0 00-2.13 1.38A5.84 5.84 0 00.63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.47 1.38 2.13a5.84 5.84 0 002.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.84 5.84 0 002.13-1.38 5.84 5.84 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.84 5.84 0 00-1.38-2.13A5.84 5.84 0 0019.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+            </a>
+            <a href="https://x.com/ixlstudio" target="_blank" rel="noopener" title="X" style="color:rgba(255,255,255,.5); transition:color .3s; cursor:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,.5)'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.83L1.17 2.25h6.83l4.72 6.24 5.52-6.24zm-1.16 17.52h1.84L7.08 4.13H5.12l11.96 15.64z"/></svg>
             </a>
         </div>
     </div>
@@ -2922,7 +3025,22 @@ document.addEventListener('DOMContentLoaded', function() {
         var stylePicker = document.getElementById('indexBgStylePicker');
         if (!picker) return;
         var defaultHex = '#FF0000';
-        function setBg(hex) { document.documentElement.style.setProperty('--accent', hex); picker.value = hex; }
+        function hexToHue(hex) {
+            var r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
+            var max = Math.max(r,g,b), min = Math.min(r,g,b), h = 0;
+            if (max !== min) {
+                var d = max - min;
+                if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+                else if (max === g) h = ((b - r) / d + 2) * 60;
+                else h = ((r - g) / d + 4) * 60;
+            }
+            return h;
+        }
+        function setBg(hex) {
+            document.documentElement.style.setProperty('--accent', hex);
+            document.documentElement.style.setProperty('--accent-hue', hexToHue(hex) + 'deg');
+            picker.value = hex;
+        }
         function setMode(mode) { var isPlain = mode === 'plain'; document.documentElement.classList.toggle('page-bg-plain', isPlain); if (stylePicker) stylePicker.value = mode; }
         setBg(defaultHex);
         picker.addEventListener('input', function() { setBg(picker.value); window._portalColorChanged = true; });
@@ -3548,18 +3666,19 @@ function initHeroPortal(heroSelector, canvasId) {
     }
 
     var portalVisible = false;
+    var portalRAF = null;
     new IntersectionObserver(function(entries) {
         portalVisible = entries[0].isIntersecting;
+        if (portalVisible && !portalRAF) draw();
     }, { threshold: 0 }).observe(hero);
 
     var needsInitialDraw = true;
 
     function draw() {
-        requestAnimationFrame(draw);
+        if (!portalVisible && !needsInitialDraw) { portalRAF = null; return; }
+        portalRAF = requestAnimationFrame(draw);
         if (window._portalColorChanged) { portalDirty = true; window._portalColorChanged = false; }
         if (!ready || !portalDirty) return;
-        // Allow initial pre-reveal draw even if not yet visible
-        if (!portalVisible && !needsInitialDraw) return;
         if (needsInitialDraw) needsInitialDraw = false;
 
         // Paint scratch onto mask when cursor is active
@@ -3648,15 +3767,16 @@ function initCursor() {
 
 // ─── Page Progress Bar ────────────────────────
 function initProgressBar() {
-    const bar = document.getElementById('page-progress');
+    var bar = document.getElementById('page-progress');
     if (!bar) return;
-    ScrollTrigger.create({
-        start: 'top top',
-        end: 'bottom bottom',
-        onUpdate: function(self) {
-            gsap.set(bar, { width: (self.progress * 100) + '%' });
-        }
-    });
+    function updateBar() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = progress + '%';
+    }
+    window.addEventListener('scroll', updateBar, { passive: true });
+    updateBar();
 }
 
 // ─── Split hero title into chars ──────────────
@@ -3775,7 +3895,7 @@ function initHorizontalScroll() {
         group.prevOpacity.fill(-1);
     });
 
-    gsap.to(track, {
+    window.hScrollTween = gsap.to(track, {
         x: function() { return -(track.scrollWidth - window.innerWidth); },
         ease: 'none',
         force3D: true,
@@ -3847,8 +3967,10 @@ function initHorizontalScroll() {
         window.addEventListener('resize', resize);
 
         var tunnelVisible = false;
+        var tunnelRAF = null;
         new IntersectionObserver(function(entries) {
             tunnelVisible = entries[0].isIntersecting;
+            if (tunnelVisible && !tunnelRAF) drawTunnel();
         }, { threshold: 0 }).observe(section);
 
         // Floating shapes definition
@@ -3999,16 +4121,19 @@ function initHorizontalScroll() {
         }
 
         function drawTunnel() {
-            requestAnimationFrame(drawTunnel);
-            if (!tunnelVisible) return;
+            if (!tunnelVisible) { tunnelRAF = null; return; }
+            tunnelRAF = requestAnimationFrame(drawTunnel);
 
             ctx.clearRect(0, 0, w, h);
             var time = hProgress * Math.PI * 6;
-            var accentHex = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF0000';
-            var ar = parseInt(accentHex.slice(1,3), 16) || 255;
-            var ag = parseInt(accentHex.slice(3,5), 16) || 0;
-            var ab = parseInt(accentHex.slice(5,7), 16) || 0;
-            var accentRGB = ar + ',' + ag + ',' + ab;
+            if (!drawTunnel._cachedAccent || window._portalColorChanged) {
+                var accentHex = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF0000';
+                var ar = parseInt(accentHex.slice(1,3), 16) || 255;
+                var ag = parseInt(accentHex.slice(3,5), 16) || 0;
+                var ab = parseInt(accentHex.slice(5,7), 16) || 0;
+                drawTunnel._cachedAccent = ar + ',' + ag + ',' + ab;
+            }
+            var accentRGB = drawTunnel._cachedAccent;
 
             // Tunnel rectangles
             var cx = w / 2;
@@ -4087,7 +4212,7 @@ function initHorizontalScroll() {
             // Floating shapes — always on top
             shapes.forEach(function(s) { drawShape(s, time, accentRGB); });
         }
-        drawTunnel();
+        // Initial draw handled by IntersectionObserver
     })();
 }
 
@@ -4102,31 +4227,57 @@ function initSectionReveals() {
         );
     });
 
-    // ─── Godot section: each element reveals individually with stagger ───
-    var godotEls = document.querySelectorAll('.godot-reveal');
-    var isMobileGodot = window.matchMedia('(max-width: 768px)').matches;
-    if (godotEls.length) {
-        gsap.set(godotEls, { opacity: 0, y: isMobileGodot ? 20 : 35, scale: isMobileGodot ? 1 : 0.95 });
-        godotEls.forEach(function(el, i) {
-            gsap.to(el, {
-                opacity: 1, y: 0, scale: 1,
-                duration: isMobileGodot ? 0.8 : 1.2,
-                delay: i * (isMobileGodot ? 0.1 : 0.18),
+    // ─── Horizontal panel reveals (sentences + godot) — triggered when panel is centered ───
+    var isMobileH = window.matchMedia('(max-width: 768px)').matches;
+
+    // Sentence narration blocks: fade+slide up when panel centers
+    if (!isMobileH && window.hScrollTween) {
+        var comicPanels = document.querySelectorAll('.h-panel-comic');
+        comicPanels.forEach(function(panel, idx) {
+            var narration = panel.querySelector('.comic-narration');
+            if (!narration) return;
+            var isThird = (idx === 2);
+            var hasTransformCenter = narration.style.transform.indexOf('translate') !== -1;
+            if (hasTransformCenter) {
+                gsap.set(narration, { opacity: 0, yPercent: -50, xPercent: -50, y: 40 });
+            } else {
+                gsap.set(narration, { opacity: 0, y: 40 });
+            }
+            gsap.to(narration, {
+                opacity: 1, y: 0,
+                duration: 1,
                 ease: 'power2.out',
                 force3D: true,
-                scrollTrigger: { trigger: '.h-panel-godot', start: 'top 75%', toggleActions: 'play none none none' }
+                scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: window.hScrollTween,
+                    start: isThird ? 'left 75%' : 'left center',
+                    toggleActions: 'play none none none'
+                }
             });
         });
-        // Subtle parallax float on the logo (desktop only)
-        if (!window.matchMedia('(max-width: 768px)').matches) {
-            var godotLogo = document.querySelector('.godot-logo');
-            if (godotLogo) {
-                gsap.to(godotLogo, {
-                    y: -20, ease: 'none',
-                    scrollTrigger: { trigger: '.h-panel-godot', start: 'top bottom', end: 'bottom top', scrub: true }
-                });
+    }
+
+    // Godot section: each element reveals individually with stagger
+    var godotEls = document.querySelectorAll('.godot-reveal');
+    if (godotEls.length) {
+        gsap.set(godotEls, { opacity: 0, y: isMobileH ? 20 : 35, scale: isMobileH ? 1 : 0.95 });
+        godotEls.forEach(function(el, i) {
+            var stOpts = { trigger: '.h-panel-godot', start: 'left center', toggleActions: 'play none none none' };
+            if (!isMobileH && window.hScrollTween) {
+                stOpts.containerAnimation = window.hScrollTween;
+            } else {
+                stOpts.start = 'top 75%';
             }
-        }
+            gsap.to(el, {
+                opacity: 1, y: 0, scale: 1,
+                duration: isMobileH ? 0.8 : 1.2,
+                delay: i * (isMobileH ? 0.1 : 0.18),
+                ease: 'power2.out',
+                force3D: true,
+                scrollTrigger: stOpts
+            });
+        });
     }
 
     // ─── SKGChess section reveal ───
@@ -4224,7 +4375,7 @@ function initSectionReveals() {
     }
 
     // ─── Floating particles canvases (planet theme) ───
-    initSectionParticles('godotParticles', '.h-panel-godot');
+    initSectionParticles('godotParticles', '.godot-section');
     initSectionParticles('researchParticles', '.research-section');
 
     // Marquee — constant speed, no scroll interaction
@@ -4395,6 +4546,181 @@ function initHeader() {
         }, { threshold: 0 });
         mqObs.observe(marquee);
     }
+})();
+
+// ─── Matrix rain (reusable) — letters fall, gaps spell OBSERVE ───
+function initMatrixRain(canvasId, sectionSel) {
+    var canvas = document.getElementById(canvasId);
+    var section = document.querySelector(sectionSel);
+    if (!canvas || !section) return;
+    var ctx = canvas.getContext('2d');
+    var w, h, columns, rows, drops, gapMap;
+    var keywords = [
+        'THEY ARE NUMB','CURIOSITY FADES','DOUBT BECOMES UNCOMFORTABLE',
+        'EVERYONE IS COMFORTABLE','POWER IS NOT EQUAL','NO ONE STOPS THE TRANSITION',
+        'THE RICH ARE COMFORTABLE','THE POOR HAVE NO LEVERAGE',
+        'IF YOU HAVE IT YOU BELONG','IF YOU DONT YOU ARE INVISIBLE',
+        'WHAT IT MEANS TO BE HUMAN','WAKE THEM UP','REWRITE THE NARRATIVE',
+        'LIVE INSIDE THE MIND','SUNK IN NUMBNESS','THE CHIP IS MANDATORY',
+        'SAFE REPEATABLE PATTERNS','THEY JUST DONT KNOW',
+        'EVERYTHING WORKS','FIND WHAT IS MISSING',
+        'REVERSE ITS EFFECTS','FROM WITHIN THE HUMAN MIND',
+        'CONFORMITY THROUGH SURVEILLANCE','BEHAVIORAL RATING','CIVIC ALIGNMENT'
+    ];
+    var fontSize = 14;
+
+    function buildGapMap() {
+        // Render "OBSERVE" on offscreen canvas to sample which grid cells are text
+        var offscreen = document.createElement('canvas');
+        offscreen.width = columns;
+        offscreen.height = rows;
+        var offCtx = offscreen.getContext('2d');
+
+        // Draw at grid scale so each pixel = one cell
+        var textSize = Math.floor(columns * 0.05);
+        offCtx.font = 'bold ' + textSize + 'px Arial, sans-serif';
+        offCtx.textAlign = 'center';
+        offCtx.textBaseline = 'middle';
+        offCtx.fillStyle = '#fff';
+        offCtx.fillText('OBSERVE', columns / 2, rows / 2);
+
+        var imgData = offCtx.getImageData(0, 0, columns, rows).data;
+        gapMap = {};
+
+        for (var col = 0; col < columns; col++) {
+            for (var row = 0; row < rows; row++) {
+                var idx = (row * columns + col) * 4;
+                if (imgData[idx + 3] > 50) {
+                    if (!gapMap[col]) gapMap[col] = {};
+                    gapMap[col][row] = true;
+                }
+            }
+        }
+    }
+
+    function resize() {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+        columns = Math.floor(w / fontSize);
+        rows = Math.floor(h / fontSize);
+        drops = new Array(columns);
+        for (var i = 0; i < columns; i++) {
+            drops[i] = Math.random() * 30;
+        }
+        buildGapMap();
+    }
+    var grid = [];
+    function buildGrid() {
+        grid = [];
+        for (var gi = 0; gi < columns; gi++) {
+            grid[gi] = new Array(rows).fill(false);
+        }
+        // Fill rows with game phrases separated by gaps
+        for (var ri = 0; ri < rows; ri++) {
+            var col = Math.floor(Math.random() * 6);
+            while (col < columns) {
+                var kw = keywords[Math.floor(Math.random() * keywords.length)];
+                var gap = 4 + Math.floor(Math.random() * 8);
+                var fits = true;
+                if (col + kw.length > columns) { fits = false; }
+                if (fits) {
+                    for (var ci = 0; ci < kw.length; ci++) {
+                        if (gapMap[col + ci] && gapMap[col + ci][ri]) { fits = false; break; }
+                    }
+                }
+                if (fits) {
+                    for (var ci = 0; ci < kw.length; ci++) {
+                        grid[col + ci][ri] = kw[ci];
+                    }
+                    col += kw.length + gap;
+                } else {
+                    col += 1;
+                }
+            }
+        }
+    }
+    resize();
+    buildGrid();
+    window.addEventListener('resize', function() { resize(); buildGrid(); });
+
+    var entered = false;
+    var startScroll = 0;
+    var totalDistance = 0;
+
+    function drawAtProgress(progress) {
+        var maxRowToShow = Math.floor(progress * (rows + 30));
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.font = fontSize + 'px monospace';
+
+        for (var c = 0; c < columns; c++) {
+            var colMax = maxRowToShow - Math.floor(drops[c]);
+            if (colMax < 0) continue;
+            if (colMax > rows) colMax = rows;
+
+            for (var r = 0; r < colMax; r++) {
+                if (grid[c][r]) {
+                    var fadeProgress = r / rows;
+                    var opacity = 0.07 * (1 - fadeProgress * 0.85);
+                    ctx.fillStyle = 'rgba(255,255,255,' + opacity + ')';
+                    ctx.fillText(grid[c][r], c * fontSize, r * fontSize + fontSize);
+                }
+            }
+        }
+    }
+
+    var allDone = false;
+    function onScroll() {
+        if (!entered || allDone) return;
+        var scrolled = window.scrollY - startScroll;
+        if (scrolled < 0) return;
+        var progress = Math.min(scrolled / totalDistance, 1);
+        drawAtProgress(progress);
+        if (progress >= 1) {
+            allDone = true;
+            window.removeEventListener('scroll', onScrollHandler);
+        }
+    }
+    var onScrollHandler = function() { requestAnimationFrame(onScroll); };
+
+    // Wait for user to actually scroll to this section
+    var observer = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !entered) {
+            entered = true;
+            startScroll = window.scrollY;
+            totalDistance = section.offsetHeight;
+            window.addEventListener('scroll', onScrollHandler, { passive: true });
+            observer.disconnect();
+        }
+    }, { threshold: 0.05 });
+    observer.observe(section);
+}
+initMatrixRain('matrixCanvasTV', '.tv-section');
+
+// ─── TV section floating planets (scroll-driven) ───
+(function() {
+    var speeds = [-80, 120, -50, 100, -70, 60, -40, 90];
+    var xSpeeds = [30, -40, 20, -50, 35, -25, 15, -30];
+
+    // TV planets
+    document.querySelectorAll('.tv-planets .tv-planet').forEach(function(p, i) {
+        gsap.to(p, {
+            y: speeds[i % speeds.length],
+            x: xSpeeds[i % xSpeeds.length],
+            ease: 'none', force3D: true,
+            scrollTrigger: { trigger: '.tv-section', start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+    });
+
+    // Contact planets
+    document.querySelectorAll('.contact-planets .tv-planet').forEach(function(p, i) {
+        gsap.to(p, {
+            y: speeds[i % speeds.length],
+            x: xSpeeds[i % xSpeeds.length],
+            ease: 'none', force3D: true,
+            scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+    });
 })();
 
 // ─── Vintage TV Trailer ──────────────────────
