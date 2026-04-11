@@ -1254,6 +1254,8 @@ h1, h2, h3, h4,
 }
 
 @media (max-width: 768px) {
+    html, body { height: 100%; overflow: hidden; }
+    .page-wrapper { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .h-scroll-section { height: auto !important; }
     .h-scroll-outer { position: relative; height: auto; }
     .h-scroll-track { flex-direction: column; height: auto; }
@@ -1284,7 +1286,7 @@ h1, h2, h3, h4,
     .h-panel-comic .panel-3-lilith { position: absolute !important; top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%,-50%) !important; opacity: 0.08 !important; width: 60vw !important; max-width: 300px !important; }
     .h-panel-comic #brainModelContainer { opacity: 0.08 !important; }
     .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
-    .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; }
+    .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
     .panel-cta-secondary { font-size: .6rem !important; }
     .panel-follow-links { margin-top: 2rem !important; }
     .tv-section { padding-top: 8rem !important; margin-top: 0 !important; }
@@ -2303,6 +2305,7 @@ h1, h2, h3, h4,
 </style>
 </head>
 <body>
+<div class="page-wrapper">
 
 <!-- Page progress -->
 <div id="page-progress" aria-hidden="true"></div>
@@ -5032,5 +5035,6 @@ window.addEventListener('pageshow', function(event) {
 });
 </script>
 
+</div><!-- .page-wrapper -->
 </body>
 </html>
