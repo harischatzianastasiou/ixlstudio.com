@@ -3913,9 +3913,13 @@ function initHorizontalScroll() {
     // Split sentence chars first (needed for both desktop and mobile)
     document.querySelectorAll('.h-panel-comic .comic-narration p').forEach(function(p) {
         var text = p.textContent;
-        p.innerHTML = text.split('').map(function(c) {
-            return c === ' ' ? '<span class="char">&nbsp;</span>' : '<span class="char">' + c + '</span>';
-        }).join('');
+        var words = text.split(' ');
+        p.innerHTML = words.map(function(word) {
+            var chars = word.split('').map(function(c) {
+                return '<span class="char">' + c + '</span>';
+            }).join('');
+            return '<span style="white-space:nowrap;display:inline-block">' + chars + '</span>';
+        }).join('<span class="char">&nbsp;</span>');
     });
 
     if (window.matchMedia('(max-width: 768px)').matches) return;
@@ -4311,8 +4315,8 @@ function initSectionReveals() {
 
         function checkNarrations() {
             var vh = window.innerHeight;
-            var center = vh / 2;
-            var zone = vh * 0.3; // trigger zone: center ± 30%
+            var center = vh * 0.4; // slightly above middle
+            var zone = vh * 0.3;
             narrations.forEach(function(n) {
                 var rect = n.getBoundingClientRect();
                 var mid = rect.top + rect.height / 2;
