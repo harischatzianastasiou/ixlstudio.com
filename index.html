@@ -1317,7 +1317,7 @@ h1, h2, h3, h4,
     .h-scroll-track { flex-direction: column; height: auto; }
     .h-panel { flex: none; width: 100%; height: auto; min-height: 60svh; padding: 0 8vw; display: flex; align-items: center; justify-content: center; }
     .h-panel-comic { min-height: 30svh !important; }
-    .h-panel-comic + .h-panel-comic { margin-top: 10vh !important; }
+    .h-panel-comic + .h-panel-comic { margin-top: 3vh !important; }
     .h-panel-comic + .h-panel-comic + .h-panel-comic { margin-top: 8vh !important; }
     .h-panel-godot { min-height: 30svh !important; margin-top: 5vh !important; }
     .h-panel-3 + .h-panel-comic { margin-top: 22vh !important; }
@@ -1343,9 +1343,10 @@ h1, h2, h3, h4,
     .comic-narration { text-align: center; max-width: 90vw; }
     .comic-narration p .char { opacity: 0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
     .comic-narration.in-view p .char { opacity: 0.9; transform: translateY(0); }
-    .h-panel-comic { padding-left: 5vw !important; padding-right: 5vw !important; justify-content: center !important; align-items: center !important; flex-direction: column !important; }
+    .h-panel-comic { padding-left: 5vw !important; padding-right: 5vw !important; justify-content: center !important; align-items: center !important; flex-direction: column !important; overflow: visible !important; }
+    .h-scroll-section, .h-scroll-outer, .h-scroll-track { overflow: visible !important; }
     .h-panel-comic .panel-2-model { position: absolute !important; top: -30vh !important; left: 50% !important; right: auto !important; transform: translateX(-50%) !important; opacity: 0.15 !important; width: 40vw !important; max-width: 180px !important; z-index: 5 !important; }
-    .h-panel-comic .panel-3-lilith { position: relative !important; top: auto !important; left: auto !important; right: auto !important; transform: none !important; opacity: 0.15 !important; width: 40vw !important; max-width: 180px !important; margin: -5vh auto 0 !important; order: -1 !important; }
+    .h-panel-comic .panel-3-lilith { position: relative !important; top: auto !important; left: auto !important; right: auto !important; transform: none !important; opacity: 0.15 !important; width: 40vw !important; max-width: 180px !important; margin: -15vh auto 0 !important; order: -1 !important; }
     .h-panel-comic #brainModelContainer { opacity: 0.15 !important; }
     .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
