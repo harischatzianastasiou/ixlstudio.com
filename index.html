@@ -1330,7 +1330,7 @@ h1, h2, h3, h4,
     .comic-narration.in-view p .char { opacity: 0.9; transform: translateY(0); }
     .h-panel-comic { padding-left: 5vw !important; padding-right: 5vw !important; justify-content: center !important; align-items: center !important; flex-direction: column !important; }
     .h-panel-comic .panel-2-model { position: absolute !important; top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%,-50%) !important; opacity: 0.08 !important; width: 60vw !important; max-width: 300px !important; }
-    .h-panel-comic .panel-3-lilith { position: absolute !important; top: 65% !important; left: 50% !important; right: auto !important; transform: translate(-50%,-50%) !important; opacity: 0.08 !important; width: 60vw !important; max-width: 300px !important; }
+    .h-panel-comic .panel-3-lilith { position: absolute !important; top: 40% !important; left: 50% !important; right: auto !important; transform: translate(-50%,-50%) !important; opacity: 0.08 !important; width: 60vw !important; max-width: 300px !important; }
     .h-panel-comic #brainModelContainer { opacity: 0.08 !important; }
     .observer-hero-title { color: var(--accent) !important; -webkit-text-fill-color: var(--accent) !important; }
     .panel-cta-primary { font-size: .7rem !important; padding: .9rem 1.8rem !important; color: #000 !important; }
@@ -4303,10 +4303,10 @@ function initSectionReveals() {
     // Sentence narration blocks: fade+slide up when panel centers
     if (isMobileH) {
         // Mobile: chars fade in when narration hits viewport center
-        var scrollRoot = document.querySelector('.page-wrapper') || null;
         var narrations = document.querySelectorAll('.h-panel-comic .comic-narration');
-        var halfVh = Math.round(window.innerHeight * 0.25);
-        var obsOpts = { root: scrollRoot, rootMargin: '-' + halfVh + 'px 0px -' + halfVh + 'px 0px', threshold: 0 };
+        var wrapper = document.querySelector('.page-wrapper');
+        var halfVh = Math.round(window.innerHeight * 0.35);
+        var obsOpts = { root: wrapper, rootMargin: '-' + halfVh + 'px 0px -' + halfVh + 'px 0px', threshold: 0 };
         var narrationObs = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
